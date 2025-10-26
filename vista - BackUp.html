@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio - Windows Vista</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            cursor: default;
+        }
+
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Desktop Background */
+        .desktop {
+            width: 100%;
+            height: 100vh;
+            background-image: url('media/wallpaper.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        /* Desktop Icons Container */
+        .desktop-icons {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 120px);
+            gap: 20px;
+        }
+
+        /* Individual Desktop Icon */
+        .desktop-icon {
+            width: 110px;
+            text-align: center;
+            padding: 5px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .desktop-icon:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4);
+        }
+
+        .desktop-icon:active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .desktop-icon img {
+            width: 96px;
+            height: 96px;
+            display: block;
+            margin: 0 auto 10px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+        }
+
+        .desktop-icon span {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9),
+                         0 0 10px rgba(0, 0, 0, 0.7);
+            display: block;
+            word-wrap: break-word;
+            line-height: 1.3;
+        }
+
+        /* Window Styles - Ultra Glass Effect */
+        .window {
+            position: absolute;
+            min-width: 400px;
+            min-height: 300px;
+            border-radius: 8px;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            /* Ultra translucent glass effect */
+            background: rgba(240, 240, 240, 0.02);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+                        0 0 0 1px rgba(255, 255, 255, 0.3) inset,
+                        0 0 80px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .window.active {
+            display: flex;
+        }
+
+        .window.maximized {
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: calc(100vh - 56px) !important;
+            border-radius: 0;
+        }
+
+        .window.minimized {
+            display: none;
+        }
+
+        /* Window Title Bar - Enhanced Glass */
+        .window-titlebar {
+            height: 30px;
+            background: linear-gradient(to bottom,
+                rgba(255, 255, 255, 0.3) 0%,
+                rgba(255, 255, 255, 0.2) 45%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(0, 0, 0, 0.1) 100%);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            cursor: move;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .window.inactive .window-titlebar {
+            background: linear-gradient(to bottom,
+                rgba(200, 200, 200, 0.2) 0%,
+                rgba(180, 180, 180, 0.15) 45%,
+                rgba(160, 160, 160, 0.1) 50%,
+                rgba(100, 100, 100, 0.1) 100%);
+        }
+
+        .window-titlebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right,
+                transparent 0%,
+                rgba(255, 255, 255, 0.8) 20%,
+                rgba(255, 255, 255, 0.8) 80%,
+                transparent 100%);
+        }
+
+        .window-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+        }
+
+        .window-title {
+            flex: 1;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 500;
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .window.inactive .window-title {
+            color: #333;
+        }
+
+        /* Window Controls - Glass Style */
+        .window-controls {
+            display: flex;
+            gap: 2px;
+        }
+
+        .window-control {
+            width: 26px;
+            height: 20px;
+            border-radius: 3px;
+            background: linear-gradient(to bottom,
+                rgba(255, 255, 255, 0.3) 0%,
+                rgba(255, 255, 255, 0.1) 100%);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .window-control:hover {
+            background: linear-gradient(to bottom,
+                rgba(255, 255, 255, 0.5) 0%,
+                rgba(255, 255, 255, 0.3) 100%);
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5),
+                        inset 0 0 3px rgba(255, 255, 255, 0.8);
+        }
+
+        .window-control:active {
+            background: linear-gradient(to bottom,
+                rgba(255, 255, 255, 0.2) 0%,
+                rgba(255, 255, 255, 0.4) 100%);
+        }
+
+        .window-control.close:hover {
+            background: linear-gradient(to bottom,
+                rgba(232, 17, 35, 0.9) 0%,
+                rgba(200, 0, 20, 0.9) 100%);
+            border-color: rgba(150, 0, 0, 0.5);
+        }
+
+        /* Control Symbols */
+        .window-control.minimize::before {
+            content: '';
+            width: 10px;
+            height: 2px;
+            background: #333;
+            position: absolute;
+            bottom: 6px;
+        }
+
+        .window-control.maximize::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border: 2px solid #333;
+            position: absolute;
+        }
+
+        .window-control.close::before,
+        .window-control.close::after {
+            content: '';
+            width: 12px;
+            height: 2px;
+            background: #333;
+            position: absolute;
+        }
+
+        .window-control.close::before {
+            transform: rotate(45deg);
+        }
+
+        .window-control.close::after {
+            transform: rotate(-45deg);
+        }
+
+        /* Window Content - Ultra Glass Background */
+        .window-content {
+            flex: 1;
+            padding: 30px;
+            overflow: auto;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Custom Scrollbar for Glass Effect */
+        .window-content::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .window-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .window-content::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+        }
+
+        .window-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Portfolio Content Styles */
+        .about-content {
+            max-width: 700px;
+            margin: 0 auto;
+            color: #fff;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+        }
+
+        .about-content h1 {
+            color: #fff;
+            margin-bottom: 25px;
+            font-size: 32px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .about-content h2 {
+            color: #fff;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 24px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .about-content p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #fff;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .gallery-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-item {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+        }
+
+        .gallery-item:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .gallery-item h3 {
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .gallery-item p {
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .service-list {
+            list-style: none;
+        }
+
+        .service-list li {
+            background: rgba(255, 255, 255, 0.15);
+            border-left: 4px solid #fff;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 0 4px 4px 0;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .service-list li:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateX(5px);
+        }
+
+        .service-list li h3 {
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .service-list li p {
+            color: #fff;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(5px);
+        }
+
+        .contact-info h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .contact-info p {
+            color: #fff;
+            font-weight: 500;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .calendly-section {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            border-radius: 4px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .calendly-section h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .reserve-btn {
+            background: linear-gradient(to bottom, #333, #000);
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .reserve-btn:hover {
+            background: linear-gradient(to bottom, #555, #222);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Taskbar */
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+            background: linear-gradient(to bottom, 
+                rgba(20, 20, 20, 0.7) 0%,
+                rgba(10, 10, 10, 0.85) 50%,
+                rgba(0, 0, 0, 0.9) 100%);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        /* Start Button */
+        .start-button {
+            width: 56px;
+            height: 56px;
+            margin-left: 2px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            position: relative;
+            background: radial-gradient(circle at 30% 30%, 
+                rgba(150, 150, 150, 0.8) 0%,
+                rgba(100, 100, 100, 0.6) 40%,
+                rgba(50, 50, 50, 0.4) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4),
+                        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+            overflow: hidden;
+        }
+
+        .start-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 2px 12px rgba(255, 255, 255, 0.4),
+                        inset 0 1px 3px rgba(255, 255, 255, 0.6);
+            background: radial-gradient(circle at 30% 30%, 
+                rgba(180, 180, 180, 0.9) 0%,
+                rgba(130, 130, 130, 0.7) 40%,
+                rgba(80, 80, 80, 0.5) 100%);
+        }
+
+        .start-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Windows Logo in Start Button */
+        .start-button img {
+            width: 60px;
+            height: 60px;
+            position: absolute;
+        }
+
+        /* Task Items Area */
+        .task-items {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            gap: 3px;
+        }
+
+        .task-item {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            padding: 5px 12px;
+            font-size: 12px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            max-width: 160px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .task-item img {
+            width: 16px;
+            height: 16px;
+        }
+
+        .task-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .task-item.active {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* System Tray */
+        .system-tray {
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            gap: 15px;
+            color: white;
+            font-size: 12px;
+        }
+
+        .system-icons {
+            display: flex;
+            gap: 8px;
+            padding-right: 10px;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .system-icon {
+            width: 16px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .system-icon:hover {
+            background: white;
+        }
+
+        /* Clock */
+        .clock {
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            padding: 2px 5px;
+            border-radius: 2px;
+            transition: background 0.2s ease;
+        }
+
+        .clock:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Show Desktop Button */
+        .show-desktop {
+            width: 10px;
+            height: 100%;
+            background: linear-gradient(to right,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.05) 100%);
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .show-desktop:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Resize Handle */
+        .resize-handle {
+            position: absolute;
+            background: transparent;
+        }
+
+        .resize-handle.n { top: 0; left: 0; right: 0; height: 5px; cursor: n-resize; }
+        .resize-handle.s { bottom: 0; left: 0; right: 0; height: 5px; cursor: s-resize; }
+        .resize-handle.e { top: 0; right: 0; bottom: 0; width: 5px; cursor: e-resize; }
+        .resize-handle.w { top: 0; left: 0; bottom: 0; width: 5px; cursor: w-resize; }
+        .resize-handle.ne { top: 0; right: 0; width: 10px; height: 10px; cursor: ne-resize; }
+        .resize-handle.nw { top: 0; left: 0; width: 10px; height: 10px; cursor: nw-resize; }
+        .resize-handle.se { bottom: 0; right: 0; width: 10px; height: 10px; cursor: se-resize; }
+        .resize-handle.sw { bottom: 0; left: 0; width: 10px; height: 10px; cursor: sw-resize; }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .photo-grid img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-grid img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="desktop">
+        <!-- Desktop Icons -->
+        <div class="desktop-icons">
+            <div class="desktop-icon" data-app="sobre">
+                <img src="media/icons/sobre.png" alt="Sobre">
+                <span>SOBRE</span>
+            </div>
+            <div class="desktop-icon" data-app="galeria">
+                <img src="media/icons/galeria.png" alt="Galeria">
+                <span>GALERIA</span>
+            </div>
+            <div class="desktop-icon" data-app="servicos">
+                <img src="media/icons/servicos.png" alt="Serviços">
+                <span>SERVIÇOS</span>
+            </div>
+            <div class="desktop-icon" data-app="contacto">
+                <img src="media/icons/contacto.png" alt="Contacto + Reservar">
+                <span>CONTACTO<br>+RESERVAR</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Windows Container -->
+    <div id="windows-container"></div>
+
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <div class="start-button">
+            <img src="media/icons/windows-icon.png" alt="Windows">
+        </div>
+        <div class="task-items" id="task-items"></div>
+        <div class="system-tray">
+            <div class="system-icons">
+                <div class="system-icon" style="background: url('media/icons/volume.png') center/contain no-repeat;"></div>
+                <div class="system-icon" style="background: url('media/icons/network-small.png') center/contain no-repeat;"></div>
+                <div class="system-icon" style="background: url('media/icons/battery.png') center/contain no-repeat;"></div>
+            </div>
+            <div class="clock" id="clock">12:00 PM</div>
+        </div>
+        <div class="show-desktop"></div>
+    </div>
+
+    <script>
+        // Window management
+        let windows = {};
+        let activeWindow = null;
+        let windowZIndex = 1000;
+        let windowIdCounter = 0;
+
+        // Window templates
+        const windowTemplates = {
+            sobre: {
+                title: 'SOBRE',
+                icon: 'media/icons/sobre.png',
+                content: `
+                    <div class="about-content">
+                        <h1>Nossa História e Fotografias Nossas</h1>
+                        <p>Somos um estúdio de fotografia apaixonado por capturar momentos únicos e contar histórias através de imagens.</p>
+                        
+                        <div class="photo-grid">
+                            <img src="media/portfolio/photo1.jpg" alt="Nossa fotografia">
+                            <img src="media/portfolio/photo2.jpg" alt="Nossa fotografia">
+                            <img src="media/portfolio/photo3.jpg" alt="Nossa fotografia">
+                            <img src="media/portfolio/photo4.jpg" alt="Nossa fotografia">
+                            <img src="media/portfolio/photo5.jpg" alt="Nossa fotografia">
+                            <img src="media/portfolio/photo6.jpg" alt="Nossa fotografia">
+                        </div>
+                    </div>
+                `,
+                width: 800,
+                height: 700
+            },
+            galeria: {
+                title: 'GALERIA',
+                icon: 'media/icons/galeria.png',
+                content: `
+                    <h1 style="color: #fff; margin-bottom: 25px; text-shadow: 0 1px 2px rgba(0,0,0, 0.5); font-size: 32px;">As Nossas Fotografias Divididas por Temas</h1>
+                    <div class="gallery-categories">
+                        <div class="gallery-item">
+                            <img src="media/portfolio/tema1.jpg" alt="Tema 1">
+                            <h3>Retratos</h3>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="media/portfolio/tema2.jpg" alt="Tema 2">
+                            <h3>Casamentos</h3>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="media/portfolio/tema3.jpg" alt="Tema 3">
+                            <h3>Eventos</h3>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="media/portfolio/tema4.jpg" alt="Tema 4">
+                            <h3>Natureza</h3>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="media/portfolio/tema5.jpg" alt="Tema 5">
+                            <h3>Urbana</h3>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="media/portfolio/tema6.jpg" alt="Tema 6">
+                            <h3>Analógica</h3>
+                        </div>
+                    </div>
+                `,
+                width: 1000,
+                height: 700
+            },
+            servicos: {
+                title: 'SERVIÇOS',
+                icon: 'media/icons/servicos.png',
+                content: `
+                    <h1 style="color: #fff; margin-bottom: 25px; text-shadow: 0 1px 2px rgba(0,0,0, 0.5); font-size: 32px;">Serviços</h1>
+                    <ul class="service-list">
+                        <li>
+                            <h3>Sessão de Fotos</h3>
+                        </li>
+                        <li>
+                            <h3>Revelação + Digitalização</h3>
+                        </li>
+                        <li>
+                            <h3>Filmagens Super 8mm</h3>
+                        </li>
+                    </ul>
+                `,
+                width: 800,
+                height: 600
+            },
+            contacto: {
+                title: 'CONTACTO+RESERVAR',
+                icon: 'media/icons/contacto.png',
+                content: `
+                    <div class="contact-content">
+                        <h1 style="color: #fff; margin-bottom: 25px; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0, 0.5); font-size: 32px;">Contacto + Reservar</h1>
+                        
+                        <div class="contact-info">
+                            <h3>Contactos</h3>
+                        </div>
+                        
+                        <div class="calendly-section">
+                            <h3>Calendly</h3>
+                            <p style="margin-bottom: 20px; color: #fff; font-weight: 500;">Sistema de reservas online</p>
+                            <button class="reserve-btn" onclick="alert('Calendly seria integrado aqui')">Reservar</button>
+                        </div>
+                    </div>
+                `,
+                width: 700,
+                height: 500
+            }
+        };
+
+        // Create window function
+        function createWindow(appType) {
+            // Check if window already exists
+            const existingWindow = Object.values(windows).find(w => w.appType === appType);
+            if (existingWindow) {
+                // If window exists, just focus it
+                const windowId = Object.keys(windows).find(key => windows[key] === existingWindow);
+                if (existingWindow.minimized) {
+                    restoreWindow(windowId);
+                } else {
+                    setActiveWindow(windowId);
+                }
+                return windowId;
+            }
+
+            const template = windowTemplates[appType] || windowTemplates.sobre;
+            const windowId = `window-${windowIdCounter++}`;
+            
+            const windowEl = document.createElement('div');
+            windowEl.className = 'window active';
+            windowEl.id = windowId;
+            windowEl.style.width = (template.width || 800) + 'px';
+            windowEl.style.height = (template.height || 600) + 'px';
+            
+            // Center the window on screen
+            const windowWidth = template.width || 800;
+            const windowHeight = template.height || 600;
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            const left = (screenWidth - windowWidth) / 2;
+            const top = (screenHeight - windowHeight - 56) / 2; // 56px for taskbar
+            
+            windowEl.style.left = left + 'px';
+            windowEl.style.top = top + 'px';
+            windowEl.style.zIndex = ++windowZIndex;
+
+            windowEl.innerHTML = `
+                <div class="window-titlebar">
+                    <img src="${template.icon}" class="window-icon" alt="">
+                    <span class="window-title">${template.title}</span>
+                    <div class="window-controls">
+                        <div class="window-control minimize"></div>
+                        <div class="window-control maximize"></div>
+                        <div class="window-control close"></div>
+                    </div>
+                </div>
+                <div class="window-content">
+                    ${template.content}
+                </div>
+                <div class="resize-handle n"></div>
+                <div class="resize-handle s"></div>
+                <div class="resize-handle e"></div>
+                <div class="resize-handle w"></div>
+                <div class="resize-handle ne"></div>
+                <div class="resize-handle nw"></div>
+                <div class="resize-handle se"></div>
+                <div class="resize-handle sw"></div>
+            `;
+
+            document.getElementById('windows-container').appendChild(windowEl);
+            
+            // Create taskbar item
+            const taskItem = document.createElement('div');
+            taskItem.className = 'task-item active';
+            taskItem.id = `task-${windowId}`;
+            taskItem.innerHTML = `
+                <img src="${template.icon}" alt="">
+                <span>${template.title}</span>
+            `;
+            document.getElementById('task-items').appendChild(taskItem);
+
+            // Store window reference
+            windows[windowId] = {
+                element: windowEl,
+                taskItem: taskItem,
+                minimized: false,
+                maximized: false,
+                appType: appType
+            };
+
+            // Set as active window
+            setActiveWindow(windowId);
+
+            // Setup event handlers
+            setupWindowEvents(windowId);
+
+            return windowId;
+        }
+
+        // Setup window events
+        function setupWindowEvents(windowId) {
+            const windowData = windows[windowId];
+            const window = windowData.element;
+            const titlebar = window.querySelector('.window-titlebar');
+            const closeBtn = window.querySelector('.window-control.close');
+            const minimizeBtn = window.querySelector('.window-control.minimize');
+            const maximizeBtn = window.querySelector('.window-control.maximize');
+            const taskItem = windowData.taskItem;
+
+            // Window activation
+            window.addEventListener('mousedown', () => setActiveWindow(windowId));
+
+            // Titlebar drag
+            let isDragging = false;
+            let dragOffset = { x: 0, y: 0 };
+
+            titlebar.addEventListener('mousedown', (e) => {
+                if (e.target.classList.contains('window-control')) return;
+                if (windowData.maximized) return;
+                
+                isDragging = true;
+                dragOffset.x = e.clientX - window.offsetLeft;
+                dragOffset.y = e.clientY - window.offsetTop;
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                
+                window.style.left = (e.clientX - dragOffset.x) + 'px';
+                window.style.top = (e.clientY - dragOffset.y) + 'px';
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+
+            // Window controls
+            closeBtn.addEventListener('click', () => closeWindow(windowId));
+            minimizeBtn.addEventListener('click', () => minimizeWindow(windowId));
+            maximizeBtn.addEventListener('click', () => toggleMaximize(windowId));
+
+            // Taskbar item click
+            taskItem.addEventListener('click', () => {
+                if (windowData.minimized) {
+                    restoreWindow(windowId);
+                } else if (activeWindow === windowId) {
+                    minimizeWindow(windowId);
+                } else {
+                    setActiveWindow(windowId);
+                }
+            });
+
+            // Window resize
+            setupResize(windowId);
+        }
+
+        // Resize functionality
+        function setupResize(windowId) {
+            const window = windows[windowId].element;
+            const handles = window.querySelectorAll('.resize-handle');
+            
+            handles.forEach(handle => {
+                let isResizing = false;
+                let startX, startY, startWidth, startHeight, startLeft, startTop;
+                
+                handle.addEventListener('mousedown', (e) => {
+                    if (windows[windowId].maximized) return;
+                    
+                    isResizing = true;
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    startWidth = window.offsetWidth;
+                    startHeight = window.offsetHeight;
+                    startLeft = window.offsetLeft;
+                    startTop = window.offsetTop;
+                    e.preventDefault();
+                });
+                
+                document.addEventListener('mousemove', (e) => {
+                    if (!isResizing) return;
+                    
+                    const dx = e.clientX - startX;
+                    const dy = e.clientY - startY;
+                    
+                    if (handle.classList.contains('e')) {
+                        window.style.width = Math.max(400, startWidth + dx) + 'px';
+                    } else if (handle.classList.contains('w')) {
+                        window.style.width = Math.max(400, startWidth - dx) + 'px';
+                        window.style.left = Math.min(startLeft + dx, startLeft + startWidth - 400) + 'px';
+                    } else if (handle.classList.contains('s')) {
+                        window.style.height = Math.max(300, startHeight + dy) + 'px';
+                    } else if (handle.classList.contains('n')) {
+                        window.style.height = Math.max(300, startHeight - dy) + 'px';
+                        window.style.top = Math.min(startTop + dy, startTop + startHeight - 300) + 'px';
+                    } else if (handle.classList.contains('se')) {
+                        window.style.width = Math.max(400, startWidth + dx) + 'px';
+                        window.style.height = Math.max(300, startHeight + dy) + 'px';
+                    } else if (handle.classList.contains('sw')) {
+                        window.style.width = Math.max(400, startWidth - dx) + 'px';
+                        window.style.left = Math.min(startLeft + dx, startLeft + startWidth - 400) + 'px';
+                        window.style.height = Math.max(300, startHeight + dy) + 'px';
+                    } else if (handle.classList.contains('ne')) {
+                        window.style.width = Math.max(400, startWidth + dx) + 'px';
+                        window.style.height = Math.max(300, startHeight - dy) + 'px';
+                        window.style.top = Math.min(startTop + dy, startTop + startHeight - 300) + 'px';
+                    } else if (handle.classList.contains('nw')) {
+                        window.style.width = Math.max(400, startWidth - dx) + 'px';
+                        window.style.left = Math.min(startLeft + dx, startLeft + startWidth - 400) + 'px';
+                        window.style.height = Math.max(300, startHeight - dy) + 'px';
+                        window.style.top = Math.min(startTop + dy, startTop + startHeight - 300) + 'px';
+                    }
+                });
+                
+                document.addEventListener('mouseup', () => {
+                    isResizing = false;
+                });
+            });
+        }
+
+        // Window management functions
+        function setActiveWindow(windowId) {
+            // Remove active class from all windows and task items
+            Object.values(windows).forEach(w => {
+                w.element.classList.remove('active');
+                w.element.classList.add('inactive');
+                w.taskItem.classList.remove('active');
+            });
+            
+            // Set active window
+            if (windows[windowId]) {
+                windows[windowId].element.classList.add('active');
+                windows[windowId].element.classList.remove('inactive');
+                windows[windowId].element.style.zIndex = ++windowZIndex;
+                windows[windowId].taskItem.classList.add('active');
+                activeWindow = windowId;
+            }
+        }
+
+        function closeWindow(windowId) {
+            if (windows[windowId]) {
+                windows[windowId].element.remove();
+                windows[windowId].taskItem.remove();
+                delete windows[windowId];
+                
+                // Set a new active window if any exist
+                const remainingWindows = Object.keys(windows);
+                if (remainingWindows.length > 0) {
+                    setActiveWindow(remainingWindows[remainingWindows.length - 1]);
+                } else {
+                    activeWindow = null;
+                }
+            }
+        }
+
+        function minimizeWindow(windowId) {
+            if (windows[windowId]) {
+                windows[windowId].element.classList.add('minimized');
+                windows[windowId].minimized = true;
+                windows[windowId].taskItem.classList.remove('active');
+            }
+        }
+
+        function restoreWindow(windowId) {
+            if (windows[windowId]) {
+                windows[windowId].element.classList.remove('minimized');
+                windows[windowId].minimized = false;
+                setActiveWindow(windowId);
+            }
+        }
+
+        function toggleMaximize(windowId) {
+            if (windows[windowId]) {
+                const window = windows[windowId];
+                if (window.maximized) {
+                    window.element.classList.remove('maximized');
+                    window.maximized = false;
+                } else {
+                    window.element.classList.add('maximized');
+                    window.maximized = true;
+                }
+            }
+        }
+
+        // Desktop icon click handler
+        document.querySelectorAll('.desktop-icon').forEach(icon => {
+            icon.addEventListener('click', function() {
+                const appType = this.getAttribute('data-app');
+                createWindow(appType);
+            });
+        });
+
+        // Update clock
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const displayHours = hours % 12 || 12;
+            
+            const timeString = `${displayHours}:${minutes} ${ampm}`;
+            document.getElementById('clock').textContent = timeString;
+        }
+
+        // Update clock immediately and then every minute
+        updateClock();
+        setInterval(updateClock, 60000);
+
+        // Start button click
+        document.querySelector('.start-button').addEventListener('click', function() {
+            alert('Bem-vindo ao nosso portfólio de fotografia! Clique em qualquer ícone para explorar.');
+        });
+
+        // Show desktop button
+        document.querySelector('.show-desktop').addEventListener('click', function() {
+            Object.values(windows).forEach(window => {
+                if (!window.minimized) {
+                    minimizeWindow(Object.keys(windows).find(key => windows[key] === window));
+                }
+            });
+        });
+    </script>
+</body>
+</html>
