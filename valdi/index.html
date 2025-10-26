@@ -62,18 +62,26 @@
 		body {
 			background-image: url("wallpaper.jpg");
 		}
-		/* Grayscale filter applied to entire page */
-		body {
+		
+		/* Grayscale filter applied only to main content area */
+		main {
 			filter: grayscale(100%);      /* Black and white effect */
+		}
+
+		/* Ensure header is visible */
+		#header-container {
+			position: relative;
+			z-index: 1000;
 		}
 
 		/* Apple TV Style Interface */
 		main {
-			min-height: 100vh;
+			/* Work within the existing grid layout */
 			display: flex;
 			flex-direction: column;
-			padding: 2rem 1rem;
+			padding: 0;
 			position: relative;
+			overflow: hidden;
 		}
 
 		/* Floating pill navigation bar */
@@ -88,16 +96,16 @@
 			-webkit-backdrop-filter: blur(20px) saturate(180%);
 			border-radius: 50px;
 			max-width: fit-content;
-			margin: 2rem auto;
+			margin: 1.5rem auto 0;
 			box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-			position: sticky;
-			top: 2rem;
+			position: relative;
 			z-index: 100;
 			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 			overflow-x: auto;
 			overflow-y: hidden;
 			-webkit-overflow-scrolling: touch;
 			scrollbar-width: none;
+			flex-shrink: 0;
 		}
 
 		.pill-nav::-webkit-scrollbar {
@@ -144,10 +152,11 @@
 			display: flex;
 			align-items: flex-end;
 			justify-content: center;
-			padding: 0 0 3rem;
+			padding: 1rem 0 2rem;
 			width: 100%;
 			overflow: hidden;
 			position: relative;
+			min-height: 0;
 		}
 
 		/* Scroll fade indicators */
@@ -155,7 +164,7 @@
 		.content-container::after {
 			content: '';
 			position: absolute;
-			bottom: 3rem;
+			bottom: 2rem;
 			top: auto;
 			width: 80px;
 			height: 400px;
@@ -275,7 +284,7 @@
 			.pill-nav {
 				gap: 0.25rem;
 				padding: 0.4rem;
-				margin: 1rem auto;
+				margin: 1rem auto 0;
 				max-width: 96%;
 			}
 
@@ -293,14 +302,14 @@
 			}
 
 			.content-container {
-				padding: 0 0 2rem;
+				padding: 1rem 0 1.5rem;
 			}
 
 			.content-container::before,
 			.content-container::after {
 				width: 40px;
 				height: 300px;
-				bottom: 2rem;
+				bottom: 1.5rem;
 			}
 		}
 
@@ -324,10 +333,15 @@
 				gap: 0.75rem;
 			}
 
+			.content-container {
+				padding: 1rem 0 1rem;
+			}
+
 			.content-container::before,
 			.content-container::after {
 				width: 30px;
 				height: 250px;
+				bottom: 1rem;
 			}
 		}
 
