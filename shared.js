@@ -10,9 +10,14 @@ function createHeader() {
       <a href="index.html">
         <img src="/media/A00_Logo_&_title_-_light.png" alt="Club Benares" style="height: 30px;">
       </a>
+      <button class="hamburger" id="hamburger-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </header>
     
-    <nav aria-label="Menu principal">
+    <nav aria-label="Menu principal" id="main-nav">
       <ul>
         <li><a href="/eventos.html">Eventos</a></li>
         <li><a href="/biblioteca/index.html">Biblioteca</a></li>
@@ -59,6 +64,39 @@ function createFooter() {
 }
 
 // =================================
+// HAMBURGER MENU FUNCTIONALITY
+// =================================
+
+function initializeHamburgerMenu() {
+  const hamburger = document.getElementById('hamburger-toggle');
+  const nav = document.getElementById('main-nav');
+  
+  if (!hamburger || !nav) return;
+  
+  hamburger.addEventListener('click', function() {
+    hamburger.classList.toggle('active');
+    nav.classList.toggle('active');
+  });
+  
+  // Close menu when clicking on a link
+  const navLinks = nav.querySelectorAll('a');
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      nav.classList.remove('active');
+    });
+  });
+  
+  // Close menu when clicking outside
+  document.addEventListener('click', function(event) {
+    if (!nav.contains(event.target) && !hamburger.contains(event.target)) {
+      hamburger.classList.remove('active');
+      nav.classList.remove('active');
+    }
+  });
+}
+
+// =================================
 // GITHUB STATUS FUNCTIONALITY
 // =================================
 
@@ -78,7 +116,7 @@ async function updateGitHubStatus() {
     statusDiv.textContent =
       state === "success" ? "🟢 Success" :
       state === "failure" ? "🔴 Failure" :
-      state === "pending" ? "🟠 Pending" : "⚪ Unknown";
+      state === "pending" ? "🟡 Pending" : "⚪ Unknown";
 
     statusDiv.className = "github-status " + state;
   } catch (err) {
@@ -162,6 +200,9 @@ document.addEventListener('DOMContentLoaded', function() {
   if (headerContainer) {
     console.log("Header container found, inserting header");
     headerContainer.innerHTML = createHeader();
+    
+    // Initialize hamburger menu after header is created
+    initializeHamburgerMenu();
     }
     
     // Highlight current page
