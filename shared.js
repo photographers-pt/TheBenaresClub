@@ -106,33 +106,47 @@ function initializeNavToggle() {
 async function updateGitHubStatus() {
   const owner = "TheBenaresClub";
   const repo = "TheBenaresClub.github.io";
-  const branch = "main";
   const statusDiv = document.getElementById("github-status");
 
   if (!statusDiv) return;
 
   try {
-    // Check both commit status and check runs
-    const statusRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits/${branch}/status`);
-    const statusData = await statusRes.json();
+    // Check for active workflow runs
+    const workflowRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/actions/runs?per_page=1`);
+    const workflowData = await workflowRes.json();
     
-    // Also check the latest commit for check runs
-    const commitRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits/${branch}`);
-    const commitData = await commitRes.json();
-
-    let state = statusData.state;
-    
-    // If no checks are configured, but commit exists, assume success
-    if (state === "pending" && statusData.total_count === 0 && commitData.sha) {
-      state = "success";
+    if (workflowData.workflow_runs && workflowData.workflow_runs.length > 0) {
+      const latestRun = workflowData.workflow_runs[0];
+      const status = latestRun.status; // queued, in_progress, completed
+      const conclusion = latestRun.conclusion; // success, failure, cancelled, etc.
+      
+      // If workflow is running
+      if (status === "queued" || status === "in_progress") {
+        statusDiv.textContent = "🟡 Building";
+        statusDiv.className = "github-status pending";
+        return;
+      }
+      
+      // If workflow completed
+      if (status === "completed") {
+        if (conclusion === "success") {
+          statusDiv.textContent = "🟢 Live";
+          statusDiv.className = "github-status success";
+        } else if (conclusion === "failure") {
+          statusDiv.textContent = "🔴 Failed";
+          statusDiv.className = "github-status failure";
+        } else {
+          statusDiv.textContent = "⚪ Unknown";
+          statusDiv.className = "github-status unknown";
+        }
+        return;
+      }
     }
-
-    statusDiv.textContent =
-      state === "success" ? "🟢 Live" :
-      state === "failure" ? "🔴 Failed" :
-      state === "pending" ? "🟡 Building" : "⚪ Unknown";
-
-    statusDiv.className = "github-status " + state;
+    
+    // No workflows found - assume live
+    statusDiv.textContent = "🟢 Live";
+    statusDiv.className = "github-status success";
+    
   } catch (err) {
     console.error("Error fetching GitHub status:", err);
     statusDiv.textContent = "⚠️ Error";
