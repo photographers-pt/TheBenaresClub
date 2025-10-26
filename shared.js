@@ -104,22 +104,33 @@ function initializeNavToggle() {
 // =================================
 
 async function updateGitHubStatus() {
-  const owner = "TheBenaresClub";   // ← Replace
-  const repo = "TheBenaresClub.github.io";    // ← Replace
-  const branch = "main";                  // ← Replace if needed
+  const owner = "TheBenaresClub";
+  const repo = "TheBenaresClub.github.io";
+  const branch = "main";
   const statusDiv = document.getElementById("github-status");
 
   if (!statusDiv) return;
 
   try {
-    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits/${branch}/status`);
-    const data = await res.json();
+    // Check both commit status and check runs
+    const statusRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits/${branch}/status`);
+    const statusData = await statusRes.json();
+    
+    // Also check the latest commit for check runs
+    const commitRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits/${branch}`);
+    const commitData = await commitRes.json();
 
-    const state = data.state || "unknown";
+    let state = statusData.state;
+    
+    // If no checks are configured, but commit exists, assume success
+    if (state === "pending" && statusData.total_count === 0 && commitData.sha) {
+      state = "success";
+    }
+
     statusDiv.textContent =
-      state === "success" ? "🟢 Success" :
-      state === "failure" ? "🔴 Failure" :
-      state === "pending" ? "🟡 Pending" : "⚪ Unknown";
+      state === "success" ? "🟢 Live" :
+      state === "failure" ? "🔴 Failed" :
+      state === "pending" ? "🟡 Building" : "⚪ Unknown";
 
     statusDiv.className = "github-status " + state;
   } catch (err) {
