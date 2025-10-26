@@ -11,8 +11,10 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<body>
-	<div id="header-container"></div>
+<body class="cinema-page">
+	<div id="header-container">
+		<!-- Pill nav will be injected here after header loads -->
+	</div>
 	
 	<!-- Background video that changes on hover -->
 	<video id="backgroundVideo" autoplay muted loop playsinline class="background-video">
@@ -20,22 +22,6 @@
 	</video>
 
 	<main class="cinema-main">
-		<!-- Apple TV style pill navigation -->
-		<nav class="pill-nav">
-			<button class="pill-tab active" data-category="all">
-				<span>Watch Now</span>
-			</button>
-			<button class="pill-tab" data-category="movies">
-				<span>Movies</span>
-			</button>
-			<button class="pill-tab" data-category="shorts">
-				<span>Shorts</span>
-			</button>
-			<button class="pill-tab" data-category="search">
-				<span><i class="fas fa-search"></i></span>
-			</button>
-		</nav>
-
 		<div class="posters-grid" id="postersGrid">
 			<!-- Movie posters loaded here -->
 		</div>
@@ -45,43 +31,37 @@
 	<script src="../shared.js"></script>
 
 	<style>
-		/* CRITICAL: Override global styles.css for cinema page */
-		body {
-			display: block !important; /* Override grid layout */
-			overflow: hidden !important;
-			background: #000 !important;
-		}
-
-		main.cinema-main {
-			/* Override all global main styles */
-			overflow: visible !important;
-			display: flex !important;
-			flex-direction: column !important;
-			padding: 0 !important;
-			min-height: auto !important;
-			position: fixed !important;
-			top: 80px !important;
-			bottom: 60px !important;
-			left: 0 !important;
-			right: 0 !important;
-			width: 100% !important;
-			height: auto !important;
-			z-index: 1 !important;
-		}
-
-		/* Ensure header nav doesn't conflict with pill nav */
-		#main-nav {
-			z-index: 50 !important; /* Lower than pill nav */
-		}
-
+		/* Cinema page specific styles */
 		* {
 			margin: 0;
 			padding: 0;
 			box-sizing: border-box;
 		}
 
+		/* Ensure header nav has lower z-index than pill nav */
+		#main-nav {
+			z-index: 50 !important;
+		}
+
+		/* Main container */
+		main.cinema-main {
+			position: fixed;
+			top: 80px; /* Space for header only */
+			bottom: 0; /* Touch the ground */
+			left: 0;
+			right: 0;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: flex-end; /* Push posters to bottom */
+			padding-bottom: 80px; /* Space above footer */
+			z-index: 1;
+		}
+
 		body {
-			background: #000;
+			background: #000 !important;
+			background-image: none !important; /* Remove any inherited background */
 			overflow: hidden;
 			font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 		}
@@ -121,68 +101,34 @@
 			transition: opacity 0.5s ease;
 		}
 
-		/* Apple TV style pill navigation */
-		.pill-nav {
-			display: flex !important;
-			justify-content: center !important;
-			align-items: center !important;
-			gap: 0.5rem;
-			padding: 0.8rem 1rem;
-			background: rgba(255, 0, 0, 0.9) !important; /* BRIGHT RED for debugging */
-			backdrop-filter: blur(20px) saturate(180%);
-			-webkit-backdrop-filter: blur(20px) saturate(180%);
-			border-radius: 50px;
-			margin: 1rem auto 0 !important;
-			box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6) !important;
-			z-index: 500 !important; /* Higher than header nav (100) */
-			flex-shrink: 0 !important;
-			border: 3px solid yellow !important; /* YELLOW BORDER for debugging */
-			position: relative !important;
-			min-height: 50px !important;
-		}
-
-		.pill-tab {
-			padding: 0.7rem 1.3rem !important;
-			background: rgba(255, 255, 0, 0.5) !important; /* YELLOW background for debugging */
-			border: 2px solid lime !important; /* LIME border for debugging */
-			border-radius: 50px !important;
-			color: #000 !important; /* BLACK text for visibility */
-			font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-			font-size: 1rem !important;
-			font-weight: 700 !important;
-			cursor: pointer !important;
-			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-			white-space: nowrap !important;
-		}
-
-		.pill-tab:hover {
-			background: rgba(255, 255, 0, 0.8) !important;
-		}
-
-		.pill-tab.active {
-			background: rgba(0, 255, 0, 1) !important; /* BRIGHT GREEN for active */
-			color: rgba(0, 0, 0, 1) !important;
-			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
-		}
+		/* Apple TV style pill navigation - inside header */
 
 		/* Grid of posters - horizontal layout */
 		.posters-grid {
-			display: flex !important;
-			gap: 2rem !important;
-			align-items: center !important;
-			padding: 0 4rem !important;
-			min-width: min-content !important;
-			flex: 1 !important;
-			overflow-x: auto !important;
-			overflow-y: hidden !important;
-			scroll-snap-type: x mandatory !important;
-			-webkit-overflow-scrolling: touch !important;
-			scrollbar-width: none !important;
-			margin-top: 2rem !important;
+			display: flex;
+			gap: 2rem;
+			align-items: flex-end; /* Align to bottom */
+			padding: 0 1rem 0 2rem; /* Reduced padding for zoom compatibility */ /* Less padding on sides */
+			min-width: min-content;
+			width: 100%;
+			overflow-x: scroll; /* Force horizontal scroll */
+			overflow-y: hidden;
+			scroll-snap-type: x proximity; /* Gentler snap */
+			scroll-behavior: smooth; /* Smooth scrolling */
+			-webkit-overflow-scrolling: touch; /* Smooth mobile scrolling */
+			scrollbar-width: none;
+			touch-action: pan-x; /* Enable horizontal touch swiping */
+			cursor: grab; /* Show grab cursor */
+			user-select: none; /* Prevent text selection while dragging */
+		}
+
+		.posters-grid:active {
+			cursor: grabbing; /* Show grabbing cursor when dragging */
+			scroll-snap-type: none; /* Disable snap while dragging */
 		}
 
 		.posters-grid::-webkit-scrollbar {
-			display: none !important;
+			display: none;
 		}
 
 		/* Individual poster card - smaller size */
@@ -199,10 +145,11 @@
 			backdrop-filter: blur(10px);
 			border: 1px solid rgba(255, 255, 255, 0.1);
 			scroll-snap-align: center;
+			pointer-events: auto; /* Allow hover/click on posters */
 		}
 
 		.poster-card:hover {
-			transform: scale(1.15) translateY(-10px);
+			transform: translateY(-40px); /* Lift up only */
 			box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
 			z-index: 10;
 			border: 1px solid rgba(255, 255, 255, 0.3);
@@ -254,7 +201,7 @@
 		@media (max-width: 1200px) {
 			.posters-grid {
 				gap: 1.5rem;
-				padding: 0 3rem;
+				padding: 0 1.5rem;
 			}
 			.poster-card {
 				width: 200px;
@@ -263,17 +210,12 @@
 		}
 
 		@media (max-width: 768px) {
-			.pill-nav {
-				gap: 0.3rem;
-				padding: 0.5rem 0.6rem;
-			}
-			.pill-tab {
-				padding: 0.5rem 0.9rem;
-				font-size: 0.8rem;
+			main.cinema-main {
+				padding-bottom: 70px;
 			}
 			.posters-grid {
 				gap: 1.2rem;
-				padding: 0 2rem;
+				padding: 0 1rem;
 			}
 			.poster-card {
 				width: 170px;
@@ -282,21 +224,42 @@
 		}
 
 		@media (max-width: 600px) {
-			.pill-nav {
-				gap: 0.25rem;
-				padding: 0.4rem 0.5rem;
-			}
-			.pill-tab {
-				padding: 0.4rem 0.7rem;
-				font-size: 0.75rem;
+			main.cinema-main {
+				padding-bottom: 60px;
 			}
 			.posters-grid {
 				gap: 1rem;
-				padding: 0 1.5rem;
+				padding: 0 1rem;
+				scroll-padding: 0 1rem;
 			}
 			.poster-card {
 				width: 150px;
 				height: 225px;
+			}
+		}
+
+		@media (max-width: 480px) {
+			main.cinema-main {
+				top: 80px;
+				padding-bottom: 50px;
+			}
+			.posters-grid {
+				gap: 0.8rem;
+				padding: 0 0.5rem;
+			}
+			.poster-card {
+				width: 140px;
+				height: 210px;
+			}
+
+		}
+		/* Disable hover on touch devices */
+		@media (hover: none) and (pointer: coarse) {
+			.poster-card:hover {
+				transform: none !important;
+			}
+			.posters-grid {
+				cursor: default !important;
 			}
 		}
 	</style>
@@ -323,6 +286,36 @@
 				year: '2024',
 				poster: './movies/elartistacomprendido.jpg',
 				video: './movies/elartistacomprendido.mp4'
+			},
+			{
+				title: 'Mystery Film',
+				year: '2025',
+				poster: './movies/placeholder.jpg',
+				video: './movies/placeholder.mp4'
+			},
+			{
+				title: 'Coming Soon',
+				year: '2025',
+				poster: './movies/placeholder.jpg',
+				video: './movies/placeholder.mp4'
+			},
+			{
+				title: 'Untitled Project',
+				year: '2024',
+				poster: './movies/placeholder.jpg',
+				video: './movies/placeholder.mp4'
+			},
+			{
+				title: 'The Next Chapter',
+				year: '2025',
+				poster: './movies/placeholder.jpg',
+				video: './movies/placeholder.mp4'
+			},
+			{
+				title: 'New Vision',
+				year: '2024',
+				poster: './movies/placeholder.jpg',
+				video: './movies/placeholder.mp4'
 			}
 		];
 
@@ -365,84 +358,67 @@
 
 		// Initialize
 		document.addEventListener('DOMContentLoaded', () => {
-			console.log('✨ DOM ready');
+			console.log('✨ Cinema page loaded');
 			
-			// Debug: Check body and main styles
-			const body = document.body;
-			const main = document.querySelector('main');
-			console.log('📐 Body display:', window.getComputedStyle(body).display);
-			console.log('📐 Main display:', window.getComputedStyle(main).display);
-			console.log('📐 Main position:', window.getComputedStyle(main).position);
-			console.log('📐 Main top:', window.getComputedStyle(main).top);
-			console.log('📐 Main flex-direction:', window.getComputedStyle(main).flexDirection);
-			
-			// Debug: Check if pill nav exists
-			const pillNav = document.querySelector('.pill-nav');
-			console.log('🔍 Pill nav element:', pillNav);
-			if (pillNav) {
-				console.log('✅ Pill nav found!');
-				console.log('📐 Pill nav display:', window.getComputedStyle(pillNav).display);
-				console.log('📐 Pill nav visibility:', window.getComputedStyle(pillNav).visibility);
-				console.log('📐 Pill nav z-index:', window.getComputedStyle(pillNav).zIndex);
-				console.log('📐 Pill nav position:', window.getComputedStyle(pillNav).position);
-				console.log('📐 Pill nav background:', window.getComputedStyle(pillNav).background);
-				
-				const rect = pillNav.getBoundingClientRect();
-				console.log('📐 Pill nav screen position:', {
-					top: rect.top,
-					left: rect.left,
-					bottom: rect.bottom,
-					right: rect.right,
-					width: rect.width,
-					height: rect.height
-				});
-				console.log('📐 Window height:', window.innerHeight);
-				
-				if (rect.top < 0) {
-					console.warn('⚠️ Pill nav is ABOVE the viewport!');
-				} else if (rect.bottom > window.innerHeight) {
-					console.warn('⚠️ Pill nav is BELOW the viewport!');
-				} else {
-					console.log('✅ Pill nav is VISIBLE in viewport');
-				}
-			} else {
-				console.error('❌ Pill nav NOT found!');
-			}
 			
 			loadPosters();
-			initPillNav();
+			initDragScroll(); // Enable mouse drag scrolling
 		});
 
-		// Pill navigation
-		function initPillNav() {
-			const tabs = document.querySelectorAll('.pill-tab');
-			console.log(`🔍 Found ${tabs.length} pill tabs`);
-			
-			tabs.forEach((tab, index) => {
-				console.log(`  Tab ${index}: ${tab.textContent.trim()}`);
-				
-				tab.addEventListener('click', () => {
-					const category = tab.dataset.category;
-					console.log(`📱 Clicked: ${category}`);
-					
-					// Handle search separately
-					if (category === 'search') {
-						console.log('🔍 Search clicked');
-						return;
-					}
-					
-					// Update active state
-					tabs.forEach(t => t.classList.remove('active'));
-					tab.classList.add('active');
-					
-					// For now, just show all movies
-					// You can add filtering logic here later
-					loadPosters();
-				});
+		// Enable mouse drag scrolling on posters grid
+		function initDragScroll() {
+			const slider = document.getElementById('postersGrid');
+			let isDown = false;
+			let startX;
+			let scrollLeft;
+
+			slider.addEventListener('mousedown', (e) => {
+				isDown = true;
+				slider.style.cursor = 'grabbing';
+				slider.style.userSelect = 'none';
+				startX = e.pageX - slider.offsetLeft;
+				scrollLeft = slider.scrollLeft;
 			});
+
+			slider.addEventListener('mouseleave', () => {
+				isDown = false;
+				slider.style.cursor = 'grab';
+			});
+
+			slider.addEventListener('mouseup', () => {
+				isDown = false;
+				slider.style.cursor = 'grab';
+			});
+
+			slider.addEventListener('mousemove', (e) => {
+				if (!isDown) return;
+				e.preventDefault();
+				const x = e.pageX - slider.offsetLeft;
+				const walk = (x - startX) * 2; // Scroll speed multiplier
+				slider.scrollLeft = scrollLeft - walk;
+			});
+
+			// Set initial cursor
+			slider.style.cursor = 'grab';
+
+			// Touch events for mobile swipe
+			let touchStartX = 0;
+			let touchScrollLeft = 0;
 			
-			console.log('✅ Pill navigation initialized');
+			slider.addEventListener('touchstart', (e) => {
+				touchStartX = e.touches[0].pageX;
+				touchScrollLeft = slider.scrollLeft;
+			}, { passive: true });
+			
+			slider.addEventListener('touchmove', (e) => {
+				const x = e.touches[0].pageX;
+				const walk = (touchStartX - x) * 1.5;
+				slider.scrollLeft = touchScrollLeft + walk;
+			}, { passive: true });
+
+			console.log('✅ Drag and touch scrolling enabled');
 		}
+
 	</script>
 
 </body>
