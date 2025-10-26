@@ -816,72 +816,24 @@ footer .copyright {
 /* ===========================
      BACKGROUNDS
 =========================== */
-
-/* FUNDOS PERSONALIZADOS POR PÁGINA */
-
-body.bg-club {
-  background-image: url("media/B01 Club Benares.png");
+/* Base background styles - common properties */
+body{
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
 
-body.bg-eventos {
-  background-image: url("media/B03 Eventos.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
+/* Individual background images - only what's unique */
+body.bg-club { background-image: url("media/B01 Club Benares.png"); }
+body.bg-eventos { background-image: url("media/B03 Eventos.png"); }
+body.bg-biblioteca { background-image: url("media/B05 Biblioteca Nacional.png"); }
+body.bg-cinemateca { background-image: url("media/B06 Canal 14.png"); }
+body.bg-laboratorio { background-image: url("media/Eventos\ \(3\).png"); }
+body.bg-mercado { background-image: url("media/Eventos\ \(2\).png"); }
+body.bg-comunidade { background-image: url("media/B10\ Comunidade.png"); }
+body.bg-contactos { background-image: url("media/B04\ Noticias.png"); }
 
-body.bg-biblioteca {
-  background-image: url("media/B05 Biblioteca Nacional.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-body.bg-cinemateca {
-  background-image: url("media/B06 Canal 14.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-body.bg-laboratorio {
-  background-image: url("media/Eventos\ \(3\).png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-body.bg-mercado {
-  background-image: url("media/Eventos\ \(2\).png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-body.bg-comunidade {
-  background-image: url("media/B10\ Comunidade.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-body.bg-contactos {
-  background-image: url("media/B04\ Noticias.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
 
 /* Add this to your existing footer styles in styles.css */
 
