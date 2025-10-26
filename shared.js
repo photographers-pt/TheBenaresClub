@@ -39,7 +39,7 @@ function createFooter() {
       </button>
       
       <div class="copyright">
-        &copy; 2025 Club Benares. Todos os direitos reservados.
+        &copy; 2025 Club Benares.
       </div>
       
       <div class="social-icons">
