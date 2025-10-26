@@ -162,6 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (headerContainer) {
     console.log("Header container found, inserting header");
     headerContainer.innerHTML = createHeader();
+    }
     
     // Highlight current page
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
