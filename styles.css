@@ -69,6 +69,11 @@ main {
   min-height: 0; /* Critical: allows content to shrink on ANY screen */
 }
 
+/* HEADER CONTAINER */
+#header-container {
+  position: relative;
+}
+
 /* HEADER */
 header {
   background-color: rgba(0, 0, 0, 0.4);
@@ -80,10 +85,16 @@ header {
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   border-radius: 0 0 10px 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 header h1 {
@@ -93,6 +104,10 @@ header h1 {
 
 /* NAV TOGGLE ARROW */
 .nav-toggle {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
@@ -108,7 +123,7 @@ header h1 {
 
 .nav-toggle:hover {
   background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.05);
+  transform: translateY(-50%) scale(1.05);
 }
 
 .arrow-icon {
@@ -128,6 +143,11 @@ nav {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   border-radius: 0 0 10px 10px;
   transition: all 0.3s ease;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 100;
   max-height: 0;
   overflow: hidden;
   opacity: 0;

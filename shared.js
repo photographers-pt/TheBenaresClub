@@ -77,17 +77,24 @@ function initializeNavToggle() {
   
   console.log("Nav toggle initialized");
   
+  // Set initial arrow based on nav state
+  if (nav.classList.contains('active')) {
+    arrowIcon.textContent = '▼';
+  } else {
+    arrowIcon.textContent = '▲';
+  }
+  
   toggleBtn.addEventListener('click', function(e) {
     e.stopPropagation();
     console.log("Toggle clicked");
     
     nav.classList.toggle('active');
     
-    // Rotate arrow
+    // Update arrow direction: down when open, up when closed
     if (nav.classList.contains('active')) {
-      arrowIcon.textContent = '▲';
-    } else {
       arrowIcon.textContent = '▼';
+    } else {
+      arrowIcon.textContent = '▲';
     }
   });
 }
