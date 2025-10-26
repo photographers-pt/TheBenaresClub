@@ -10,14 +10,12 @@ function createHeader() {
       <a href="index.html">
         <img src="/media/A00_Logo_&_title_-_light.png" alt="Club Benares" style="height: 30px;">
       </a>
-      <button class="hamburger" id="hamburger-toggle" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+        <span class="arrow-icon">▼</span>
       </button>
     </header>
     
-    <nav aria-label="Menu principal" id="main-nav">
+    <nav aria-label="Menu principal" id="main-nav" class="active">
       <ul>
         <li><a href="/eventos.html">Eventos</a></li>
         <li><a href="/biblioteca/index.html">Biblioteca</a></li>
@@ -64,34 +62,32 @@ function createFooter() {
 }
 
 // =================================
-// HAMBURGER MENU FUNCTIONALITY
+// NAV TOGGLE FUNCTIONALITY
 // =================================
 
-function initializeHamburgerMenu() {
-  const hamburger = document.getElementById('hamburger-toggle');
+function initializeNavToggle() {
+  const toggleBtn = document.getElementById('nav-toggle');
   const nav = document.getElementById('main-nav');
+  const arrowIcon = toggleBtn?.querySelector('.arrow-icon');
   
-  if (!hamburger || !nav) return;
+  if (!toggleBtn || !nav || !arrowIcon) {
+    console.log("Toggle elements not found");
+    return;
+  }
   
-  hamburger.addEventListener('click', function() {
-    hamburger.classList.toggle('active');
+  console.log("Nav toggle initialized");
+  
+  toggleBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    console.log("Toggle clicked");
+    
     nav.classList.toggle('active');
-  });
-  
-  // Close menu when clicking on a link
-  const navLinks = nav.querySelectorAll('a');
-  navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('active');
-      nav.classList.remove('active');
-    });
-  });
-  
-  // Close menu when clicking outside
-  document.addEventListener('click', function(event) {
-    if (!nav.contains(event.target) && !hamburger.contains(event.target)) {
-      hamburger.classList.remove('active');
-      nav.classList.remove('active');
+    
+    // Rotate arrow
+    if (nav.classList.contains('active')) {
+      arrowIcon.textContent = '▲';
+    } else {
+      arrowIcon.textContent = '▼';
     }
   });
 }
@@ -201,8 +197,8 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("Header container found, inserting header");
     headerContainer.innerHTML = createHeader();
     
-    // Initialize hamburger menu after header is created
-    initializeHamburgerMenu();
+    // Initialize nav toggle after header is created
+    initializeNavToggle();
     }
     
     // Highlight current page

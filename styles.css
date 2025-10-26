@@ -91,40 +91,32 @@ header h1 {
   font-weight: 500;
 }
 
-/* HAMBURGER MENU */
-.hamburger {
-  display: none; /* Hidden on desktop */
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 24px;
-  background: transparent;
-  border: none;
+/* NAV TOGGLE ARROW */
+.nav-toggle {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  padding: 0;
-  z-index: 1000;
-}
-
-.hamburger span {
-  display: block;
-  width: 100%;
-  height: 3px;
-  background-color: var(--accent-color);
-  border-radius: 2px;
   transition: all 0.3s ease;
+  padding: 0;
 }
 
-/* Hamburger animation when active */
-.hamburger.active span:nth-child(1) {
-  transform: translateY(10.5px) rotate(45deg);
+.nav-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
 }
 
-.hamburger.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger.active span:nth-child(3) {
-  transform: translateY(-10.5px) rotate(-45deg);
+.arrow-icon {
+  color: var(--accent-color);
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+  display: block;
+  line-height: 1;
 }
 
 /* NAV */
@@ -136,6 +128,14 @@ nav {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   border-radius: 0 0 10px 10px;
   transition: all 0.3s ease;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+
+nav.active {
+  max-height: 200px;
+  opacity: 1;
 }
 
 nav ul {
@@ -177,49 +177,6 @@ nav a.active {
     0 0 15px rgba(255, 255, 255, 0.8),
     0 0 25px rgba(255, 255, 255, 0.6);
   font-weight: 600;
-}
-
-/* MOBILE RESPONSIVE */
-@media (max-width: 768px) {
-  .hamburger {
-    display: flex; /* Show hamburger on mobile */
-  }
-  
-  nav {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    border-radius: 0 0 10px 10px;
-    z-index: 999;
-  }
-  
-  nav.active {
-    max-height: 500px;
-    opacity: 1;
-  }
-  
-  nav ul {
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem;
-    gap: 0.5rem;
-  }
-  
-  nav li {
-    width: 100%;
-    text-align: center;
-  }
-  
-  nav a {
-    display: block;
-    width: 100%;
-    padding: 0.75rem 1rem;
-    font-size: 0.9rem;
-  }
 }
 
 
