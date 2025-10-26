@@ -7,7 +7,7 @@ console.log("Complete shared.js loaded");
 function createHeader() {
   return `
    <header>
-      <a href="index.html">
+      <a href="/">
         <img src="/media/A00_Logo_&_title_-_light.png" alt="Club Benares" style="height: 30px;">
       </a>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
@@ -122,7 +122,7 @@ async function updateGitHubStatus() {
       
       // If workflow is running
       if (status === "queued" || status === "in_progress") {
-        statusDiv.textContent = "🟡 Building";
+        statusDiv.textContent = "Building";
         statusDiv.className = "github-status pending";
         return;
       }
@@ -130,13 +130,13 @@ async function updateGitHubStatus() {
       // If workflow completed
       if (status === "completed") {
         if (conclusion === "success") {
-          statusDiv.textContent = "🟢 Live";
+          statusDiv.textContent = "Live";
           statusDiv.className = "github-status success";
         } else if (conclusion === "failure") {
-          statusDiv.textContent = "🔴 Failed";
+          statusDiv.textContent = "Failed";
           statusDiv.className = "github-status failure";
         } else {
-          statusDiv.textContent = "⚪ Unknown";
+          statusDiv.textContent = "Unknown";
           statusDiv.className = "github-status unknown";
         }
         return;
@@ -144,12 +144,12 @@ async function updateGitHubStatus() {
     }
     
     // No workflows found - assume live
-    statusDiv.textContent = "🟢 Live";
+    statusDiv.textContent = "Live";
     statusDiv.className = "github-status success";
     
   } catch (err) {
     console.error("Error fetching GitHub status:", err);
-    statusDiv.textContent = "⚠️ Error";
+    statusDiv.textContent = "Error";
     statusDiv.className = "github-status error";
   }
 }
