@@ -34,9 +34,13 @@ function createHeader() {
 function createFooter() {
   return `
     <footer>
-      <button id="shadow-toggle" class="shadow-toggle-btn shadows-off">
-        Debug
-      </button>
+      <div class="footer-controls">
+        <button id="shadow-toggle" class="shadow-toggle-btn shadows-off">
+          Debug
+        </button>
+
+        <div id="github-status" class="github-status pending">Loading...</div>
+      </div>
       
       <div class="copyright">
         &copy; 2025 Club Benares.
@@ -52,6 +56,36 @@ function createFooter() {
       </div>
     </footer>
   `;
+}
+
+// =================================
+// GITHUB STATUS FUNCTIONALITY
+// =================================
+
+async function updateGitHubStatus() {
+  const owner = "TheBenaresClub";   // ← Replace
+  const repo = "TheBenaresClub.github.io";    // ← Replace
+  const branch = "main";                  // ← Replace if needed
+  const statusDiv = document.getElementById("github-status");
+
+  if (!statusDiv) return;
+
+  try {
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits/${branch}/status`);
+    const data = await res.json();
+
+    const state = data.state || "unknown";
+    statusDiv.textContent =
+      state === "success" ? "🟢 Success" :
+      state === "failure" ? "🔴 Failure" :
+      state === "pending" ? "🟠 Pending" : "⚪ Unknown";
+
+    statusDiv.className = "github-status " + state;
+  } catch (err) {
+    console.error("Error fetching GitHub status:", err);
+    statusDiv.textContent = "⚠️ Error";
+    statusDiv.className = "github-status error";
+  }
 }
 
 // =================================
@@ -108,7 +142,6 @@ function applyRandomBoxShadows() {
   
   allElements.forEach(element => {
     const randomColor = generateRandomColor();
-    const shadowSize = Math.floor(Math.random() * 3) + 1;
     const shadowBlur = Math.floor(Math.random() * 8) + 2;
     const offsetX = (Math.random() - 0.5) * 4;
     const offsetY = (Math.random() - 0.5) * 4;
@@ -134,8 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     const currentLink = document.querySelector(`nav a[href="${currentPage}"]`);
     if (currentLink) {
-      currentLink.classList.add('active');
-    }
+    if (currentLink) currentLink.classList.add('active');
   }
 
   // Insert footer
@@ -146,9 +178,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add toggle functionality
     const toggleBtn = document.getElementById('shadow-toggle');
-    if (toggleBtn) {
-      console.log("Toggle button found, adding click listener");
-      toggleBtn.addEventListener('click', toggleBoxShadows);
-    }
+    if (toggleBtn) toggleBtn.addEventListener('click', toggleBoxShadows);
+    updateGitHubStatus();
+    setInterval(updateGitHubStatus, 60000);
   }
 });

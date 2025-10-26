@@ -94,6 +94,14 @@
 			top: 2rem;
 			z-index: 100;
 			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+			overflow-x: auto;
+			overflow-y: hidden;
+			-webkit-overflow-scrolling: touch;
+			scrollbar-width: none;
+		}
+
+		.pill-nav::-webkit-scrollbar {
+			display: none;
 		}
 
 		/* Individual pill tab button */
@@ -143,8 +151,8 @@
 		/* Responsive poster grid */
 		.posters-grid {
 			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(clamp(140px, 15vw, 200px), 1fr));
-			gap: clamp(1rem, 2vw, 2rem);
+			grid-template-columns: repeat(auto-fit, minmax(clamp(120px, 15vw, 200px), 1fr));
+			gap: clamp(0.75rem, 2vw, 2rem);
 			width: 100%;
 			max-width: 1600px;
 			padding: 0 clamp(1rem, 3vw, 3rem);
@@ -230,11 +238,12 @@
 				gap: 0.25rem;
 				padding: 0.4rem;
 				margin: 1rem auto;
+				max-width: 96%;
 			}
 
 			.pill-tab {
-				padding: 0.6rem 1rem;
-				font-size: 0.85rem;
+				padding: 0.5rem 0.75rem;
+				font-size: 0.75rem;
 			}
 
 			.pill-tab.active {
@@ -242,8 +251,8 @@
 			}
 
 			.posters-grid {
-				grid-template-columns: repeat(auto-fit, minmax(clamp(130px, 40vw, 180px), 1fr));
-				gap: 1rem;
+				grid-template-columns: repeat(auto-fit, minmax(clamp(110px, 35vw, 160px), 1fr));
+				gap: 0.75rem;
 			}
 
 			.content-container {
@@ -253,12 +262,30 @@
 
 		@media (max-width: 480px) {
 			.pill-tab {
-				padding: 0.5rem 0.8rem;
-				font-size: 0.8rem;
+				padding: 0.45rem 0.6rem;
+				font-size: 0.7rem;
 			}
 
 			.pill-nav {
-				max-width: 95%;
+				max-width: 98%;
+				gap: 0.2rem;
+				padding: 0.3rem;
+			}
+
+			.posters-grid {
+				grid-template-columns: repeat(auto-fit, minmax(clamp(100px, 42vw, 150px), 1fr));
+			}
+		}
+
+		@media (max-width: 380px) {
+			.pill-tab {
+				padding: 0.4rem 0.5rem;
+				font-size: 0.65rem;
+			}
+
+			.pill-nav {
+				gap: 0.15rem;
+				padding: 0.25rem;
 			}
 		}
 	</style>
