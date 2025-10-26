@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Laboratorio | Club Benares</title>
+	
+	<!-- Google Fonts - Inter font family -->
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+	
+	<!-- Main stylesheet -->
+	<link rel="stylesheet" href="../styles.css">
+	
+	<!-- Favicon - small icon in browser tab -->
+	<link rel="icon" href="./media/A00 Logo - Light.png" type="image/png" />
+	
+	<!-- Font Awesome icons library -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+	<!-- Placeholder div for dynamically loaded header (via JavaScript) -->
+	<div id="header-container"></div>
+
+	<!-- Main content area -->
+	<main>
+		<!-- Floating pill navigation bar -->
+		<nav class="pill-nav">
+			<button class="pill-tab active" data-category="watchnow">
+				<span>Watch Now</span>
+			</button>
+			<button class="pill-tab" data-category="movies">
+				<span>Movies</span>
+			</button>
+			<button class="pill-tab" data-category="documentaries">
+				<span>Documentaries</span>
+			</button>
+			<button class="pill-tab" data-category="shorts">
+				<span>Shorts</span>
+			</button>
+			<button class="pill-tab" data-category="search">
+				<span><i class="fas fa-search"></i></span>
+			</button>
+		</nav>
+
+		<!-- Content container -->
+		<div class="content-container">
+			<div class="posters-grid" id="postersGrid">
+				<!-- Movie posters will be dynamically loaded here -->
+			</div>
+		</div>
+	</main>
+
+	<!-- Placeholder div for dynamically loaded footer (via JavaScript) -->
+	<div id="footer-container"></div>
+	
+	<!-- JavaScript file that loads shared components (header/footer) -->
+	<script src="../shared.js"></script>
+
+	<style>
+		/* Page background wallpaper */
+		body {
+			background-image: url("wallpaper.jpg");
+		}
+		/* Grayscale filter applied to entire page */
+		body {
+			filter: grayscale(100%);      /* Black and white effect */
+		}
+
+		/* Apple TV Style Interface */
+		main {
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			padding: 2rem 1rem;
+			position: relative;
+		}
+
+		/* Floating pill navigation bar */
+		.pill-nav {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 0.5rem;
+			padding: 0.5rem;
+			background: rgba(50, 50, 50, 0.7);
+			backdrop-filter: blur(20px) saturate(180%);
+			-webkit-backdrop-filter: blur(20px) saturate(180%);
+			border-radius: 50px;
+			max-width: fit-content;
+			margin: 2rem auto;
+			box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+			position: sticky;
+			top: 2rem;
+			z-index: 100;
+			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+
+		/* Individual pill tab button */
+		.pill-tab {
+			padding: 0.75rem 1.5rem;
+			background: transparent;
+			border: none;
+			border-radius: 50px;
+			color: rgba(255, 255, 255, 0.6);
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+			font-size: 0.95rem;
+			font-weight: 600;
+			cursor: pointer;
+			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+			white-space: nowrap;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.pill-tab:hover {
+			color: rgba(255, 255, 255, 0.9);
+			transform: translateY(-1px);
+		}
+
+		.pill-tab.active {
+			background: rgba(200, 200, 200, 0.9);
+			color: rgba(20, 20, 20, 0.95);
+			transform: scale(1.08);
+			box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+		}
+
+		.pill-tab span {
+			position: relative;
+			z-index: 1;
+		}
+
+		/* Content container */
+		.content-container {
+			flex: 1;
+			display: flex;
+			align-items: flex-end;
+			justify-content: center;
+			padding: 2rem 0 4rem;
+			width: 100%;
+		}
+
+		/* Responsive poster grid */
+		.posters-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(clamp(140px, 15vw, 200px), 1fr));
+			gap: clamp(1rem, 2vw, 2rem);
+			width: 100%;
+			max-width: 1600px;
+			padding: 0 clamp(1rem, 3vw, 3rem);
+		}
+
+		/* Individual poster card */
+		.poster-card {
+			aspect-ratio: 2/3;
+			border-radius: 12px;
+			overflow: hidden;
+			cursor: pointer;
+			transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+			position: relative;
+			background: rgba(40, 40, 40, 0.5);
+			backdrop-filter: blur(10px);
+			box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+		}
+
+		.poster-card::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.7) 100%);
+			opacity: 0;
+			transition: opacity 0.3s ease;
+			z-index: 2;
+		}
+
+		.poster-card:hover {
+			transform: scale(1.08) translateY(-8px);
+			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+			z-index: 10;
+		}
+
+		.poster-card:hover::before {
+			opacity: 1;
+		}
+
+		.poster-card img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+
+		.poster-card:hover img {
+			transform: scale(1.05);
+		}
+
+		.poster-info {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			padding: 1rem;
+			transform: translateY(100%);
+			transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+			z-index: 3;
+		}
+
+		.poster-card:hover .poster-info {
+			transform: translateY(0);
+		}
+
+		.poster-title {
+			color: white;
+			font-size: clamp(0.85rem, 1.2vw, 1rem);
+			font-weight: 600;
+			margin: 0 0 0.25rem 0;
+			text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+		}
+
+		.poster-meta {
+			color: rgba(255, 255, 255, 0.8);
+			font-size: clamp(0.7rem, 1vw, 0.85rem);
+			margin: 0;
+			text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+		}
+
+		/* Responsive adjustments */
+		@media (max-width: 768px) {
+			.pill-nav {
+				gap: 0.25rem;
+				padding: 0.4rem;
+				margin: 1rem auto;
+			}
+
+			.pill-tab {
+				padding: 0.6rem 1rem;
+				font-size: 0.85rem;
+			}
+
+			.pill-tab.active {
+				transform: scale(1.05);
+			}
+
+			.posters-grid {
+				grid-template-columns: repeat(auto-fit, minmax(clamp(130px, 40vw, 180px), 1fr));
+				gap: 1rem;
+			}
+
+			.content-container {
+				padding: 1rem 0 2rem;
+			}
+		}
+
+		@media (max-width: 480px) {
+			.pill-tab {
+				padding: 0.5rem 0.8rem;
+				font-size: 0.8rem;
+			}
+
+			.pill-nav {
+				max-width: 95%;
+			}
+		}
+	</style>
+
+	<script>
+		// Sample movie data for demonstration
+		const movieData = {
+			watchnow: [
+				{ title: 'Featured Film 1', year: '2025', img: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400' },
+				{ title: 'Featured Film 2', year: '2025', img: 'https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=400' },
+				{ title: 'Featured Film 3', year: '2024', img: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=400' },
+				{ title: 'Featured Film 4', year: '2024', img: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400' },
+				{ title: 'Featured Film 5', year: '2025', img: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400' },
+				{ title: 'Featured Film 6', year: '2024', img: 'https://images.unsplash.com/photo-1574267432644-f9c8b4f9d337?w=400' },
+				{ title: 'Featured Film 7', year: '2025', img: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=400' },
+				{ title: 'Featured Film 8', year: '2024', img: 'https://images.unsplash.com/photo-1616530940355-351fabd9524b?w=400' }
+			],
+			movies: [
+				{ title: 'Cinema Classic 1', year: '2025', img: 'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=400' },
+				{ title: 'Cinema Classic 2', year: '2024', img: 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=400' },
+				{ title: 'Cinema Classic 3', year: '2025', img: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400' },
+				{ title: 'Cinema Classic 4', year: '2024', img: 'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=400' },
+				{ title: 'Cinema Classic 5', year: '2025', img: 'https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=400' },
+				{ title: 'Cinema Classic 6', year: '2024', img: 'https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?w=400' }
+			],
+			documentaries: [
+				{ title: 'Documentary 1', year: '2025', img: 'https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?w=400' },
+				{ title: 'Documentary 2', year: '2024', img: 'https://images.unsplash.com/photo-1470115636492-6d2b56f9146d?w=400' },
+				{ title: 'Documentary 3', year: '2025', img: 'https://images.unsplash.com/photo-1501696461415-6bd6660c6742?w=400' },
+				{ title: 'Documentary 4', year: '2024', img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400' },
+				{ title: 'Documentary 5', year: '2025', img: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400' },
+				{ title: 'Documentary 6', year: '2024', img: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=400' }
+			],
+			shorts: [
+				{ title: 'Short Film 1', year: '2025', img: 'https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=400' },
+				{ title: 'Short Film 2', year: '2024', img: 'https://images.unsplash.com/photo-1568876694728-451bbf694b83?w=400' },
+				{ title: 'Short Film 3', year: '2025', img: 'https://images.unsplash.com/photo-1500099817043-86d46000d58f?w=400' },
+				{ title: 'Short Film 4', year: '2024', img: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=400' },
+				{ title: 'Short Film 5', year: '2025', img: 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=400' },
+				{ title: 'Short Film 6', year: '2024', img: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400' }
+			]
+		};
+
+		// Load posters based on category
+		function loadPosters(category) {
+			const grid = document.getElementById('postersGrid');
+			const movies = movieData[category] || movieData.watchnow;
+			
+			// Fade out animation
+			grid.style.opacity = '0';
+			grid.style.transform = 'translateY(20px)';
+			
+			setTimeout(() => {
+				grid.innerHTML = movies.map(movie => `
+					<div class="poster-card">
+						<img src="${movie.img}" alt="${movie.title}" loading="lazy">
+						<div class="poster-info">
+							<h3 class="poster-title">${movie.title}</h3>
+							<p class="poster-meta">${movie.year}</p>
+						</div>
+					</div>
+				`).join('');
+				
+				// Fade in animation
+				setTimeout(() => {
+					grid.style.opacity = '1';
+					grid.style.transform = 'translateY(0)';
+				}, 50);
+			}, 300);
+		}
+
+		// Tab switching functionality
+		function initTabs() {
+			const tabs = document.querySelectorAll('.pill-tab');
+			
+			tabs.forEach(tab => {
+				tab.addEventListener('click', () => {
+					const category = tab.dataset.category;
+					
+					// Handle search separately
+					if (category === 'search') {
+						// You can implement search functionality here
+						console.log('Search clicked');
+						return;
+					}
+					
+					// Update active state
+					tabs.forEach(t => t.classList.remove('active'));
+					tab.classList.add('active');
+					
+					// Load corresponding posters
+					loadPosters(category);
+				});
+			});
+		}
+
+		// Initialize on page load
+		document.addEventListener('DOMContentLoaded', () => {
+			loadPosters('watchnow');
+			initTabs();
+			
+			// Add transition styles to poster grid
+			const grid = document.getElementById('postersGrid');
+			grid.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+		});
+	</script>
+
+</body>
+</html>
