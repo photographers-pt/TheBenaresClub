@@ -144,22 +144,59 @@
 			display: flex;
 			align-items: flex-end;
 			justify-content: center;
-			padding: 2rem 0 4rem;
+			padding: 0 0 3rem;
 			width: 100%;
+			overflow: hidden;
+			position: relative;
 		}
 
-		/* Responsive poster grid */
+		/* Scroll fade indicators */
+		.content-container::before,
+		.content-container::after {
+			content: '';
+			position: absolute;
+			bottom: 3rem;
+			top: auto;
+			width: 80px;
+			height: 400px;
+			pointer-events: none;
+			z-index: 2;
+			opacity: 0.7;
+		}
+
+		.content-container::before {
+			left: 0;
+			background: linear-gradient(to right, rgba(0,0,0,0.4), transparent);
+		}
+
+		.content-container::after {
+			right: 0;
+			background: linear-gradient(to left, rgba(0,0,0,0.4), transparent);
+		}
+
+		/* Responsive poster grid - now horizontal scrolling */
 		.posters-grid {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(clamp(120px, 15vw, 200px), 1fr));
-			gap: clamp(0.75rem, 2vw, 2rem);
+			display: flex;
+			gap: clamp(1rem, 2vw, 2rem);
 			width: 100%;
-			max-width: 1600px;
+			max-width: 100%;
 			padding: 0 clamp(1rem, 3vw, 3rem);
+			overflow-x: auto;
+			overflow-y: hidden;
+			scroll-snap-type: x mandatory;
+			-webkit-overflow-scrolling: touch;
+			scrollbar-width: none;
+			scroll-behavior: smooth;
+		}
+
+		.posters-grid::-webkit-scrollbar {
+			display: none;
 		}
 
 		/* Individual poster card */
 		.poster-card {
+			flex: 0 0 auto;
+			width: clamp(180px, 16vw, 240px);
 			aspect-ratio: 2/3;
 			border-radius: 12px;
 			overflow: hidden;
@@ -169,6 +206,7 @@
 			background: rgba(40, 40, 40, 0.5);
 			backdrop-filter: blur(10px);
 			box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+			scroll-snap-align: start;
 		}
 
 		.poster-card::before {
@@ -250,13 +288,19 @@
 				transform: scale(1.05);
 			}
 
-			.posters-grid {
-				grid-template-columns: repeat(auto-fit, minmax(clamp(110px, 35vw, 160px), 1fr));
-				gap: 0.75rem;
+			.poster-card {
+				width: clamp(160px, 35vw, 200px);
 			}
 
 			.content-container {
-				padding: 1rem 0 2rem;
+				padding: 0 0 2rem;
+			}
+
+			.content-container::before,
+			.content-container::after {
+				width: 40px;
+				height: 300px;
+				bottom: 2rem;
 			}
 		}
 
@@ -272,8 +316,18 @@
 				padding: 0.3rem;
 			}
 
+			.poster-card {
+				width: clamp(140px, 42vw, 180px);
+			}
+
 			.posters-grid {
-				grid-template-columns: repeat(auto-fit, minmax(clamp(100px, 42vw, 150px), 1fr));
+				gap: 0.75rem;
+			}
+
+			.content-container::before,
+			.content-container::after {
+				width: 30px;
+				height: 250px;
 			}
 		}
 
@@ -286,6 +340,15 @@
 			.pill-nav {
 				gap: 0.15rem;
 				padding: 0.25rem;
+			}
+
+			.poster-card {
+				width: clamp(130px, 45vw, 160px);
+			}
+
+			.content-container::before,
+			.content-container::after {
+				width: 20px;
 			}
 		}
 	</style>
