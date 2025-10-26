@@ -38,12 +38,16 @@
             top: 40px;
             left: 40px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, 120px);
+    grid-template-rows: repeat(3, auto);
+    grid-auto-flow: column;
             gap: 20px;
+            align-items: start;
         }
 
         /* Individual Desktop Icon */
         .desktop-icon {
+
+
             width: 110px;
             text-align: center;
             padding: 5px;
@@ -63,7 +67,7 @@
 
         .desktop-icon img {
             width: 96px;
-            height: 96px;
+            height: auto;
             display: block;
             margin: 0 auto 10px;
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
@@ -656,19 +660,19 @@
         <div class="desktop-icons">
             <div class="desktop-icon" data-app="sobre">
                 <img src="posters/a.jpg" alt="poster">
-                <span>A</span>
+                <span>Metropolis</span>
             </div>
             <div class="desktop-icon" data-app="galeria">
                 <img src="posters/b.jpg" alt="poster">
-                <span>B</span>
+                <span>El Artista<br>Comprendido</span>
             </div>
             <div class="desktop-icon" data-app="servicos">
                 <img src="posters/c.jpg" alt="poster">
-                <span>C</span>
+                <span>Inexistente</span>
             </div>
             <div class="desktop-icon" data-app="contacto">
                 <img src="posters/d.jpg" alt="poster">
-                <span>D</span>
+                <span>Inexistente</span>
             </div>
         </div>
     </div>
