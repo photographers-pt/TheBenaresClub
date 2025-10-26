@@ -63,28 +63,29 @@
 			background-image: url("wallpaper.jpg");
 		}
 		
-		/* Grayscale filter applied only to main content area */
-		main {
+		/* Grayscale filter applied only to content area, not the pill nav */
+		.content-container {
 			filter: grayscale(100%);      /* Black and white effect */
 		}
 
-		/* Ensure header is visible */
+		/* Ensure header is visible and doesn't overlap */
 		#header-container {
 			position: relative;
 			z-index: 1000;
 		}
 
-		/* Apple TV Style Interface */
+		/* Override main styles from styles.css */
 		main {
-			/* Work within the existing grid layout */
-			display: flex;
-			flex-direction: column;
-			padding: 0;
-			position: relative;
-			overflow: hidden;
+			display: flex !important;
+			flex-direction: column !important;
+			padding: 0 !important;
+			position: relative !important;
+			overflow-y: auto !important;
+			overflow-x: hidden !important;
+			min-height: 0 !important;
 		}
 
-		/* Floating pill navigation bar */
+		/* Floating pill navigation bar - CRITICAL: Higher z-index than dropdown nav */
 		.pill-nav {
 			display: flex;
 			justify-content: center;
@@ -99,7 +100,7 @@
 			margin: 1.5rem auto 0;
 			box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 			position: relative;
-			z-index: 100;
+			z-index: 500; /* Higher than dropdown nav (z-index: 100) but lower than header */
 			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 			overflow-x: auto;
 			overflow-y: hidden;
@@ -372,7 +373,7 @@
 		const movieData = {
 			watchnow: [
 				{ title: 'Featured Film 1', year: '2025', img: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400' },
-				{ title: 'Featured Film 2', year: '2025', img: 'https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=400' },
+				{ title: 'Featured Film 2', year: '2025', img: 'https.unsplash.com/photo-1594908900066-3f47337549d8?w=400' },
 				{ title: 'Featured Film 3', year: '2024', img: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=400' },
 				{ title: 'Featured Film 4', year: '2024', img: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400' },
 				{ title: 'Featured Film 5', year: '2025', img: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400' },
@@ -461,12 +462,31 @@
 
 		// Initialize on page load
 		document.addEventListener('DOMContentLoaded', () => {
-			loadPosters('watchnow');
-			initTabs();
+			console.log('Page loaded, initializing...');
 			
-			// Add transition styles to poster grid
-			const grid = document.getElementById('postersGrid');
-			grid.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+			// Small delay to ensure DOM is fully ready
+			setTimeout(() => {
+				console.log('Loading initial content...');
+				loadPosters('watchnow');
+				initTabs();
+				
+				// Add transition styles to poster grid
+				const grid = document.getElementById('postersGrid');
+				if (grid) {
+					grid.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+					console.log('Poster grid initialized');
+				}
+				
+				// Check if pill nav is visible
+				const pillNav = document.querySelector('.pill-nav');
+				if (pillNav) {
+					console.log('Pill nav found:', pillNav);
+					console.log('Pill nav display:', window.getComputedStyle(pillNav).display);
+					console.log('Pill nav z-index:', window.getComputedStyle(pillNav).zIndex);
+				} else {
+					console.error('Pill nav NOT found!');
+				}
+			}, 100);
 		});
 	</script>
 
