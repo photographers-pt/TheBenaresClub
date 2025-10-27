@@ -43,6 +43,9 @@
 					</div>
 				</div>
 				<div class="modal-right">
+					<h2 class="crew-title">Crew</h2>
+					<div id="crewList" class="crew-list"></div>
+					
 					<h2 class="cast-title">Cast</h2>
 					<div id="castList" class="cast-list"></div>
 				</div>
@@ -55,6 +58,15 @@
 
 	<style>
 		/* Cinema page specific styles */
+		
+		/* CRITICAL: Override styles.css overflow-x restrictions */
+		html, body {
+			overflow-x: visible !important; /* Allow horizontal scrolling */
+		}
+		
+		main {
+			overflow-x: visible !important; /* Allow horizontal scrolling in main */
+		}
 		* {
 			margin: 0;
 			padding: 0;
@@ -85,7 +97,8 @@
 		body {
 			background: #000 !important;
 			background-image: none !important; /* Remove any inherited background */
-			overflow: hidden;
+			overflow-x: auto !important; /* Allow horizontal scrolling */
+			overflow-y: hidden; /* Prevent vertical scroll on body */
 			font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 		}
 
@@ -441,6 +454,51 @@
 			color: white;
 		}
 
+		.crew-title {
+			font-size: 1.5rem;
+			font-weight: 600;
+			margin: 0 0 1.5rem 0;
+			letter-spacing: -0.02em;
+		}
+
+		.crew-list {
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+			margin-bottom: 2.5rem;
+			padding-bottom: 2rem;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.crew-member {
+			display: flex;
+			flex-direction: column;
+			gap: 0.3rem;
+			padding: 0.75rem 1rem;
+			background: rgba(255, 255, 255, 0.05);
+			border-radius: 10px;
+			transition: all 0.3s ease;
+		}
+
+		.crew-member:hover {
+			background: rgba(255, 255, 255, 0.08);
+			transform: translateX(5px);
+		}
+
+		.crew-name {
+			font-size: 1rem;
+			font-weight: 600;
+			color: white;
+			margin: 0;
+		}
+
+		.crew-roles {
+			font-size: 0.9rem;
+			color: rgba(255, 255, 255, 0.6);
+			margin: 0;
+			line-height: 1.4;
+		}
+
 		.cast-title {
 			font-size: 1.5rem;
 			font-weight: 600;
@@ -541,8 +599,17 @@ const movies = [
 		year: '2024',
 		poster: './movies/inexistente.jpg',
 		video: './movies/inexistente.mp4',
-		vimeoId: '',
-		description: 'A compelling story that explores the boundaries between reality and imagination.',
+		vimeoId: '930451906',
+		description: 'Helder visita a antiga casa do seu melhor amigo, Pedro, quem desapareceu há um tempo atras sem deixar rasto. O objetivo do Helder é redescobrir memórias esquecidas, mas acabará por descobrir ainda mais.\n\nHelder visits the abandoned house of his best friend, Pedro, who disappeared a while ago without leaving a trace. Helder\'s intention is to rediscover forgotten memories, but he will end up discovering even more.',
+		crew: [
+			{ name: 'Charlie Chaves', roles: ['Director', 'Producer'] },
+			{ name: 'Nityam', roles: ['Assistant Director', 'Producer', 'Camera Operator'] },
+			{ name: 'Patricia Pontes', roles: ['Assistant Director'] },
+			{ name: 'Gonçalo Pereira', roles: ['Camera Operator'] },
+			{ name: 'João Formiga', roles: ['Camera Assistant'] },
+			{ name: 'Valdir Neves', roles: ['Sound Operator'] },
+			{ name: 'Carlos Calderon', roles: ['Post-production'] }
+		],
 		cast: []
 	},
 	{
@@ -552,6 +619,10 @@ const movies = [
 		video: './movies/metropolis.mp4',
 		vimeoId: '395198337',
 		description: 'A groundbreaking German expressionist science-fiction film set in a futuristic urban dystopia. Directed by Fritz Lang, it tells the story of a society divided between wealthy industrialists and underground workers, and the revolution that brings them together.',
+		crew: [
+			{ name: 'Fritz Lang', roles: ['Director'] },
+			{ name: 'Thea von Harbou', roles: ['Writer'] }
+		],
 		cast: [
 			{
 				name: 'Brigitte Helm',
@@ -590,9 +661,25 @@ const movies = [
 		year: '2024',
 		poster: './movies/elartistacomprendido.jpg',
 		video: './movies/elartistacomprendido.mp4',
-		vimeoId: '',
-		description: 'An intimate exploration of artistic expression and understanding in the modern world.',
-		cast: []
+		vimeoId: '930022904',
+		description: 'Um jovem artista finaliza a sua obra-prima, mas a cada dia que passa, fica mais insatisfeito com o resultado final, por isso decide descartar o seu trabalho. Posteriormente, um crítico de arte encontra a sua obra...\n\nA young artist finishes his masterpiece, but with each passing day, he becomes more dissatisfied with the final result, so he decides to discard his work. Later, an art critic comes across his piece...',
+		crew: [
+			{ name: 'Charlie Chaves', roles: ['Director', 'Actor'] }
+		],
+		cast: [
+			{
+				name: 'Charlie Chaves',
+				character: 'O Artista',
+				photo: '',
+				profile: ''
+			},
+			{
+				name: 'Bruno de Franclieu',
+				character: 'O oportuno Critico de Arte',
+				photo: '',
+				profile: ''
+			}
+		]
 	},
 	{
 		title: 'Mystery Film',
@@ -601,6 +688,7 @@ const movies = [
 		video: './movies/placeholder.mp4',
 		vimeoId: '',
 		description: 'Coming soon...',
+		crew: [],
 		cast: []
 	}
 ];
@@ -624,6 +712,19 @@ const movies = [
 			vimeoPlayer.src = `https://player.vimeo.com/video/${movie.vimeoId}?autoplay=1&title=0&byline=0&portrait=0`;
 		} else {
 			vimeoPlayer.src = '';
+		}
+		
+		// Build crew list
+		const crewList = document.getElementById('crewList');
+		if (movie.crew && movie.crew.length > 0) {
+			crewList.innerHTML = movie.crew.map(member => `
+				<div class="crew-member">
+					<p class="crew-name">${member.name}</p>
+					<p class="crew-roles">${member.roles.join(', ')}</p>
+				</div>
+			`).join('');
+		} else {
+			crewList.innerHTML = '<p style="color: rgba(255,255,255,0.5);">Crew information not available.</p>';
 		}
 		
 		// Build cast list
