@@ -376,7 +376,7 @@
 			position: absolute;
 			top: 1.5rem;
 			right: 1.5rem;
-			background: rgba(255, 255, 255, 0.1);
+			background: rgba(255, 0, 0, 0.5);
 			border: none;
 			color: white;
 			font-size: 2rem;
@@ -392,7 +392,7 @@
 		}
 
 		.modal-close:hover {
-			background: rgba(255, 255, 255, 0.2);
+			background: #f00;
 			transform: rotate(90deg);
 		}
 
@@ -624,8 +624,6 @@
 		// Movie data with local files
 const movies = [
 
-
-
 	{
 		title: 'Inexistente',
 		year: '2024',
@@ -641,25 +639,10 @@ const movies = [
 			{ name: 'Mario Quezada', roles: ['Agradecimentos Especiais'], link: '' }
 		],
 		cast: [
-			{
-				name: 'Alessandro Barboza',
-				character: 'Pedro Amaral',
-				photo: './talent/placeholder.jpg',
-				profile: ''
-			},
-			{
-				name: 'Pedro Antonie de Saint',
-				character: 'Helder Saramago',
-				photo: './talent/placeholder.jpg',
-				profile: ''
-			}
+			{ name: 'Alessandro Barboza', character: 'Pedro Amaral', photo: './talent/placeholder.jpg', profile: '' },
+			{ name: 'Pedro Antonie de Saint', character: 'Helder Saramago', photo: './talent/placeholder.jpg', profile: ''}
 		]
 	},
-
-
-
-
-
 
 	{
 		title: 'El Artista Comprendido',
@@ -679,22 +662,27 @@ const movies = [
 			{ name: 'Inês Pinheiro', roles: ['Agradecimentos Especiais'], link: 'https://www.instagram.com/neespera' }
 		],
 		cast: [
-			{
-				name: 'Charlie Chaves',
-				character: 'O Artista',
-				photo: './talent/artista.jpg',
-				profile: 'https://www.instagram.com/charliechavess'
-			},
-			{
-				name: 'Bruno de Franclieu',
-				character: 'O oportuno Critico de Arte',
-				photo: './talent/critico.jpg',
-				profile: 'https://www.linkedin.com/in/bruno-de-franclieu-b6899aa4/'
-			}
+			{ name: 'Charlie Chaves', character: 'O Artista', photo: './talent/artista.jpg', profile: 'https://www.instagram.com/charliechavess' },
+			{ name: 'Bruno de Franclieu', character: 'O oportuno Critico de Arte', photo: './talent/critico.jpg', profile: 'https://www.linkedin.com/in/bruno-de-franclieu-b6899aa4/'}
 		]
 	},
 
-
+	{
+		title: 'El Profesor',
+		year: '2024',
+		poster: './movies/profesor.jpg',
+		video: './movies/profesor.mp4',
+		vimeoId: '',
+		description: 'Coming soon...',
+		crew: [
+			{ name: 'Charlie Chaves', roles: ['Realização', 'Produção'], link: 'https://www.instagram.com/charliechavess' },
+			{ name: 'Charlie Chaves', roles: ['Realização', 'Produção'], link: 'https://www.instagram.com/charliechavess' }
+		],
+		cast: [
+			{ name: 'Charlie Chaves', character: '???', photo: './talent/placeholder.jpg', profile: 'https://www.instagram.com/charliechavess' },
+			{ name: 'Charlie Chaves', character: '???', photo: './talent/placeholder.jpg', profile: 'https://www.instagram.com/charliechavess' }
+		]
+	},
 
 	{
 		title: 'Jay Gupta',
@@ -703,65 +691,15 @@ const movies = [
 		video: './movies/jay.mp4',
 		vimeoId: '',
 		description: 'Coming soon...',
-		crew: [],
-		cast: []
-	},
-
-
-
-	{
-		title: 'Metropolis',
-		year: '1927',
-		poster: './movies/metropolis.jpg',
-		video: './movies/metropolis.mp4',
-		vimeoId: '395198337',
-		description: 'A groundbreaking German expressionist science-fiction film set in a futuristic urban dystopia. Directed by Fritz Lang, it tells the story of a society divided between wealthy industrialists and underground workers, and the revolution that brings them together.',
 		crew: [
-			{ name: 'Fritz Lang', roles: ['Director'], link: 'https://en.wikipedia.org/wiki/Fritz_Lang' },
-			{ name: 'Thea von Harbou', roles: ['Writer'], link: 'https://en.wikipedia.org/wiki/Thea_von_Harbou' }
+			{ name: 'Charlie Chaves', roles: ['Realização', 'Produção'], link: 'https://www.instagram.com/charliechavess' },
+			{ name: 'Charlie Chaves', roles: ['Realização', 'Produção'], link: 'https://www.instagram.com/charliechavess' }
 		],
 		cast: [
-			{
-				name: 'Brigitte Helm',
-				character: 'Maria / Maschinenmensch',
-				photo: './talent/placeholder.jpg',
-				profile: 'https://en.wikipedia.org/wiki/Brigitte_Helm'
-			},
-			{
-				name: 'Fritz Rasp',
-				character: 'The Thin Man',
-				photo: './talent/placeholder.jpg',
-				profile: 'https://en.wikipedia.org/wiki/Fritz_Rasp'
-			}
+			{ name: 'Charlie Chaves', character: '???', photo: './talent/placeholder.jpg', profile: 'https://www.instagram.com/charliechavess' },
+			{ name: 'Charlie Chaves', character: '???', photo: './talent/placeholder.jpg', profile: 'https://www.instagram.com/charliechavess' }
 		]
 	},
-
-
-
-
-
-
-
-
-
-
-
-
-	{
-		title: 'Mystery Film',
-		year: '2025',
-		poster: './movies/placeholder.jpg',
-		video: './movies/placeholder.mp4',
-		vimeoId: '',
-		description: 'Coming soon...',
-		crew: [],
-		cast: []
-	}
-
-
-
-
-
 
 ];
 
