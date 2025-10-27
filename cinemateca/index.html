@@ -17,7 +17,7 @@
 	</div>
 	
 	<!-- Background video that changes on hover -->
-	<video id="backgroundVideo" autoplay muted loop playsinline webkit-playsinline class="background-video">
+	<video id="backgroundVideo" autoplay muted loop playsinline class="background-video">
 		<source src="./movies/metropolis.mp4" type="video/mp4">
 	</video>
 
@@ -705,39 +705,6 @@ const movies = [
 
 		const backgroundVideo = document.getElementById('backgroundVideo');
 
-		// iOS video fix - ensure video can play
-		function playVideo(video, forceLoad = false) {
-			// Only force load if explicitly needed (iOS initial load or after touch)
-			if (forceLoad) {
-				video.load();
-			}
-			
-			const playPromise = video.play();
-			
-			if (playPromise !== undefined) {
-				playPromise.catch(error => {
-					console.log('Video autoplay failed, will retry on user interaction:', error);
-					// On iOS, if autoplay fails, try again on first user interaction
-					document.body.addEventListener('touchstart', function enableVideoPlay() {
-						video.load();
-						video.play();
-						document.body.removeEventListener('touchstart', enableVideoPlay);
-					}, { once: true });
-				});
-			}
-		}
-
-		// Ensure initial video plays on iOS
-		if (backgroundVideo) {
-			backgroundVideo.addEventListener('loadeddata', () => {
-				playVideo(backgroundVideo, true); // Force load on initial
-			});
-			
-			// Also try to play immediately
-			playVideo(backgroundVideo, true);
-		}
-
-
 
 	// Modal functions
 	function openModal(movieIndex) {
@@ -845,17 +812,8 @@ const movies = [
 				card.addEventListener('mouseenter', () => {
 					console.log(`🎥 Hovering ${movies[index].title}`);
 					backgroundVideo.src = videoSrc;
-					// Desktop: autoplay attribute handles playback automatically, no need to call play()
 					backgroundVideo.style.opacity = '0.5';
 				});
-				
-				// iOS touch support - change video on touch
-				card.addEventListener('touchstart', () => {
-					console.log(`📱 Touch ${movies[index].title}`);
-					backgroundVideo.src = videoSrc;
-					playVideo(backgroundVideo, true); // Mobile: force load for iOS
-					backgroundVideo.style.opacity = '0.5';
-				}, { passive: true });
 				
 				card.addEventListener('mouseleave', () => {
 					console.log('⬅️ Mouse left poster');
