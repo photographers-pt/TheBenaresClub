@@ -83,12 +83,12 @@
 			position: fixed;
 			top: 80px; /* Space for header only */
 			bottom: 0; /* Touch the ground */
-			left: 0;
+			left: 0 !important;
 			right: 0;
 			width: 100%;
 			display: flex;
 			flex-direction: column;
-			align-items: center;
+			align-items: flex-start; /* Changed from center to allow left scroll */
 			justify-content: flex-end; /* Push posters to bottom */
 			padding-bottom: 80px; /* Space above footer */
 			z-index: 1;
@@ -147,7 +147,7 @@
 			padding: 50px 3rem 0 3rem !important; /* Increased side padding for zoom compatibility */
 			min-width: min-content;
 			width: 100%;
-			overflow-x: scroll; /* Force horizontal scroll */
+			overflow-x: scroll !important; /* Force horizontal scroll */
 			overflow-y: visible; /* Changed from hidden to visible to allow hover lift */
 			scroll-snap-type: x proximity; /* Gentler snap */
 			scroll-behavior: smooth; /* Smooth scrolling */
@@ -887,6 +887,13 @@ const movies = [
 			
 			loadPosters();
 			initDragScroll(); // Enable mouse drag scrolling
+			
+			// Reset scroll position to show leftmost movie
+			const postersGrid = document.getElementById('postersGrid');
+			if (postersGrid) {
+				postersGrid.scrollLeft = 0;
+				console.log('📍 Scroll position reset to 0');
+			}
 		});
 
 		// Enable mouse drag scrolling on posters grid
