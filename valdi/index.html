@@ -27,6 +27,29 @@
 		</div>
 	</main>
 
+	<!-- Movie Modal -->
+	<div id="movieModal" class="modal">
+		<div class="modal-content">
+			<button class="modal-close" onclick="closeModal()">&times;</button>
+			<div class="modal-body">
+				<div class="modal-left">
+					<div class="vimeo-container">
+						<iframe id="vimeoPlayer" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+					</div>
+					<div class="movie-info">
+						<h1 id="modalTitle" class="modal-title"></h1>
+						<p id="modalYear" class="modal-year"></p>
+						<p id="modalDescription" class="modal-description"></p>
+					</div>
+				</div>
+				<div class="modal-right">
+					<h2 class="cast-title">Cast</h2>
+					<div id="castList" class="cast-list"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div id="footer-container"></div>
 	<script src="../shared.js"></script>
 
@@ -108,7 +131,7 @@
 			display: flex;
 			gap: 2rem;
 			align-items: flex-end; /* Align to bottom */
-			padding: 50px 1rem 0 2rem; /* Added top padding to prevent clipping on hover */
+			padding: 50px 3rem 0 3rem; /* Increased side padding for zoom compatibility */
 			min-width: min-content;
 			width: 100%;
 			overflow-x: scroll; /* Force horizontal scroll */
@@ -116,7 +139,8 @@
 			scroll-snap-type: x proximity; /* Gentler snap */
 			scroll-behavior: smooth; /* Smooth scrolling */
 			-webkit-overflow-scrolling: touch; /* Smooth mobile scrolling */
-			scrollbar-width: none;
+			scroll-padding-left: 3rem; /* Prevent first item from going out of bounds */
+			scroll-padding-right: 3rem; /* Prevent last item from going out of bounds */
 			touch-action: pan-x; /* Enable horizontal touch swiping */
 			cursor: grab; /* Show grab cursor */
 			user-select: none; /* Prevent text selection while dragging */
@@ -127,9 +151,26 @@
 			scroll-snap-type: none; /* Disable snap while dragging */
 		}
 
+		/* Custom scrollbar styling */
 		.posters-grid::-webkit-scrollbar {
-			display: none;
+			height: 10px;
 		}
+
+		.posters-grid::-webkit-scrollbar-track {
+			background: rgba(255, 255, 255, 0.05);
+			border-radius: 10px;
+			margin: 0 3rem;
+		}
+
+		.posters-grid::-webkit-scrollbar-thumb {
+			background: rgba(255, 255, 255, 0.3);
+			border-radius: 10px;
+		}
+
+		.posters-grid::-webkit-scrollbar-thumb:hover {
+			background: rgba(255, 255, 255, 0.5);
+		}
+
 
 		/* Individual poster card - smaller size */
 		.poster-card {
@@ -201,7 +242,9 @@
 		@media (max-width: 1200px) {
 			.posters-grid {
 				gap: 1.5rem;
-				padding: 50px 1.5rem 0;
+				padding: 50px 2.5rem 0;
+				scroll-padding-left: 2.5rem;
+				scroll-padding-right: 2.5rem;
 			}
 			.poster-card {
 				width: 200px;
@@ -215,7 +258,9 @@
 			}
 			.posters-grid {
 				gap: 1.2rem;
-				padding: 45px 1rem 0;
+				padding: 45px 2rem 0;
+				scroll-padding-left: 2rem;
+				scroll-padding-right: 2rem;
 			}
 			.poster-card {
 				width: 170px;
@@ -229,8 +274,9 @@
 			}
 			.posters-grid {
 				gap: 1rem;
-				padding: 40px 1rem 0;
-				scroll-padding: 0 1rem;
+			padding: 40px 1.5rem 0;
+				scroll-padding-left: 1.5rem;
+				scroll-padding-right: 1.5rem;
 			}
 			.poster-card {
 				width: 150px;
@@ -245,7 +291,9 @@
 			}
 			.posters-grid {
 				gap: 0.8rem;
-				padding: 35px 0.5rem 0;
+				padding: 35px 1rem 0;
+				scroll-padding-left: 1rem;
+				scroll-padding-right: 1rem;
 			}
 			.poster-card {
 				width: 140px;
@@ -262,40 +310,371 @@
 				cursor: default !important;
 			}
 		}
+
+		/* Modal Styles */
+		.modal {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.95);
+			z-index: 10000;
+			overflow-y: auto;
+			animation: fadeIn 0.3s ease;
+		}
+
+		.modal.active {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		@keyframes fadeIn {
+			from { opacity: 0; }
+			to { opacity: 1; }
+		}
+
+		.modal-content {
+			position: relative;
+			width: 90%;
+			max-width: 1400px;
+			background: #0a0a0a;
+			border-radius: 16px;
+			padding: 3rem;
+			margin: 2rem;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			animation: slideUp 0.4s ease;
+		}
+
+		@keyframes slideUp {
+			from { 
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			to { 
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.modal-close {
+			position: absolute;
+			top: 1.5rem;
+			right: 1.5rem;
+			background: rgba(255, 255, 255, 0.1);
+			border: none;
+			color: white;
+			font-size: 2rem;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: all 0.3s ease;
+			z-index: 10001;
+		}
+
+		.modal-close:hover {
+			background: rgba(255, 255, 255, 0.2);
+			transform: rotate(90deg);
+		}
+
+		.modal-body {
+			display: grid;
+			grid-template-columns: 2fr 1fr;
+			gap: 3rem;
+			margin-top: 1rem;
+		}
+
+		.modal-left {
+			display: flex;
+			flex-direction: column;
+			gap: 2rem;
+		}
+
+		.vimeo-container {
+			position: relative;
+			width: 100%;
+			padding-bottom: 56.25%; /* 16:9 aspect ratio */
+			background: #000;
+			border-radius: 12px;
+			overflow: hidden;
+		}
+
+		.vimeo-container iframe {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		.movie-info {
+			color: white;
+		}
+
+		.modal-title {
+			font-size: 2.5rem;
+			font-weight: 700;
+			margin: 0 0 0.5rem 0;
+			letter-spacing: -0.02em;
+		}
+
+		.modal-year {
+			font-size: 1.2rem;
+			color: rgba(255, 255, 255, 0.6);
+			margin: 0 0 1.5rem 0;
+		}
+
+		.modal-description {
+			font-size: 1.1rem;
+			line-height: 1.6;
+			color: rgba(255, 255, 255, 0.8);
+			margin: 0;
+		}
+
+		.modal-right {
+			color: white;
+		}
+
+		.cast-title {
+			font-size: 1.5rem;
+			font-weight: 600;
+			margin: 0 0 1.5rem 0;
+			letter-spacing: -0.02em;
+		}
+
+		.cast-list {
+			display: flex;
+			flex-direction: column;
+			gap: 1.5rem;
+		}
+
+		.cast-member {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+			padding: 1rem;
+			background: rgba(255, 255, 255, 0.05);
+			border-radius: 12px;
+			transition: all 0.3s ease;
+		}
+
+		.cast-member:hover {
+			background: rgba(255, 255, 255, 0.08);
+			transform: translateX(5px);
+		}
+
+		.cast-photo {
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+			object-fit: cover;
+			border: 2px solid rgba(255, 255, 255, 0.2);
+		}
+
+		.cast-info {
+			flex: 1;
+		}
+
+		.cast-name {
+			font-size: 1.1rem;
+			font-weight: 600;
+			margin: 0 0 0.3rem 0;
+			color: white;
+			text-decoration: none;
+			display: inline-block;
+			transition: color 0.3s ease;
+		}
+
+		.cast-name:hover {
+			color: #60a5fa;
+		}
+
+		.cast-character {
+			font-size: 0.95rem;
+			color: rgba(255, 255, 255, 0.6);
+			margin: 0;
+		}
+
+		/* Responsive modal */
+		@media (max-width: 1024px) {
+			.modal-body {
+				grid-template-columns: 1fr;
+			}
+
+			.modal-content {
+				padding: 2rem;
+			}
+		}
+
+		@media (max-width: 768px) {
+			.modal-content {
+				width: 95%;
+				padding: 1.5rem;
+				margin: 1rem;
+			}
+
+			.modal-title {
+				font-size: 2rem;
+			}
+
+			.modal-close {
+				width: 40px;
+				height: 40px;
+				font-size: 1.5rem;
+			}
+		}
 	</style>
 
 	<script>
 		console.log('🎬 Cinema page loading...');
 
 		// Movie data with local files
-		const movies = [
+const movies = [
+	{
+		title: 'Inexistente',
+		year: '2024',
+		poster: './movies/inexistente.jpg',
+		video: './movies/inexistente.mp4',
+		vimeoId: '',
+		description: 'A compelling story that explores the boundaries between reality and imagination.',
+		cast: []
+	},
+	{
+		title: 'Metropolis',
+		year: '1927',
+		poster: './movies/metropolis.jpg',
+		video: './movies/metropolis.mp4',
+		vimeoId: '809301801',
+		description: 'A groundbreaking German expressionist science-fiction film set in a futuristic urban dystopia. Directed by Fritz Lang, it tells the story of a society divided between wealthy industrialists and underground workers, and the revolution that brings them together.',
+		cast: [
 			{
-				title: 'Inexistente',
-				year: '2024',
-				poster: './movies/inexistente.jpg',
-				video: './movies/inexistente.mp4'
+				name: 'Brigitte Helm',
+				character: 'Maria / Maschinenmensch',
+				photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Brigitte_Helm_%281928%29.jpg/220px-Brigitte_Helm_%281928%29.jpg',
+				profile: 'https://en.wikipedia.org/wiki/Brigitte_Helm'
 			},
 			{
-				title: 'Metropolis',
-				year: '1927',
-				poster: './movies/metropolis.jpg',
-				video: './movies/metropolis.mp4'
+				name: 'Gustav Fröhlich',
+				character: 'Freder Fredersen',
+				photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Gustav_Fr%C3%B6hlich_%281920%29.jpg/220px-Gustav_Fr%C3%B6hlich_%281920%29.jpg',
+				profile: 'https://en.wikipedia.org/wiki/Gustav_Fr%C3%B6hlich'
 			},
 			{
-				title: 'El Artista Comprendido',
-				year: '2024',
-				poster: './movies/elartistacomprendido.jpg',
-				video: './movies/elartistacomprendido.mp4'
+				name: 'Alfred Abel',
+				character: 'Joh Fredersen',
+				photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Alfred_Abel_%281920%29.jpg/220px-Alfred_Abel_%281920%29.jpg',
+				profile: 'https://en.wikipedia.org/wiki/Alfred_Abel'
 			},
 			{
-				title: 'Mystery Film',
-				year: '2025',
-				poster: './movies/placeholder.jpg',
-				video: './movies/placeholder.mp4'
+				name: 'Rudolf Klein-Rogge',
+				character: 'Rotwang',
+				photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Rudolf_Klein-Rogge_%281920%29.jpg/220px-Rudolf_Klein-Rogge_%281920%29.jpg',
+				profile: 'https://en.wikipedia.org/wiki/Rudolf_Klein-Rogge'
+			},
+			{
+				name: 'Fritz Rasp',
+				character: 'The Thin Man',
+				photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Fritz_Rasp_%281926%29.jpg/220px-Fritz_Rasp_%281926%29.jpg',
+				profile: 'https://en.wikipedia.org/wiki/Fritz_Rasp'
 			}
-		];
+		]
+	},
+	{
+		title: 'El Artista Comprendido',
+		year: '2024',
+		poster: './movies/elartistacomprendido.jpg',
+		video: './movies/elartistacomprendido.mp4',
+		vimeoId: '',
+		description: 'An intimate exploration of artistic expression and understanding in the modern world.',
+		cast: []
+	},
+	{
+		title: 'Mystery Film',
+		year: '2025',
+		poster: './movies/placeholder.jpg',
+		video: './movies/placeholder.mp4',
+		vimeoId: '',
+		description: 'Coming soon...',
+		cast: []
+	}
+];
 
 		const backgroundVideo = document.getElementById('backgroundVideo');
+
+
+	// Modal functions
+	function openModal(movieIndex) {
+		const movie = movies[movieIndex];
+		const modal = document.getElementById('movieModal');
+		
+		// Set movie details
+		document.getElementById('modalTitle').textContent = movie.title;
+		document.getElementById('modalYear').textContent = movie.year;
+		document.getElementById('modalDescription').textContent = movie.description;
+		
+		// Set Vimeo player
+		const vimeoPlayer = document.getElementById('vimeoPlayer');
+		if (movie.vimeoId) {
+			vimeoPlayer.src = `https://player.vimeo.com/video/${movie.vimeoId}?autoplay=1&title=0&byline=0&portrait=0`;
+		} else {
+			vimeoPlayer.src = '';
+		}
+		
+		// Build cast list
+		const castList = document.getElementById('castList');
+		if (movie.cast && movie.cast.length > 0) {
+			castList.innerHTML = movie.cast.map(actor => `
+				<div class="cast-member">
+					<img src="${actor.photo}" alt="${actor.name}" class="cast-photo" onerror="this.src='https://via.placeholder.com/60'">
+					<div class="cast-info">
+						<a href="${actor.profile}" target="_blank" class="cast-name">${actor.name}</a>
+						<p class="cast-character">${actor.character}</p>
+					</div>
+				</div>
+			`).join('');
+		} else {
+			castList.innerHTML = '<p style="color: rgba(255,255,255,0.5);">Cast information not available.</p>';
+		}
+		
+		// Show modal
+		modal.classList.add('active');
+		document.body.style.overflow = 'hidden';
+		
+		console.log(`🎬 Opened modal for: ${movie.title}`);
+	}
+
+	function closeModal() {
+		const modal = document.getElementById('movieModal');
+		modal.classList.remove('active');
+		document.body.style.overflow = 'auto';
+		
+		// Stop Vimeo video
+		const vimeoPlayer = document.getElementById('vimeoPlayer');
+		vimeoPlayer.src = '';
+		
+		console.log('❌ Closed modal');
+	}
+
+	// Close modal when clicking outside
+	document.addEventListener('click', (e) => {
+		const modal = document.getElementById('movieModal');
+		if (e.target === modal) {
+			closeModal();
+		}
+	});
+
+	// Close modal with Escape key
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape') {
+			closeModal();
+		}
+	});
 
 		// Load posters
 		function loadPosters() {
@@ -329,6 +708,11 @@
 					console.log('⬅️ Mouse left poster');
 					backgroundVideo.style.opacity = '0.3';
 				});
+					
+					// Add click event to open modal
+					card.addEventListener('click', () => {
+						openModal(index);
+					});
 			});
 		}
 
