@@ -144,7 +144,7 @@
 			display: flex;
 			gap: 2rem;
 			align-items: flex-end; /* Align to bottom */
-			padding: 50px 3rem 0 3rem; /* Increased side padding for zoom compatibility */
+			padding: 50px 3rem 0 3rem !important; /* Increased side padding for zoom compatibility */
 			min-width: min-content;
 			width: 100%;
 			overflow-x: scroll; /* Force horizontal scroll */
@@ -152,8 +152,8 @@
 			scroll-snap-type: x proximity; /* Gentler snap */
 			scroll-behavior: smooth; /* Smooth scrolling */
 			-webkit-overflow-scrolling: touch; /* Smooth mobile scrolling */
-			scroll-padding-left: 3rem; /* Prevent first item from going out of bounds */
-			scroll-padding-right: 3rem; /* Prevent last item from going out of bounds */
+			scroll-padding-left: 3rem !important; /* Prevent first item from going out of bounds */
+			scroll-padding-right: 3rem !important; /* Prevent last item from going out of bounds */
 			touch-action: pan-x; /* Enable horizontal touch swiping */
 			cursor: grab; /* Show grab cursor */
 			user-select: none; /* Prevent text selection while dragging */
@@ -255,9 +255,9 @@
 		@media (max-width: 1200px) {
 			.posters-grid {
 				gap: 1.5rem;
-				padding: 50px 2.5rem 0;
-				scroll-padding-left: 2.5rem;
-				scroll-padding-right: 2.5rem;
+				padding: 50px 3rem 0 !important;
+				scroll-padding-left: 3rem !important;
+				scroll-padding-right: 3rem !important;
 			}
 			.poster-card {
 				width: 200px;
@@ -271,9 +271,9 @@
 			}
 			.posters-grid {
 				gap: 1.2rem;
-				padding: 45px 2rem 0;
-				scroll-padding-left: 2rem;
-				scroll-padding-right: 2rem;
+				padding: 45px 3rem 0 !important;
+				scroll-padding-left: 3rem !important;
+				scroll-padding-right: 3rem !important;
 			}
 			.poster-card {
 				width: 170px;
@@ -287,9 +287,9 @@
 			}
 			.posters-grid {
 				gap: 1rem;
-			padding: 40px 2.5rem 0;
-				scroll-padding-left: 2.5rem;
-				scroll-padding-right: 2.5rem;
+			padding: 40px 3rem 0 !important;
+				scroll-padding-left: 3rem !important;
+				scroll-padding-right: 3rem !important;
 			}
 			.poster-card {
 				width: 150px;
@@ -304,9 +304,9 @@
 			}
 			.posters-grid {
 				gap: 0.8rem;
-				padding: 35px 2rem 0;
-				scroll-padding-left: 2rem;
-				scroll-padding-right: 2rem;
+				padding: 35px 2.5rem 0 !important;
+				scroll-padding-left: 2.5rem !important;
+				scroll-padding-right: 2.5rem !important;
 			}
 			.poster-card {
 				width: 140px;
@@ -600,9 +600,19 @@
 			}
 
 			.vimeo-container {
-				max-height: 50vh; /* Limit vimeo height on mobile */
-				padding-bottom: 0;
-				height: 50vh;
+				position: relative;
+				width: 100%;
+				padding-bottom: 56.25%; /* Maintain 16:9 aspect ratio */
+				max-height: 40vh; /* Limit max height */
+				overflow: hidden;
+			}
+			
+			.vimeo-container iframe {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
 			}
 		}
 
