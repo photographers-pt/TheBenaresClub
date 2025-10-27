@@ -19,9 +19,9 @@ function createHeader() {
       <ul>
         <li><a href="/eventos.html">Eventos</a></li>
         <li><a href="/biblioteca/index.html">Biblioteca</a></li>
-        <li><a href="/cinemateca.html">CINE</a></li>
-        <li><a href="/cinemateca/index.html">CINE2</a></li>
-        <li><a href="/valdi/index.html">CINE3</a></li>
+        <li><a href="/cinemateca-tv.html">TV</a></li>
+        <li><a href="/computer-films/index.html">PC</a></li>
+        <li><a href="/cinemateca/index.html">Cinemateca</a></li>
         <li><a href="/mercado.html">Mercado</a></li>
         <li><a href="/comunidad.html">Comunidad</a></li>
         <li><a href="/contactos.html">Contactos</a></li>

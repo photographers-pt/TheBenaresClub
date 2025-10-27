@@ -3,97 +3,901 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Laboratorio | Club Benares</title>
+	<title>Laboratorio | Club Benares</title>
 	
-	<!-- Google Fonts - Inter font family -->
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-	
-	<!-- Main stylesheet -->
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="../styles.css">
-	
-	<!-- Favicon - small icon in browser tab -->
 	<link rel="icon" href="./media/A00 Logo - Light.png" type="image/png" />
-	
-	<!-- Font Awesome icons library -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<body>
-	<!-- Placeholder div for dynamically loaded header (via JavaScript) -->
-	<div id="header-container"></div>
+<body class="cinema-page">
+	<div id="header-container">
+		<!-- Pill nav will be injected here after header loads -->
+	</div>
+	
+	<!-- Background video that changes on hover -->
+	<video id="backgroundVideo" autoplay muted loop playsinline class="background-video">
+		<source src="./movies/metropolis.mp4" type="video/mp4">
+	</video>
 
-	<!-- Main content area -->
-	<main>
-		<!-- Container for the computer monitor visualization -->
-		<div class="computer-wrapper">
-			<!-- Monitor frame/bezel image background -->
-			<div class="monitor-background"></div>
-			
-			<!-- Embedded operating system simulation -->
-			<iframe 
-				src="system.html" 
-				class="os-simulation"
-				title="Vista Operating System Simulation"
-				frameborder="0"
-				allowfullscreen>
-			</iframe>
+	<main class="cinema-main">
+		<div class="posters-grid" id="postersGrid">
+			<!-- Movie posters loaded here -->
 		</div>
 	</main>
 
-	<!-- Placeholder div for dynamically loaded footer (via JavaScript) -->
+	<!-- Movie Modal -->
+	<div id="movieModal" class="modal">
+		<div class="modal-content">
+			<button class="modal-close" onclick="closeModal()">&times;</button>
+			<div class="modal-body">
+				<div class="modal-left">
+					<div class="vimeo-container">
+						<iframe id="vimeoPlayer" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+					</div>
+					<div class="movie-info">
+						<h1 id="modalTitle" class="modal-title"></h1>
+						<p id="modalYear" class="modal-year"></p>
+						<p id="modalDescription" class="modal-description"></p>
+					</div>
+				</div>
+				<div class="modal-right">
+					<h2 class="cast-title">Cast</h2>
+					<div id="castList" class="cast-list"></div>
+					
+					<h2 class="crew-title">Crew</h2>
+					<div id="crewList" class="crew-list"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div id="footer-container"></div>
-	
-	<!-- JavaScript file that loads shared components (header/footer) -->
 	<script src="../shared.js"></script>
 
 	<style>
-		/* Page background wallpaper */
+		/* Cinema page specific styles */
+		
+		/* CRITICAL: Override styles.css overflow-x restrictions */
+		html, body {
+			overflow-x: visible !important; /* Allow horizontal scrolling */
+		}
+		
+		main {
+			overflow-x: visible !important; /* Allow horizontal scrolling in main */
+		}
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		/* Ensure header nav has lower z-index than pill nav */
+		#main-nav {
+			z-index: 50 !important;
+		}
+
+		/* Main container */
+		main.cinema-main {
+			position: fixed;
+			top: 80px; /* Space for header only */
+			bottom: 0; /* Touch the ground */
+			left: 0 !important;
+			right: 0;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start; /* Changed from center to allow left scroll */
+			justify-content: flex-end; /* Push posters to bottom */
+			padding-bottom: 80px; /* Space above footer */
+			z-index: 1;
+		}
+
 		body {
-			background-image: url("wallpaper.jpg");
+			background: #000 !important;
+			background-image: none !important; /* Remove any inherited background */
+			overflow-x: auto !important; /* Allow horizontal scrolling */
+			overflow-y: hidden; /* Prevent vertical scroll on body */
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 		}
 
-		/* Main wrapper for monitor and iframe - centers everything */
-		.computer-wrapper {
-			display: flex;                /* Flexbox for centering */
-			justify-content: center;      /* Horizontal centering */
-			align-items: center;          /* Vertical centering */
-			min-height: 80vh;             /* Minimum 80% of viewport height */
-			padding: 2rem;                /* Breathing room around content */
-			position: relative;           /* Positioning context for children */
-			width: 100%;                  /* Full width */
-			height: 100%;                 /* Full height */
+		/* Ensure header and footer are visible and not blurred */
+		#header-container,
+		#footer-container {
+			position: relative;
+			z-index: 1000;
+			pointer-events: auto;
 		}
 
-		/* Monitor background image (bezel/frame) */
-		.monitor-background {
-			position: absolute;           /* Positioned behind iframe */
-			width: 1739px;                /* Calculated: 1280 * 1.43 * 0.95 */
-			height: 1062px;               /* Calculated: 1739 * 0.611 (aspect ratio) */
-			background-image: url('monitor.png');
-			background-size: contain;     /* Fit image without cropping */
-			background-repeat: no-repeat; /* Don't tile the image */
-			background-position: center;  /* Center the monitor image */
-			z-index: 1;                   /* Behind the iframe (layer 1) */
-			pointer-events: none;         /* Don't block clicks to iframe */
-			transform: translateY(100px); /* Move down 100px for alignment */
+		#header-container {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
 		}
 
-		/* OS simulation iframe (the "screen" content) */
-		.os-simulation {
-			position: relative;           /* Positioned in front of monitor */
-			width: 1280px;                /* Screen width */
-			height: 780px;                /* Screen height */
-			border: none;                 /* Remove default iframe border */
-			filter: grayscale(100%);      /* Black and white effect on iframe */
-			background: #000;             /* Black background */
-			z-index: 2;                   /* In front of monitor (layer 2) */
+		#footer-container {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
 		}
 
-		/* Grayscale filter applied to entire page */
-		body {
-			filter: grayscale(100%);      /* Black and white effect */
+		/* Background video */
+		.background-video {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			z-index: -1;
+			opacity: 0.3;
+			transition: opacity 0.5s ease;
 		}
+
+		/* Apple TV style pill navigation - inside header */
+
+		/* Grid of posters - horizontal layout */
+		.posters-grid {
+			display: flex;
+			gap: 2rem;
+			align-items: flex-end; /* Align to bottom */
+			padding: 50px 3rem 0 3rem !important; /* Increased side padding for zoom compatibility */
+			min-width: min-content;
+			width: 100%;
+			overflow-x: scroll !important; /* Force horizontal scroll */
+			overflow-y: visible; /* Changed from hidden to visible to allow hover lift */
+			scroll-snap-type: x proximity; /* Gentler snap */
+			scroll-behavior: smooth; /* Smooth scrolling */
+			-webkit-overflow-scrolling: touch; /* Smooth mobile scrolling */
+			scroll-padding-left: 3rem !important; /* Prevent first item from going out of bounds */
+			scroll-padding-right: 3rem !important; /* Prevent last item from going out of bounds */
+			touch-action: pan-x; /* Enable horizontal touch swiping */
+			cursor: grab; /* Show grab cursor */
+			user-select: none; /* Prevent text selection while dragging */
+		}
+
+		.posters-grid:active {
+			cursor: grabbing; /* Show grabbing cursor when dragging */
+			scroll-snap-type: none; /* Disable snap while dragging */
+		}
+
+		/* Custom scrollbar styling */
+		.posters-grid::-webkit-scrollbar {
+			height: 10px;
+		}
+
+		.posters-grid::-webkit-scrollbar-track {
+			background: rgba(255, 255, 255, 0.05);
+			border-radius: 10px;
+			margin: 0 3rem;
+		}
+
+		.posters-grid::-webkit-scrollbar-thumb {
+			background: rgba(255, 255, 255, 0.3);
+			border-radius: 10px;
+		}
+
+		.posters-grid::-webkit-scrollbar-thumb:hover {
+			background: rgba(255, 255, 255, 0.5);
+		}
+
+
+		/* Individual poster card - smaller size */
+		.poster-card {
+			position: relative;
+			width: 220px;
+			height: 330px;
+			flex-shrink: 0;
+			border-radius: 12px;
+			overflow: hidden;
+			cursor: pointer;
+			transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+			background: rgba(255, 255, 255, 0.05);
+			backdrop-filter: blur(10px);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			scroll-snap-align: center;
+			pointer-events: auto; /* Allow hover/click on posters */
+		}
+
+		.poster-card:hover {
+			transform: translateY(-40px); /* Lift up only */
+			box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+			z-index: 10;
+			border: 1px solid rgba(255, 255, 255, 0.3);
+		}
+
+		/* Poster image */
+		.poster-card img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			transition: transform 0.5s ease;
+		}
+
+		.poster-card:hover img {
+			transform: scale(1.05);
+		}
+
+		/* Poster info overlay */
+		.poster-info {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			padding: 2rem 1.5rem 1.5rem;
+			background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, transparent 100%);
+			transform: translateY(100%);
+			transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+
+		.poster-card:hover .poster-info {
+			transform: translateY(0);
+		}
+
+		.poster-title {
+			color: white;
+			font-size: 1.25rem;
+			font-weight: 600;
+			margin: 0 0 0.5rem 0;
+			letter-spacing: -0.02em;
+		}
+
+		.poster-meta {
+			color: rgba(255, 255, 255, 0.7);
+			font-size: 0.9rem;
+			font-weight: 400;
+		}
+
+		/* Responsive */
+		@media (max-width: 1200px) {
+			.posters-grid {
+				gap: 1.5rem;
+				padding: 50px 3rem 0 !important;
+				scroll-padding-left: 3rem !important;
+				scroll-padding-right: 3rem !important;
+			}
+			.poster-card {
+				width: 200px;
+				height: 300px;
+			}
+		}
+
+		@media (max-width: 768px) {
+			main.cinema-main {
+				padding-bottom: 70px;
+			}
+			.posters-grid {
+				gap: 1.2rem;
+				padding: 45px 3rem 0 !important;
+				scroll-padding-left: 3rem !important;
+				scroll-padding-right: 3rem !important;
+			}
+			.poster-card {
+				width: 170px;
+				height: 255px;
+			}
+		}
+
+		@media (max-width: 600px) {
+			main.cinema-main {
+				padding-bottom: 60px;
+			}
+			.posters-grid {
+				gap: 1rem;
+			padding: 40px 3rem 0 !important;
+				scroll-padding-left: 3rem !important;
+				scroll-padding-right: 3rem !important;
+			}
+			.poster-card {
+				width: 150px;
+				height: 225px;
+			}
+		}
+
+		@media (max-width: 480px) {
+			main.cinema-main {
+				top: 80px;
+				padding-bottom: 50px;
+			}
+			.posters-grid {
+				gap: 0.8rem;
+				padding: 35px 2.5rem 0 !important;
+				scroll-padding-left: 2.5rem !important;
+				scroll-padding-right: 2.5rem !important;
+			}
+			.poster-card {
+				width: 140px;
+				height: 210px;
+			}
+
+		}
+		/* Disable hover on touch devices */
+		@media (hover: none) and (pointer: coarse) {
+			.poster-card:hover {
+				transform: none !important;
+			}
+			.posters-grid {
+				cursor: default !important;
+			}
+		}
+
+		/* Modal Styles */
+		.modal {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.95);
+			z-index: 10000;
+			overflow-y: auto;
+			overflow-x: hidden;
+			padding: 2rem 0; /* Add vertical padding for mobile scrolling */
+			animation: fadeIn 0.3s ease;
+		}
+
+		.modal.active {
+			display: block; /* Changed from flex to block for better mobile scrolling */
+		}
+
+		@keyframes fadeIn {
+			from { opacity: 0; }
+			to { opacity: 1; }
+		}
+
+		.modal-content {
+			position: relative;
+			width: 90%;
+			max-width: 1400px;
+			background: #0a0a0a;
+			border-radius: 16px;
+			padding: 3rem;
+			margin: 2rem auto; /* Center horizontally */
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			animation: slideUp 0.4s ease;
+		}
+
+		@keyframes slideUp {
+			from { 
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			to { 
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.modal-close {
+			position: absolute;
+			top: 1.5rem;
+			right: 1.5rem;
+			background: rgba(255, 0, 0, 0.5);
+			border: none;
+			color: white;
+			font-size: 2rem;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: all 0.3s ease;
+			z-index: 10001;
+		}
+
+		.modal-close:hover {
+			background: #f00;
+			transform: rotate(90deg);
+		}
+
+		.modal-body {
+			display: grid;
+			grid-template-columns: 2fr 1fr;
+			gap: 3rem;
+			margin-top: 1rem;
+		}
+
+		.modal-left {
+			display: flex;
+			flex-direction: column;
+			gap: 2rem;
+		}
+
+		.vimeo-container {
+			position: relative;
+			width: 100%;
+			padding-bottom: 56.25%; /* 16:9 aspect ratio */
+			background: #000;
+			border-radius: 12px;
+			overflow: hidden;
+		}
+
+		.vimeo-container iframe {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		.movie-info {
+			color: white;
+		}
+
+		.modal-title {
+			font-size: 2.5rem;
+			font-weight: 700;
+			margin: 0 0 0.5rem 0;
+			letter-spacing: -0.02em;
+		}
+
+		.modal-year {
+			font-size: 1.2rem;
+			color: rgba(255, 255, 255, 0.6);
+			margin: 0 0 1.5rem 0;
+		}
+
+		.modal-description {
+			font-size: 1.1rem;
+			line-height: 1.6;
+			color: rgba(255, 255, 255, 0.8);
+			margin: 0;
+			white-space: pre-line; /* to fix the description /n/n line breaks */
+		}
+
+		.modal-right {
+			color: white;
+		}
+
+		.crew-title {
+			font-size: 1.5rem;
+			font-weight: 600;
+			margin: 0 0 1.5rem 0;
+			letter-spacing: -0.02em;
+		}
+
+		.crew-list {
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+		}
+
+		.crew-member {
+			display: flex;
+			flex-direction: column;
+			gap: 0.3rem;
+			padding: 0.75rem 1rem;
+			background: rgba(255, 255, 255, 0.05);
+			border-radius: 10px;
+			transition: all 0.3s ease;
+		}
+
+		.crew-member:hover {
+			background: rgba(255, 255, 255, 0.08);
+			transform: translateX(5px);
+		}
+
+		.crew-name {
+			font-size: 1rem;
+			font-weight: 600;
+			color: white;
+			margin: 0;
+			text-decoration: none;
+			display: inline-block;
+			transition: color 0.3s ease;
+		}
+
+		.crew-name:hover {
+			color: #60a5fa;
+		}
+
+		.crew-roles {
+			font-size: 0.9rem;
+			color: rgba(255, 255, 255, 0.6);
+			margin: 0;
+			line-height: 1.4;
+		}
+
+		.cast-title {
+			font-size: 1.5rem;
+			font-weight: 600;
+			margin: 0 0 1.5rem 0;
+			letter-spacing: -0.02em;
+		}
+
+		.cast-list {
+			display: flex;
+			flex-direction: column;
+			gap: 1.5rem;
+			margin-bottom: 2.5rem;
+			padding-bottom: 2rem;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.cast-member {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+			padding: 1rem;
+			background: rgba(255, 255, 255, 0.05);
+			border-radius: 12px;
+			transition: all 0.3s ease;
+		}
+
+		.cast-member:hover {
+			background: rgba(255, 255, 255, 0.08);
+			transform: translateX(5px);
+		}
+
+		.cast-photo {
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+			object-fit: cover;
+			border: 2px solid rgba(255, 255, 255, 0.2);
+		}
+
+		.cast-info {
+			flex: 1;
+		}
+
+		.cast-name {
+			font-size: 1.1rem;
+			font-weight: 600;
+			margin: 0 0 0.3rem 0;
+			color: white;
+			text-decoration: none;
+			display: inline-block;
+			transition: color 0.3s ease;
+		}
+
+		.cast-name:hover {
+			color: #60a5fa;
+		}
+
+		.cast-character {
+			font-size: 0.95rem;
+			color: rgba(255, 255, 255, 0.6);
+			margin: 0;
+		}
+
+		/* Responsive modal */
+		@media (max-width: 1024px) {
+			.modal-body {
+				grid-template-columns: 1fr;
+			}
+
+			.modal-content {
+				padding: 2rem;
+			}
+		}
+
+		@media (max-width: 768px) {
+			.modal {
+				padding: 1rem 0; /* Reduce vertical padding on mobile */
+			}
+
+			.modal-content {
+				width: 95%;
+				padding: 1.5rem;
+				margin: 1rem auto; /* Center on mobile */
+			}
+
+			.modal-title {
+				font-size: 2rem;
+			}
+
+			.modal-close {
+				width: 40px;
+				height: 40px;
+				font-size: 1.5rem;
+			}
+
+			.vimeo-container {
+				position: relative;
+				width: 100%;
+				padding-bottom: 56.25%; /* Maintain 16:9 aspect ratio */
+				max-height: 40vh; /* Limit max height */
+				overflow: hidden;
+			}
+			
+			.vimeo-container iframe {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+		}
+
 	</style>
+
+	<script>
+		console.log('🎬 Cinema page loading...');
+
+		// Movie data with local files
+const movies = [
+
+	{
+		title: 'Inexistente',
+		year: '2024',
+		poster: './movies/inexistente.jpg',
+		video: './movies/inexistente.mp4',
+		vimeoId: '930451906',
+		description: 'Helder visita a antiga casa do seu melhor amigo, Pedro, quem desapareceu há um tempo atras sem deixar rasto. O objetivo do Helder é redescobrir memórias esquecidas, mas acabará por descobrir ainda mais.\n\nHelder visits the abandoned house of his best friend, Pedro, who disappeared a while ago without leaving a trace. Helder\'s intention is to rediscover forgotten memories, but he will end up discovering even more.',
+		crew: [
+			{ name: 'Charlie Chaves', roles: ['Realizador', 'Produtor'], link: 'https://www.instagram.com/charliechavess' },
+			{ name: 'João Nobre', roles: ['Fotografia', 'Som', 'Montagem'], link: '' },
+			{ name: 'Locutor "Serviço Social"', roles: ['Agradecimentos Especiais'], link: '' },
+			{ name: 'Pedro Senna Nunes', roles: ['Agradecimentos Especiais'], link: '' },
+			{ name: 'Mario Quezada', roles: ['Agradecimentos Especiais'], link: '' }
+		],
+		cast: [
+			{ name: 'Alessandro Barboza', character: 'Pedro Amaral', photo: './talent/placeholder.jpg', profile: '' },
+			{ name: 'Pedro Antonie de Saint', character: 'Helder Saramago', photo: './talent/placeholder.jpg', profile: ''}
+		]
+	},
+
+	{
+		title: 'El Artista Comprendido',
+		year: '2024',
+		poster: './movies/elartistacomprendido.jpg',
+		video: './movies/elartistacomprendido.mp4',
+		vimeoId: '930022904',
+		description: 'Um jovem artista finaliza a sua obra-prima, mas a cada dia que passa, fica mais insatisfeito com o resultado final, por isso decide descartar o seu trabalho. Posteriormente, um crítico de arte encontra a sua obra...\n\nA young artist finishes his masterpiece, but with each passing day, he becomes more dissatisfied with the final result, so he decides to discard his work. Later, an art critic comes across his piece...',
+		crew: [
+			{ name: 'Charlie Chaves', roles: ['Realização', 'Produção', 'Ator'], link: 'https://www.instagram.com/charliechavess' },
+			{ name: 'Nityam', roles: ['Assistente Realização', 'Produção', 'Operador de Câmara'], link: 'https://www.instagram.com/nityamnow' },
+			{ name: 'Patricia Pontes', roles: ['Assistente Realização','Agradecimentos Especiais'], link: 'https://www.instagram.com/pontes_filmworks' },
+			{ name: 'Gonçalo Pereira', roles: ['Operador de Câmara'], link: 'https://www.instagram.com/goncalopereiraaa_' },
+			{ name: 'João Formiga', roles: ['Assistente de Câmara'], link: 'https://www.instagram.com/joaoformiga' },
+			{ name: 'Valdir Neves', roles: ['Operador de Som'], link: 'https://www.instagram.com/val.nevs' },
+			{ name: 'Carlos Calderon', roles: ['Post-produção'], link: 'https://www.instagram.com/charliechavess' },
+			{ name: 'Inês Pinheiro', roles: ['Agradecimentos Especiais'], link: 'https://www.instagram.com/neespera' }
+		],
+		cast: [
+			{ name: 'Charlie Chaves', character: 'O Artista', photo: './talent/artista.jpg', profile: 'https://www.instagram.com/charliechavess' },
+			{ name: 'Bruno de Franclieu', character: 'O oportuno Critico de Arte', photo: './talent/critico.jpg', profile: 'https://www.linkedin.com/in/bruno-de-franclieu-b6899aa4/'}
+		]
+	},
+
+	{
+		title: 'El Profesor',
+		year: '2024',
+		poster: './movies/profesor.jpg',
+		video: './movies/profesor.mp4',
+		vimeoId: '',
+		description: 'Coming soon...',
+		crew: [
+			{ name: 'Charlie Chaves', roles: ['Realização', 'Produção'], link: 'https://www.instagram.com/charliechavess' },
+			{ name: 'Charlie Chaves', roles: ['Realização', 'Produção'], link: 'https://www.instagram.com/charliechavess' }
+		],
+		cast: [
+			{ name: 'Charlie Chaves', character: '???', photo: './talent/placeholder.jpg', profile: 'https://www.instagram.com/charliechavess' },
+			{ name: 'Charlie Chaves', character: '???', photo: './talent/placeholder.jpg', profile: 'https://www.instagram.com/charliechavess' }
+		]
+	},
+
+	{
+		title: 'Jay Gupta',
+		year: '2025',
+		poster: './movies/jay.jpg',
+		video: './movies/jay.mp4',
+		vimeoId: '',
+		description: 'Coming soon...',
+		crew: [
+			{ name: 'Charlie Chaves', roles: ['Realização', 'Produção'], link: 'https://www.instagram.com/charliechavess' },
+			{ name: 'Charlie Chaves', roles: ['Realização', 'Produção'], link: 'https://www.instagram.com/charliechavess' }
+		],
+		cast: [
+			{ name: 'Charlie Chaves', character: '???', photo: './talent/placeholder.jpg', profile: 'https://www.instagram.com/charliechavess' },
+			{ name: 'Charlie Chaves', character: '???', photo: './talent/placeholder.jpg', profile: 'https://www.instagram.com/charliechavess' }
+		]
+	},
+
+];
+
+		const backgroundVideo = document.getElementById('backgroundVideo');
+
+
+	// Modal functions
+	function openModal(movieIndex) {
+		const movie = movies[movieIndex];
+		const modal = document.getElementById('movieModal');
+		
+		// Set movie details
+		document.getElementById('modalTitle').textContent = movie.title;
+		document.getElementById('modalYear').textContent = movie.year;
+		document.getElementById('modalDescription').textContent = movie.description;
+		
+		// Set Vimeo player
+		const vimeoPlayer = document.getElementById('vimeoPlayer');
+		if (movie.vimeoId) {
+			vimeoPlayer.src = `https://player.vimeo.com/video/${movie.vimeoId}?autoplay=1&title=0&byline=0&portrait=0`;
+		} else {
+			vimeoPlayer.src = '';
+		}
+		
+		// Build cast list
+		const castList = document.getElementById('castList');
+		if (movie.cast && movie.cast.length > 0) {
+			castList.innerHTML = movie.cast.map(actor => `
+				<div class="cast-member">
+					<img src="${actor.photo}" alt="${actor.name}" class="cast-photo" onerror="this.src='https://via.placeholder.com/60'">
+					<div class="cast-info">
+						<a href="${actor.profile}" target="_blank" class="cast-name">${actor.name}</a>
+						<p class="cast-character">${actor.character}</p>
+					</div>
+				</div>
+			`).join('');
+		} else {
+			castList.innerHTML = '<p style="color: rgba(255,255,255,0.5);">Cast information not available.</p>';
+		}
+		
+		// Build crew list
+		const crewList = document.getElementById('crewList');
+		if (movie.crew && movie.crew.length > 0) {
+			crewList.innerHTML = movie.crew.map(member => `
+				<div class="crew-member">
+					<a href="${member.link || 'https://www.instagram.com/'}" target="_blank" class="crew-name">${member.name}</a>
+					<p class="crew-roles">${member.roles.join(', ')}</p>
+				</div>
+			`).join('');
+		} else {
+			crewList.innerHTML = '<p style="color: rgba(255,255,255,0.5);">Crew information not available.</p>';
+		}
+		
+		// Show modal
+		modal.classList.add('active');
+		document.body.style.overflow = 'hidden';
+		
+		console.log(`🎬 Opened modal for: ${movie.title}`);
+	}
+
+	function closeModal() {
+		const modal = document.getElementById('movieModal');
+		modal.classList.remove('active');
+		document.body.style.overflow = 'auto';
+		
+		// Stop Vimeo video
+		const vimeoPlayer = document.getElementById('vimeoPlayer');
+		vimeoPlayer.src = '';
+		
+		console.log('❌ Closed modal');
+	}
+
+	// Close modal when clicking outside
+	document.addEventListener('click', (e) => {
+		const modal = document.getElementById('movieModal');
+		if (e.target === modal) {
+			closeModal();
+		}
+	});
+
+	// Close modal with Escape key
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape') {
+			closeModal();
+		}
+	});
+
+		// Load posters
+		function loadPosters() {
+			console.log('🎯 Loading posters...');
+			const grid = document.getElementById('postersGrid');
+			
+			grid.innerHTML = movies.map((movie, index) => `
+				<div class="poster-card" data-video="${movie.video}" data-index="${index}">
+					<img src="${movie.poster}" alt="${movie.title}">
+					<div class="poster-info">
+						<h3 class="poster-title">${movie.title}</h3>
+						<p class="poster-meta">${movie.year}</p>
+					</div>
+				</div>
+			`).join('');
+
+			console.log(`✅ Loaded ${movies.length} posters`);
+			
+			// Add hover events
+			document.querySelectorAll('.poster-card').forEach(card => {
+				const videoSrc = card.dataset.video;
+				const index = card.dataset.index;
+				
+				card.addEventListener('mouseenter', () => {
+					console.log(`🎥 Hovering ${movies[index].title}`);
+					backgroundVideo.src = videoSrc;
+					backgroundVideo.style.opacity = '0.5';
+				});
+				
+				card.addEventListener('mouseleave', () => {
+					console.log('⬅️ Mouse left poster');
+					backgroundVideo.style.opacity = '0.3';
+				});
+					
+					// Add click event to open modal
+					card.addEventListener('click', () => {
+						openModal(index);
+					});
+			});
+		}
+
+		// Initialize
+		document.addEventListener('DOMContentLoaded', () => {
+			console.log('✨ Cinema page loaded');
+			
+			
+			loadPosters();
+			initDragScroll(); // Enable mouse drag scrolling
+			
+			// Reset scroll position to show leftmost movie
+			const postersGrid = document.getElementById('postersGrid');
+			if (postersGrid) {
+				postersGrid.scrollLeft = 0;
+				console.log('📍 Scroll position reset to 0');
+			}
+		});
+
+		// Enable mouse drag scrolling on posters grid
+		function initDragScroll() {
+			const slider = document.getElementById('postersGrid');
+			let isDown = false;
+			let startX;
+			let scrollLeft;
+
+			slider.addEventListener('mousedown', (e) => {
+				isDown = true;
+				slider.style.cursor = 'grabbing';
+				slider.style.userSelect = 'none';
+				startX = e.pageX - slider.offsetLeft;
+				scrollLeft = slider.scrollLeft;
+			});
+
+			slider.addEventListener('mouseleave', () => {
+				isDown = false;
+				slider.style.cursor = 'grab';
+			});
+
+			slider.addEventListener('mouseup', () => {
+				isDown = false;
+				slider.style.cursor = 'grab';
+			});
+
+			slider.addEventListener('mousemove', (e) => {
+				if (!isDown) return;
+				e.preventDefault();
+				const x = e.pageX - slider.offsetLeft;
+				const walk = (x - startX) * 2; // Scroll speed multiplier
+				slider.scrollLeft = scrollLeft - walk;
+			});
+
+			// Set initial cursor
+			slider.style.cursor = 'grab';
+
+			// Touch events for mobile swipe
+			let touchStartX = 0;
+			let touchScrollLeft = 0;
+			
+			slider.addEventListener('touchstart', (e) => {
+				touchStartX = e.touches[0].pageX;
+				touchScrollLeft = slider.scrollLeft;
+			}, { passive: true });
+			
+			slider.addEventListener('touchmove', (e) => {
+				const x = e.touches[0].pageX;
+				const walk = (touchStartX - x) * 1.5;
+				slider.scrollLeft = touchScrollLeft + walk;
+			}, { passive: true });
+
+			console.log('✅ Drag and touch scrolling enabled');
+		}
+
+	</script>
 
 </body>
 </html>
