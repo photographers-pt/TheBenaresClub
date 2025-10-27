@@ -287,9 +287,9 @@
 			}
 			.posters-grid {
 				gap: 1rem;
-			padding: 40px 1.5rem 0;
-				scroll-padding-left: 1.5rem;
-				scroll-padding-right: 1.5rem;
+			padding: 40px 2.5rem 0;
+				scroll-padding-left: 2.5rem;
+				scroll-padding-right: 2.5rem;
 			}
 			.poster-card {
 				width: 150px;
@@ -304,9 +304,9 @@
 			}
 			.posters-grid {
 				gap: 0.8rem;
-				padding: 35px 1rem 0;
-				scroll-padding-left: 1rem;
-				scroll-padding-right: 1rem;
+				padding: 35px 2rem 0;
+				scroll-padding-left: 2rem;
+				scroll-padding-right: 2rem;
 			}
 			.poster-card {
 				width: 140px;
@@ -335,13 +335,13 @@
 			background: rgba(0, 0, 0, 0.95);
 			z-index: 10000;
 			overflow-y: auto;
+			overflow-x: hidden;
+			padding: 2rem 0; /* Add vertical padding for mobile scrolling */
 			animation: fadeIn 0.3s ease;
 		}
 
 		.modal.active {
-			display: flex;
-			align-items: center;
-			justify-content: center;
+			display: block; /* Changed from flex to block for better mobile scrolling */
 		}
 
 		@keyframes fadeIn {
@@ -356,7 +356,7 @@
 			background: #0a0a0a;
 			border-radius: 16px;
 			padding: 3rem;
-			margin: 2rem;
+			margin: 2rem auto; /* Center horizontally */
 			border: 1px solid rgba(255, 255, 255, 0.1);
 			animation: slideUp 0.4s ease;
 		}
@@ -579,10 +579,14 @@
 		}
 
 		@media (max-width: 768px) {
+			.modal {
+				padding: 1rem 0; /* Reduce vertical padding on mobile */
+			}
+
 			.modal-content {
 				width: 95%;
 				padding: 1.5rem;
-				margin: 1rem;
+				margin: 1rem auto; /* Center on mobile */
 			}
 
 			.modal-title {
@@ -594,7 +598,14 @@
 				height: 40px;
 				font-size: 1.5rem;
 			}
+
+			.vimeo-container {
+				max-height: 50vh; /* Limit vimeo height on mobile */
+				padding-bottom: 0;
+				height: 50vh;
+			}
 		}
+
 	</style>
 
 	<script>
