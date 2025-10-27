@@ -448,6 +448,7 @@
 			line-height: 1.6;
 			color: rgba(255, 255, 255, 0.8);
 			margin: 0;
+			white-space: pre-line; /* to fix the description /n/n line breaks */
 		}
 
 		.modal-right {
@@ -601,6 +602,9 @@
 
 		// Movie data with local files
 const movies = [
+
+
+
 	{
 		title: 'Inexistente',
 		year: '2024',
@@ -609,21 +613,24 @@ const movies = [
 		vimeoId: '930451906',
 		description: 'Helder visita a antiga casa do seu melhor amigo, Pedro, quem desapareceu há um tempo atras sem deixar rasto. O objetivo do Helder é redescobrir memórias esquecidas, mas acabará por descobrir ainda mais.\n\nHelder visits the abandoned house of his best friend, Pedro, who disappeared a while ago without leaving a trace. Helder\'s intention is to rediscover forgotten memories, but he will end up discovering even more.',
 		crew: [
-			{ name: 'Fritz Lang', roles: ['Director'], link: 'https://en.wikipedia.org/wiki/Fritz_Lang' },
-			{ name: 'Thea von Harbou', roles: ['Writer'], link: 'https://en.wikipedia.org/wiki/Thea_von_Harbou' }
+			{ name: 'Charlie Chaves', roles: ['Realizador', 'Produtor'], link: 'https://www.instagram.com/charliechavess' },
+			{ name: 'João Nobre', roles: ['Fotografia', 'Som', 'Montagem'], link: '' },
+			{ name: 'Locutor "Serviço Social"', roles: ['Agradecimentos Especiais'], link: '' },
+			{ name: 'Pedro Senna Nunes', roles: ['Agradecimentos Especiais'], link: '' },
+			{ name: 'Mario Quezada', roles: ['Agradecimentos Especiais'], link: '' }
 		],
 		cast: [
 			{
-				name: 'Brigitte Helm',
-				character: 'Maria / Maschinenmensch',
-				photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Brigitte_Helm_%281928%29.jpg/220px-Brigitte_Helm_%281928%29.jpg',
-				profile: 'https://en.wikipedia.org/wiki/Brigitte_Helm'
+				name: 'Pedro Amaral',
+				character: 'Alessandro Barboza',
+				photo: '',
+				profile: ''
 			},
 			{
-				name: 'Fritz Rasp',
-				character: 'The Thin Man',
-				photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Fritz_Rasp_%281926%29.jpg/220px-Fritz_Rasp_%281926%29.jpg',
-				profile: 'https://en.wikipedia.org/wiki/Fritz_Rasp'
+				name: 'Helder Saramago',
+				character: 'Pedro Antonie de Saint',
+				photo: '',
+				profile: ''
 			}
 		]
 	},
@@ -641,13 +648,13 @@ const movies = [
 		vimeoId: '930022904',
 		description: 'Um jovem artista finaliza a sua obra-prima, mas a cada dia que passa, fica mais insatisfeito com o resultado final, por isso decide descartar o seu trabalho. Posteriormente, um crítico de arte encontra a sua obra...\n\nA young artist finishes his masterpiece, but with each passing day, he becomes more dissatisfied with the final result, so he decides to discard his work. Later, an art critic comes across his piece...',
 		crew: [
-			{ name: 'Charlie Chaves', roles: ['Director', 'Producer', 'Actor'], link: 'https://www.instagram.com/charliechavess' },
-			{ name: 'Nityam', roles: ['Assistant Director', 'Producer', 'Camera Operator'], link: 'https://www.instagram.com/nityamnow' },
-			{ name: 'Patricia Pontes', roles: ['Assistant Director','Agradecimentos Especiais'], link: 'https://www.instagram.com/pontes_filmworks' },
-			{ name: 'Gonçalo Pereira', roles: ['Camera Operator'], link: 'https://www.instagram.com/goncalopereiraaa_' },
-			{ name: 'João Formiga', roles: ['Camera Assistant'], link: 'https://www.instagram.com/joaoformiga' },
-			{ name: 'Valdir Neves', roles: ['Sound Operator'], link: 'https://www.instagram.com/val.nevs' },
-			{ name: 'Carlos Calderon', roles: ['Post-production'], link: 'https://www.instagram.com/charliechavess' },
+			{ name: 'Charlie Chaves', roles: ['Realização', 'Produção', 'Ator'], link: 'https://www.instagram.com/charliechavess' },
+			{ name: 'Nityam', roles: ['Assistente Realização', 'Produção', 'Operador de Câmara'], link: 'https://www.instagram.com/nityamnow' },
+			{ name: 'Patricia Pontes', roles: ['Assistente Realização','Agradecimentos Especiais'], link: 'https://www.instagram.com/pontes_filmworks' },
+			{ name: 'Gonçalo Pereira', roles: ['Operador de Câmara'], link: 'https://www.instagram.com/goncalopereiraaa_' },
+			{ name: 'João Formiga', roles: ['Assistente de Câmara'], link: 'https://www.instagram.com/joaoformiga' },
+			{ name: 'Valdir Neves', roles: ['Operador de Som'], link: 'https://www.instagram.com/val.nevs' },
+			{ name: 'Carlos Calderon', roles: ['Post-produção'], link: 'https://www.instagram.com/charliechavess' },
 			{ name: 'Inês Pinheiro', roles: ['Agradecimentos Especiais'], link: 'https://www.instagram.com/neespera' }
 		],
 		cast: [
