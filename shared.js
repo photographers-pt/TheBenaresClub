@@ -20,7 +20,8 @@ function createHeader() {
         <li><a href="/eventos.html">Eventos</a></li>
         <li><a href="/biblioteca/index.html">Biblioteca</a></li>
         <li><a href="/cinemateca-tv.html">TV</a></li>
-        <li><a href="/computer-films/index.html">PC</a></li>
+        <li><a href="/pc.html">PC</a></li>
+        <li><a href="/computer-films/index.html">Cine-PC</a></li>
         <li><a href="/cinemateca/index.html">Cinemateca</a></li>
         <li><a href="/mercado.html">Mercado</a></li>
         <li><a href="/comunidad.html">Comunidad</a></li>
