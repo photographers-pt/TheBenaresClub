@@ -43,11 +43,11 @@
 					</div>
 				</div>
 				<div class="modal-right">
-					<h2 class="crew-title">Crew</h2>
-					<div id="crewList" class="crew-list"></div>
-					
 					<h2 class="cast-title">Cast</h2>
 					<div id="castList" class="cast-list"></div>
+					
+					<h2 class="crew-title">Crew</h2>
+					<div id="crewList" class="crew-list"></div>
 				</div>
 			</div>
 		</div>
@@ -465,9 +465,6 @@
 			display: flex;
 			flex-direction: column;
 			gap: 1rem;
-			margin-bottom: 2.5rem;
-			padding-bottom: 2rem;
-			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 		}
 
 		.crew-member {
@@ -490,6 +487,13 @@
 			font-weight: 600;
 			color: white;
 			margin: 0;
+			text-decoration: none;
+			display: inline-block;
+			transition: color 0.3s ease;
+		}
+
+		.crew-name:hover {
+			color: #60a5fa;
 		}
 
 		.crew-roles {
@@ -510,6 +514,9 @@
 			display: flex;
 			flex-direction: column;
 			gap: 1.5rem;
+			margin-bottom: 2.5rem;
+			padding-bottom: 2rem;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 		}
 
 		.cast-member {
@@ -602,26 +609,8 @@ const movies = [
 		vimeoId: '930451906',
 		description: 'Helder visita a antiga casa do seu melhor amigo, Pedro, quem desapareceu há um tempo atras sem deixar rasto. O objetivo do Helder é redescobrir memórias esquecidas, mas acabará por descobrir ainda mais.\n\nHelder visits the abandoned house of his best friend, Pedro, who disappeared a while ago without leaving a trace. Helder\'s intention is to rediscover forgotten memories, but he will end up discovering even more.',
 		crew: [
-			{ name: 'Charlie Chaves', roles: ['Director', 'Producer'] },
-			{ name: 'Nityam', roles: ['Assistant Director', 'Producer', 'Camera Operator'] },
-			{ name: 'Patricia Pontes', roles: ['Assistant Director'] },
-			{ name: 'Gonçalo Pereira', roles: ['Camera Operator'] },
-			{ name: 'João Formiga', roles: ['Camera Assistant'] },
-			{ name: 'Valdir Neves', roles: ['Sound Operator'] },
-			{ name: 'Carlos Calderon', roles: ['Post-production'] }
-		],
-		cast: []
-	},
-	{
-		title: 'Metropolis',
-		year: '1927',
-		poster: './movies/metropolis.jpg',
-		video: './movies/metropolis.mp4',
-		vimeoId: '395198337',
-		description: 'A groundbreaking German expressionist science-fiction film set in a futuristic urban dystopia. Directed by Fritz Lang, it tells the story of a society divided between wealthy industrialists and underground workers, and the revolution that brings them together.',
-		crew: [
-			{ name: 'Fritz Lang', roles: ['Director'] },
-			{ name: 'Thea von Harbou', roles: ['Writer'] }
+			{ name: 'Fritz Lang', roles: ['Director'], link: 'https://en.wikipedia.org/wiki/Fritz_Lang' },
+			{ name: 'Thea von Harbou', roles: ['Writer'], link: 'https://en.wikipedia.org/wiki/Thea_von_Harbou' }
 		],
 		cast: [
 			{
@@ -631,22 +620,30 @@ const movies = [
 				profile: 'https://en.wikipedia.org/wiki/Brigitte_Helm'
 			},
 			{
-				name: 'Gustav Fröhlich',
-				character: 'Freder Fredersen',
-				photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Gustav_Fr%C3%B6hlich_%281920%29.jpg/220px-Gustav_Fr%C3%B6hlich_%281920%29.jpg',
-				profile: 'https://en.wikipedia.org/wiki/Gustav_Fr%C3%B6hlich'
-			},
+				name: 'Fritz Rasp',
+				character: 'The Thin Man',
+				photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Fritz_Rasp_%281926%29.jpg/220px-Fritz_Rasp_%281926%29.jpg',
+				profile: 'https://en.wikipedia.org/wiki/Fritz_Rasp'
+			}
+		]
+	},
+	{
+		title: 'Metropolis',
+		year: '1927',
+		poster: './movies/metropolis.jpg',
+		video: './movies/metropolis.mp4',
+		vimeoId: '395198337',
+		description: 'A groundbreaking German expressionist science-fiction film set in a futuristic urban dystopia. Directed by Fritz Lang, it tells the story of a society divided between wealthy industrialists and underground workers, and the revolution that brings them together.',
+		crew: [
+			{ name: 'Fritz Lang', roles: ['Director'], link: 'https://en.wikipedia.org/wiki/Fritz_Lang' },
+			{ name: 'Thea von Harbou', roles: ['Writer'], link: 'https://en.wikipedia.org/wiki/Thea_von_Harbou' }
+		],
+		cast: [
 			{
-				name: 'Alfred Abel',
-				character: 'Joh Fredersen',
-				photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Alfred_Abel_%281920%29.jpg/220px-Alfred_Abel_%281920%29.jpg',
-				profile: 'https://en.wikipedia.org/wiki/Alfred_Abel'
-			},
-			{
-				name: 'Rudolf Klein-Rogge',
-				character: 'Rotwang',
-				photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Rudolf_Klein-Rogge_%281920%29.jpg/220px-Rudolf_Klein-Rogge_%281920%29.jpg',
-				profile: 'https://en.wikipedia.org/wiki/Rudolf_Klein-Rogge'
+				name: 'Brigitte Helm',
+				character: 'Maria / Maschinenmensch',
+				photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Brigitte_Helm_%281928%29.jpg/220px-Brigitte_Helm_%281928%29.jpg',
+				profile: 'https://en.wikipedia.org/wiki/Brigitte_Helm'
 			},
 			{
 				name: 'Fritz Rasp',
@@ -664,20 +661,26 @@ const movies = [
 		vimeoId: '930022904',
 		description: 'Um jovem artista finaliza a sua obra-prima, mas a cada dia que passa, fica mais insatisfeito com o resultado final, por isso decide descartar o seu trabalho. Posteriormente, um crítico de arte encontra a sua obra...\n\nA young artist finishes his masterpiece, but with each passing day, he becomes more dissatisfied with the final result, so he decides to discard his work. Later, an art critic comes across his piece...',
 		crew: [
-			{ name: 'Charlie Chaves', roles: ['Director', 'Actor'] }
+			{ name: 'Charlie Chaves', roles: ['Director', 'Producer', 'Actor'], link: 'https://www.instagram.com/charliechavess' },
+			{ name: 'Nityam', roles: ['Assistant Director', 'Producer', 'Camera Operator'], link: 'https://www.instagram.com/nityamnow' },
+			{ name: 'Patricia Pontes', roles: ['Assistant Director'], link: 'https://www.instagram.com/pontes_filmworks' },
+			{ name: 'Gonçalo Pereira', roles: ['Camera Operator'], link: 'https://www.instagram.com/goncalopereiraaa_' },
+			{ name: 'João Formiga', roles: ['Camera Assistant'], link: 'https://www.instagram.com/joaoformiga' },
+			{ name: 'Valdir Neves', roles: ['Sound Operator'], link: 'https://www.instagram.com/val.nevs' },
+			{ name: 'Carlos Calderon', roles: ['Post-production'], link: 'https://www.instagram.com/charliechavess' }
 		],
 		cast: [
 			{
 				name: 'Charlie Chaves',
 				character: 'O Artista',
 				photo: '',
-				profile: ''
+				profile: 'https://www.instagram.com/charliechavess'
 			},
 			{
 				name: 'Bruno de Franclieu',
 				character: 'O oportuno Critico de Arte',
 				photo: '',
-				profile: ''
+				profile: 'https://www.linkedin.com/in/bruno-de-franclieu-b6899aa4/'
 			}
 		]
 	},
@@ -714,19 +717,6 @@ const movies = [
 			vimeoPlayer.src = '';
 		}
 		
-		// Build crew list
-		const crewList = document.getElementById('crewList');
-		if (movie.crew && movie.crew.length > 0) {
-			crewList.innerHTML = movie.crew.map(member => `
-				<div class="crew-member">
-					<p class="crew-name">${member.name}</p>
-					<p class="crew-roles">${member.roles.join(', ')}</p>
-				</div>
-			`).join('');
-		} else {
-			crewList.innerHTML = '<p style="color: rgba(255,255,255,0.5);">Crew information not available.</p>';
-		}
-		
 		// Build cast list
 		const castList = document.getElementById('castList');
 		if (movie.cast && movie.cast.length > 0) {
@@ -741,6 +731,19 @@ const movies = [
 			`).join('');
 		} else {
 			castList.innerHTML = '<p style="color: rgba(255,255,255,0.5);">Cast information not available.</p>';
+		}
+		
+		// Build crew list
+		const crewList = document.getElementById('crewList');
+		if (movie.crew && movie.crew.length > 0) {
+			crewList.innerHTML = movie.crew.map(member => `
+				<div class="crew-member">
+					<a href="${member.link || 'https://www.instagram.com/'}" target="_blank" class="crew-name">${member.name}</a>
+					<p class="crew-roles">${member.roles.join(', ')}</p>
+				</div>
+			`).join('');
+		} else {
+			crewList.innerHTML = '<p style="color: rgba(255,255,255,0.5);">Crew information not available.</p>';
 		}
 		
 		// Show modal
