@@ -70,6 +70,7 @@ function initializeNavToggle() {
   const toggleBtn = document.getElementById('nav-toggle');
   const nav = document.getElementById('main-nav');
   const arrowIcon = toggleBtn?.querySelector('.arrow-icon');
+  const mainContent = document.querySelector('main');
   
   if (!toggleBtn || !nav || !arrowIcon) {
     console.log("Toggle elements not found");
@@ -78,25 +79,29 @@ function initializeNavToggle() {
   
   console.log("Nav toggle initialized");
   
-  // Set initial arrow based on nav state
-  if (nav.classList.contains('active')) {
-    arrowIcon.textContent = '▼';
-  } else {
-    arrowIcon.textContent = '▲';
+  // Function to update content spacing
+  function updateContentSpacing() {
+    if (nav.classList.contains('active')) {
+      // Nav is open - add padding to push content down
+      const navHeight = nav.offsetHeight;
+      if (mainContent) mainContent.style.paddingTop = `${navHeight}px`;
+      arrowIcon.textContent = '▼';
+    } else {
+      // Nav is closed - remove padding
+      if (mainContent) mainContent.style.paddingTop = '0';
+      arrowIcon.textContent = '▲';
+    }
   }
+  
+  // Set initial state
+  updateContentSpacing();
   
   toggleBtn.addEventListener('click', function(e) {
     e.stopPropagation();
     console.log("Toggle clicked");
     
     nav.classList.toggle('active');
-    
-    // Update arrow direction: down when open, up when closed
-    if (nav.classList.contains('active')) {
-      arrowIcon.textContent = '▼';
-    } else {
-      arrowIcon.textContent = '▲';
-    }
+    updateContentSpacing();
   });
 }
 
