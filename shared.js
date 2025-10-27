@@ -17,7 +17,7 @@ function createHeader() {
     
     <nav aria-label="Menu principal" id="main-nav" class="active">
       <ul>
-        <li><a href="/eventos.html">Eventos</a></li>
+        <li><a href="/eventos/index.html">Eventos</a></li>
         <li><a href="/biblioteca/index.html">Biblioteca</a></li>
         <li><a href="/cinemateca-tv.html">TV</a></li>
         <li><a href="/pc.html">PC</a></li>
