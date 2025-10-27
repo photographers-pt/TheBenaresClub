@@ -19,7 +19,7 @@ function createHeader() {
       <ul>
         <li><a href="/eventos/index.html">Eventos</a></li>
         <li><a href="/biblioteca/index.html">Biblioteca</a></li>
-        <li data-debug="true><a href="/cinemateca-tv.html">TV</a></li>
+        <li data-debug="true"><a href="/cinemateca-tv.html">TV</a></li>
         <li data-debug="true"><a href="/pc.html">PC</a></li>
         <li data-debug="true"><a href="/computer-films/index.html">Cine-PC</a></li>
         <li><a href="/cinemateca/index.html">Cinemateca</a></li>
