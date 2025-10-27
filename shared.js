@@ -37,13 +37,18 @@ function createHeader() {
 
 function createFooter() {
   return `
+    <style>
+      .shadow-toggle-btn:hover {
+        background-color: rgba(255, 255, 255, 0.15) !important;
+        box-shadow: 0 0 6px rgba(255, 255, 255, 0.1) !important;
+        transform: none !important;
+      }
+    </style>
     <footer>
       <div class="footer-controls">
-        <button id="shadow-toggle" class="shadow-toggle-btn shadows-off">
-          Debug
+        <button id="shadow-toggle" class="shadow-toggle-btn shadows-off" style="cursor: not-allowed;">
+          Loading...
         </button>
-
-        <div id="github-status" class="github-status pending">Loading...</div>
       </div>
       
       <div class="copyright">
@@ -112,9 +117,9 @@ function initializeNavToggle() {
 async function updateGitHubStatus() {
   const owner = "TheBenaresClub";
   const repo = "TheBenaresClub.github.io";
-  const statusDiv = document.getElementById("github-status");
+  const toggleBtn = document.getElementById("shadow-toggle");
 
-  if (!statusDiv) return;
+  if (!toggleBtn) return;
 
   try {
     // Check for active workflow runs
@@ -128,35 +133,40 @@ async function updateGitHubStatus() {
       
       // If workflow is running
       if (status === "queued" || status === "in_progress") {
-        statusDiv.textContent = "Building";
-        statusDiv.className = "github-status pending";
+        toggleBtn.textContent = "Building";
+        toggleBtn.classList.add('github-pending');
+        toggleBtn.classList.remove('github-success', 'github-failure', 'github-error');
         return;
       }
       
       // If workflow completed
       if (status === "completed") {
         if (conclusion === "success") {
-          statusDiv.textContent = "Live";
-          statusDiv.className = "github-status success";
+          toggleBtn.textContent = "Online";
+          toggleBtn.classList.add('github-success');
+          toggleBtn.classList.remove('github-pending', 'github-failure', 'github-error');
         } else if (conclusion === "failure") {
-          statusDiv.textContent = "Failed";
-          statusDiv.className = "github-status failure";
+          toggleBtn.textContent = "Failed";
+          toggleBtn.classList.add('github-failure');
+          toggleBtn.classList.remove('github-pending', 'github-success', 'github-error');
         } else {
-          statusDiv.textContent = "Unknown";
-          statusDiv.className = "github-status unknown";
+          toggleBtn.textContent = "Unknown";
+          toggleBtn.classList.remove('github-pending', 'github-success', 'github-failure', 'github-error');
         }
         return;
       }
     }
     
-    // No workflows found - assume live
-    statusDiv.textContent = "Live";
-    statusDiv.className = "github-status success";
+    // No workflows found - assume online
+    toggleBtn.textContent = "Online";
+    toggleBtn.classList.add('github-success');
+    toggleBtn.classList.remove('github-pending', 'github-failure', 'github-error');
     
   } catch (err) {
     console.error("Error fetching GitHub status:", err);
-    statusDiv.textContent = "Error";
-    statusDiv.className = "github-status error";
+    toggleBtn.textContent = "Error";
+    toggleBtn.classList.add('github-error');
+    toggleBtn.classList.remove('github-pending', 'github-success', 'github-failure');
   }
 }
 
@@ -183,8 +193,7 @@ function toggleBoxShadows() {
       item.style.display = 'none';
     });
     
-    // Update button
-    toggleBtn.textContent = 'Debug';
+    // Update button - keep status text
     toggleBtn.classList.add('shadows-off');
   } else {
     // Turn ON shadows and show debug items
@@ -197,8 +206,7 @@ function toggleBoxShadows() {
       item.style.display = '';
     });
     
-    // Update button
-    toggleBtn.textContent = 'Debug';
+    // Update button - keep status text
     toggleBtn.classList.remove('shadows-off');
   }
 }
