@@ -19,9 +19,9 @@ function createHeader() {
       <ul>
         <li><a href="/eventos/index.html">Eventos</a></li>
         <li><a href="/biblioteca/index.html">Biblioteca</a></li>
-        <li><a href="/cinemateca-tv.html">TV</a></li>
-        <li><a href="/pc.html">PC</a></li>
-        <li><a href="/computer-films/index.html">Cine-PC</a></li>
+        <li data-debug="true><a href="/cinemateca-tv.html">TV</a></li>
+        <li data-debug="true"><a href="/pc.html">PC</a></li>
+        <li data-debug="true"><a href="/computer-films/index.html">Cine-PC</a></li>
         <li><a href="/cinemateca/index.html">Cinemateca</a></li>
         <li><a href="/mercado.html">Mercado</a></li>
         <li><a href="/comunidad.html">Comunidad</a></li>
@@ -164,24 +164,33 @@ let shadowsEnabled = false; // Shadows OFF by default
 function toggleBoxShadows() {
   const allElements = document.querySelectorAll('*');
   const toggleBtn = document.getElementById('shadow-toggle');
+  const debugItems = document.querySelectorAll('[data-debug="true"]');
   
   if (shadowsEnabled) {
-    // Turn OFF shadows
-    shadowsEnabled = false; // Update variable FIRST
+    // Turn OFF shadows and hide debug items
+    shadowsEnabled = false;
     
     allElements.forEach(element => {
       element.style.boxShadow = 'none';
+    });
+    
+    debugItems.forEach(item => {
+      item.style.display = 'none';
     });
     
     // Update button
     toggleBtn.textContent = 'Debug';
     toggleBtn.classList.add('shadows-off');
   } else {
-    // Turn ON shadows
-    shadowsEnabled = true; // Update variable FIRST
+    // Turn ON shadows and show debug items
+    shadowsEnabled = true;
     
-    // Now apply shadows
+    // Apply shadows
     applyRandomBoxShadows();
+    
+    debugItems.forEach(item => {
+      item.style.display = '';
+    });
     
     // Update button
     toggleBtn.textContent = 'Debug';
@@ -232,6 +241,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize nav toggle after header is created
     initializeNavToggle();
+    
+    // Hide debug items initially
+    const debugItems = document.querySelectorAll('[data-debug="true"]');
+    debugItems.forEach(item => {
+      item.style.display = 'none';
+    });
     }
     
     // Highlight current page
