@@ -108,11 +108,11 @@
 			display: flex;
 			gap: 2rem;
 			align-items: flex-end; /* Align to bottom */
-			padding: 0 1rem 0 2rem; /* Reduced padding for zoom compatibility */ /* Less padding on sides */
+			padding: 50px 1rem 0 2rem; /* Added top padding to prevent clipping on hover */
 			min-width: min-content;
 			width: 100%;
 			overflow-x: scroll; /* Force horizontal scroll */
-			overflow-y: hidden;
+			overflow-y: visible; /* Changed from hidden to visible to allow hover lift */
 			scroll-snap-type: x proximity; /* Gentler snap */
 			scroll-behavior: smooth; /* Smooth scrolling */
 			-webkit-overflow-scrolling: touch; /* Smooth mobile scrolling */
@@ -201,7 +201,7 @@
 		@media (max-width: 1200px) {
 			.posters-grid {
 				gap: 1.5rem;
-				padding: 0 1.5rem;
+				padding: 50px 1.5rem 0;
 			}
 			.poster-card {
 				width: 200px;
@@ -215,7 +215,7 @@
 			}
 			.posters-grid {
 				gap: 1.2rem;
-				padding: 0 1rem;
+				padding: 45px 1rem 0;
 			}
 			.poster-card {
 				width: 170px;
@@ -229,7 +229,7 @@
 			}
 			.posters-grid {
 				gap: 1rem;
-				padding: 0 1rem;
+				padding: 40px 1rem 0;
 				scroll-padding: 0 1rem;
 			}
 			.poster-card {
@@ -245,7 +245,7 @@
 			}
 			.posters-grid {
 				gap: 0.8rem;
-				padding: 0 0.5rem;
+				padding: 35px 0.5rem 0;
 			}
 			.poster-card {
 				width: 140px;
