@@ -18,8 +18,11 @@
 	
 	<!-- Background video that changes on hover -->
 	<video id="backgroundVideo" autoplay muted loop playsinline class="background-video">
-		<source src="./movies/metropolis.mp4" type="video/mp4">
+		<source src="./movies/inexistente.mp4" type="video/mp4">
 	</video>
+	
+	<!-- Background image for mobile (static) -->
+	<div id="backgroundImage" class="background-image" style="background-image: url('./movies/inexistente-bg.jpg');"></div>
 
 	<main class="cinema-main">
 		<div class="posters-grid" id="postersGrid">
@@ -135,6 +138,33 @@
 			z-index: -1;
 			opacity: 0.3;
 			transition: opacity 0.5s ease;
+		}
+		
+		/* Background image for mobile */
+		.background-image {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			z-index: -1;
+			opacity: 0.3;
+			transition: opacity 0.5s ease, background-image 0.5s ease;
+			display: none; /* Hidden by default, shown on mobile */
+		}
+		
+		/* Show image on mobile, hide video */
+		@media (max-width: 768px), (hover: none) {
+			.background-video {
+				display: none !important;
+			}
+			.background-image {
+				display: block !important;
+				opacity: 0.5 !important; /* More visible on mobile */
+			}
 		}
 
 		/* Apple TV style pill navigation - inside header */
@@ -629,6 +659,7 @@ const movies = [
 		year: '2024',
 		poster: './movies/inexistente.jpg',
 		video: './movies/inexistente.mp4',
+		backgroundImage: './movies/inexistente-bg.jpg',
 		vimeoId: '930451906',
 		description: 'Helder visita a antiga casa do seu melhor amigo, Pedro, quem desapareceu há um tempo atras sem deixar rasto. O objetivo do Helder é redescobrir memórias esquecidas, mas acabará por descobrir ainda mais.\n\nHelder visits the abandoned house of his best friend, Pedro, who disappeared a while ago without leaving a trace. Helder\'s intention is to rediscover forgotten memories, but he will end up discovering even more.',
 		crew: [
@@ -649,6 +680,7 @@ const movies = [
 		year: '2024',
 		poster: './movies/elartistacomprendido.jpg',
 		video: './movies/elartistacomprendido.mp4',
+		backgroundImage: './movies/elartistacomprendido-bg.jpg',
 		vimeoId: '930022904',
 		description: 'Um jovem artista finaliza a sua obra-prima, mas a cada dia que passa, fica mais insatisfeito com o resultado final, por isso decide descartar o seu trabalho. Posteriormente, um crítico de arte encontra a sua obra...\n\nA young artist finishes his masterpiece, but with each passing day, he becomes more dissatisfied with the final result, so he decides to discard his work. Later, an art critic comes across his piece...',
 		crew: [
@@ -672,6 +704,7 @@ const movies = [
 		year: '2024',
 		poster: './movies/profesor.jpg',
 		video: './movies/profesor.mp4',
+		backgroundImage: './movies/profesor-bg.jpg',
 		vimeoId: '',
 		description: 'Coming soon...',
 		crew: [
@@ -689,6 +722,7 @@ const movies = [
 		year: '2025',
 		poster: './movies/jay.jpg',
 		video: './movies/jay.mp4',
+		backgroundImage: './movies/jay-bg.jpg',
 		vimeoId: '',
 		description: 'Coming soon...',
 		crew: [
@@ -704,6 +738,7 @@ const movies = [
 ];
 
 		const backgroundVideo = document.getElementById('backgroundVideo');
+		const backgroundImage = document.getElementById('backgroundImage');
 
 
 	// Modal functions
@@ -808,17 +843,33 @@ const movies = [
 			document.querySelectorAll('.poster-card').forEach(card => {
 				const videoSrc = card.dataset.video;
 				const index = card.dataset.index;
+				const movie = movies[index];
 				
 				card.addEventListener('mouseenter', () => {
-					console.log(`🎥 Hovering ${movies[index].title}`);
+					console.log(`🎥 Hovering ${movie.title}`);
 					backgroundVideo.src = videoSrc;
 					backgroundVideo.style.opacity = '0.5';
+					// Also update background image for mobile
+					if (movie.backgroundImage) {
+						backgroundImage.style.backgroundImage = `url('${movie.backgroundImage}')`;
+						backgroundImage.style.opacity = '0.5';
+					}
 				});
 				
 				card.addEventListener('mouseleave', () => {
 					console.log('⬅️ Mouse left poster');
 					backgroundVideo.style.opacity = '0.3';
+					backgroundImage.style.opacity = '0.5'; // Keep mobile background visible
 				});
+				
+				// Touch event for mobile background changes
+				card.addEventListener('touchstart', () => {
+					console.log(`📱 Touched ${movie.title}`);
+					if (movie.backgroundImage) {
+						backgroundImage.style.backgroundImage = `url('${movie.backgroundImage}')`;
+						backgroundImage.style.opacity = '0.5';
+					}
+				}, { passive: true });
 					
 					// Add click event to open modal
 					card.addEventListener('click', () => {
