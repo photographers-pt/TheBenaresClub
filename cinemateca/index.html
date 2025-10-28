@@ -638,11 +638,11 @@
 			}
 
 			.modal-close {
-				width: 40px;
-				height: 40px;
-				font-size: 1.5rem;
-				top: 0.75rem; /* Moved up slightly */
-				right: 0.75rem; /* Moved in slightly */
+				width: 36px; /* Slightly smaller */
+				height: 36px;
+				font-size: 1.3rem;
+				top: 0.25rem; /* Move it much higher */
+				right: 0.5rem;
 				z-index: 10002; /* Ensure it's above everything */
 			}
 
@@ -652,6 +652,7 @@
 				padding-bottom: 56.25%; /* Maintain 16:9 aspect ratio */
 				max-height: 40vh; /* Limit max height */
 				overflow: hidden;
+				margin-top: 2.5rem; /* Push Vimeo down to avoid X button overlap */
 			}
 			
 			.vimeo-container iframe {
