@@ -4,10 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mercado | Club Benares</title>
+  <link rel="stylesheet" href="../styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="./media/A00 Logo - Light.png" type="image/png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="../shared.js"></script>
 
   <style>
     /* ===========================
@@ -170,7 +172,6 @@
   <!-- Construction Overlay -->
   <div id="constructionOverlay" class="construction-overlay">
     <div class="construction-content">
-      <div class="construction-stripe"></div>
       <div class="construction-text">Under Construction</div>
       <div class="construction-subtext">Coming Soon</div>
     </div>
@@ -202,11 +203,11 @@
     <h2 style="font-size: clamp(1.5rem, 5vw, 2rem); font-weight: 700; margin-bottom: 1rem; color: white; margin-top: 1rem;">Rigs Low Cost</h2>
     <div class="popup1-products">
       <div class="popup1-product" data-popup="rig1">
-        <img src="media/FX3test.jpg" alt="Rig Básico">
+        <img src="FX3test.jpg" alt="Rig Básico">
         <div style="font-size: clamp(0.9rem, 3vw, 1.1rem);">Rig Básico<br>€40</div>
       </div>
       <div class="popup1-product" data-popup="rig2">
-        <img src="media/FX3test.jpg" alt="Shoulder Rig">
+        <img src="FX3test.jpg" alt="Shoulder Rig">
         <div style="font-size: clamp(0.9rem, 3vw, 1.1rem);">Shoulder Rig<br>€60</div>
       </div>
     </div>
@@ -217,11 +218,11 @@
     <h2 style="font-size: clamp(1.5rem, 5vw, 2rem); font-weight: 700; margin-bottom: 1rem; color: white; margin-top: 1rem;">Merch Club Benares</h2>
     <div class="popup1-products">
       <div class="popup1-product" data-popup="merch1">
-        <img src="media/HOODIEtest.jpg" alt="Camiseta Club">
+        <img src="HOODIEtest.jpg" alt="Camiseta Club">
         <div style="font-size: clamp(0.9rem, 3vw, 1.1rem);">Camiseta Club<br>€20</div>
       </div>
       <div class="popup1-product" data-popup="merch2">
-        <img src="media/HOODIEtest.jpg" alt="Boné Preto">
+        <img src="HOODIEtest.jpg" alt="Boné Preto">
         <div style="font-size: clamp(0.9rem, 3vw, 1.1rem);">Boné Preto<br>€15</div>
       </div>
     </div>
@@ -232,11 +233,11 @@
     <h2 style="font-size: clamp(1.5rem, 5vw, 2rem); font-weight: 700; margin-bottom: 1rem; color: white; margin-top: 1rem;">Projetos Experimentais</h2>
     <div class="popup1-products">
       <div class="popup1-product" data-popup="proj1">
-        <img src="media/3Dcameratest.jpeg" alt="Câmera DIY">
+        <img src="3Dcameratest.jpeg" alt="Câmera DIY">
         <div style="font-size: clamp(0.9rem, 3vw, 1.1rem);">Câmera DIY<br>€120</div>
       </div>
       <div class="popup1-product" data-popup="proj2">
-        <img src="media/3Dcameratest.jpeg" alt="Slider 3D">
+        <img src="3Dcameratest.jpeg" alt="Slider 3D">
         <div style="font-size: clamp(0.9rem, 3vw, 1.1rem);">Slider Impresso 3D<br>€35</div>
       </div>
     </div>
@@ -295,12 +296,12 @@
     const popup2Price = document.getElementById('popup2-price');
 
     const productDetails = {
-      rig1: { title: 'Rig Básico', img: 'media/FX3test.jpg', desc: 'Ideal para iniciantes e gravações leves.', price: '€40' },
-      rig2: { title: 'Shoulder Rig', img: 'media/FX3test.jpg', desc: 'Estabilidade superior para filmagens em movimento.', price: '€60' },
-      merch1: { title: 'Camiseta Club', img: 'media/HOODIEtest.jpg', desc: 'Confortável e estilosa com o logo do clube.', price: '€20' },
-      merch2: { title: 'Boné Preto', img: 'media/HOODIEtest.jpg', desc: 'Boné casual com bordado Club Benares.', price: '€15' },
-      proj1: { title: 'Câmera DIY', img: 'media/3Dcameratest.jpeg', desc: 'Montada artesanalmente, excelente para testes.', price: '€120' },
-      proj2: { title: 'Slider 3D', img: 'media/3Dcameratest.jpeg', desc: 'Feito em impressora 3D, ideal para planos suaves.', price: '€35' }
+      rig1: { title: 'Rig Básico', img: 'FX3test.jpg', desc: 'Ideal para iniciantes e gravações leves.', price: '€40' },
+      rig2: { title: 'Shoulder Rig', img: 'FX3test.jpg', desc: 'Estabilidade superior para filmagens em movimento.', price: '€60' },
+      merch1: { title: 'Camiseta Club', img: 'HOODIEtest.jpg', desc: 'Confortável e estilosa com o logo do clube.', price: '€20' },
+      merch2: { title: 'Boné Preto', img: 'HOODIEtest.jpg', desc: 'Boné casual com bordado Club Benares.', price: '€15' },
+      proj1: { title: 'Câmera DIY', img: '3Dcameratest.jpeg', desc: 'Montada artesanalmente, excelente para testes.', price: '€120' },
+      proj2: { title: 'Slider 3D', img: '3Dcameratest.jpeg', desc: 'Feito em impressora 3D, ideal para planos suaves.', price: '€35' }
     };
 
     // FUNCIONES POPUP1
@@ -350,24 +351,24 @@
     document.querySelectorAll('.categoria-card').forEach(card => {
       card.addEventListener('click', () => {
         showConstructionOverlay();
-        // Original popup functionality commented out for construction mode
-        // const categoria = card.dataset.categoria;
-        // const popup = document.getElementById(`popup1-${categoria}`);
-        // if (popup) {
-        //   openPopup1(popup);
-        // }
+         //Original popup functionality commented out for construction mode
+         //const categoria = card.dataset.categoria;
+         //const popup = document.getElementById(`popup1-${categoria}`);
+         //if (popup) {
+         //  openPopup1(popup);
+         //}
       });
 
       card.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           showConstructionOverlay();
-          // Original popup functionality commented out for construction mode
-          // const categoria = card.dataset.categoria;
-          // const popup = document.getElementById(`popup1-${categoria}`);
-          // if (popup) {
-          //   openPopup1(popup);
-          // }
+           //Original popup functionality commented out for construction mode
+           //const categoria = card.dataset.categoria;
+           //const popup = document.getElementById(`popup1-${categoria}`);
+           //if (popup) {
+           //  openPopup1(popup);
+           //}
         }
       });
     });
