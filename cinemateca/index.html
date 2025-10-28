@@ -325,6 +325,13 @@
 				width: 150px;
 				height: 225px;
 			}
+			.poster-title {
+				font-size: 1rem; /* Reduced from 1.25rem */
+				line-height: 1.2;
+			}
+			.poster-info {
+				padding: 1.5rem 1rem 1rem; /* Reduced padding */
+			}
 		}
 
 		@media (max-width: 480px) {
@@ -341,6 +348,13 @@
 			.poster-card {
 				width: 140px;
 				height: 210px;
+			}
+			.poster-title {
+				font-size: 0.9rem; /* Even smaller for very small screens */
+				line-height: 1.1;
+			}
+			.poster-info {
+				padding: 1.2rem 0.8rem 0.8rem; /* Even less padding */
 			}
 
 		}
@@ -627,6 +641,9 @@
 				width: 40px;
 				height: 40px;
 				font-size: 1.5rem;
+				top: 0.75rem; /* Moved up slightly */
+				right: 0.75rem; /* Moved in slightly */
+				z-index: 10002; /* Ensure it's above everything */
 			}
 
 			.vimeo-container {
@@ -754,7 +771,7 @@ const movies = [
 		// Set Vimeo player
 		const vimeoPlayer = document.getElementById('vimeoPlayer');
 		if (movie.vimeoId) {
-			vimeoPlayer.src = `https://player.vimeo.com/video/${movie.vimeoId}?autoplay=1&title=0&byline=0&portrait=0`;
+			vimeoPlayer.src = `https://player.vimeo.com/video/${movie.vimeoId}?autoplay=0&title=0&byline=0&portrait=0`;
 		} else {
 			vimeoPlayer.src = '';
 		}
