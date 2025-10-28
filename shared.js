@@ -18,11 +18,11 @@ function createHeader() {
     <nav aria-label="Menu principal" id="main-nav" class="active">
       <ul>
         <li><a href="/eventos/">Eventos</a></li>
-        <li><a href="/biblioteca/index.html">Biblioteca</a></li>
+        <li><a href="/biblioteca/">Biblioteca</a></li>
         <li data-debug="true"><a href="/cinemateca-tv.html">TV</a></li>
         <li data-debug="true"><a href="/pc.html">PC</a></li>
-        <li data-debug="true"><a href="/computer-films/index.html">Cine-PC</a></li>
-        <li><a href="/cinemateca/index.html">Cinemateca</a></li>
+        <li data-debug="true"><a href="/computer-films/">Cine-PC</a></li>
+        <li><a href="/cinemateca/">Cinemateca</a></li>
         <li><a href="/mercado.html">Mercado</a></li>
         <li><a href="/comunidad.html">Comunidad</a></li>
         <li><a href="/contactos.html">Contactos</a></li>
