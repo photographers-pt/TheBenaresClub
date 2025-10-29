@@ -115,12 +115,68 @@
       color: #ddd;
     }
 
-    /* Photo Grid */
+    /* Events History */
+    .events-history {
+      margin-bottom: 3rem;
+    }
+
+    .event-section {
+      background-color: rgba(15, 15, 15, 0.6);
+      backdrop-filter: blur(10px) saturate(120%);
+      -webkit-backdrop-filter: blur(10px) saturate(120%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .event-header {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 1rem;
+    }
+
+    .event-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--accent-color);
+    }
+
+    .event-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+      color: #bbb;
+    }
+
+    .event-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .event-meta i {
+      color: var(--accent-color);
+      font-size: 1rem;
+    }
+
+    .event-meta a {
+      color: #bbb;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .event-meta a:hover {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
-      margin-bottom: 3rem;
     }
 
     .photo-item {
@@ -129,6 +185,7 @@
       border-radius: 8px;
       cursor: pointer;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
     }
 
     .photo-item:hover {
@@ -141,6 +198,11 @@
       height: 100%;
       object-fit: cover;
       filter: grayscale(100%);
+      transition: filter 0.3s ease;
+    }
+
+    .photo-item:hover img {
+      filter: grayscale(0%);
     }
 
     /* Fullscreen Modal */
@@ -204,6 +266,20 @@
         grid-template-columns: 1fr;
       }
 
+      .event-section {
+        padding: 1.5rem;
+      }
+
+      .event-title {
+        font-size: 1.25rem;
+      }
+
+      .event-meta {
+        flex-direction: column;
+        gap: 0.75rem;
+        font-size: 0.85rem;
+      }
+
       .photo-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 0.5rem;
@@ -245,56 +321,113 @@
       </div>
     </div>
 
-    <!-- Photo Grid -->
-    <div class="photo-grid">
-      <div class="photo-item">
-        <img src="./fotos/1.jpg" alt="Gallery Image">
+    <!-- Events History -->
+    <div class="events-history">
+      
+      <!-- Event 1 -->
+      <div class="event-section">
+        <div class="event-header">
+          <h2 class="event-title">Night Lounge #1</h2>
+          <div class="event-meta">
+            <span><i class="fas fa-map-marker-alt"></i> <a href="https://maps.google.com/?q=ETIC+Atmosferas+Lisboa" target="_blank">ETIC Atmosferas, Lisboa</a></span>
+            <span><i class="fas fa-calendar-alt"></i> December 6, 2024</span>
+            <span><i class="fas fa-camera"></i> Photos by: <a href="https://www.instagram.com/santiago.photographyy/" target="_blank">Santiago Machuca</a>&<a href="https://www.instagram.com/val.nevs/" target="_blank">Valdir Neves</a></span>
+          </div>
+        </div>
+        <div class="photo-grid">
+          <div class="photo-item">
+            <img src="./fotos/1.jpg">
+          </div>
+          <div class="photo-item">
+            <img src="./fotos/2.jpg">
+          </div>
+          <div class="photo-item">
+            <img src="./fotos/3.jpg">
+          </div>
+          <div class="photo-item">
+            <img src="./fotos/4.jpg">
+          </div>
+        </div>
       </div>
-      <div class="photo-item">
-        <img src="./fotos/2.jpg" alt="Gallery Image">
+
+      <!-- Event 2 -->
+      <div class="event-section">
+        <div class="event-header">
+          <h2 class="event-title">Night Lounge #2</h2>
+          <div class="event-meta">
+            <span><i class="fas fa-map-marker-alt"></i> <a href="https://maps.google.com/?q=ETIC+Atmosferas+Lisboa" target="_blank">ETIC Atmosferas, Lisboa</a></span>
+            <span><i class="fas fa-calendar-alt"></i> January 30, 2025</span>
+            <span><i class="fas fa-camera"></i> Photos by: <a href="https://www.instagram.com/foxfecit/" target="_blank">Mel Fox</a></span>
+          </div>
+        </div>
+        <div class="photo-grid">
+          <div class="photo-item">
+            <img src="./fotos/5.jpg">
+          </div>
+          <div class="photo-item">
+            <img src="./fotos/6.jpg">
+          </div>
+          <div class="photo-item">
+            <img src="./fotos/7.jpg">
+          </div>
+          <div class="photo-item">
+            <img src="./fotos/8.jpg">
+          </div>
+        </div>
       </div>
-      <div class="photo-item">
-        <img src="./fotos/3.jpg" alt="Gallery Image">
+
+      <!-- Event 3 -->
+      <div class="event-section">
+        <div class="event-header">
+          <h2 class="event-title">Special <a href="https://www.instagram.com/cmcs_media/" target="_blank">CMCS Media</a> Film Screening</h2>
+          <div class="event-meta">
+            <span><i class="fas fa-map-marker-alt"></i> <a href="https://maps.google.com/?q=Fabrica+Braco+de+Prata+Lisboa" target="_blank">Fábrica Braço de Prata, Lisboa</a></span>
+            <span><i class="fas fa-calendar-alt"></i> April 18, 2025</span>
+            <span><i class="fas fa-camera"></i> Photos by: <a href="https://www.instagram.com/val.nevs/" target="_blank">Valdir Neves</a></span>
+          </div>
+        </div>
+        <div class="photo-grid">
+          <div class="photo-item">
+            <img src="./fotos/9.jpg">
+          </div>
+          <div class="photo-item">
+            <img src="./fotos/10.jpg">
+          </div>
+          <div class="photo-item">
+            <img src="./fotos/11.jpg">
+          </div>
+          <div class="photo-item">
+            <img src="./fotos/12.jpg">
+          </div>
+        </div>
       </div>
-      <div class="photo-item">
-        <img src="./fotos/4.jpg" alt="Gallery Image">
+
+      <!-- Event 4 -->
+      <div class="event-section">
+        <div class="event-header">
+          <h2 class="event-title">MashUp #1 Club Benares & <a href="https://www.instagram.com/cinecore.lx/" target="_blank">Cinecore</a> | Horror Short-films Screening</h2>
+          <div class="event-meta">
+            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/cossoul.sigc/" target="_blank">Cossoul, Lisboa</a></span>
+            <span><i class="fas fa-calendar-alt"></i> October 16, 2025</span>
+            <span><i class="fas fa-camera"></i> Photos by: <a href="https://www.instagram.com/contraplonge/" target="_blank">Karen Mattos</a>&<a href="https://www.instagram.com/val.nevs/" target="_blank">Valdir Neves</a></span>
+          </div>
+        </div>
+        <div class="photo-grid">
+          <div class="photo-item">
+            <img src="./fotos/13.jpg">
+          </div>
+          <div class="photo-item">
+            <img src="./fotos/14.jpg">
+          </div>
+          <div class="photo-item">
+            <img src="./fotos/15.jpg">
+          </div>
+          <div class="photo-item">
+            <img src="./fotos/16.jpg">
+          </div>
+        </div>
       </div>
-      <div class="photo-item">
-        <img src="./fotos/5.jpg" alt="Gallery Image">
-      </div>
-      <div class="photo-item">
-        <img src="./fotos/6.jpg" alt="Gallery Image">
-      </div>
-      <div class="photo-item">
-        <img src="./fotos/7.jpg" alt="Gallery Image">
-      </div>
-      <div class="photo-item">
-        <img src="./fotos/8.jpg" alt="Gallery Image">
-      </div>
-      <div class="photo-item">
-        <img src="./fotos/9.jpg" alt="Gallery Image">
-      </div>
-      <div class="photo-item">
-        <img src="./fotos/10.jpg" alt="Gallery Image">
-      </div>
-      <div class="photo-item">
-        <img src="./fotos/11.jpg" alt="Gallery Image">
-      </div>
-      <div class="photo-item">
-        <img src="./fotos/12.jpg" alt="Gallery Image">
-      </div>
-      <div class="photo-item">
-        <img src="./fotos/13.jpg" alt="Gallery Image">
-      </div>
-      <div class="photo-item">
-        <img src="./fotos/14.jpg" alt="Gallery Image">
-      </div>
-      <div class="photo-item">
-        <img src="./fotos/15.jpg" alt="Gallery Image">
-      </div>
-      <div class="photo-item">
-        <img src="./fotos/16.jpg" alt="Gallery Image">
-      </div>
+
     </div>
 
     <!-- Story Section -->
@@ -338,9 +471,7 @@
     });
 
     modal.addEventListener('click', function(e) {
-      if (e.target === modal) {
-        modal.classList.remove('active');
-      }
+      modal.classList.remove('active');
     });
 
     // Close with Escape key
