@@ -245,17 +245,17 @@
     
       const detalhesEventos = {
         "BATTLE ROYALE": {
-          description: "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500...",
+          description: "Mostra competitiva internacional de curtas e médias-metragens.",
           image: "./battle.jpg",
           link: "#"
         },
         "Night Lounge": {
-          description: "Descrição detalhada e independente para Night Lounge, com mais informações que não aparecem na tarjeta.",
+          description: "Noites descontraídas de projeções e conversas com snacks e música.",
           image: "./night.jpg",
           link: "#"
         },
         "Circuito Nacional": {
-          description: "Texto exclusivo para Circuito Nacional, detalhando o evento de forma independente.",
+          description: "Tour nacional com filmes da comunidade e convidados especiais.",
           image: "./circuito.jpg",
           link: "#"
         }
@@ -275,7 +275,7 @@
             <h3 style="margin-bottom: 1rem;">${title}</h3>
             <img src="${evento.image}" alt="${title}" style="width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
             <p style="margin-bottom: 1rem;">${evento.description}</p>
-            <a href="${evento.link}" style="display: inline-block; background-color: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 0.6rem 1.2rem; font-weight: 600; font-size: 0.9rem; border-radius: 8px; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 0 6px rgba(255, 255, 255, 0.1);">Saber Mais</a>
+            <a href="${evento.link}" style="cursor: not-allowed; display: inline-block; background-color: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 0.6rem 1.2rem; font-weight: 600; font-size: 0.9rem; border-radius: 8px; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 0 6px rgba(255, 255, 255, 0.1);">Saber Mais</a>
           `;
           popupOverlay.style.display = 'flex';
           document.body.style.overflow = 'hidden';
