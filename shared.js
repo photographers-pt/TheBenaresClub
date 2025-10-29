@@ -6,6 +6,27 @@ console.log("Complete shared.js loaded");
 
 function createHeader() {
   return `
+    <style>
+      @keyframes pulseRed {
+        0%, 100% {
+          text-shadow: 0 0 10px rgba(255, 0, 0, 0.1),
+                       0 0 20px rgba(255, 0, 0, 0.1),
+                       0 0 30px rgba(255, 0, 0, 0.1);
+        }
+        50% {
+          text-shadow: 0 0 10px rgba(255, 0, 0, 1),
+                       0 0 20px rgba(255, 0, 0, 1),
+                       0 0 30px rgba(255, 0, 0, 1);
+        }
+      }
+      
+      nav a[href="/eventos/"] {
+        color: white !important;
+        animation: pulseRed 2s ease-in-out infinite;
+        font-weight: 600;
+      }
+    </style>
+    
    <header>
       <a href="/">
         <img src="/media/A00_Logo_&_title_-_light.png" alt="Club Benares" style="height: 30px;">
