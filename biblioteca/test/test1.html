@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Cover</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #000;
+            margin: 10px;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            overflow: hidden;
+        }
+        
+        #cover-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 20px);
+        }
+        
+        #cover-container.hidden {
+            display: none;
+        }
+        
+        #cover {
+            max-width: 100%;
+            max-height: 100%;
+            cursor: pointer;
+            display: block;
+        }
+        
+        #main-content {
+            display: none;
+            height: calc(100vh - 20px);
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #main-content.visible {
+            display: flex;
+        }
+        
+        .img-wrapper {
+            position: relative;
+            display: flex;
+        }
+        
+        .img-wrapper img {
+            max-height: calc(100vh - 20px);
+            max-width: 50vw;
+            width: auto;
+            height: auto;
+            display: block;
+        }
+        
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 80%;
+        }
+        
+        #left-section .content {
+            left: 55%;
+        }
+        
+        #right-section .content {
+            left: 45%;
+        }
+        
+        .content h2 {
+            font-size: min(4.6vh, 6.6vw);
+            margin-bottom: min(1.5vh, 2.2vw);
+        }
+        
+        .content p {
+            font-size: min(2.8vh, 4vw);
+            line-height: 1.6;
+            margin-bottom: min(1.2vh, 1.7vw);
+        }
+        
+        .content a {
+            font-size: min(2.8vh, 4vw);
+            color: #4da6ff;
+            text-decoration: none;
+        }
+        
+        .content a:hover {
+            text-decoration: underline;
+        }
+        
+        .content img {
+            max-width: 80%;
+            height: auto;
+            margin: 1.5vmin 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="cover-container">
+        <img id="cover" src="cover1.png" alt="Cover" onclick="showContent()">
+    </div>
+    
+    <div id="main-content">
+        <div class="img-wrapper" id="left-section">
+            <img src="left1.png" alt="Left page">
+            <div class="content">
+                <h2>Left Section</h2>
+                <p>This is the left section.</p>
+                <p>You can add text, <a href="#">links</a>, and images here.</p>
+                <p>More content can go here...</p>
+            </div>
+        </div>
+        
+        <div class="img-wrapper" id="right-section">
+            <img src="right.png" alt="Right page">
+            <div class="content">
+                <h2>Right Section</h2>
+                <p>This is the right section.</p>
+                <p>Add your content, <a href="#">links</a>, and images here too.</p>
+                <p>Additional content...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showContent() {
+            document.getElementById('cover-container').classList.add('hidden');
+            document.getElementById('main-content').classList.add('visible');
+        }
+    </script>
+</body>
+</html>
