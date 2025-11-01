@@ -16,6 +16,13 @@
       font-style: normal;
     }
 
+    @font-face {
+      font-family: 'DSEG7';
+      src: url('./fuentes/DSEG7Modern-BoldItalic.ttf') format('truetype');
+      font-weight: bold;
+      font-style: italic;
+    }
+
     .bg-sample {
       background-image: url('./media/B01 Club Benares.png');
       background-size: cover;
@@ -88,6 +95,75 @@
       color: #fff;
       text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
       transform: scale(1.1);
+    }
+
+    /* Next Event Countdown */
+    .next-event-section {
+      background-color: rgba(15, 15, 15, 0.6);
+      backdrop-filter: blur(10px) saturate(120%);
+      -webkit-backdrop-filter: blur(10px) saturate(120%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .next-event-section a {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      color: var(--accent-color);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .next-event-section a::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+      );
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    .next-event-section a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.5);
+      color: #fff;
+      transform: scale(1.02);
+    }
+
+    #countdown {
+      font-family: 'DSEG7', monospace;
+      font-size: 2rem;
     }
 
     /* Story Section */
@@ -272,6 +348,18 @@
         font-size: 4rem;
       }
 
+      .next-event-section {
+        padding: 1.5rem 1rem;
+        font-size: 1.1rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .next-event-section a {
+        font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
+      }
+
       .story-section {
         grid-template-columns: 1fr;
       }
@@ -337,6 +425,12 @@
     <div class="events-history">
 
 
+
+    <!-- Next Event Countdown -->
+    <div class="next-event-section">
+      Next Event in <span id="countdown">15</span> days
+      <a href="/eventos/index.html">View All Events</a>
+    </div>
 
     <!-- Story Section -->
     <div class="story-section">
@@ -469,6 +563,29 @@
   <script src="shared.js"></script>
 
   <script>
+    // Countdown to next event
+    function updateCountdown() {
+      const eventDate = new Date('2025-11-15T00:00:00');
+      const now = new Date();
+      const difference = eventDate - now;
+      
+      const days = Math.ceil(difference / (1000 * 60 * 60 * 24));
+      
+      const countdownElement = document.getElementById('countdown');
+      
+      if (days > 0) {
+        countdownElement.textContent = days;
+      } else if (days === 0) {
+        countdownElement.textContent = '0';
+      } else {
+        countdownElement.textContent = '0';
+      }
+    }
+    
+    // Update countdown immediately and then every hour
+    updateCountdown();
+    setInterval(updateCountdown, 3600000); // Update every hour
+
     // Fullscreen image functionality
     const photoItems = document.querySelectorAll('.photo-item');
     const modal = document.getElementById('fullscreenModal');
