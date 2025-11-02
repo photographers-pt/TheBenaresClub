@@ -25,6 +25,18 @@ function createHeader() {
         animation: pulseRed 2s ease-in-out infinite;
         font-weight: 600;
       }
+      
+      nav a.active {
+        background-color: rgba(255, 255, 255, 0.15);
+        padding: 8px 16px;
+        border-radius: 6px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+      
+      nav img {
+        vertical-align: middle;
+      }
     </style>
     
    <header>
@@ -38,6 +50,7 @@ function createHeader() {
     
     <nav aria-label="Menu principal" id="main-nav" class="active">
       <ul>
+        <li><a href="/"><img src="/media/logo_small.png" alt="Logo" style="height:25px;"></a></li>
         <li><a href="/eventos/">Eventos</a></li>
         <li><a href="/biblioteca/">Biblioteca</a></li>
         <li data-debug="true"><a href="/cinemateca-tv.html">TV</a></li>
@@ -63,6 +76,14 @@ function createFooter() {
         background-color: rgba(255, 255, 255, 0.15) !important;
         box-shadow: 0 0 6px rgba(255, 255, 255, 0.1) !important;
         transform: none !important;
+      }
+      
+      nav a.active {
+        background-color: rgba(255, 255, 255, 0.15);
+        padding: 8px 16px;
+        border-radius: 6px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
       }
     </style>
     <footer>
@@ -284,11 +305,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Highlight current page
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    const currentLink = document.querySelector(`nav a[href="${currentPage}"]`);
+    const currentPath = window.location.pathname;
+    const currentLink = document.querySelector(`nav a[href="${currentPath}"]`);
     if (currentLink) {
-    if (currentLink) currentLink.classList.add('active');
-  }
+      currentLink.classList.add('active');
+    }
 
   // Insert footer
   const footerContainer = document.getElementById('footer-container');
