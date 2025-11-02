@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Open Book Layout</title>
     <style>
+        @font-face {
+            font-family: 'Montserrat';
+            src: url('../Fontes/Montserrat-VariableFont_wght.ttf') format('truetype');
+            font-weight: 100 900;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -23,6 +29,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .book-container {
@@ -63,7 +70,7 @@
             overflow: hidden;
             padding: 2rem;
             color: #000;
-            font-family: 'Georgia', serif;
+            font-family: 'Montserrat', sans-serif;
             line-height: 1.4;
             font-size: 3rem;
         }
@@ -105,13 +112,6 @@
             text-decoration: underline;
         }
 
-        .page img {
-            width: 100%;
-            height: auto;
-            margin: 1rem 0;
-            border-radius: 0.4rem;
-        }
-
         .page ul {
             margin-left: 2rem;
             font-size: 3rem;
@@ -123,7 +123,7 @@
 
         .menu-item {
             font-size: 3rem;
-            font-weight: bold;
+            font-weight: normal;
             margin-bottom: 1.5rem;
             cursor: pointer;
             display: block;
@@ -140,6 +140,59 @@
         }
 
         .content-section.active {
+            display: block;
+        }
+
+        .links-section {
+            margin-top: 2rem;
+        }
+
+        .links-section a {
+            display: block;
+            font-size: 2.4rem;
+            color: #8B4513;
+            text-decoration: none;
+            margin-bottom: 1rem;
+            width: fit-content;
+            transition: background-color 0.3s;
+        }
+
+        .links-section a:hover {
+            background-color: #FFD700;
+        }
+
+        .gallery-section, .extras-section {
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            margin-bottom: 2rem;
+        }
+
+        .gallery-item p {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-button, .film-button {
+            display: inline-block;
+            font-size: 2.2rem;
+            color: #fff;
+            background-color: #8B4513;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .gallery-button:hover, .film-button:hover {
+            background-color: #D2691E;
+        }
+
+        .content-section img {
+            width: 100%;
+            height: auto;
             display: block;
         }
 
@@ -170,6 +223,8 @@
 </head>
 <body>
     <a href="/biblioteca/" class="back-button">←</a>
+    <audio id="open-book-sound" src="/A Side/A00 Club Benares/Materiales/Audios/Open Book Sound Effect.mp3" preload="auto"></audio>
+    <audio id="close-book-sound" src="/A Side/A00 Club Benares/Materiales/Audios/Close Book Sound Effect.mp3" preload="auto"></audio>
     <div class="book-container">
         <img src="artista.jpg" alt="Open Book" class="book-image">
         
@@ -187,39 +242,61 @@
 
                 <div class="page right-page">
                     <div class="content-section active" id="notascharlie">
-                        <h2>Notas Charlie</h2>
-                        <p>Conteúdo das Notas Charlie aqui...</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <img src="./Imagens/01 EAC - Notas.png" alt="Notas Charlie">
                     </div>
 
                     <div class="content-section" id="fichatecnica">
                         <h2>Ficha Técnica</h2>
-                        <p>Informações técnicas do projeto...</p>
-                        <p>Detalhes sobre a produção, equipamento utilizado, etc.</p>
+                        <p><strong>Runtime:</strong> 3m42s</p>
+                        <p><strong>Câmera:</strong> Sony FX30 + Sony A7III</p>
+                        <p><strong>Áudio:</strong> Premix3 + Rode NTG2</p>
+                        <p><strong>Software:</strong> Kdenlive</p>
+                        <p><strong>Local:</strong> Areeiro, Lisboa</p>
+                        
+                        <p style="margin-top: 2rem;"><strong>REALIZAÇÃO + PRODUÇÃO + EDIÇÃO</strong><br>
+                        <a href="https://www.instagram.com/charliechavess/" target="_blank">Charlie Chaves</a></p>
+                        
+                        <p><strong>Assistência Produção</strong><br>
+                        <a href="https://www.instagram.com/nityamnow/" target="_blank">Nityam</a> + <a href="https://www.instagram.com/pontes_filmworks/" target="_blank">Patricia Pontes</a></p>
+                        
+                        <p><strong>IMAGEM</strong><br>
+                        <a href="https://www.instagram.com/goncalopereiraaa/" target="_blank">Gonçalo Pereira</a> + <a href="https://www.instagram.com/nityamnow/" target="_blank">Nityam</a></p>
+                        
+                        <p><strong>SOM</strong><br>
+                        <a href="https://www.instagram.com/val.nevs/" target="_blank">Valdir Neves</a></p>
                     </div>
 
                     <div class="content-section" id="fichaartistica">
-                        <h2>Ficha Artística</h2>
-                        <p>Elenco e equipe artística...</p>
-                        <p>Informações sobre os artistas envolvidos.</p>
+                        <img src="./Imagens/03 EAC - Ficha Artistica.png" alt="Ficha Artística">
+                        <div class="links-section">
+                            <a href="https://www.instagram.com/charliechavess/" target="_blank">Charlie Chaves</a>
+                            <a href="https://www.instagram.com/nobru_defranfran/" target="_blank">Bruno de Franclieu</a>
+                        </div>
                     </div>
 
                     <div class="content-section" id="sinopse">
-                        <h2>Sinopse</h2>
-                        <p>Resumo da história ou projeto...</p>
-                        <p>Uma breve descrição do conteúdo principal.</p>
+                        <img src="./Imagens/04 EAC - Sinopse.png" alt="Sinopse">
                     </div>
 
                     <div class="content-section" id="fotografias">
-                        <h2>Fotografias</h2>
-                        <img src="https://picsum.photos/400/300?random=1" alt="Fotografia 1">
-                        <img src="https://picsum.photos/400/300?random=2" alt="Fotografia 2">
+                        <img src="./Imagens/05 EAC - Fotografias.png" alt="Fotografias">
+                        <div class="gallery-section">
+                            <div class="gallery-item">
+                                <p>71 Imagens Fotografias: Valdir Neves</p>
+                                <a href="./EACrodagem.html" target="_blank" class="gallery-button">Visualizar</a>
+                            </div>
+                            <div class="gallery-item">
+                                <p>4 Frames Direccíon: Charlie Chaves</p>
+                                <a href="./EACframes.html" target="_blank" class="gallery-button">Visualizar</a>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="content-section" id="extras">
-                        <h2>Extras</h2>
-                        <p>Conteúdo adicional e materiais extras...</p>
-                        <p>Informações complementares e recursos adicionais.</p>
+                        <img src="./Imagens/06 EAC - Extras.png" alt="Extras">
+                        <div class="extras-section">
+                            <a href="/A Side/A03 El Cuarto de Charlie/El Cuarto de Charlie.html" target="_blank" class="film-button">+ Vê o filme aqui!</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -227,6 +304,20 @@
     </div>
 
     <script>
+        // Debug: Add random color box shadows to all elements
+        function debugBoxShadows() {
+            document.querySelectorAll('*').forEach(element => {
+                const r = Math.floor(Math.random() * 256);
+                const g = Math.floor(Math.random() * 256);
+                const b = Math.floor(Math.random() * 256);
+                element.style.boxShadow = `0 0 0 1px rgb(${r}, ${g}, ${b})`;
+            });
+        }
+        
+        // Uncomment the line below to enable debug mode
+        debugBoxShadows();
+
+        // Menu functionality
         document.querySelectorAll('.menu-item').forEach(item => {
             item.addEventListener('click', function() {
                 const contentId = this.getAttribute('data-content');
