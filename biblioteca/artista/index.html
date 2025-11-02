@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Book Layout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: min(calc(100vw / 90), calc(100vh / 64.8));
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .book-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .book-image {
+            width: 90rem;
+            height: 64.8rem;
+            object-fit: contain;
+            display: block;
+        }
+
+        .content-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90rem;
+            height: 64.8rem;
+            pointer-events: none;
+        }
+
+        .content-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .page {
+            position: absolute;
+            pointer-events: auto;
+            overflow: hidden;
+            padding: 2rem;
+            color: #000;
+            font-family: 'Georgia', serif;
+            line-height: 1.4;
+            font-size: 3rem;
+        }
+
+        .left-page {
+            top: 7.8rem;
+            left: 5.4rem;
+            width: 36rem;
+            height: 49rem;
+        }
+
+        .right-page {
+            top: 7.8rem;
+            right: 5.4rem;
+            width: 36rem;
+            height: 49rem;
+        }
+
+        .page h2 {
+            font-size: 4.5rem;
+            margin-bottom: 2rem;
+            color: #000;
+        }
+
+        .page p {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page a {
+            color: #8B4513;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .page a:hover {
+            color: #D2691E;
+            text-decoration: underline;
+        }
+
+        .page img {
+            width: 100%;
+            height: auto;
+            margin: 1rem 0;
+            border-radius: 0.4rem;
+        }
+
+        .page ul {
+            margin-left: 2rem;
+            font-size: 3rem;
+        }
+
+        .page li {
+            margin-bottom: 0.6rem;
+        }
+
+        .menu-item {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            display: block;
+            width: fit-content;
+            transition: background-color 0.3s;
+        }
+
+        .menu-item:hover {
+            background-color: #FFD700;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            width: 5rem;
+            height: 5rem;
+            background-color: #fff;
+            border: 0.2rem solid #000;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            z-index: 1000;
+            text-decoration: none;
+            font-size: 3rem;
+            color: #000;
+        }
+
+        .back-button:hover {
+            background-color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <a href="/biblioteca/" class="back-button">←</a>
+    <div class="book-container">
+        <img src="artista.jpg" alt="Open Book" class="book-image">
+        
+        <div class="content-wrapper">
+            <div class="content-inner">
+                <div class="page left-page">
+                    <h2>El Artista Comprendido</h2>
+                    <div class="menu-item" data-content="notascharlie">Notas Charlie</div>
+                    <div class="menu-item" data-content="fichatecnica">Ficha Técnica</div>
+                    <div class="menu-item" data-content="fichaartistica">Ficha Artística</div>
+                    <div class="menu-item" data-content="sinopse">Sinopse</div>
+                    <div class="menu-item" data-content="fotografias">Fotografias</div>
+                    <div class="menu-item" data-content="extras">Extras</div>
+                </div>
+
+                <div class="page right-page">
+                    <div class="content-section active" id="notascharlie">
+                        <h2>Notas Charlie</h2>
+                        <p>Conteúdo das Notas Charlie aqui...</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+
+                    <div class="content-section" id="fichatecnica">
+                        <h2>Ficha Técnica</h2>
+                        <p>Informações técnicas do projeto...</p>
+                        <p>Detalhes sobre a produção, equipamento utilizado, etc.</p>
+                    </div>
+
+                    <div class="content-section" id="fichaartistica">
+                        <h2>Ficha Artística</h2>
+                        <p>Elenco e equipe artística...</p>
+                        <p>Informações sobre os artistas envolvidos.</p>
+                    </div>
+
+                    <div class="content-section" id="sinopse">
+                        <h2>Sinopse</h2>
+                        <p>Resumo da história ou projeto...</p>
+                        <p>Uma breve descrição do conteúdo principal.</p>
+                    </div>
+
+                    <div class="content-section" id="fotografias">
+                        <h2>Fotografias</h2>
+                        <img src="https://picsum.photos/400/300?random=1" alt="Fotografia 1">
+                        <img src="https://picsum.photos/400/300?random=2" alt="Fotografia 2">
+                    </div>
+
+                    <div class="content-section" id="extras">
+                        <h2>Extras</h2>
+                        <p>Conteúdo adicional e materiais extras...</p>
+                        <p>Informações complementares e recursos adicionais.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const contentId = this.getAttribute('data-content');
+                
+                // Hide all content sections
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show the selected content section
+                document.getElementById(contentId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
