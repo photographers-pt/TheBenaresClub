@@ -271,12 +271,12 @@
             link: '#'
           };
     
-          popupContent.innerHTML = `
-            <h3 style="margin-bottom: 1rem;">${title}</h3>
-            <img src="${evento.image}" alt="${title}" style="width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
-            <p style="margin-bottom: 1rem;">${evento.description}</p>
-            <a href="${evento.link}" style="cursor: not-allowed; display: inline-block; background-color: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 0.6rem 1.2rem; font-weight: 600; font-size: 0.9rem; border-radius: 8px; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 0 6px rgba(255, 255, 255, 0.1);">Saber Mais</a>
-          `;
+popupContent.innerHTML = `
+  <h3 style="margin-bottom: 1rem;">${title}</h3>
+  <img src="${evento.image}" alt="${title}" style="width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+  <p style="margin-bottom: 1rem;">${evento.description}</p>
+  <button disabled style="cursor: not-allowed; display: inline-block; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); color: #999; padding: 0.6rem 1.2rem; font-weight: 600; font-size: 0.9rem; border-radius: 8px; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 0 6px rgba(255, 255, 255, 0.1); opacity: 0.5;">Saber Mais</button>
+`;
           popupOverlay.style.display = 'flex';
           document.body.style.overflow = 'hidden';
         });
