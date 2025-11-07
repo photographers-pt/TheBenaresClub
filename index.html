@@ -11,21 +11,31 @@
   <style>
     @font-face {
       font-family: 'Extenda';
-      src: url('./fuentes/Extenda30Deca.woff2') format('woff2'),
+      src: url('/fuentes/Extenda30Deca.woff2') format('woff2'),
       font-weight: normal;
       font-style: normal;
     }
 
     @font-face {
       font-family: 'DSEG7';
-      src: url('./fuentes/DSEG7Modern-BoldItalic.woff2') format('woff2'),
-           url('./fuentes/DSEG7Modern-BoldItalic.woff') format('woff');
+      src: url('/fuentes/DSEG7Modern-Regular.woff2') format('woff2'),
+           url('/fuentes/DSEG7Modern-Regular.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'DSEG7';
+      src: url('/fuentes/DSEG7Modern-BoldItalic.woff2') format('woff2'),
+           url('/fuentes/DSEG7Modern-BoldItalic.woff') format('woff');
       font-weight: bold;
       font-style: italic;
+      font-display: swap;
     }
 
     .bg-sample {
-      background-image: url('./media/B01 Club Benares.png');
+      background-image: url('/media/B01 Club Benares.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -169,6 +179,8 @@
 
     #countdown {
       font-family: 'DSEG7', monospace;
+      font-weight: bold;
+      font-style: italic;
       font-size: 2rem;
       color: red;
     }
