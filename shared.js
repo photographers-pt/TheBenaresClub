@@ -60,7 +60,8 @@ function createHeader() {
         <li><a href="/mercado/">Mercado</a></li>
         <li><a href="/comunidad/">Comunidad</a></li>
         <li><a href="/contactos/">Contactos</a></li>
-        <li data-debug="true"><a href="/movielog/">movielog</a></li>
+        <li data-debug="true"><a href="/movielog/">Movie Log</a></li>
+        <li data-debug="true"><a href="/sample.html">Sample</a></li>
       </ul>
     </nav>
   `;
