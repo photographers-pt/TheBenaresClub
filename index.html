@@ -165,7 +165,6 @@
       100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
     }
 
-    /* Pause shimmer when not in view */
     .next-event-section a.paused::before {
       animation-play-state: paused;
     }
@@ -187,32 +186,148 @@
 
     /* Story Section */
     .story-section {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 2rem;
-      margin-bottom: 0rem;
       background-color: rgba(15, 15, 15, 0.6);
       backdrop-filter: blur(5px) saturate(120%);
       -webkit-backdrop-filter: blur(5px) saturate(120%);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
-      padding: 1rem 2rem;
+      padding: 2rem;
+      margin-bottom: 3rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 2rem;
+      align-items: flex-start;
     }
 
-    .story-section h2 {
+    .story-section:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .story-image-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      border-radius: 8px;
+      aspect-ratio: 1;
+    }
+
+    .story-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .story-text-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .story-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0;
+      gap: 1rem;
+    }
+
+    .story-header h2 {
       font-size: 1.5rem;
       font-weight: 600;
+      flex: 1;
+    }
+    
+    /* Language Switcher Inside Story */
+    .language-switcher {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .lang-btn {
+      padding: 0.4rem 0.8rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .lang-btn img {
+      height: 24px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .lang-btn.active {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    }
+
+    .lang-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .story-toggle-btn {
+      background: none;
+      border: none;
+      color: var(--accent-color);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      padding: 0.5rem;
+      flex-shrink: 0;
+      display: none;
+    }
+
+    .story-toggle-btn.expanded {
+      transform: rotate(180deg);
+    }
+
+    /* Story Content with fade effect */
+    .story-content-wrapper {
+      position: relative;
+      max-height: none;
+      overflow: visible;
+      transition: max-height 0.3s ease;
+      grid-column: 1 / -1;
+    }
+
+    .story-content-wrapper.expanded {
+      max-height: none;
+    }
+
+    .story-content-wrapper::after {
+      display: none;
+    }
+
+    .story-content-wrapper.expanded::after {
+      display: none;
+    }
+
+    .story-content {
+      position: relative;
+      z-index: 1;
     }
 
     .story-section p {
       font-size: 0.85rem;
       line-height: 1.8;
       color: #ddd;
+      margin: 0;
+      white-space: pre-wrap;
     }
 
     /* Events History */
     .events-history {
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
     }
 
     .event-section {
@@ -222,8 +337,7 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
       padding: 1rem 2rem;
-
-      margin-bottom: 0.5rem;
+      margin-bottom: 2rem;
     }
 
     .event-header {
@@ -377,10 +491,6 @@
         padding: 0.6rem 1.2rem;
       }
 
-      .story-section {
-        grid-template-columns: 1fr;
-      }
-
       .event-section {
         padding: 1.5rem;
       }
@@ -411,6 +521,62 @@
         height: 50px;
         font-size: 2rem;
       }
+
+      .story-section {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        align-items: stretch;
+      }
+
+      .story-header {
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .story-header h2 {
+        font-size: 1.2rem;
+      }
+
+      .language-switcher {
+        margin-bottom: 1rem;
+        gap: 0.5rem;
+      }
+
+      .lang-btn {
+        padding: 0.35rem 0.7rem;
+        font-size: 0.8rem;
+      }
+
+      .story-content-wrapper {
+        max-height: 60px;
+        overflow: hidden;
+        grid-column: 1;
+      }
+
+      .story-content-wrapper::after {
+        display: block;
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 40px;
+        background: linear-gradient(to bottom, transparent 0%, rgba(15, 15, 15, 0.6) 100%);
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+
+      .story-content-wrapper.expanded::after {
+        display: none;
+      }
+
+      .story-toggle-btn {
+        display: block;
+      }
+
+      .story-image-wrapper {
+        aspect-ratio: 16/9;
+      }
     }
   </style>
 </head>
@@ -430,13 +596,38 @@
     <!-- Events History -->
     <div class="events-history">
 
-    <!-- Story Section -->
-    <div class="story-section">
-      <h2>How it all started</h2>
-      <p>
-        Club Benares began as a vision to create a space where culture, creativity, and community converge. From intimate gatherings to grand celebrations, we've grown into a vibrant hub where diverse voices come together. Our story is written by every member, every event, and every moment shared within these walls.
-      </p>
-    </div>
+      <!-- Language Switcher - REMOVED FROM HERE -->
+
+      <!-- Expandable Story Section -->
+      <div class="story-section" id="story-section">
+        <div class="story-image-wrapper">
+          <img src="/media/about.jpg" alt="Club Benares">
+        </div>
+
+        <div class="story-text-wrapper">
+          <div class="story-header">
+            <h2 id="story-title">About Club Benares</h2>
+            <button class="story-toggle-btn" id="story-toggle-btn" aria-expanded="false">
+              <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+
+          <div class="language-switcher">
+            <button class="lang-btn active" data-lang="en" id="lang-en">
+              <img src="/media/flag-england.png" alt="English">
+            </button>
+            <button class="lang-btn" data-lang="pt" id="lang-pt">
+              <img src="/media/flag-portugal.png" alt="Português">
+            </button>
+          </div>
+          
+          <div class="story-content-wrapper" id="story-content-wrapper">
+            <div class="story-content">
+              <p id="story-text">Club Benares is a film community open to everyone who loves cinema. Founded by <strong>Charlie Chaves</strong> in 2023 in Lisbon, the club's original concept was to bring together a group of people, like a rock band, united by the desire to create independent films.<br><br>That idea remains alive, but the project has evolved. Today, Club Benares aims to be a space where professionals, students, amateurs, and enthusiasts can share experiences, exchange ideas, and collaborate on new projects.<br><br>Over time, the Club has grown and begun organizing events, screenings, debates, networking sessions, film productions, and festivals that bring artists and audiences together, <strong>strengthening the bonds within the community.</strong><br><br>We invite you to become part of Club Benares, to join our activities, and to enjoy the connection between people who share the same passion for cinema. Explore our website and discover all its sections and projects. <strong>We look forward to seeing you at our next event!</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- Event 1 -->
       <div class="event-section">
@@ -568,7 +759,6 @@
         </div>
       </div>
 
-
       <div class="event-section">
         <div class="event-header">
           <h2 class="event-title">Night Lounge #4 | Screening with <a href="https://www.meetup.com/filmmaking-lisbon/" target="_blank">Filmmaking Lisboa Group</a>  & <a href="https://www.instagram.com/cmcs_media/" target="_blank">CMCS Media</a></h2>
@@ -617,12 +807,7 @@
         </div>
       </div>
 
-
-
-
     </div>
-
-
 
   </main>
 
@@ -638,6 +823,51 @@
   <script src="/shared.js"></script>
 
   <script>
+    // Translations
+    const translations = {
+      en: {
+        title: "About Club Benares",
+        text: "Club Benares is a film community open to everyone who loves cinema. Founded by <strong>Charlie Chaves</strong> in 2023 in Lisbon, the club's original concept was to bring together a group of people, like a rock band, united by the desire to create independent films.\n\nThat idea remains alive, but the project has evolved. Today, Club Benares aims to be a space where professionals, students, amateurs, and enthusiasts can share experiences, exchange ideas, and collaborate on new projects.\n\nOver time, the Club has grown and begun organizing events, screenings, debates, networking sessions, film productions, and festivals that bring artists and audiences together, <strong>strengthening the bonds within the community.</strong>\n\nWe invite you to become part of Club Benares, to join our activities, and to enjoy the connection between people who share the same passion for cinema. Explore our website and discover all its sections and projects. <strong>We look forward to seeing you at our next event!</strong>"
+      },
+      pt: {
+        title: "Sobre Club Benares",
+        text: "Club Benares é uma comunidade de cinema aberta a todas as pessoas que amam o cinema. Fundado por <strong>Charlie Chaves</strong> em 2023 em Lisboa, o conceito original do Club era reunir uma equipa de pessoas, como uma banda de rock, interessadas em fazer cinema independente.\n\nEssa ideia continua viva, mas o projeto evoluiu. Hoje o Club Benares procura também criar um espaço onde profissionais, estudantes e amadores possam partilhar experiências, trocar ideias e desenvolver projetos em conjunto.\n\nCom o tempo, o Club cresceu e passou a organizar eventos, projeções, debates, sessões de networking, produções cinematográficas e festivais, promovendo o encontro entre artistas e o público e <strong>fortalecendo os laços dentro da comunidade.</strong>\n\nConvidamos-te a fazer parte do Club Benares, a participar nas nossas atividades e a viver a convivência entre pessoas que partilham a mesma paixão pelo cinema. Explora o nosso site e descobre cada um dos seus espaços e projetos. <strong>Esperamos ver-te no próximo evento!</strong>"
+      }
+    };
+
+    let currentLang = 'en';
+
+    // Story expansion functionality
+    const storyToggleBtn = document.getElementById('story-toggle-btn');
+    const storyContentWrapper = document.getElementById('story-content-wrapper');
+    const storyText = document.getElementById('story-text');
+    const storyTitle = document.getElementById('story-title');
+    const storySection = document.getElementById('story-section');
+    const langBtns = document.querySelectorAll('.lang-btn');
+
+    // Click on story section or button to expand
+    storySection.addEventListener('click', function() {
+      storyContentWrapper.classList.toggle('expanded');
+      storyToggleBtn.classList.toggle('expanded');
+      storyToggleBtn.setAttribute('aria-expanded', storyContentWrapper.classList.contains('expanded'));
+    });
+
+    // Language switching
+    langBtns.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent triggering story expansion
+        currentLang = this.dataset.lang;
+        
+        // Update active button
+        langBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Update text
+        storyTitle.textContent = translations[currentLang].title;
+        storyText.innerHTML = translations[currentLang].text;
+      });
+    });
+
     // Countdown to next event
     function updateCountdown() {
       const eventDate = new Date('2025-11-15T00:00:00');
@@ -679,39 +909,39 @@
       observer.observe(eventButton);
     }
 
-// Fullscreen image functionality (load full version only when clicked)
-const photoItems = document.querySelectorAll('.photo-item');
-const modal = document.getElementById('fullscreenModal');
-const fullscreenImg = document.getElementById('fullscreenImg');
-const closeBtn = document.getElementById('closeBtn');
+    // Fullscreen image functionality (load full version only when clicked)
+    const photoItems = document.querySelectorAll('.photo-item');
+    const modal = document.getElementById('fullscreenModal');
+    const fullscreenImg = document.getElementById('fullscreenImg');
+    const closeBtn = document.getElementById('closeBtn');
 
-photoItems.forEach(item => {
-  item.addEventListener('click', function() {
-    const img = this.querySelector('img');
-    const previewSrc = img.src;
+    photoItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const img = this.querySelector('img');
+        const previewSrc = img.src;
 
-    // Automatically switch folder to the full-resolution version
-    const fullSrc = previewSrc
-      .replace('/120px/', '/full/')
-      .replace('/320px/', '/full/');
+        // Automatically switch folder to the full-resolution version
+        const fullSrc = previewSrc
+          .replace('/120px/', '/full/')
+          .replace('/320px/', '/full/');
 
-    fullscreenImg.src = fullSrc;
-    modal.classList.add('active');
-  });
-});
+        fullscreenImg.src = fullSrc;
+        modal.classList.add('active');
+      });
+    });
 
-function closeFullscreen() {
-  modal.classList.remove('active');
-  fullscreenImg.src = ""; // unload full image to free memory
-}
+    function closeFullscreen() {
+      modal.classList.remove('active');
+      fullscreenImg.src = ""; // unload full image to free memory
+    }
 
-closeBtn.addEventListener('click', closeFullscreen);
-modal.addEventListener('click', closeFullscreen);
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape' && modal.classList.contains('active')) {
-    closeFullscreen();
-  }
-});
+    closeBtn.addEventListener('click', closeFullscreen);
+    modal.addEventListener('click', closeFullscreen);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeFullscreen();
+      }
+    });
 
   </script>
 
