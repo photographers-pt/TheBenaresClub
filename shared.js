@@ -50,7 +50,7 @@ function createHeader() {
     
     <nav aria-label="Menu principal" id="main-nav" class="active">
       <ul>
-        <li><a href="/"><img src="/media/logo_small.png" alt="Logo" style="height:25px;"></a></li>
+        <!--<li><a href="/"><img src="/media/logo_small.png" alt="Logo" style="height:25px;"></a></li>-->
         <li><a href="/eventos/">Eventos</a></li>
         <li><a href="/biblioteca/">Biblioteca</a></li>
         <li data-debug="true"><a href="/cinemateca-tv.html">TV</a></li>
