@@ -96,7 +96,7 @@ function createFooter() {
       </div>
       
       <div class="copyright">
-        &copy; 2025 Club Benares.
+        &copy; 2026 Club Benares.
       </div>
       
       <div class="social-icons">
