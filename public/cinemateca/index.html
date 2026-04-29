@@ -266,6 +266,32 @@
 			transform: translateY(0);
 		}
 
+		.poster-disabled {
+			cursor: not-allowed;
+			opacity: 0.5;
+			filter: grayscale(60%);
+		}
+
+		.poster-lock {
+			position: absolute;
+			inset: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 2rem;
+			opacity: 0;
+			transition: opacity 0.3s ease;
+			z-index: 2;
+		}
+
+		.poster-disabled:hover .poster-lock {
+			opacity: 1;
+		}
+
+		.poster-disabled:hover .poster-info {
+			transform: translateY(100%);
+		}
+
 		.poster-title {
 			color: white;
 			font-size: 1.25rem;
@@ -719,6 +745,7 @@ const movies = [
 	{
 		title: 'COMING SOON',
 		year: '2024',
+		disabled: true,
 		poster: './movies/profesor-thumb.jpg',
 		video: './movies/profesor.mp4',
 		backgroundImage: './movies/profesor-bg.jpg',
@@ -766,6 +793,29 @@ const movies = [
 			{ name: 'Varsha Mehra', character: 'Veera', photo: './talent/veera.jpg', profile: 'https://www.instagram.com/varsha_dabhi/' },
 			{ name: 'Yacine Meziti', character: 'Fábio', photo: './talent/fabio.jpg', profile: 'https://www.instagram.com/alchemist__777/' },
 			{ name: 'Francisco Lopes', character: 'Gustavo', photo: './talent/gustavo.jpg', profile: 'https://www.instagram.com/flsantos793/' }
+		]
+	},
+
+	{
+		title: 'OTTO',
+		year: '2026',
+		poster: './movies/otto-thumb.jpg',
+		video: '',
+		backgroundImage: '',
+		vimeoId: '',
+		description: 'Coming soon...',
+		crew: [
+			{ name: 'Charlie Chaves', roles: ['Realização', 'Produção'], link: 'https://www.instagram.com/charliechavess' },
+			{ name: 'Nityam', roles: ['Realização'], link: 'https://www.instagram.com/nityamnow' },
+			{ name: 'Valdir Neves', roles: ['Som', 'Stills'], link: 'https://www.instagram.com/val.nevs/' },
+			{ name: 'Elias', roles: ['Equipa'], link: '' },
+			{ name: 'Inês Serra', roles: ['Produção'], link: 'https://www.instagram.com/_nene.05_/' },
+			{ name: 'José Machado', roles: ['Assistente de Produção'], link: 'https://www.instagram.com/zemariamachado__/' },
+			{ name: 'Elmira', roles: ['Equipa'], link: '' }
+		],
+		cast: [
+			{ name: '???', character: '???', photo: './talent/placeholder.jpg', profile: '' },
+			{ name: '???', character: '???', photo: './talent/placeholder.jpg', profile: '' }
 		]
 	},
 
@@ -862,8 +912,9 @@ const movies = [
 			const grid = document.getElementById('postersGrid');
 			
 			grid.innerHTML = movies.map((movie, index) => `
-				<div class="poster-card" data-video="${movie.video}" data-index="${index}">
+				<div class="poster-card${movie.disabled ? ' poster-disabled' : ''}" data-video="${movie.video}" data-index="${index}">
 					<img src="${movie.poster}" alt="${movie.title}" loading="lazy">
+					${movie.disabled ? '<div class="poster-lock"><span>🔒</span></div>' : ''}
 					<div class="poster-info">
 						<h3 class="poster-title">${movie.title}</h3>
 						<p class="poster-meta">${movie.year}</p>
@@ -907,6 +958,7 @@ const movies = [
 					
 					// Add click event to open modal
 					card.addEventListener('click', () => {
+						if (movie.disabled) return;
 						openModal(index);
 					});
 			});
