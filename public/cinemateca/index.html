@@ -37,7 +37,7 @@
 			<div class="modal-body">
 				<div class="modal-left">
 					<div class="vimeo-container">
-						<iframe id="vimeoPlayer" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+						<video id="modalVideo" controls playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;background:#000;"></video>
 					</div>
 					<div class="movie-info">
 						<h1 id="modalTitle" class="modal-title"></h1>
@@ -487,12 +487,14 @@
 			overflow: hidden;
 		}
 
-		.vimeo-container iframe {
+		.vimeo-container video {
 			position: absolute;
 			top: 0;
 			left: 0;
 			width: 100%;
 			height: 100%;
+			object-fit: contain;
+			background: #000;
 		}
 
 		.movie-info {
@@ -680,7 +682,7 @@
 				margin-top: 2.5rem; /* Push Vimeo down to avoid X button overlap */
 			}
 			
-			.vimeo-container iframe {
+			.vimeo-container video {
 				position: absolute;
 				top: 0;
 				left: 0;
@@ -835,12 +837,12 @@ const movies = [
 		document.getElementById('modalYear').textContent = movie.year;
 		document.getElementById('modalDescription').textContent = movie.description;
 		
-		// Set Vimeo player
-		const vimeoPlayer = document.getElementById('vimeoPlayer');
-		if (movie.vimeoId) {
-			vimeoPlayer.src = `https://player.vimeo.com/video/${movie.vimeoId}?autoplay=0&title=0&byline=0&portrait=0`;
+		// Set local video player
+		const modalVideo = document.getElementById('modalVideo');
+		if (movie.video) {
+			modalVideo.src = movie.video;
 		} else {
-			vimeoPlayer.src = '';
+			modalVideo.src = '';
 		}
 		
 		// Build cast list
@@ -884,9 +886,10 @@ const movies = [
 		modal.classList.remove('active');
 		document.body.style.overflow = 'auto';
 		
-		// Stop Vimeo video
-		const vimeoPlayer = document.getElementById('vimeoPlayer');
-		vimeoPlayer.src = '';
+		// Stop and unload video
+		const modalVideo = document.getElementById('modalVideo');
+		modalVideo.pause();
+		modalVideo.src = '';
 		
 		console.log('❌ Closed modal');
 	}
