@@ -17,7 +17,7 @@
 	</div>
 	
 	<!-- Background video that changes on hover -->
-	<video id="backgroundVideo" autoplay muted loop playsinline class="background-video">
+	<video id="backgroundVideo" autoplay muted loop playsinline preload="none" class="background-video">
 		<source src="./movies/inexistente.mp4" type="video/mp4">
 	</video>
 	
@@ -226,7 +226,6 @@
 			cursor: pointer;
 			transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 			background: rgba(255, 255, 255, 0.05);
-			backdrop-filter: blur(10px);
 			border: 1px solid rgba(255, 255, 255, 0.1);
 			scroll-snap-align: center;
 			pointer-events: auto; /* Allow hover/click on posters */
@@ -675,7 +674,7 @@ const movies = [
 	{
 		title: 'Inexistente',
 		year: '2023',
-		poster: './movies/inexistente.jpg',
+		poster: './movies/inexistente-thumb.jpg',
 		video: './movies/inexistente.mp4',
 		backgroundImage: './movies/inexistente-bg.jpg',
 		vimeoId: '930451906',
@@ -696,7 +695,7 @@ const movies = [
 	{
 		title: 'El Artista Comprendido',
 		year: '2024',
-		poster: './movies/elartistacomprendido.jpg',
+		poster: './movies/elartistacomprendido-thumb.jpg',
 		video: './movies/elartistacomprendido.mp4',
 		backgroundImage: './movies/elartistacomprendido-bg.jpg',
 		vimeoId: '930022904',
@@ -720,7 +719,7 @@ const movies = [
 	{
 		title: 'COMING SOON',
 		year: '2024',
-		poster: './movies/profesor.jpg',
+		poster: './movies/profesor-thumb.jpg',
 		video: './movies/profesor.mp4',
 		backgroundImage: './movies/profesor-bg.jpg',
 		vimeoId: '',
@@ -738,7 +737,7 @@ const movies = [
 	{
 		title: 'Jay Gupta',
 		year: '2025',
-		poster: './movies/jay.jpg',
+		poster: './movies/jay-thumb.jpg',
 		video: './movies/jay.mp4',
 		backgroundImage: './movies/jay-bg.jpg',
 		vimeoId: '',
@@ -864,7 +863,7 @@ const movies = [
 			
 			grid.innerHTML = movies.map((movie, index) => `
 				<div class="poster-card" data-video="${movie.video}" data-index="${index}">
-					<img src="${movie.poster}" alt="${movie.title}">
+					<img src="${movie.poster}" alt="${movie.title}" loading="lazy">
 					<div class="poster-info">
 						<h3 class="poster-title">${movie.title}</h3>
 						<p class="poster-meta">${movie.year}</p>
