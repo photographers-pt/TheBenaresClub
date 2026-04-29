@@ -280,8 +280,6 @@ footer .copyright {
   min-width: 320px;
   width: 90%;
   background-color: rgba(15, 15, 15, 0.6); /* tono más profundo */
-  backdrop-filter: blur(10px) saturate(120%);
-  -webkit-backdrop-filter: blur(10px) saturate(120%);
   border: 1px solid rgba(255, 255, 255, 0.08); /* borde sutil tipo glassmorphism */
   border-radius: 12px;
   display: flex;
@@ -367,8 +365,6 @@ footer .copyright {
   border-radius: 15px;
   overflow: hidden;
   background-color: rgba(15, 15, 15, 0.6);
-  backdrop-filter: blur(10px) saturate(120%);
-  -webkit-backdrop-filter: blur(10px) saturate(120%);
   border: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
@@ -419,8 +415,6 @@ footer .copyright {
 .card-content .ver-detalhes {
   align-self: flex-start;
   background-color: rgba(255, 255, 255, 0.15); /* translúcido claro */
-  backdrop-filter: blur(10px) saturate(120%);
-  -webkit-backdrop-filter: blur(10px) saturate(120%);
   border: 1px solid rgba(255, 255, 255, 0.2); /* borde sutil blanco */
   color: #fff;
   padding: 0.5rem 1rem;
@@ -491,8 +485,6 @@ footer .copyright {
   padding-bottom: 150%;
   overflow: hidden;
   background-color: rgba(15, 15, 15, 0.6);
-  backdrop-filter: blur(10px) saturate(120%);
-  -webkit-backdrop-filter: blur(10px) saturate(120%);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -861,8 +853,6 @@ body.bg-contactos { background-image: url("media/B04\ Noticias.png"); }
 
 .shadow-toggle-btn {
   background-color: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px) saturate(120%);
-  -webkit-backdrop-filter: blur(10px) saturate(120%);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
   padding: 0.25rem 0.5rem;
