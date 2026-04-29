@@ -1,14 +1,14 @@
-70	  {
-18:25:58.670	    "$schema": "node_modules/wrangler/config-schema.json",
-18:25:58.671	    "name": "thebenaresclub",
-18:25:58.674	    "compatibility_date": "2026-04-29",
-18:25:58.674	    "observability": {
-18:25:58.675	      "enabled": true
-18:25:58.675	    },
-18:25:58.675	    "assets": {
-18:25:58.675	      "directory": "."
-18:25:58.675	    },
-18:25:58.676	    "compatibility_flags": [
-18:25:58.676	      "nodejs_compat"
-18:25:58.676	    ]
-18:25:58.676	  }
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "thebenaresclub",
+  "compatibility_date": "2026-04-29",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "."
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
