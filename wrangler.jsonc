@@ -3,8 +3,6 @@
   "name": "club-benares",
   "compatibility_date": "2026-04-29",
   "assets": {
-    "directory": ".",
-    "binding": "ASSETS",
-    "exclude": [".git", ".github", "node_modules"]
+    "directory": "./public"
   }
 }
