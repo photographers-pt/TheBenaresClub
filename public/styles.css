@@ -847,7 +847,7 @@ body{
 }
 
 /* Individual background images - only what's unique */
-body.bg-club { background-image: url("media/B01 Club Benares.png"); }
+body.bg-club { background-image: url("media/B01 Club Benares.webp"); }
 body.bg-eventos { background-image: url("media/B03 Eventos.png"); }
 body.bg-biblioteca { background-image: url("media/B05 Biblioteca Nacional.png"); }
 body.bg-cinemateca { background-image: url("media/B06 Canal 14.png"); }
