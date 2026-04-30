@@ -14,7 +14,7 @@
 body {
   background-color: #0a0a0a;
   color: #fff;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: system-ui, -apple-system, "Inter", sans-serif;
   min-height: 100vh;
 }
 
@@ -27,20 +27,20 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
-  height: 44px;
-  background: rgba(10, 10, 10, 0.88);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(255,255,255,0.07);
+  height: 48px;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
 .topbar-back {
   background: none;
   border: none;
-  color: rgba(255,255,255,0.7);
-  font-size: 18px;
+  color: rgba(255,255,255,0.6);
+  font-size: 20px;
   cursor: pointer;
-  padding: 4px 8px 4px 0;
+  padding: 6px 10px 6px 0;
   line-height: 1;
   transition: color 0.15s;
   flex-shrink: 0;
@@ -56,7 +56,7 @@ body {
 .topbar-film {
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.9);
   white-space: nowrap;
@@ -65,23 +65,24 @@ body {
 }
 .topbar-section {
   font-size: 10px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
-  margin-top: 1px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 2px;
 }
 
 .topbar-count {
   font-size: 11px;
   letter-spacing: 0.08em;
-  color: rgba(255,255,255,0.45);
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 /* ── GALLERY ── */
 .gallery-wrap {
-  padding: 12px 8px 40px;
+  padding: 12px 8px 48px;
 }
 
 .gallery {
@@ -102,12 +103,22 @@ body {
   width: 100%;
   height: auto;
   display: block;
-  transition: transform 0.2s ease, filter 0.2s ease;
+  transition: transform 0.22s ease, filter 0.22s ease;
 }
 
 .gallery-item:hover img {
   transform: scale(1.03);
   filter: brightness(1.1);
+}
+
+/* ── CREDIT ── */
+.gallery-credit {
+  text-align: center;
+  padding: 24px 0 8px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
 }
 
 /* ── LIGHTBOX ── */
@@ -122,6 +133,13 @@ body {
 }
 .lightbox.active { display: flex; }
 
+.lb-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1002;
+  cursor: default;
+}
+
 .lightbox-img-wrap {
   position: relative;
   display: flex;
@@ -129,6 +147,8 @@ body {
   justify-content: center;
   max-width: 90vw;
   max-height: 90vh;
+  z-index: 1003;
+  pointer-events: none;
 }
 
 .lightbox-img-wrap img {
@@ -139,18 +159,19 @@ body {
   display: block;
   object-fit: contain;
   border-radius: 1px;
+  pointer-events: auto;
 }
 
 .lb-btn {
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.06);
   border: none;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255,255,255,0.75);
   font-size: 22px;
-  width: 48px;
-  height: 64px;
+  width: 52px;
+  height: 72px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -159,18 +180,18 @@ body {
   transition: background 0.15s, color 0.15s;
   z-index: 1010;
 }
-.lb-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+.lb-btn:hover { background: rgba(255,255,255,0.14); color: #fff; }
 .lb-prev { left: 12px; }
 .lb-next { right: 12px; }
 
 .lb-close {
   position: fixed;
   top: 14px;
-  right: 16px;
+  right: 18px;
   background: none;
   border: none;
-  color: rgba(255,255,255,0.7);
-  font-size: 28px;
+  color: rgba(255,255,255,0.6);
+  font-size: 30px;
   cursor: pointer;
   line-height: 1;
   z-index: 1010;
@@ -180,21 +201,15 @@ body {
 
 .lb-counter {
   position: fixed;
-  bottom: 18px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 11px;
-  letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
   z-index: 1010;
   white-space: nowrap;
-}
-
-.lb-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1005;
-  cursor: default;
 }
 
 /* ── RESPONSIVE ── */
@@ -220,6 +235,7 @@ body {
 
 <div class="gallery-wrap">
   <div class="gallery" id="gallery"></div>
+  <div class="gallery-credit" id="credit"></div>
 </div>
 
 <!-- Lightbox -->
@@ -246,8 +262,9 @@ const images = [
   "./Imagens/Galeria/02 Frames/4 EAC - Frames.jpg"
 ];
 
-// Set photo count
+// Top bar info
 document.getElementById('photoCount').textContent = images.length + ' fotos';
+if (CREDIT) document.getElementById('credit').textContent = CREDIT;
 
 // Build gallery
 const gallery = document.getElementById('gallery');
@@ -299,7 +316,7 @@ document.getElementById('lbClose').addEventListener('click', closeLightbox);
 document.getElementById('lbPrev').addEventListener('click', showPrev);
 document.getElementById('lbNext').addEventListener('click', showNext);
 
-// Click outside image closes
+// Click outside image closes (overlay sits behind image-wrap)
 document.getElementById('lbOverlay').addEventListener('click', closeLightbox);
 
 document.addEventListener('keydown', (e) => {
