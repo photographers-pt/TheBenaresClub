@@ -1,117 +1,244 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>EAC - Frames | Club Benares</title>      
-
+<title>El Artista Comprendido — Frames | Club Benares</title>
 <style>
-* {
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  background-color: black;
-  padding: 2vw;
+  background-color: #0a0a0a;
+  color: #fff;
+  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
 }
 
-.container {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
+/* ── TOP BAR ── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 44px;
+  background: rgba(10, 10, 10, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
 }
 
-h1 {
-  color: white;
-  margin-bottom: 4vw;
-  font-size: clamp(20px, 4vw, 40px);
+.topbar-back {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.7);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px 4px 0;
+  line-height: 1;
+  transition: color 0.15s;
+  flex-shrink: 0;
+}
+.topbar-back:hover { color: #fff; }
+
+.topbar-center {
+  text-align: center;
+  flex: 1;
+  padding: 0 12px;
+  overflow: hidden;
+}
+.topbar-film {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.topbar-section {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-top: 1px;
+}
+
+.topbar-count {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.45);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── GALLERY ── */
+.gallery-wrap {
+  padding: 12px 8px 40px;
 }
 
 .gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2vw;
+  columns: 4;
+  column-gap: 4px;
 }
 
 .gallery-item {
-  width: 100%;
-  aspect-ratio: 1;
+  break-inside: avoid;
+  margin-bottom: 4px;
+  display: block;
   overflow: hidden;
-  border-radius: 4px;
-  background-color: #1a1a1a;
+  border-radius: 2px;
+  cursor: pointer;
 }
 
 .gallery-item img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  cursor: pointer;
+  height: auto;
+  display: block;
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
-.modal {
+.gallery-item:hover img {
+  transform: scale(1.03);
+  filter: brightness(1.1);
+}
+
+/* ── LIGHTBOX ── */
+.lightbox {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.95);
+  inset: 0;
+  background: #000;
   z-index: 1000;
   justify-content: center;
   align-items: center;
 }
+.lightbox.active { display: flex; }
 
-.modal.active {
-  display: flex;
-}
-
-.modal-content {
+.lightbox-img-wrap {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   max-width: 90vw;
   max-height: 90vh;
 }
 
-.modal-content img {
-  width: 100%;
-  height: 100%;
+.lightbox-img-wrap img {
+  max-width: 90vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  display: block;
   object-fit: contain;
+  border-radius: 1px;
 }
 
-.modal-close {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  color: white;
-  font-size: 40px;
+.lb-btn {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.07);
+  border: none;
+  color: rgba(255,255,255,0.8);
+  font-size: 22px;
+  width: 48px;
+  height: 64px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  transition: background 0.15s, color 0.15s;
+  z-index: 1010;
+}
+.lb-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+.lb-prev { left: 12px; }
+.lb-next { right: 12px; }
+
+.lb-close {
+  position: fixed;
+  top: 14px;
+  right: 16px;
   background: none;
   border: none;
-  transition: transform 0.2s ease;
-  z-index: 1001;
+  color: rgba(255,255,255,0.7);
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+  z-index: 1010;
+  transition: color 0.15s;
+}
+.lb-close:hover { color: #fff; }
+
+.lb-counter {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.45);
+  z-index: 1010;
+  white-space: nowrap;
+}
+
+.lb-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1005;
+  cursor: default;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .gallery { columns: 3; }
+}
+@media (max-width: 560px) {
+  .gallery { columns: 2; }
+  .topbar-section { display: none; }
 }
 </style>
-
 </head>
 <body>
 
-<div class="container">
-  <h1>4 Frames Direccíon: Charlie Chaves</h1>
-  
-  <div class="gallery" id="gallery">
+<div class="topbar">
+  <button class="topbar-back" onclick="window.history.length > 1 ? window.history.back() : window.close()" title="Voltar">&#8592;</button>
+  <div class="topbar-center">
+    <div class="topbar-film">El Artista Comprendido</div>
+    <div class="topbar-section">Frames</div>
   </div>
+  <div class="topbar-count" id="photoCount"></div>
 </div>
 
-<div class="modal" id="modal">
-  <button class="modal-close" id="closeModal">&times;</button>
-  <div class="modal-content">
-    <img id="modalImage" src="" alt="">
+<div class="gallery-wrap">
+  <div class="gallery" id="gallery"></div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <div class="lb-overlay" id="lbOverlay"></div>
+  <button class="lb-prev lb-btn" id="lbPrev">&#8592;</button>
+  <div class="lightbox-img-wrap">
+    <img id="lbImage" src="" alt="">
   </div>
+  <button class="lb-next lb-btn" id="lbNext">&#8594;</button>
+  <button class="lb-close" id="lbClose">&#215;</button>
+  <div class="lb-counter" id="lbCounter"></div>
 </div>
 
 <script>
+const FILM = "El Artista Comprendido";
+const SECTION = "Frames";
+const CREDIT = "Direcção: Charlie Chaves";
+
 const images = [
   "./Imagens/Galeria/02 Frames/1 EAC - Frames.jpg",
   "./Imagens/Galeria/02 Frames/2 EAC - Frames.jpg",
@@ -119,54 +246,68 @@ const images = [
   "./Imagens/Galeria/02 Frames/4 EAC - Frames.jpg"
 ];
 
+// Set photo count
+document.getElementById('photoCount').textContent = images.length + ' fotos';
+
+// Build gallery
 const gallery = document.getElementById('gallery');
-const modal = document.getElementById('modal');
-const modalImage = document.getElementById('modalImage');
-const closeModal = document.getElementById('closeModal');
-
-function openModal(src) {
-  modalImage.src = src;
-  modal.classList.add('active');
-}
-
-function closeModalFunc() {
-  modal.classList.remove('active');
-}
-
-closeModal.addEventListener('click', closeModalFunc);
-modal.addEventListener('click', closeModalFunc);
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeModalFunc();
-});
-
-function loadImageSequentially(index) {
-  if (index >= images.length) return;
-  
+images.forEach((src, i) => {
   const item = document.createElement('div');
   item.className = 'gallery-item';
-  
   const img = document.createElement('img');
-  img.alt = (index + 1).toString();
-  
-  img.onload = () => {
-    loadImageSequentially(index + 1);
-  };
-  
-  img.onerror = () => {
-    loadImageSequentially(index + 1);
-  };
-  
-  img.onclick = () => {
-    openModal(images[index]);
-  };
-  
-  img.src = images[index];
+  img.src = src;
+  img.alt = SECTION + ' ' + (i + 1);
+  img.loading = 'lazy';
+  img.addEventListener('click', () => openLightbox(i));
   item.appendChild(img);
   gallery.appendChild(item);
+});
+
+// Lightbox
+const lightbox = document.getElementById('lightbox');
+const lbImage = document.getElementById('lbImage');
+const lbCounter = document.getElementById('lbCounter');
+let currentIndex = 0;
+
+function openLightbox(index) {
+  currentIndex = index;
+  lbImage.src = images[currentIndex];
+  lbCounter.textContent = (currentIndex + 1) + ' / ' + images.length;
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
 }
 
-loadImageSequentially(0);
+function closeLightbox() {
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+  lbImage.src = '';
+}
+
+function showPrev() {
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  lbImage.src = images[currentIndex];
+  lbCounter.textContent = (currentIndex + 1) + ' / ' + images.length;
+}
+
+function showNext() {
+  currentIndex = (currentIndex + 1) % images.length;
+  lbImage.src = images[currentIndex];
+  lbCounter.textContent = (currentIndex + 1) + ' / ' + images.length;
+}
+
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lbPrev').addEventListener('click', showPrev);
+document.getElementById('lbNext').addEventListener('click', showNext);
+
+// Click outside image closes
+document.getElementById('lbOverlay').addEventListener('click', closeLightbox);
+
+document.addEventListener('keydown', (e) => {
+  if (!lightbox.classList.contains('active')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') showPrev();
+  if (e.key === 'ArrowRight') showNext();
+});
 </script>
 
 </body>
