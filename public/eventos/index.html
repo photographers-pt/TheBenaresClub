@@ -102,7 +102,6 @@
     /* Glassy shimmer buttons */
     .evento-botao button {
       background: rgba(255, 255, 255, 0.1) !important;
-      backdrop-filter: blur(10px) !important;
       border: 1px solid rgba(255, 255, 255, 0.3) !important;
       color: #ff4444 !important;
       font-weight: 600 !important;
@@ -183,7 +182,7 @@
 
         </div>
         <div class="evento-botao" style="margin-top: 5px;">
-          <div id="countdown-2" style="position: absolute; top: -72px; right: 0; background: rgba(255,50,50,0.3); backdrop-filter: blur(8px); padding: 8px 12px; border-radius: 10px; transform: rotate(-3deg) translateY(50%); pointer-events: none; font-size: 0.8rem; font-weight: 600; color: #fff; text-align: center; line-height: 1.3;"></div>
+          <div id="countdown-2" style="position: absolute; top: -72px; right: 0; background: rgba(255,50,50,0.3); padding: 8px 12px; border-radius: 10px; transform: rotate(-3deg) translateY(50%); pointer-events: none; font-size: 0.8rem; font-weight: 600; color: #fff; text-align: center; line-height: 1.3;"></div>
           <!--<button onclick="window.open('https://www.eventbrite.com/o/114185001841', '_blank')" style="cursor: pointer; color: #F05537 !important; margin-right: 10px;">Reserve on Eventbrite®</button>-->
           <!--<button onclick="window.open('https://www.meetup.com/club-benares-cinema-portugal/events/', '_blank')" style="cursor: pointer; color: #FF4A79 !important;">Attend on Meetup®</button>-->
           <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSeeOwWcPxJW7iS5vDqPfsa9lGE-RkikZ0Kjq6fYtu-EGaAqag/viewform', '_blank')" style="cursor: pointer; color: #FF4400 !important;">Secure your place!</button>
@@ -278,7 +277,7 @@ popupContent.innerHTML = `
   <h3 style="margin-bottom: 1rem;">${title}</h3>
   <img src="${evento.image}" alt="${title}" style="width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
   <p style="margin-bottom: 1rem;">${evento.description}</p>
-  <button disabled style="cursor: not-allowed; display: inline-block; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); color: #999; padding: 0.6rem 1.2rem; font-weight: 600; font-size: 0.9rem; border-radius: 8px; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 0 6px rgba(255, 255, 255, 0.1); opacity: 0.5;">Saber Mais</button>
+  <button disabled style="cursor: not-allowed; display: inline-block; background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #999; padding: 0.6rem 1.2rem; font-weight: 600; font-size: 0.9rem; border-radius: 8px; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 0 6px rgba(255, 255, 255, 0.1); opacity: 0.5;">Saber Mais</button>
 `;
           popupOverlay.style.display = 'flex';
           document.body.style.overflow = 'hidden';
