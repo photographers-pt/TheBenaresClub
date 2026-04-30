@@ -127,12 +127,9 @@ header h1 {
   transform: translateY(-50%) scale(1.05);
 }
 
-.arrow-icon {
+.nav-icon {
   color: var(--accent-color);
   font-size: 1rem;
-  transition: transform 0.3s ease;
-  display: block;
-  line-height: 1;
 }
 
 /* NAV */
