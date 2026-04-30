@@ -1,0 +1,390 @@
+body 
+    {background-color: black;}
+ 
+
+@font-face 
+    {font-family: Yuji;
+     src: url('./Fontes/YujiBoku-Regular.ttf');}
+
+     @font-face 
+     {font-family: INX;
+      src: url('./Fontes/Afrah-Bold.ttf');}
+
+
+      @font-face 
+      {font-family: Montserrat;
+       src: url('./Fontes/Montserrat-VariableFont_wght.ttf');}
+
+
+
+#INX-tapa
+{position: absolute;
+ width: 600px;
+ left: 600px;
+ top: 60px;
+ border-radius: 20px;
+ z-index: 1000;
+ position: fixed;}
+#INX-tapa:hover{cursor: pointer;}
+
+
+
+#INX-notas
+{position: absolute;
+ width: 1270px;
+ top: -6px;
+ left: 315px;
+ position: fixed;}
+
+#botonFichatA
+{position: absolute;
+ width: 35px;
+ top: 445px;
+ left: 1320px;
+ z-index: 1000;
+ font-size: 20px;
+ color: black;
+ font-family: INX;
+ white-space: nowrap;}
+
+#botonFichatB
+{position: absolute;
+ width: 35px;
+ top: 500px;
+ left: 1295px;
+ z-index: 1000;
+ font-size: 20px;
+ color: black;
+ font-family: INX;
+ white-space: nowrap;}
+
+
+
+#INX-fichaT
+{position: absolute;
+ width: 1270px;
+ top: 38px;
+ left: 315px;
+ position: fixed;}
+
+#botonFicharA
+{position: absolute;
+ width: 25px;
+ top: 252px;
+ left: 1050px;
+ z-index: 1000;
+ font-size: 23px;
+ color: black;
+ font-family: INX;
+ white-space: nowrap;}
+ 
+#botonFicharB
+{position: absolute;
+ width: 25px;
+ top: 316px;
+ left: 1050px;
+ z-index: 1000;
+ font-size: 23px;
+ color: black;
+ font-family: INX;
+ white-space: nowrap;}
+
+ #botonFicharC
+ {position: absolute;
+  width: 25px;
+  top: 380px;
+  left: 1050px;
+  z-index: 1000;
+  font-size: 23px;
+  color: black;
+  font-family: INX;
+  white-space: nowrap;}
+
+  #botonFicharE
+  {position: absolute;
+   width: 25px;
+   top: 580px;
+   left: 1050px;
+   z-index: 1000;
+   font-size: 23px;
+   color: black;
+   font-family: INX;
+   white-space: nowrap;}
+
+   #botonFicharD
+ {position: absolute;
+  width: 25px;
+  top: 640px;
+  left: 1050px;
+  z-index: 1000;
+  font-size: 23px;
+  color: black;
+  font-family: INX;
+  white-space: nowrap;}
+ 
+
+
+
+#INX-fichaA
+{position: absolute;
+ width: 1270px;
+ top: 38px;
+ left: 315px;
+ position: fixed;}
+
+#INX-sinopse
+{position: absolute;
+ width: 1270px;
+ top: 38px;
+ left: 315px;
+ position: fixed;}
+
+#INX-foto
+{position: absolute;
+ width: 1270px;
+ top: 38px;
+ left: 315px;
+ position: fixed;}
+
+#InfoRodagem
+{position: absolute;
+ left: 1130px;
+ top: 320px;
+ width: 200px;
+ font-family: Montserrat;
+ font-size: 25px;
+ text-align: center;
+ border: none;
+ background-color: transparent;}
+
+#GaleriaRodagem
+{position: absolute;
+    left: 1130px;
+    top: 420px;
+    width: 200px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    border: none;
+    background-color: transparent;}
+#GaleriaRodagem:hover{cursor: pointer;}
+
+#InfoFrames
+{position: absolute;
+ left: 1110px;
+ top: 535px;
+ width: 230px;
+ font-family: Montserrat;
+ font-size: 25px;
+ border: none;
+ background-color: transparent;
+ text-align: center;}
+
+#GaleriaFrames
+{position: absolute;
+    left: 1130px;
+    top: 640px;
+    width: 200px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    border: none;
+    background-color: transparent;}
+#GaleriaFrames:hover{cursor: pointer;}
+
+
+
+
+
+#INX-extras
+{position: absolute;
+ width: 1270px;
+ top: 38px;
+ left: 315px;
+ position: fixed;}
+
+#GaleriaExtras
+{position: absolute;
+ left: 1050px;
+ top: 270px;
+ width: 200px;
+ font-family: INX;
+ font-weight: bold;
+ font-size: 25px;
+ text-align: center;
+ border: none;
+ background-color: transparent;
+ white-space: nowrap;}
+ #GaleriaExtras:hover{cursor: pointer;}
+
+
+ #GaleriaExtrasA
+ {position: absolute;
+  left: 1050px;
+  top: 340px;
+  width: 200px;
+  font-family: INX;
+  font-weight: bold;
+  font-size: 25px;
+  text-align: center;
+  border: none;
+  background-color: transparent;
+  white-space: nowrap;}
+  #GaleriaExtrasA:hover{cursor: pointer;}
+ 
+
+#Back
+{position: absolute;
+ width: 100px;}
+
+
+
+
+#Notascharlie
+{position: absolute;
+ border: none;
+ background-color: transparent;
+ font-family: Montserrat;
+ font-size: 40px;
+ left: 550px;
+ top: 275px;}
+#Notascharlie:focus,#Notascharlie:active
+{text-decoration: underline;}
+
+#FichaTecnica
+{position: absolute;
+ border: none;
+ background-color: transparent;
+ font-family: Montserrat;
+ font-size: 40px;
+ left: 550px;
+ top: 340px;}
+#FichaTecnica:focus,#FichaTecnica:active
+{text-decoration: underline;}
+ 
+
+#FichaArtistica
+{position: absolute;
+ border: none;
+ background-color: transparent;
+ font-family:Montserrat;
+ font-size: 40px;
+ left: 550px;
+ top: 405px;}
+#FichaArtistica:focus,#fichaArtistica:active
+{text-decoration: underline;}
+
+
+#Sinopse
+{position: absolute;
+ border: none;
+ background-color: transparent;
+ font-family:Montserrat;
+ font-size: 40px;
+ left: 550px;
+ top: 470px;}
+#Sinopse:focus,#Sinopse:active
+{text-decoration: underline;}
+ 
+
+#Fotografias
+{position: absolute;
+ border: none;
+ background-color: transparent;
+ font-family: Montserrat;
+ font-size: 40px;
+ left: 550px;
+ top: 535px;}
+#Fotografias:focus,#Fotografias:active
+{text-decoration: underline;}
+
+
+#Extras
+{position: absolute;
+ border: none;
+ background-color: transparent;
+ font-family: Montserrat;
+ font-size: 40px;
+ left: 550px;
+ top: 600px;}
+#Extras:focus,#Extras:active
+{text-decoration: underline;}
+
+
+#Cerrar
+{position: absolute;
+ border: none;
+ background-color: transparent;
+ font-family:Montserrat;
+ font-weight: bold;
+ font-size: 40px;
+ left: 550px;
+ top: 665px;}
+
+
+
+
+.fade-in 
+{opacity: 0;
+ transition: opacity 5s ease-in-out}
+
+.fade-in.active 
+{opacity: 1;}
+
+
+
+.container-slider
+{width: 100%;
+ max-width: 900px;
+ margin: auto;
+ box-shadow: 0 0 0 5px black, 0 0px 500px;
+ position: absolute;
+align-items: center;} 
+
+.slider
+{width: 100%;
+ height: 200px;}
+
+.slider__section
+{width: 100%;}
+
+.slider__img 
+{display: block;
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ align-items: center;}
+
+ .INEXISTENTEr
+ {position: absolute;
+  font-family: INX;
+  font-size: 50px;
+  color: white;
+  z-index: 3000;
+  left: 300px;
+  top: 350px;}
+    
+
+
+  .fade-out {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+
+  #transition-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+    z-index: 9999;
+  }
+  
+  #transition-overlay.fade-out {
+    opacity: 1;
+    pointer-events: auto;
+  }

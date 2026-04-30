@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>El Artista Comprendido | Club Benares</title>      
+
+<link rel="stylesheet" href="EAC.css">        
+<script src="EAC.js"></script>
+
+<!-- LIBRO EL ARTISTA COMPRENDIDO -->
+
+<img id="EAC-tapa" src="./Imagens/00 EAC - tapa.png">
+<audio id="EAC-tapa-click" src="/A Side/A00 Club Benares/Materiales/Audios/Open Book Sound Effect.mp3" preload="auto"></audio>
+
+
+<!-- NOTAS -->
+
+<img id="EAC-notas" src="./Imagens/01 EAC - Notas.png" style="display: none;">
+
+<!-- TECNICA -->
+
+<img id="EAC-fichaT" src="./Imagens/02 EAC - Ficha Tecnica.png" style="display: none;">
+
+<a href="https://www.instagram.com/charliechavess/" target="_blank"><p id="botonFichatA" style="display: none;"> Charlie Chaves</P></a>
+
+<a href="https://www.instagram.com/nityamnow/" target="_blank"><p id="botonFichatB"style="display: none;"> Nityam</P></a>
+<a href="https://www.instagram.com/nityamnow/" target="_blank"><p id="botonFichatB1"style="display: none;"> Nityam</P></a>
+
+
+<a href="https://www.instagram.com/val.nevs/" target="_blank"><P id="botonFichatC" style="display: none;"> Valdir Neves</P></a>
+
+<a href="https://www.instagram.com/goncalopereiraaa/" target="_blank"><p id="botonFichatD"style="display: none;"> Gonçalo Pereira</P></a>
+
+<a href="https://www.instagram.com/pontes_filmworks/" target="_blank"><p id="botonFichatE" style="display: none;"> Patricia Pontes</P></a>
+
+
+<!-- ARTISTICA -->
+
+<img id="EAC-fichaA" src="./Imagens/03 EAC - Ficha Artistica.png" style="display: none;">
+
+<a href="https://www.instagram.com/charliechavess/" target="_blank"><p id="botonFicharA" style="display: none;"> Charlie Chaves</p></a>
+
+<a href="https://www.instagram.com/nobru_defranfran/" target="_blank"><p id="botonFicharB" style="display: none;"> Bruno de Franclieu</p></a>
+
+
+
+<img id="EAC-sinopse" src="./Imagens/04 EAC - Sinopse.png" style="display: none;">
+
+
+<img id="EAC-foto" src="./Imagens/05 EAC - Fotografias.png" style="display: none;">
+<button id="InfoRodagem">71 Imagens Fotografias: Valdir Neves</button>
+
+
+<a href="./EACrodagem.html" target="_blank"> 
+<button id="GaleriaRodagem">Visualizar</button></a>
+
+
+<button id="InfoFrames">4 Frames Dirección: Charlie Chaves</button>
+<a href="./EACframes.html" target="_blank">
+<button id="GaleriaFrames">Visualizar</button>
+</a>
+
+
+<img id="EAC-extras" src="./Imagens/06 EAC - Extras.png" style="display: none;">
+<a href="/A Side/A03 El Cuarto de Charlie/El Cuarto de Charlie.html" target="_blank">
+<button id="GaleriaExtras">+ Vê o filme aqui!</button>
+</a>
+
+
+
+<button id="Notascharlie">Notas Charlie</button>
+<button id="FichaTecnica">Ficha Técnica</button>
+<button id="FichaArtistica">Ficha Artística</button>
+<button id="Sinopse">Sinopse</button>
+<button id="Fotografias">Fotografias</button>
+<button id="Extras">Extras</button>
+
+<button id="Cerrar">Fechar</button>
+<audio id="EAC-Cerrar-click" src="/A Side/A00 Club Benares/Materiales/Audios/Close Book Sound Effect.mp3" preload="auto"></audio>
+
+
+
+
+
+
+<script src="EAC.js"></script>
+
+
+
+<div id="overlay"></div>
+
+<div class="fade-container" id="fade">
+
+    <!-- Contenedor general con overlay de transición -->
+ <div class="fade-container" id="fade">
+ 
+   <!-- Contenedor visual de las puertas con sus posiciones -->
+   <div class="Imagenes-Portas-Landing">
+
+
+<a href="index.html" onclick="handleFade(event, this.href)">
+<img id="Back" src="./Imagens/Sinal.png" class="imagem pos1">
+</a>
+
+<!-- Overlay de transición -->
+<div id="transition-overlay"></div>
+
+
+
+<!-- Script para fade + sonido -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tapa = document.getElementById('EAC-tapa');
+        const tapaAudio = document.getElementById('EAC-tapa-click');
+    
+        if (tapa && tapaAudio) {
+            tapa.addEventListener('click', function () {
+                tapaAudio.currentTime = 0;
+                tapaAudio.play();
+            });
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const cerrarBtn = document.getElementById('Cerrar');
+    const cerrarAudio = document.getElementById('EAC-Cerrar-click');
+
+    if (cerrarBtn && cerrarAudio) {
+        cerrarBtn.addEventListener('click', function () {
+            cerrarAudio.currentTime = 0;
+            cerrarAudio.play();
+        });
+    }
+});
+
+backLink.addEventListener('click', function(event) {
+  event.preventDefault();
+
+  if (overlay) overlay.classList.add('active');
+  document.body.classList.add('fade-out');
+
+  setTimeout(() => {
+    window.location.href = backLink.href;
+  }, 600);
+});
+
+function handleFade(event, url) {
+    event.preventDefault();
+
+    const overlay = document.getElementById('transition-overlay');
+    const sound = document.getElementById('doorSound');
+
+    if (sound) {
+      sound.currentTime = 0;
+      sound.play();
+    }
+
+    overlay.classList.add('fade-out');
+
+    setTimeout(() => {
+      window.location.href = url;
+    }, 1000); // tiempo igual al transition
+  }
+  
+    </script>
+
+
+
+</head>
+<body>

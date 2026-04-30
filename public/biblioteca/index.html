@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biblioteca | Club Benares</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="/media/A00 Logo - Light.png" type="image/png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    /* Custom fonts */
+    @font-face {
+      font-family: 'Yuji';
+      src: url('./Fontes/YujiBoku-Regular.ttf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'INX';
+      src: url('./Fontes/Afrah-Bold.ttf') format('truetype');
+    }
+    
+    @font-face {
+      font-family: 'Montserrat';
+      src: url('../media/fontes/Montserrat-VariableFont_wght.ttf') format('truetype');
+    }
+    
+    /* Biblioteca specific styles */
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+    
+    .fade-container {
+      position: relative;
+      display: inline-block;
+      max-width: 900px;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .Imagenes-Portas-Landing {
+      position: absolute;
+      display: flex;
+      gap: 1%;
+      align-items: flex-end;
+      left: 20%;
+      top: 50%;
+      transform: translateY(-50%);
+      flex-direction: row;
+    }
+    
+    .LIVRO {
+      display: block;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    
+    .LIVRO a {
+      display: block;
+      text-decoration: none;
+    }
+    
+    .LIVRO:hover {
+      transform: scale(1.05);
+      filter: brightness(1.2);
+    }
+    
+    .LIVRO img {
+      height: 450px;
+      width: auto;
+      border-radius: 2px;
+      box-shadow: none;
+      display: block;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 1200px) {
+      .Imagenes-Portas-Landing {
+        left: 10%;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .LIVRO img {
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+<body class="bg-biblioteca">
+
+  <!-- Header container where JavaScript will insert the header -->
+  <div id="header-container"></div>
+
+  <main>
+    <div class="fade-container" id="fade">
+      <!-- Book container - books flow left to right -->
+      <div class="Imagenes-Portas-Landing">
+
+        <div class="LIVRO">
+          <a href="../biblioteca/inexistente/">
+            <img class="INX" src="../media/04_Arquivo_Nacional_-_INX.png" alt="I N E X I S T E N T E">
+          </a>
+        </div>
+
+        <div class="LIVRO">
+          <a href="../biblioteca/artista/">
+            <img class="EAC" src="../media/04_Arquivo_Nacional_-_EAC.png" alt="El Artista Comprendido">
+          </a>
+        </div>
+
+
+
+<!--
+        <div class="LIVRO">
+          <a href="../biblioteca/INX.html">
+            <img class="EAC" src="../media/book-side.png" alt="El Artista Comprendido">
+          </a>
+        </div>
+
+        <div class="LIVRO">
+          <a href="../biblioteca/EAC.html">
+            <img class="EAC" src="../media/book-side.png" alt="El Artista Comprendido">
+          </a>
+        </div>
+-->
+
+
+
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-container"></div>
+  <script src="/shared.js"></script>
+
+</body>
+</html>

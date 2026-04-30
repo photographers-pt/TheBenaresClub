@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>I N E X I S T E N T E | Club Benares</title>      
+
+<link rel="stylesheet" href="INX.css">        
+
+
+
+<img id="INX-notas" src="./Imagens/01 INX-Notas.png" style="display: none;">
+
+
+<img id="INX-fichaT" src="./Imagens/02 INX - Ficha Tecnica.png" style="display: none;">
+<a href="https://www.instagram.com/charliechavess/" target="_blank"><p id="botonFichatA" style="display: none;">Charlie Chaves</P></a>
+<a href="https://www.instagram.com/joaonalua/" target="_blank"><p id="botonFichatB" style="display: none;">João Nobre</P></a>
+
+<img id="INX-fichaA" src="./Imagens/03 INX - Ficha Artistica.png" style="display: none;">
+<a href="https://www.instagram.com/_alessandrobv/" target="_blank"><p id="botonFicharA" style="display: none;">Alessandro Barboza | "Pedro Amaral"</P></a>
+<a href="https://www.instagram.com/azorvedzanets/" target="_blank"><p id="botonFicharB" style="display: none;">Pedro Cabral | "Helder Saramago"</P></a>
+<a href="https://www.instagram.com/pedro.senna.nunes/" target="_blank"><p id="botonFicharC" style="display: none;">Pedro Senna Nunes | "Reporter"</P></a>
+  <p id="botonFicharE" style="display: none;">Mi Mamalety</P>
+    <p id="botonFicharD" style="display: none;">Mis amigos Menes & JJ</P></a>
+
+
+<img id="INX-sinopse" src="./Imagens/04 INX - Sinopse.png" style="display: none;">
+
+<img id="INX-foto" src="./Imagens/05 INX - Fotografias.png" style="display: none;">
+<button id="InfoRodagem" style="display: none;">20 Imagens Fotografias: João Nobre</button>
+<a href="./INXrodagem.html" target="_blank">
+<button id="GaleriaRodagem" style="display: none;">Visualizar</button>
+</a>
+
+<button id="InfoFrames" style="display: none;">5 Frames Dirección: Charlie Chaves</button>
+<a href="./INXframes.html" target="_blank">
+<button id="GaleriaFrames" style="display: none;">Visualizar</button>
+</a>
+
+<img id="INX-extras" src="./Imagens/07 INX - Extras.png" style="display: none;">
+
+<a href="./INXextras.html" target="_blank">
+<button id="GaleriaExtras" style="display: none;">+ Media de divulgação</button>
+</a>
+
+<a href="/A Side/A03 El Cuarto de Charlie/El Cuarto de Charlie.html" target="_blank">
+  <button id="GaleriaExtrasA" style="display: none;">+ Vê o filme aqui!</button>
+  </a>
+
+
+<button id="Notascharlie">Notas Charlie</button>
+<button id="FichaTecnica">Ficha Técnica</button>
+<button id="FichaArtistica">Ficha Artística</button>
+<button id="Sinopse">Sinopse</button>
+<button id="Fotografias">Fotografias</button>
+<button id="Extras">Extras</button>
+
+<script src="INX.js"></script> 
+
+
+
+<img id="INX-tapa" src="./Imagens/00 INX - tapa.png">
+<audio id="INX-tapa-click" src="/A Side/A00 Club Benares/Materiales/Audios/Open Book Sound Effect.mp3" preload="auto"></audio>
+
+<button id="Cerrar">Fechar</button>
+<audio id="INX-Cerrar-click" src="/A Side/A00 Club Benares/Materiales/Audios/Close Book Sound Effect.mp3" preload="auto"></audio>
+
+
+<div id="overlay"></div>
+
+<div class="fade-container" id="fade">
+
+    <!-- Contenedor general con overlay de transición -->
+ <div class="fade-container" id="fade">
+ 
+   <!-- Contenedor visual de las puertas con sus posiciones -->
+   <div class="Imagenes-Portas-Landing">
+
+<a href="index.html" onclick="handleFade(event, this.href)">
+<img id="Back" src="./Imagens/Sinal.png"></a>
+
+<!-- Overlay de transición -->
+<div id="transition-overlay"></div>
+
+
+
+<!-- Script para fade + sonido -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tapa = document.getElementById('INX-tapa');
+        const tapaAudio = document.getElementById('INX-tapa-click');
+    
+        if (tapa && tapaAudio) {
+            tapa.addEventListener('click', function () {
+                tapaAudio.currentTime = 0;
+                tapaAudio.play();
+            });
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const cerrarBtn = document.getElementById('Cerrar');
+    const cerrarAudio = document.getElementById('INX-Cerrar-click');
+
+    if (cerrarBtn && cerrarAudio) {
+        cerrarBtn.addEventListener('click', function () {
+            cerrarAudio.currentTime = 0;
+            cerrarAudio.play();
+        });
+    }
+});
+
+backLink.addEventListener('click', function(event) {
+  event.preventDefault();
+
+  if (overlay) overlay.classList.add('active');
+  document.body.classList.add('fade-out');
+
+  setTimeout(() => {
+    window.location.href = backLink.href;
+  }, 600);
+});
+
+function handleFade(event, url) {
+    event.preventDefault();
+
+    const overlay = document.getElementById('transition-overlay');
+    const sound = document.getElementById('doorSound');
+
+    if (sound) {
+      sound.currentTime = 0;
+      sound.play();
+    }
+
+    overlay.classList.add('fade-out');
+
+    setTimeout(() => {
+      window.location.href = url;
+    }, 1000); // tiempo igual al transition
+  }
+  
+    </script>
+
+</head>
+<body>

@@ -43,11 +43,11 @@ function createHeader() {
       <a href="/">
         <img src="/media/A00_Logo_&_title_-_light.png" alt="Club Benares" style="height: 30px;">
       </a>
-      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
-        <span class="arrow-icon">▼</span>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" style="display:none;">
+        <i class="fas fa-bars nav-icon"></i>
       </button>
     </header>
-    
+
     <nav aria-label="Menu principal" id="main-nav" class="active">
       <ul>
         <!--<li><a href="/"><img src="/media/logo_small.png" alt="Logo" style="height:25px;"></a></li>-->
@@ -118,39 +118,31 @@ function createFooter() {
 function initializeNavToggle() {
   const toggleBtn = document.getElementById('nav-toggle');
   const nav = document.getElementById('main-nav');
-  const arrowIcon = toggleBtn?.querySelector('.arrow-icon');
-  const mainContent = document.querySelector('main');
-  
-  if (!toggleBtn || !nav || !arrowIcon) {
-    console.log("Toggle elements not found");
+  const isMercado = window.location.pathname.startsWith('/mercado');
+
+  if (!toggleBtn || !nav) return;
+
+  if (!isMercado) {
+    // All other pages: always-open nav, no button needed
+    nav.classList.add('active');
     return;
   }
-  
-  console.log("Nav toggle initialized");
-  
-  // Function to update content spacing
-  function updateContentSpacing() {
-    if (nav.classList.contains('active')) {
-      // Nav is open - add padding to push content down
-      const navHeight = nav.offsetHeight;
-      if (mainContent) mainContent.style.paddingTop = `${navHeight}px`;
-      arrowIcon.textContent = '▼';
-    } else {
-      // Nav is closed - remove padding
-      if (mainContent) mainContent.style.paddingTop = '0';
-      arrowIcon.textContent = '▲';
-    }
+
+  // Mercado: burger/X toggle, starts closed
+  toggleBtn.style.display = 'flex';
+  nav.classList.remove('active');
+
+  function updateIcon() {
+    const icon = toggleBtn.querySelector('.nav-icon');
+    icon.className = nav.classList.contains('active') ? 'fas fa-xmark nav-icon' : 'fas fa-bars nav-icon';
   }
-  
-  // Set initial state
-  updateContentSpacing();
-  
+
+  updateIcon();
+
   toggleBtn.addEventListener('click', function(e) {
     e.stopPropagation();
-    console.log("Toggle clicked");
-    
     nav.classList.toggle('active');
-    updateContentSpacing();
+    updateIcon();
   });
 }
 

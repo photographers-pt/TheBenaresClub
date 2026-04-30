@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Book Layout</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="icon" href="/media/A00 Logo - Light.png" type="image/png" />
+    <style>
+        @font-face {
+            font-family: 'Montserrat';
+            src: url('../Fontes/Montserrat-VariableFont_wght.ttf') format('truetype');
+            font-weight: 100 900;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: min(calc(100vw / 90), calc(100vh / 90));
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Cover Overlay */
+        .cover-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            cursor: default;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .cover-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .cover-image {
+            cursor: default;
+            width: 90vw;
+            height: 90vh;
+            object-fit: contain;
+        }
+
+        .book-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .book-image {
+            width: 90rem;
+            height: 90rem;
+            object-fit: contain;
+            display: block;
+        }
+
+        .content-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90rem;
+            height: 90rem;
+            pointer-events: none;
+        }
+
+        .content-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .page {
+            position: absolute;
+            pointer-events: auto;
+            overflow: hidden;
+            padding: 0rem;
+            color: #000;
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.4;
+            font-size: 3rem;
+        }
+
+        .left-page {
+            top: 5rem;
+            left: 5rem;
+            width: 38rem;
+            height: 80rem;
+        }
+
+        .right-page {
+            top: 5rem;
+            right: 5rem;
+            width: 38rem;
+            height: 80rem;
+            font-size: 3rem;
+        }
+
+        .right-page h2 {
+            font-size: 4.5rem;
+        }
+
+        .page h2 {
+            font-size: 4.5rem;
+            margin-bottom: 2rem;
+            color: #000;
+        }
+
+        .page p {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .right-page p {
+            font-size: 3rem;
+        }
+
+        .page a {
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .right-page a {
+            font-size: 3rem;
+        }
+
+        .right-page strong {
+            font-size: inherit;
+        }
+
+        #notascharlie p {
+            font-size: 1.8rem !important;
+        }
+
+        #sinopse {
+            text-align: center;
+        }
+
+        #fichaartistica {
+            text-align: center;
+        }
+
+        #fotografias {
+            text-align: center;
+        }
+
+        .gallery-button {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background-color: #000;
+            color: #fff !important;
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+            transition: background-color 0.3s;
+        }
+
+        .gallery-button:hover {
+            background-color: #333 !important;
+        }
+
+        #extras {
+            text-align: center;
+        }
+
+        #fichaartistica a {
+            font-weight: normal;
+        }
+
+        #fotografias a:not(.gallery-button) {
+            font-weight: normal;
+        }
+
+        #fichatecnica a {
+            font-weight: normal;
+        }
+
+        .page a:hover {
+            background-color: #ADD8E6;
+        }
+
+        .page ul {
+            margin-left: 2rem;
+            font-size: 3rem;
+        }
+
+        .page li {
+            margin-bottom: 0.6rem;
+        }
+
+        .menu-item {
+            font-size: 3rem;
+            font-weight: normal;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            display: block;
+            width: fit-content;
+            transition: background-color 0.3s;
+        }
+
+        .menu-item:hover {
+            background-color: #FFD700;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .links-section {
+            margin-top: 2rem;
+        }
+
+        .links-section a {
+            display: block;
+            font-size: 2.4rem;
+            color: #8B4513;
+            text-decoration: none;
+            margin-bottom: 1rem;
+            width: fit-content;
+            transition: background-color 0.3s;
+        }
+
+        .links-section a:hover {
+            background-color: #FFD700;
+        }
+
+        .gallery-section, .extras-section {
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            margin-bottom: 2rem;
+        }
+
+        .gallery-item p {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-button, .film-button {
+            display: inline-block;
+            font-size: 2.2rem;
+            color: #fff;
+            background-color: #8B4513;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .gallery-button:hover, .film-button:hover {
+            background-color: #D2691E;
+        }
+
+        .content-section img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .page p.tech-specs {
+            font-size: 2rem !important;
+        }
+
+        .page p.tech-specs strong {
+            font-size: inherit !important;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 6rem;
+            height: 6rem;
+            background-color: #333;
+            border: none;
+            border-radius: 0 0 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            z-index: 9999;
+            text-decoration: none;
+            color: #fff;
+            font-size: 3.5rem;
+        }
+
+        .back-button:hover {
+            background-color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .back-button {
+                width: 16rem;
+                height: 16rem;
+                font-size: 8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cover Overlay -->
+    <div class="cover-overlay" id="coverOverlay">
+        <img src="cover.png" alt="Book Cover" class="cover-image">
+    </div>
+
+    <audio id="open-book-sound" src="/A Side/A00 Club Benares/Materiales/Audios/Open Book Sound Effect.mp3" preload="auto"></audio>
+    <audio id="close-book-sound" src="/A Side/A00 Club Benares/Materiales/Audios/Close Book Sound Effect.mp3" preload="auto"></audio>
+    
+    <a href="/biblioteca/" class="back-button">←</a>
+    
+    <div class="book-container">
+        <img src="pages.jpg" alt="Open Book" class="book-image">
+        
+        <div class="content-wrapper">
+            <div class="content-inner">
+                <div class="page left-page">
+                    <h3>El Artista Comprendido</h3><br>
+                    <div class="menu-item" data-content="notascharlie">Notas Charlie</div>
+                    <div class="menu-item" data-content="fichatecnica">Ficha Técnica</div>
+                    <div class="menu-item" data-content="fichaartistica">Ficha Artística</div>
+                    <div class="menu-item" data-content="sinopse">Sinopse</div>
+                    <div class="menu-item" data-content="fotografias">Fotografias</div>
+                    <div class="menu-item" data-content="extras">Extras</div>
+                    <div class="menu-item" id="fecharMenuItem">Fechar</div>
+                </div>
+
+                <div class="page right-page">
+                    <div class="content-section active" id="notascharlie">
+                        <h2>Notas</h2>
+                        <p><strong>"O segundo projeto de Charlie | Club Benares.</strong></p>
+                        <p>Esta curta-metragem apresenta uma crítica ao mundo artístico contemporâneo, onde o esforço, a técnica, o valor econômico e emocional de uma obra parecem já não ser critérios relevantes para que algo seja considerado "arte".</p>
+                        <p>Hoje em dia, quase tudo é rotulado como arte, talvez porque, socialmente, deixámos de questionar o que realmente merece esse nome. Inspirado pelo conceito de "Hamparte", criado por Antonio García Villarán - <strong>"a arte de não ter talento"</strong>.</p>
+                        <p>Este filme lança um olhar provocador sobre obras que, por carecerem de substância, tornam-se quase um insulto à nossa inteligência. Mas mais grave ainda é o papel dos artistas e críticos que, com discursos vazios e pretensiosos, tentam convencer-nos do valor dessas obras e inventam qualquer barbaridade haha."</p>
+                        <p><strong>CC.</strong></p>
+                    </div>
+
+                    <div class="content-section" id="fichatecnica">
+                        <h2>Ficha Técnica</h2>
+                        <p class="tech-specs"><strong>Runtime:</strong> 3m42s</p>
+                        <p class="tech-specs"><strong>Câmera:</strong> Sony FX30 + Sony A7III</p>
+                        <p class="tech-specs"><strong>Áudio:</strong> Premix3 + Rode NTG2</p>
+                        <p class="tech-specs"><strong>Software:</strong> Kdenlive</p>
+                        <p class="tech-specs"><strong>Local:</strong> Areeiro, Lisboa</p>
+                        
+                        <p style="margin-top: 2rem;"><strong>REALIZAÇÃO + PRODUÇÃO + EDIÇÃO</strong><br>
+                        <a href="https://www.instagram.com/charliechavess/" target="_blank">Charlie Chaves</a></p>
+                        
+                        <p><strong>Assistência Produção</strong><br>
+                        <a href="https://www.instagram.com/nityamnow/" target="_blank">Nityam</a> + <a href="https://www.instagram.com/pontes_filmworks/" target="_blank">Patricia Pontes</a></p>
+                        
+                        <p><strong>IMAGEM</strong><br>
+                        <a href="https://www.instagram.com/goncalopereiraaa/" target="_blank">Gonçalo Pereira</a> + <a href="https://www.instagram.com/nityamnow/" target="_blank">Nityam</a></p>
+                        
+                        <p><strong>SOM</strong><br>
+                        <a href="https://www.instagram.com/val.nevs/" target="_blank">Valdir Neves</a></p>
+                    </div>
+
+                    <div class="content-section" id="fichaartistica">
+                        <h2>Ficha Artística</h2>
+                        <p><strong>"EL ARTISTA COMPRENDIDO"</strong><br>
+                        <a href="https://www.instagram.com/charliechavess/" target="_blank">Charlie Chaves</a></p>
+                        
+                        <p><strong>"EL CRITICO OPORTUNO"</strong><br>
+                        <a href="https://www.instagram.com/nobru_defranfran/" target="_blank">Bruno de Franclieu</a></p>
+                    </div>
+
+                    <div class="content-section" id="sinopse">
+                        <h2>Sinopse</h2>
+                        <p>Um jovem artista finaliza a sua obra-prima, mas a cada dia que passa, fica mais insatisfeito com o resultado final, por isso decide descartar o seu trabalho. Posteriormente, um crítico de arte encontra a sua obra...</p>
+                    </div>
+
+                    <div class="content-section" id="fotografias">
+                        <h2>Fotografias</h2>
+                        
+                        <p style="margin-top: 2rem;"><strong>Janeiro 2024 | Rodagem</strong></p>
+                        <p>71 Imagens</p>
+                        <p>Fotografias: <a href="https://www.instagram.com/val.nevs/" target="_blank">Valdir Neves</a></p>
+                        <a href="../EACrodagem.html" target="_blank" class="gallery-button">Visualizar</a>
+                        <br><br>
+                        <p style="margin-top: 3rem;"><strong>Março 2024 | Frames</strong></p>
+                        <p>4 Frames</p>
+                        <p>Direccíon: <a href="https://www.instagram.com/charliechavess/" target="_blank">Charlie Chaves</a></p>
+                        <a href="../EACframes.html" target="_blank" class="gallery-button">Visualizar</a>
+                    </div>
+
+                    <div class="content-section" id="extras">
+                        <h2>Extras</h2>
+                        <a href="/cinemateca/" class="gallery-button" style="margin-top: 2rem;">Vê o filme aqui!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const coverOverlay = document.getElementById('coverOverlay');
+        const coverImage = document.querySelector('.cover-image');
+        const fecharMenuItem = document.getElementById('fecharMenuItem');
+        const backButton = document.querySelector('.back-button');
+
+        // Update cursor based on mouse position over cover image
+        coverImage.addEventListener('mousemove', function(e) {
+            const rect = coverImage.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Calculate where the image actually is within the bounding box
+            const displayWidth = rect.width;
+            const displayHeight = rect.height;
+            const aspectRatio = 493 / 638; // cover.png dimensions
+            
+            let imgWidth, imgHeight, offsetX, offsetY;
+            
+            if (displayWidth / displayHeight > aspectRatio) {
+                // Height is limiting
+                imgHeight = displayHeight;
+                imgWidth = displayHeight * aspectRatio;
+                offsetX = (displayWidth - imgWidth) / 2;
+                offsetY = 0;
+            } else {
+                // Width is limiting
+                imgWidth = displayWidth;
+                imgHeight = displayWidth / aspectRatio;
+                offsetX = 0;
+                offsetY = (displayHeight - imgHeight) / 2;
+            }
+            
+            // Check if cursor is over the actual image
+            if (x >= offsetX && x <= offsetX + imgWidth && y >= offsetY && y <= offsetY + imgHeight) {
+                coverImage.style.cursor = 'pointer';
+            } else {
+                coverImage.style.cursor = 'default';
+            }
+        });
+
+        // Click on cover image to start the book
+        coverImage.addEventListener('click', function(e) {
+            const rect = coverImage.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const displayWidth = rect.width;
+            const displayHeight = rect.height;
+            const aspectRatio = 493 / 638;
+            
+            let imgWidth, imgHeight, offsetX, offsetY;
+            
+            if (displayWidth / displayHeight > aspectRatio) {
+                imgHeight = displayHeight;
+                imgWidth = displayHeight * aspectRatio;
+                offsetX = (displayWidth - imgWidth) / 2;
+                offsetY = 0;
+            } else {
+                imgWidth = displayWidth;
+                imgHeight = displayWidth / aspectRatio;
+                offsetX = 0;
+                offsetY = (displayHeight - imgHeight) / 2;
+            }
+            
+            // Only open if clicked on actual image
+            if (x >= offsetX && x <= offsetX + imgWidth && y >= offsetY && y <= offsetY + imgHeight) {
+                coverOverlay.classList.add('hidden');
+            }
+        });
+
+        // Click anywhere on cover overlay to exit (unless on actual image)
+        coverOverlay.addEventListener('click', function(e) {
+            // Don't exit if clicking back button
+            if (e.target.closest('.back-button')) return;
+            
+            // If clicking the image, check if it's on the actual image or black area
+            if (e.target === coverImage) {
+                const rect = coverImage.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const displayWidth = rect.width;
+                const displayHeight = rect.height;
+                const aspectRatio = 493 / 638;
+                
+                let imgWidth, imgHeight, offsetX, offsetY;
+                
+                if (displayWidth / displayHeight > aspectRatio) {
+                    imgHeight = displayHeight;
+                    imgWidth = displayHeight * aspectRatio;
+                    offsetX = (displayWidth - imgWidth) / 2;
+                    offsetY = 0;
+                } else {
+                    imgWidth = displayWidth;
+                    imgHeight = displayWidth / aspectRatio;
+                    offsetX = 0;
+                    offsetY = (displayHeight - imgHeight) / 2;
+                }
+                
+                // If on actual image, open it
+                if (x >= offsetX && x <= offsetX + imgWidth && y >= offsetY && y <= offsetY + imgHeight) {
+                    coverOverlay.classList.add('hidden');
+                } else {
+                    // If on black area, exit
+                    window.location.href = '/biblioteca/';
+                }
+            } else {
+                // Clicked on overlay background (not on image), exit
+                window.location.href = '/biblioteca/';
+            }
+        });
+
+        // Fechar menu item returns to cover
+        fecharMenuItem.addEventListener('click', function() {
+            coverOverlay.classList.remove('hidden');
+            // Reset to first menu item
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById('notascharlie').classList.add('active');
+        });
+
+        // Menu functionality
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const contentId = this.getAttribute('data-content');
+                
+                // Skip if this is the Fechar button (no data-content)
+                if (!contentId) return;
+                
+                // Hide all content sections
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show the selected content section
+                document.getElementById(contentId).classList.add('active');
+            });
+        });
+
+        // Click outside the book to exit
+        const bookContainer = document.querySelector('.book-container');
+        bookContainer.addEventListener('click', function(e) {
+            // Don't exit if clicking back button or inside the content wrapper
+            if (e.target.closest('.back-button') || e.target.closest('.content-wrapper')) return;
+            
+            // Click outside book, exit
+            window.location.href = '/biblioteca/';
+        });
+    </script>
+</body>
+</html>

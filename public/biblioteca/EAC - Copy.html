@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>El Artista Comprendido | Club Benares</title>      
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body 
+    {background-color: black;
+     display: flex;
+     justify-content: center;
+     align-items: flex-start;
+     min-height: 100vh;}
+
+.main-wrapper
+    {position: relative;
+     width: 100%;
+     display: flex;
+     justify-content: center;}
+
+.content-container
+    {position: relative;
+     width: 1600px;
+     height: 100vh;
+     margin-left: -400px;}
+ 
+
+@font-face 
+    {font-family: Yuji;
+     src: url('./Fontes/YujiBoku-Regular.ttf');}
+
+@font-face 
+     {font-family: Day;
+      src: url('./Fontes/Montserrat-VariableFont_wght.ttf');}
+
+#EAC-tapa
+{position: absolute;
+ width: 600px;
+ left: 600px;
+ top: 60px;
+ border-radius: 20px;
+ z-index: 1000;}
+#EAC-tapa:hover{cursor: pointer;}
+
+#EAC-notas
+{position: absolute;
+ width: 1270px;
+ top: -40px;
+ left: 315px;
+ z-index: 100;}
+
+#EAC-fichaT
+{position: absolute;
+ width: 1270px;
+ top: 38px;
+ left: 315px;
+ z-index: 100;}
+
+#EAC-fichaA
+{position: absolute;
+ width: 1270px;
+ top: 38px;
+ left: 315px;
+ z-index: 100;}
+
+#EAC-sinopse
+{position: absolute;
+ width: 1270px;
+ top: 38px;
+ left: 315px;
+ z-index: 100;}
+
+#EAC-foto
+{position: absolute;
+ width: 1270px;
+ top: 38px;
+ left: 315px;
+ z-index: 100;}
+
+#EAC-extras
+{position: absolute;
+ width: 1270px;
+ top: 38px;
+ left: 315px;
+ z-index: 100;}
+
+#Back
+{position: fixed;
+ width: 100px;
+ top: 20px;
+ left: 20px;
+ z-index: 10000;}
+#Back:hover{cursor: pointer;}
+
+
+
+#Notascharlie
+{position: absolute;
+ border: none;
+ background-color: transparent;
+ font-family: Day;
+ font-size: 40px;
+ left: 550px;
+ top: 275px;
+ z-index: 500;}
+#Notascharlie:focus,#Notascharlie:active
+{text-decoration: underline;}
+
+#InfoNotas
+{position: absolute;
+  border: none;
+  background-color: transparent;
+  font-family: Day;
+  font-size: 10px;
+  left: 550px;
+  top: 405px;
+  z-index: 500;}
+
+
+
+#FichaTecnica
+{position: absolute;
+ border: none;
+ background-color: transparent;
+ font-family: Day;
+ font-size: 40px;
+ left: 550px;
+ top: 340px;
+ z-index: 500;}
+#FichaTecnica:focus,#FichaTecnica:active
+{text-decoration: underline;} 
+
+
+#botonFichatA
+{position: absolute;
+ width: 30px;
+ top: 402px;
+ left: 1330px;
+ z-index: 1000;
+ color: black;
+ font-family: Day;
+ white-space: nowrap;}
+
+
+#botonFichatE
+{position: absolute;
+ width: 30px;
+ top: 460px;
+ left: 1325px;
+ z-index: 1000;
+ color: black;
+ font-family: Day;
+ white-space: nowrap;}
+
+
+#botonFichatC
+{position: absolute;
+ width: 30px;
+ top: 577px;
+ left: 1085px;
+ z-index: 1000;
+ color: black;
+ font-family: Day;
+ white-space: nowrap;}
+
+
+#botonFichatD
+{position: absolute;
+ width: 30px;
+ top: 520px;
+ left: 1100px;
+ z-index: 1000;
+ color: black;
+ font-family: Day;
+ white-space: nowrap;}
+
+
+#botonFichatB
+{position: absolute;
+ width: 30px;
+ top: 460px;
+ left: 1230px;
+ z-index: 1000;
+ color: black;
+ font-family: Day;
+ white-space: nowrap;}
+
+ #botonFichatB1
+ {position: absolute;
+  width: 30px;
+  top: 520px;
+  left: 1255px;
+  z-index: 1000;
+  color: black;
+  font-family: Day;
+  white-space: nowrap;} 
+ 
+ 
+
+
+#FichaArtistica
+{position: absolute;
+ border: none;
+ background-color: transparent;
+ font-family: Day;
+ font-size: 40px;
+ left: 550px;
+ top: 405px;
+ z-index: 500;}
+#FichaArtistica:focus,#fichaArtistica:active
+{text-decoration: underline;}
+
+#botonFicharA
+{position: absolute;
+ width: 70px;
+ font-size: 22px;
+ top: 340px;
+ left: 1139px;
+ z-index: 1000;
+ color: black;
+ font-family: Day;
+ white-space: nowrap;}
+
+#botonFicharB
+{position: absolute;
+ width: 20px;
+ font-size: 22px;
+ top: 489px;
+ left: 1120px;
+ z-index: 1000;
+ color: black;
+ font-family: Day;
+ white-space: nowrap;}
+ 
+
+
+#Sinopse
+{position: absolute;
+ border: none;
+ background-color: transparent;
+ font-family: Day;
+ font-size: 40px;
+ left: 550px;
+ top: 470px;
+ z-index: 500;}
+#Sinopse:focus,#Sinopse:active
+{text-decoration: underline;}
+ 
+
+#Fotografias
+{position: absolute;
+ border: none;
+ background-color: transparent;
+ font-family:Day;
+ font-size: 40px;
+ left: 550px;
+ top: 535px;
+ z-index: 500;}
+#Fotografias:focus,#Fotografias:active
+{text-decoration: underline;}
+
+#InfoRodagem
+{position: absolute;
+ left: 1130px;
+ top: 330px;
+ width: 200px;
+ font-family: Day;
+ font-size: 25px;
+ text-align: center;
+ border: none;
+ background-color: transparent;
+ z-index: 500;}
+
+#GaleriaRodagem
+{position: absolute;
+    left: 1130px;
+    top: 425px;
+    width: 200px;
+    font-family: Day;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    border: none;
+    background-color: transparent;
+    z-index: 500;}
+#GaleriaRodagem:hover{cursor: pointer;}
+
+#InfoFrames
+{position: absolute;
+ left: 1110px;
+ top: 540px;
+ width: 230px;
+ font-family: Day;
+ font-size: 25px;
+ border: none;
+ background-color: transparent;
+ text-align: center;
+ z-index: 500;}
+
+#GaleriaFrames
+{position: absolute;
+    left: 1130px;
+    top: 640px;
+    width: 200px;
+    font-family: Day;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    border: none;
+    background-color: transparent;
+    z-index: 500;}
+#GaleriaFrames:hover{cursor: pointer;}
+
+
+#Extras
+{position: absolute;
+ border: none;
+ background-color: transparent;
+ font-family: Day;
+ font-size: 40px;
+ left: 550px;
+ top: 600px;
+ z-index: 500;}
+#Extras:focus,#Extras:active
+{text-decoration: underline;}
+
+#GaleriaExtras
+{position: absolute;
+ left: 1110px;
+ top: 300px;
+ width: 200px;
+ font-family: Day;
+ font-weight: bold;
+ font-size: 25px;
+ text-align: center;
+ border: none;
+ background-color: transparent;
+ white-space: nowrap;
+ z-index: 500;}
+ #GaleriaExtras:hover{cursor: pointer;}
+
+#Cerrar
+{position: absolute;
+ border: none;
+ background-color: transparent;
+ font-family: Day;
+ font-weight: bold;
+ font-size: 40px;
+ left: 550px;
+ top: 665px;
+ z-index: 500;}
+
+
+
+
+.container-slider
+{width: 100%;
+ max-width: 900px;
+ margin: auto;
+ box-shadow: 0 0 0 5px black, 0 0px 500px;
+ position: absolute;
+align-items: center;} 
+
+.slider
+{width: 100%;
+ height: 200px;}
+
+.slider__section
+{width: 100%;}
+
+.slider__img 
+{display: block;
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ align-items: center;}
+
+
+
+
+ .fade-out {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+
+  #transition-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+    z-index: 9999;
+  }
+  
+  #transition-overlay.fade-out {
+    opacity: 1;
+    pointer-events: auto;
+  }
+</style>
+
+</head>
+<body>
+
+<div class="main-wrapper">
+  <div class="content-container">
+
+<!-- LIBRO EL ARTISTA COMPRENDIDO -->
+
+<img id="EAC-tapa" src="./Imagens/00 EAC - tapa.png">
+<audio id="EAC-tapa-click" src="/A Side/A00 Club Benares/Materiales/Audios/Open Book Sound Effect.mp3" preload="auto"></audio>
+
+
+<!-- NOTAS -->
+
+<img id="EAC-notas" src="./Imagens/01 EAC - Notas.png" style="display: none;">
+
+<!-- TECNICA -->
+
+<img id="EAC-fichaT" src="./Imagens/02 EAC - Ficha Tecnica.png" style="display: none;">
+
+<a href="https://www.instagram.com/charliechavess/" target="_blank"><p id="botonFichatA" style="display: none;"> Charlie Chaves</P></a>
+
+<a href="https://www.instagram.com/nityamnow/" target="_blank"><p id="botonFichatB"style="display: none;"> Nityam</P></a>
+<a href="https://www.instagram.com/nityamnow/" target="_blank"><p id="botonFichatB1"style="display: none;"> Nityam</P></a>
+
+
+<a href="https://www.instagram.com/val.nevs/" target="_blank"><P id="botonFichatC" style="display: none;"> Valdir Neves</P></a>
+
+<a href="https://www.instagram.com/goncalopereiraaa/" target="_blank"><p id="botonFichatD"style="display: none;"> Gonçalo Pereira</P></a>
+
+<a href="https://www.instagram.com/pontes_filmworks/" target="_blank"><p id="botonFichatE" style="display: none;"> Patricia Pontes</P></a>
+
+
+<!-- ARTISTICA -->
+
+<img id="EAC-fichaA" src="./Imagens/03 EAC - Ficha Artistica.png" style="display: none;">
+
+<a href="https://www.instagram.com/charliechavess/" target="_blank"><p id="botonFicharA" style="display: none;"> Charlie Chaves</p></a>
+
+<a href="https://www.instagram.com/nobru_defranfran/" target="_blank"><p id="botonFicharB" style="display: none;"> Bruno de Franclieu</p></a>
+
+
+
+<img id="EAC-sinopse" src="./Imagens/04 EAC - Sinopse.png" style="display: none;">
+
+
+<img id="EAC-foto" src="./Imagens/05 EAC - Fotografias.png" style="display: none;">
+<button id="InfoRodagem">71 Imagens Fotografias: Valdir Neves</button>
+
+
+<a href="./EACrodagem.html" target="_blank"> 
+<button id="GaleriaRodagem">Visualizar</button></a>
+
+
+<button id="InfoFrames">4 Frames Dirección: Charlie Chaves</button>
+<a href="./EACframes.html" target="_blank">
+<button id="GaleriaFrames">Visualizar</button>
+</a>
+
+
+<img id="EAC-extras" src="./Imagens/06 EAC - Extras.png" style="display: none;">
+<a href="/A Side/A03 El Cuarto de Charlie/El Cuarto de Charlie.html" target="_blank">
+<button id="GaleriaExtras">+ Vê o filme aqui!</button>
+</a>
+
+
+
+<button id="Notascharlie">Notas Charlie</button>
+<button id="FichaTecnica">Ficha Técnica</button>
+<button id="FichaArtistica">Ficha Artística</button>
+<button id="Sinopse">Sinopse</button>
+<button id="Fotografias">Fotografias</button>
+<button id="Extras">Extras</button>
+
+<button id="Cerrar">Fechar</button>
+<audio id="EAC-Cerrar-click" src="/A Side/A00 Club Benares/Materiales/Audios/Close Book Sound Effect.mp3" preload="auto"></audio>
+
+<div id="overlay"></div>
+
+<div class="fade-container" id="fade">
+  <div class="Imagenes-Portas-Landing">
+    <a href="./index.html" id="backLink">
+      <img id="Back" src="./Imagens/Sinal.png" class="imagem pos1">
+    </a>
+    <div id="transition-overlay"></div>
+  </div>
+</div>
+
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tapa = document.getElementById('EAC-tapa');
+    const notas = document.getElementById('EAC-notas');
+    const fichaTecnica = document.getElementById('EAC-fichaT');
+    const fichaArtistica = document.getElementById('EAC-fichaA');
+    const sinopse = document.getElementById('EAC-sinopse');
+    const fotografias = document.getElementById('EAC-foto');
+    const extras = document.getElementById('EAC-extras');
+    const cerrar = document.getElementById('Cerrar');
+
+    // Función para ocultar todas las imágenes excepto la tapa
+    function ocultarTodas() {
+        notas.style.display = 'none';
+        fichaTecnica.style.display = 'none';
+        botonFichatA.style.display = 'none';
+        botonFichatB.style.display = 'none';
+        botonFichatB1.style.display = 'none';
+        botonFichatC.style.display = 'none';
+        botonFichatD.style.display = 'none';
+        botonFichatE.style.display = 'none';
+        fichaArtistica.style.display = 'none';
+        sinopse.style.display = 'none';
+        fotografias.style.display = 'none';
+        extras.style.display = 'none';
+        
+    }
+
+
+    // Función para mostrar cada imagen individualmente
+    function mostrarImagen(imagen) {
+        ocultarTodas(); // Ocultar todas las imágenes
+        imagen.style.display = 'block'; // Mostrar la imagen especificada
+
+    if (imagen === fichaTecnica) 
+        {botonFichatA.style.display = 'block';
+         botonFichatB.style.display = 'block';
+         botonFichatB1.style.display = 'block';
+         botonFichatC.style.display = 'block';
+         botonFichatD.style.display = 'block';
+         botonFichatE.style.display = 'block';
+    }
+    
+    if (imagen === fichaArtistica) 
+        {botonFicharA.style.display = 'block';
+         botonFicharB.style.display = 'block';}
+
+    else{document.getElementById('botonFicharA').style.display = 'none';
+         document.getElementById('botonFicharB').style.display = 'none';}
+
+    if (imagen === fotografias)
+        {InfoRodagem.style.display = 'block';
+         GaleriaRodagem.style.display = 'block';
+         InfoFrames.style.display = 'block';
+         GaleriaFrames.style.display = 'block';}
+ 
+      else {
+         // Ocultar los elementos de fotografías si se muestra otra imagen
+         document.getElementById('InfoRodagem').style.display = 'none';
+         document.getElementById('GaleriaRodagem').style.display = 'none';
+         document.getElementById('InfoFrames').style.display = 'none';
+         document.getElementById('GaleriaFrames').style.display = 'none';} 
+    
+         if (imagen === extras)
+         {GaleriaExtras.style.display = 'block';}
+ 
+      else{ document.getElementById('GaleriaExtras').style.display = 'none';}}
+
+
+    // Agregar eventos de clic a cada botón
+    document.getElementById('Notascharlie').addEventListener('click', function() {
+        mostrarImagen(notas);
+    });
+
+    document.getElementById('FichaTecnica').addEventListener('click', function() {
+        mostrarImagen(fichaTecnica);
+    });
+
+    document.getElementById('FichaArtistica').addEventListener('click', function() {
+        mostrarImagen(fichaArtistica);
+    });
+
+    document.getElementById('Sinopse').addEventListener('click', function() {
+        mostrarImagen(sinopse);
+    });
+
+    document.getElementById('Fotografias').addEventListener('click', function() {
+        mostrarImagen(fotografias);
+    });
+
+    document.getElementById('Extras').addEventListener('click', function() {
+        mostrarImagen(extras);
+    });
+
+    // Agregar evento de clic a la tapa
+    tapa.addEventListener('click', function() {
+        tapa.style.display = 'none'; // Ocultar la tapa
+        mostrarImagen(notas); // Mostrar la primera página del libro al hacer clic en la tapa
+    });
+
+    // Agregar evento de clic al botón Cerrar
+    cerrar.addEventListener('click', function() {
+        ocultarTodas(); // Ocultar todas las imágenes
+        tapa.style.display = 'block'; // Mostrar solo la tapa al cerrar el libro
+    });
+});
+
+// Audio effects
+document.addEventListener('DOMContentLoaded', function () {
+    const tapa = document.getElementById('EAC-tapa');
+    const tapaAudio = document.getElementById('EAC-tapa-click');
+
+    if (tapa && tapaAudio) {
+        tapa.addEventListener('click', function () {
+            tapaAudio.currentTime = 0;
+            tapaAudio.play();
+        });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const cerrarBtn = document.getElementById('Cerrar');
+    const cerrarAudio = document.getElementById('EAC-Cerrar-click');
+
+    if (cerrarBtn && cerrarAudio) {
+        cerrarBtn.addEventListener('click', function () {
+            cerrarAudio.currentTime = 0;
+            cerrarAudio.play();
+        });
+    }
+});
+
+const backLink = document.getElementById('backLink');
+if (backLink) {
+  backLink.addEventListener('click', function(event) {
+    const overlay = document.getElementById('transition-overlay');
+    if (overlay) {
+      overlay.classList.add('fade-out');
+    }
+  });
+}
+</script>
+
+</body>
+</html>

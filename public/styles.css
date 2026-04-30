@@ -127,12 +127,9 @@ header h1 {
   transform: translateY(-50%) scale(1.05);
 }
 
-.arrow-icon {
+.nav-icon {
   color: var(--accent-color);
   font-size: 1rem;
-  transition: transform 0.3s ease;
-  display: block;
-  line-height: 1;
 }
 
 /* NAV */
@@ -143,12 +140,7 @@ nav {
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   border-radius: 0 0 10px 10px;
-  transition: all 0.3s ease;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 100;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
   max-height: 0;
   overflow: hidden;
   opacity: 0;
@@ -280,8 +272,6 @@ footer .copyright {
   min-width: 320px;
   width: 90%;
   background-color: rgba(15, 15, 15, 0.6); /* tono más profundo */
-  backdrop-filter: blur(10px) saturate(120%);
-  -webkit-backdrop-filter: blur(10px) saturate(120%);
   border: 1px solid rgba(255, 255, 255, 0.08); /* borde sutil tipo glassmorphism */
   border-radius: 12px;
   display: flex;
@@ -367,8 +357,6 @@ footer .copyright {
   border-radius: 15px;
   overflow: hidden;
   background-color: rgba(15, 15, 15, 0.6);
-  backdrop-filter: blur(10px) saturate(120%);
-  -webkit-backdrop-filter: blur(10px) saturate(120%);
   border: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
@@ -419,8 +407,6 @@ footer .copyright {
 .card-content .ver-detalhes {
   align-self: flex-start;
   background-color: rgba(255, 255, 255, 0.15); /* translúcido claro */
-  backdrop-filter: blur(10px) saturate(120%);
-  -webkit-backdrop-filter: blur(10px) saturate(120%);
   border: 1px solid rgba(255, 255, 255, 0.2); /* borde sutil blanco */
   color: #fff;
   padding: 0.5rem 1rem;
@@ -491,8 +477,6 @@ footer .copyright {
   padding-bottom: 150%;
   overflow: hidden;
   background-color: rgba(15, 15, 15, 0.6);
-  backdrop-filter: blur(10px) saturate(120%);
-  -webkit-backdrop-filter: blur(10px) saturate(120%);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -847,7 +831,7 @@ body{
 }
 
 /* Individual background images - only what's unique */
-body.bg-club { background-image: url("media/B01 Club Benares.png"); }
+body.bg-club { background-image: url("media/B01 Club Benares.webp"); }
 body.bg-eventos { background-image: url("media/B03 Eventos.png"); }
 body.bg-biblioteca { background-image: url("media/B05 Biblioteca Nacional.png"); }
 body.bg-cinemateca { background-image: url("media/B06 Canal 14.png"); }
@@ -861,8 +845,6 @@ body.bg-contactos { background-image: url("media/B04\ Noticias.png"); }
 
 .shadow-toggle-btn {
   background-color: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px) saturate(120%);
-  -webkit-backdrop-filter: blur(10px) saturate(120%);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
   padding: 0.25rem 0.5rem;
