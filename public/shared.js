@@ -118,7 +118,6 @@ function createFooter() {
 function initializeNavToggle() {
   const toggleBtn = document.getElementById('nav-toggle');
   const nav = document.getElementById('main-nav');
-  const mainContent = document.querySelector('main');
   const isMercado = window.location.pathname.startsWith('/mercado');
 
   if (!toggleBtn || !nav) return;
@@ -135,14 +134,7 @@ function initializeNavToggle() {
 
   function updateIcon() {
     const icon = toggleBtn.querySelector('.nav-icon');
-    if (nav.classList.contains('active')) {
-      icon.className = 'fas fa-xmark nav-icon';
-    } else {
-      icon.className = 'fas fa-bars nav-icon';
-    }
-    if (mainContent) {
-      mainContent.style.paddingTop = nav.classList.contains('active') ? `${nav.offsetHeight}px` : '0';
-    }
+    icon.className = nav.classList.contains('active') ? 'fas fa-xmark nav-icon' : 'fas fa-bars nav-icon';
   }
 
   updateIcon();

@@ -140,12 +140,7 @@ nav {
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   border-radius: 0 0 10px 10px;
-  transition: all 0.3s ease;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 100;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
   max-height: 0;
   overflow: hidden;
   opacity: 0;
