@@ -3,305 +3,429 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Junta-te à comunidade de cinema do Club Benares em Lisboa. Eventos, projetos e conexões para todos os apaixonados pelo cinema.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Club Benares">
+  <meta property="og:title" content="Comunidade | Club Benares">
+  <meta property="og:description" content="Junta-te à comunidade de cinema do Club Benares em Lisboa. Eventos, projetos e conexões para todos os apaixonados pelo cinema.">
+  <meta property="og:image" content="https://club-benares.pages.dev/media/B01 Club Benares.webp">
+  <meta property="og:url" content="https://club-benares.pages.dev/comunidad/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#000000">
   <title>Comunidade | Club Benares</title>
   <link rel="stylesheet" href="/styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap" rel="stylesheet">
   <link rel="icon" href="/media/A00 Logo - Light.png" type="image/png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    /* Grayscale filter for entire page */
-    body.bg-comunidade {
-      filter: grayscale(100%);
+    /* ── Hero Section ── */
+    .comunidade-hero {
+      width: 100%;
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      background: rgba(5, 2, 0, 0.82);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      border-bottom: 1px solid rgba(255,100,30,0.2);
     }
 
-    /* Corkboard styling */
+    .comunidade-hero h1 {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 1rem;
+      letter-spacing: -0.5px;
+      line-height: 1.15;
+    }
+
+    .comunidade-hero h1 span {
+      color: #ff6a1a;
+    }
+
+    .comunidade-hero p {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: rgba(255,255,255,0.78);
+      max-width: 620px;
+      margin: 0 auto 2.2rem;
+      line-height: 1.6;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.75rem 1.6rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      display: inline-block;
+    }
+
+    .btn-primary.red {
+      background: #ff6a1a;
+      color: #fff;
+    }
+
+    .btn-primary.red:hover {
+      background: #e05510;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 106, 26, 0.4);
+    }
+
+    .btn-primary.outline {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.45);
+    }
+
+    .btn-primary.outline:hover {
+      border-color: #ff6a1a;
+      color: #ff6a1a;
+      transform: translateY(-2px);
+    }
+
+    /* ── Corkboard ── */
+    .corkboard-wrapper {
+      position: relative;
+    }
+
+    .corkboard-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 5, 0, 0.60);
+      pointer-events: none;
+      z-index: 0;
+    }
+
     .corkboard {
-      padding: 2rem;
-      min-height: calc(100vh - 200px);
+      position: relative;
+      z-index: 1;
+      padding: 3rem 2rem 4rem;
       display: flex;
       flex-wrap: wrap;
-      gap: 2rem;
+      gap: 2.2rem;
       justify-content: center;
       align-items: flex-start;
-      overflow-y: auto;
-      position: relative;
     }
 
-    /* Base sticky note styles */
+    /* ── Sticky Notes ── */
     .sticky-note {
-      width: 220px;
-      min-height: 220px;
-      padding: 20px 15px 15px 15px;
+      width: 230px;
+      min-height: 230px;
+      padding: 22px 18px 18px;
       position: relative;
-      background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.85) 100%);
       font-family: 'Kalam', cursive;
-      color: #333;
-      box-shadow: 
-        2px 2px 5px rgba(0,0,0,0.2),
-        inset -1px -1px 2px rgba(0,0,0,0.05);
+      color: #1a1a1a;
+      box-shadow:
+        3px 3px 10px rgba(0,0,0,0.45),
+        inset -1px -1px 2px rgba(0,0,0,0.07);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       cursor: default;
       display: flex;
       flex-direction: column;
     }
 
-    /* Sticky note tape effect */
+    /* Tape strip across top */
     .sticky-note::before {
       content: '';
       position: absolute;
-      top: -15px;
+      top: -14px;
       left: 50%;
       transform: translateX(-50%);
-      width: 80px;
-      height: 30px;
-      background: rgba(255,255,255,0.4);
-      border: 1px solid rgba(200,200,200,0.3);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      width: 72px;
+      height: 26px;
+      background: rgba(255,255,255,0.38);
+      border: 1px solid rgba(255,255,255,0.22);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.18);
     }
 
-    /* Yellow sticky notes - now will be gray */
-    .sticky-yellow {
-      background: linear-gradient(135deg, #d0d0d0 0%, #b0b0b0 100%);
-    }
-    .sticky-yellow::before {
-      background: rgba(200,200,200,0.3);
-    }
-
-    /* Pink sticky notes - now will be gray */
-    .sticky-pink {
-      background: linear-gradient(135deg, #c0c0c0 0%, #a0a0a0 100%);
-    }
-    .sticky-pink::before {
-      background: rgba(180,180,180,0.3);
-    }
-
-    /* Blue sticky notes - now will be gray */
-    .sticky-blue {
-      background: linear-gradient(135deg, #909090 0%, #707070 100%);
-      color: white;
-    }
-    .sticky-blue::before {
-      background: rgba(120,120,120,0.3);
-    }
-    .sticky-blue a {
-      color: #f0f0f0 !important;
-    }
-
-    /* Green sticky notes - now will be gray */
-    .sticky-green {
-      background: linear-gradient(135deg, #b8b8b8 0%, #989898 100%);
-    }
-    .sticky-green::before {
-      background: rgba(160,160,160,0.3);
-    }
-
-    /* Orange sticky notes - now will be gray */
-    .sticky-orange {
-      background: linear-gradient(135deg, #c8c8c8 0%, #a8a8a8 100%);
-    }
-    .sticky-orange::before {
-      background: rgba(190,190,190,0.3);
-    }
-
-    /* Purple sticky notes - now will be gray */
-    .sticky-purple {
-      background: linear-gradient(135deg, #d8d8d8 0%, #b8b8b8 100%);
-    }
-    .sticky-purple::before {
-      background: rgba(210,210,210,0.3);
-    }
-
-    /* Rotation classes */
-    .tilt-left {
-      transform: rotate(-5deg);
-    }
-    .tilt-right {
-      transform: rotate(4deg);
-    }
-    .tilt-left-small {
-      transform: rotate(-2deg);
-    }
-    .tilt-right-small {
-      transform: rotate(3deg);
-    }
-    .tilt-left-large {
-      transform: rotate(-8deg);
-    }
-
-    /* Hover effects */
     .sticky-note:hover {
-      transform: rotate(0deg) scale(1.05);
-      box-shadow: 
-        4px 4px 12px rgba(0,0,0,0.3),
-        inset -1px -1px 2px rgba(0,0,0,0.05);
-      z-index: 10;
+      transform: rotate(0deg) scale(1.06) !important;
+      box-shadow:
+        5px 5px 18px rgba(0,0,0,0.55),
+        inset -1px -1px 2px rgba(0,0,0,0.07);
+      z-index: 20;
     }
 
-    /* Sticky note content */
     .sticky-note h3 {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 700;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.55rem;
       text-decoration: underline;
       text-underline-offset: 3px;
     }
 
     .sticky-note p {
-      font-size: 1rem;
-      line-height: 1.4;
+      font-size: 0.97rem;
+      line-height: 1.45;
       margin-bottom: 0.8rem;
       flex-grow: 1;
     }
 
     .sticky-note a {
-      color: #2a2a2a;
+      color: #1a1a1a;
       text-decoration: none;
-      font-weight: 600;
-      border-bottom: 2px solid transparent;
-      transition: border-color 0.2s ease;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-bottom: 2px solid rgba(0,0,0,0.25);
+      transition: border-color 0.2s;
       display: inline-block;
       margin-top: auto;
     }
 
     .sticky-note a:hover {
-      border-bottom-color: currentColor;
+      border-color: currentColor;
     }
 
-    /* Special handwritten-style list */
+    /* Colour variants */
+    .sticky-yellow {
+      background: linear-gradient(145deg, #ffe066 0%, #ffd020 100%);
+    }
+    .sticky-yellow::before { background: rgba(255,220,80,0.38); }
+
+    .sticky-pink {
+      background: linear-gradient(145deg, #ff8fbb 0%, #ff5fa0 100%);
+    }
+    .sticky-pink::before { background: rgba(255,130,170,0.38); }
+
+    .sticky-blue {
+      background: linear-gradient(145deg, #5bb8f5 0%, #2196e0 100%);
+      color: #fff;
+    }
+    .sticky-blue::before { background: rgba(100,190,255,0.38); }
+    .sticky-blue h3,
+    .sticky-blue p,
+    .sticky-blue a { color: #fff; }
+    .sticky-blue a { border-bottom-color: rgba(255,255,255,0.4); }
+
+    .sticky-purple {
+      background: linear-gradient(145deg, #c47eff 0%, #9b3ddc 100%);
+      color: #fff;
+    }
+    .sticky-purple::before { background: rgba(180,120,255,0.38); }
+    .sticky-purple h3,
+    .sticky-purple p,
+    .sticky-purple a { color: #fff; }
+    .sticky-purple a { border-bottom-color: rgba(255,255,255,0.4); }
+
+    /* Tilt classes */
+    .tilt-left       { transform: rotate(-5deg); }
+    .tilt-right      { transform: rotate(4deg); }
+    .tilt-left-sm    { transform: rotate(-2deg); }
+    .tilt-right-sm   { transform: rotate(3deg); }
+
+    /* Handwritten list */
     .sticky-list {
       list-style: none;
       padding: 0;
-      margin: 0.5rem 0;
+      margin: 0.4rem 0 0.8rem;
+      flex-grow: 1;
     }
-
     .sticky-list li {
-      padding: 0.3rem 0;
+      padding: 0.25rem 0 0.25rem 1.2rem;
       position: relative;
-      padding-left: 1.2rem;
+      font-size: 0.93rem;
     }
-
     .sticky-list li::before {
       content: '→';
       position: absolute;
       left: 0;
-      color: inherit;
       opacity: 0.7;
     }
 
-    /* Polaroid-style images */
+    /* ── Polaroid Photos ── */
     .corkboard-photo {
-      width: 320px;
-      height: 260px;
+      width: 230px;
       position: relative;
-      background: white;
-      padding: 10px 10px 50px 10px;
-      box-shadow: 
-        2px 2px 8px rgba(0,0,0,0.3),
-        inset 0 0 2px rgba(0,0,0,0.1);
+      background: #fff;
+      padding: 10px 10px 46px;
+      box-shadow:
+        3px 3px 12px rgba(0,0,0,0.5),
+        inset 0 0 2px rgba(0,0,0,0.08);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       display: flex;
       flex-direction: column;
     }
 
-    /* Photo frame effect */
+    /* Push-pin */
     .corkboard-photo::before {
       content: '';
       position: absolute;
-      top: -20px;
-      left: 50%;
-      transform: translateX(-50%) rotate(45deg);
-      width: 30px;
-      height: 30px;
-      background: radial-gradient(circle, #c0c0c0 0%, #808080 100%);
-      border-radius: 50%;
-      box-shadow: 
-        0 2px 4px rgba(0,0,0,0.3),
-        inset 0 -1px 2px rgba(255,255,255,0.5);
-      z-index: 1;
-    }
-
-    /* Push pin shadow */
-    .corkboard-photo::after {
-      content: '';
-      position: absolute;
-      top: -18px;
+      top: -16px;
       left: 50%;
       transform: translateX(-50%);
-      width: 26px;
-      height: 26px;
+      width: 22px;
+      height: 22px;
+      background: radial-gradient(circle at 40% 35%, #e06020 0%, #b03a00 100%);
       border-radius: 50%;
-      background: rgba(0,0,0,0.2);
-      filter: blur(3px);
-      z-index: 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5), inset 0 -1px 2px rgba(255,255,255,0.3);
+      z-index: 2;
     }
 
-    /* Image container */
-    .photo-image {
+    .corkboard-photo:hover {
+      transform: rotate(0deg) scale(1.04) !important;
+      box-shadow:
+        5px 5px 20px rgba(0,0,0,0.6),
+        inset 0 0 2px rgba(0,0,0,0.08);
+      z-index: 20;
+    }
+
+    .photo-img {
       width: 100%;
-      height: 180px;
-      background-size: cover;
-      background-position: center;
-      background-color: #f0f0f0;
-      position: relative;
-      overflow: hidden;
+      height: 170px;
+      object-fit: cover;
+      display: block;
+      background: #222;
     }
 
-    /* Photo caption */
     .photo-caption {
       font-family: 'Kalam', cursive;
       text-align: center;
       color: #333;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       padding-top: 10px;
       font-weight: 400;
     }
 
-    /* Different photo tilts */
-    .photo-tilt-left {
-      transform: rotate(-4deg);
-    }
-    .photo-tilt-right {
-      transform: rotate(3deg);
-    }
-    .photo-tilt-slight {
-      transform: rotate(-1deg);
+    .photo-tilt-left  { transform: rotate(-4deg); }
+    .photo-tilt-right { transform: rotate(3deg); }
+
+    /* ── Como Participar ── */
+    .como-participar {
+      background: rgba(8, 4, 0, 0.92);
+      border-top: 1px solid rgba(255,100,30,0.2);
+      padding: 4rem 2rem 4.5rem;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
     }
 
-    /* Photo hover effect */
-    .corkboard-photo:hover {
-      transform: rotate(0deg) scale(1.02);
-      box-shadow: 
-        4px 4px 15px rgba(0,0,0,0.4),
-        inset 0 0 2px rgba(0,0,0,0.1);
-      z-index: 10;
+    .como-participar h2 {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 800;
+      margin: 0 0 0.4rem;
+      letter-spacing: -0.3px;
     }
 
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
+    .como-participar .section-sub {
+      color: rgba(255,255,255,0.55);
+      margin: 0 auto 3rem;
+      max-width: 480px;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .steps {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .step-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 2rem 1.5rem;
+      max-width: 280px;
+      flex: 1 1 220px;
+      text-align: left;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .step-card:hover {
+      border-color: rgba(255,106,26,0.5);
+      background: rgba(255,106,26,0.06);
+    }
+
+    .step-icon {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .step-num {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ff6a1a;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .step-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 0.6rem;
+    }
+
+    .step-card p {
+      font-size: 0.93rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .email-cta {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.65);
+      margin: 0;
+    }
+
+    .email-cta a {
+      color: #ff6a1a;
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(255,106,26,0.4);
+      transition: border-color 0.2s;
+    }
+
+    .email-cta a:hover {
+      border-color: #ff6a1a;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
       .corkboard {
-        padding: 1rem;
-        gap: 1.5rem;
+        gap: 2rem;
+        padding: 2rem 1rem 3rem;
       }
-      
+
       .sticky-note {
-        width: 180px;
+        width: calc(50vw - 2rem);
+        min-width: 155px;
         min-height: 180px;
         font-size: 0.9rem;
       }
 
+      .sticky-note h3 { font-size: 1.1rem; }
+
       .corkboard-photo {
-        width: 320px;
-        height: 260px;
+        width: calc(50vw - 2rem);
+        min-width: 155px;
       }
 
-      .photo-image {
-        height: 180px;
-      }
+      .photo-img { height: 130px; }
+
+      .steps { flex-direction: column; align-items: center; }
+
+      .step-card { max-width: 100%; flex: none; width: 100%; }
     }
 
-    /* Keep main scrollable */
     main {
       overflow-y: auto !important;
     }
@@ -309,61 +433,113 @@
 </head>
 <body class="bg-comunidade">
 
-  <!-- Header container where JavaScript will insert the header -->
   <div id="header-container"></div>
 
   <main>
-    <div class="corkboard">
-      
-      <!-- Welcome Note -->
-      <div class="sticky-note sticky-yellow tilt-left">
-        <h3>Bem-vindo!</h3>
-        <p>A nossa comunidade é um espaço de partilha, criatividade e conexão. Junte-se a nós!</p>
-        <a href="https://www.instagram.com/thebenaresclub" target="_blank">Seguir no Instagram →</a>
+
+    <!-- ══ HERO ══════════════════════════════════════════════════════ -->
+    <section class="comunidade-hero">
+      <h1>Faz parte da <span>comunidade</span></h1>
+      <p>Club Benares é um espaço aberto a todos os que amam o cinema — cineastas, estudantes, curiosos e espectadores.</p>
+      <div class="hero-ctas">
+        <a href="/eventos/" class="btn-primary red">Ver próximo evento →</a>
+        <a href="https://www.instagram.com/thebenaresclub" target="_blank" rel="noopener" class="btn-primary outline">Seguir no Instagram →</a>
+      </div>
+    </section>
+
+    <!-- ══ CORKBOARD ══════════════════════════════════════════════════ -->
+    <section class="corkboard-wrapper">
+      <div class="corkboard-overlay"></div>
+      <div class="corkboard">
+
+        <!-- 1. Welcome note -->
+        <div class="sticky-note sticky-yellow tilt-left">
+          <h3>Bem-vindo!</h3>
+          <p>A nossa comunidade é um espaço de criatividade, partilha e paixão pelo cinema. Todos são bem-vindos.</p>
+          <a href="https://www.instagram.com/thebenaresclub" target="_blank" rel="noopener">Seguir no Instagram →</a>
+        </div>
+
+        <!-- 2. Próximo evento -->
+        <div class="sticky-note sticky-pink tilt-right-sm">
+          <h3>Próximo Evento</h3>
+          <p>Não percas o próximo encontro! Projeções, música e boa companhia em Lisboa.</p>
+          <a href="/eventos/">Ver Calendário →</a>
+        </div>
+
+        <!-- 3. Photo — MashUp #1 -->
+        <div class="corkboard-photo photo-tilt-left">
+          <img
+            src="/fotos/120px/mashup1-A.jpg"
+            alt="MashUp #1 — Club Benares"
+            class="photo-img"
+            loading="lazy"
+          >
+          <div class="photo-caption">MashUp #1</div>
+        </div>
+
+        <!-- 4. Redes sociais -->
+        <div class="sticky-note sticky-purple tilt-right-sm">
+          <h3>Redes Sociais</h3>
+          <ul class="sticky-list">
+            <li>Instagram: @thebenaresclub</li>
+            <li>TikTok: @thebenaresclub</li>
+            <li>YouTube: @TheBenaresClub</li>
+          </ul>
+          <a href="/contactos/">Ver todos os links →</a>
+        </div>
+
+        <!-- 5. Photo — Battle Royale #1 -->
+        <div class="corkboard-photo photo-tilt-right">
+          <img
+            src="/fotos/120px/battle1-A.jpg"
+            alt="Battle Royale #1 — Club Benares"
+            class="photo-img"
+            loading="lazy"
+          >
+          <div class="photo-caption">Battle Royale #1</div>
+        </div>
+
+        <!-- 6. Os Nossos Filmes -->
+        <div class="sticky-note sticky-blue tilt-left">
+          <h3>Os Nossos Filmes</h3>
+          <p>Já produzimos curtas-metragens que podes ver online. Descobre a nossa cinemateca.</p>
+          <a href="/cinemateca/">Ver Cinemateca →</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ COMO PARTICIPAR ════════════════════════════════════════════ -->
+    <section class="como-participar">
+      <h2>Como participar</h2>
+      <p class="section-sub">Não precisas de convite — só de aparecer.</p>
+
+      <div class="steps">
+        <div class="step-card">
+          <span class="step-icon">🎬</span>
+          <span class="step-num">Passo 1</span>
+          <h3>Vem a um evento</h3>
+          <p>Os nossos eventos são abertos e gratuitos (ou de entrada simbólica). Segue-nos para saber quando é o próximo.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-icon">🤝</span>
+          <span class="step-num">Passo 2</span>
+          <h3>Junta-te à conversa</h3>
+          <p>Fala com a equipa, conhece outros membros e descobre como podes contribuir com o teu talento.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-icon">🎥</span>
+          <span class="step-num">Passo 3</span>
+          <h3>Cria connosco</h3>
+          <p>Participa nas produções, na organização ou nas sessões. O Club Benares é feito por quem aparece.</p>
+        </div>
       </div>
 
-      <!-- Events Reminder -->
-      <div class="sticky-note sticky-pink tilt-right-small">
-        <h3>Próximo Evento</h3>
-        <p>Não perca o nosso próximo encontro! Música ao vivo, arte e boa companhia.</p>
-        <a href="/eventos/">Ver Calendário →</a>
-      </div>
-
-      <!-- Photo 1 - Event Photo -->
-      <div class="corkboard-photo photo-tilt-left">
-        <div class="photo-image" style="background-image: url('foto1.jpg');"></div>
-        <div class="photo-caption">Evento</div>
-      </div>
-
-      <!-- Social Media -->
-      <div class="sticky-note sticky-purple tilt-right-small">
-        <h3>Redes Sociais</h3>
-        <ul class="sticky-list">
-          <li>Instagram: @thebenaresclub</li>
-          <li>Twitter: @benares_club</li>
-          <li>TikTok: @clubbenares</li>
-        </ul>
-        <a href="https://www.instagram.com/thebenaresclub" target="_blank">Todos os links →</a>
-      </div>
-
-      <!-- Photo 5 - Music Night -->
-      <div class="corkboard-photo photo-tilt-right">
-        <div class="photo-image" style="background-image: url('foto2.jpg');"></div>
-        <div class="photo-caption">Evento</div>
-      </div>
-
-      <!-- Discord Community -->
-      <div class="sticky-note sticky-blue tilt-left-small">
-        <h3>Discord</h3>
-        <p>Junte-se ao nosso servidor Discord para conversas diárias e eventos exclusivos online!</p>
-        <a href="https://discord.gg/benares" target="_blank">Entrar no Discord →</a>
-      </div>
-
-
-
-    </div>
+      <p class="email-cta">Tens perguntas? Fala connosco: <a href="mailto:charlie@thebenaresclub.com">charlie@thebenaresclub.com</a></p>
+    </section>
 
   </main>
+
   <div id="footer-container"></div>
   <script src="/shared.js"></script>
 </body>
