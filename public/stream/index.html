@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Club Benares Stream</title>
+
+  <!-- SEO / Open Graph -->
+  <meta name="description" content="Plataforma de cinema do Club Benares. Vê os nossos filmes e descobre o cinema da comunidade." />
+  <meta property="og:title" content="Club Benares Stream" />
+  <meta property="og:description" content="Plataforma de cinema do Club Benares. Vê os nossos filmes e descobre o cinema da comunidade." />
+  <meta property="og:type" content="website" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="/media/A00 Logo - Light.png" type="image/png" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ─── Design Tokens ─────────────────────────────────── */
+    :root {
+      --bg:           #080706;
+      --glass-bg:     rgba(255, 248, 238, 0.05);
+      --glass-blur:   blur(20px) saturate(160%);
+      --border:       rgba(255, 248, 238, 0.10);
+      --border-hover: rgba(255, 248, 238, 0.25);
+      --text-primary: #f0e8d8;
+      --text-secondary: rgba(240, 232, 216, 0.55);
+      --text-muted:   rgba(240, 232, 216, 0.3);
+      --font-serif:   'Fraunces', Georgia, serif;
+      --font-ui:      'Inter', system-ui, sans-serif;
+    }
+
+    /* ─── Reset ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    main { overflow-y: auto; }
+
+    /* ─── Scrollbar ──────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #1a1612; }
+    ::-webkit-scrollbar-thumb { background: #2e2820; border-radius: 3px; }
+
+    /* ─── Film Grain Overlay ─────────────────────────────── */
+    #grain-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.04;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ─── Hero ───────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 85vh;
+      overflow: hidden;
+    }
+
+    .hero video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero-fallback {
+      position: absolute;
+      inset: 0;
+      background-image: url('../cinemateca/movies/inexistente-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      z-index: -1;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, #080706 0%, rgba(8,7,6,0.6) 50%, rgba(8,7,6,0.3) 100%);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding: 3rem;
+      z-index: 2;
+      max-width: 600px;
+    }
+
+    .hero-label {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+      line-height: 1.05;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-director {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      max-width: 480px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: #fff;
+      color: #000;
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.65rem 1.4rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+
+    .btn-glass {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.65rem 1.4rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-glass:hover {
+      border-color: var(--border-hover);
+      background: rgba(255, 248, 238, 0.09);
+    }
+
+    /* ─── Main Content ───────────────────────────────────── */
+    .stream-main {
+      padding: 0 2rem 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ─── Section Labels ─────────────────────────────────── */
+    .section-label {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      margin-top: 3rem;
+    }
+
+    /* ─── Film Shelf ─────────────────────────────────────── */
+    .film-shelf {
+      display: flex;
+      overflow-x: auto;
+      gap: 1rem;
+      padding: 1rem 0;
+      scrollbar-width: none;
+    }
+    .film-shelf::-webkit-scrollbar { display: none; }
+
+    /* ─── Film Card ──────────────────────────────────────── */
+    .film-card {
+      width: 180px;
+      flex-shrink: 0;
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.28s ease;
+    }
+    .film-card:hover { transform: scale(1.04); }
+    .film-card:hover .card-hover-overlay { opacity: 1; }
+
+    .film-card img {
+      width: 100%;
+      aspect-ratio: 2/3;
+      object-fit: cover;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .film-card.coming-soon img {
+      filter: grayscale(60%) opacity(0.5);
+    }
+
+    .coming-soon-badge {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.6rem;
+      background: rgba(8,7,6,0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: var(--text-secondary);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.55rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .lock-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.6rem;
+      color: var(--text-secondary);
+      pointer-events: none;
+    }
+
+    .card-hover-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8,7,6,0.95) 0%, rgba(8,7,6,0.5) 55%, transparent 100%);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      opacity: 0;
+      transition: opacity 0.28s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1rem 0.85rem;
+      border-radius: 10px;
+    }
+
+    .card-hover-title {
+      font-family: var(--font-serif);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin-bottom: 0.2rem;
+    }
+
+    .card-hover-meta {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.65rem;
+    }
+
+    .card-hover-btn {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+      cursor: pointer;
+      width: fit-content;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: background 0.2s;
+    }
+    .card-hover-btn:hover { background: rgba(255,255,255,0.2); }
+
+    /* ─── Community Panel ────────────────────────────────── */
+    .community-panel {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 3rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .community-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .community-text {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+
+    .placeholder-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .placeholder-card {
+      aspect-ratio: 3/4;
+      background: rgba(255, 248, 238, 0.03);
+      border: 1px dashed rgba(255, 248, 238, 0.15);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .placeholder-card i {
+      font-size: 1.3rem;
+      color: var(--text-muted);
+    }
+
+    .placeholder-card span {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ─── Coming Soon Row ────────────────────────────────── */
+    .coming-soon-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
+    .coming-soon-note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    /* ─── Join Section ───────────────────────────────────── */
+    .join-section {
+      background: rgba(255,248,238,0.03);
+      border-top: 1px solid var(--border);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .join-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .join-text {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin: 0 auto 2rem;
+      line-height: 1.65;
+    }
+
+    .join-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ─── Mobile ─────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero { height: 60vh; }
+      .hero-content { padding: 1.5rem; }
+
+      .stream-main { padding: 0 1rem 3rem; }
+
+      .film-card { width: 140px; }
+
+      .community-panel {
+        grid-template-columns: 1fr;
+        padding: 2rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Film Grain Overlay -->
+  <div id="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Shared Nav -->
+  <div id="header-container"></div>
+
+  <!-- ─── Hero ─────────────────────────────────────────── -->
+  <section class="hero" aria-label="Destaque: Inexistente">
+    <div class="hero-fallback"></div>
+    <video autoplay muted loop playsinline preload="none">
+      <source src="../cinemateca/movies/inexistente.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-label">Club Benares · 2023</p>
+      <h1 class="hero-title">I N E X I S T E N T E</h1>
+      <p class="hero-director">Charlie Chaves</p>
+      <p class="hero-desc">Hélder visita a antiga casa do seu melhor amigo, Pedro, quem desapareceu há um tempo atrás sem deixar rasto...</p>
+      <div class="hero-buttons">
+        <a href="../cinemateca/" class="btn-primary">&#9654; Ver agora</a>
+        <a href="../cinemateca/" class="btn-glass">+ Mais info</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Main Content ──────────────────────────────────── -->
+  <main class="stream-main">
+
+    <!-- Row 1: Club Benares Films -->
+    <p class="section-label">OS NOSSOS FILMES</p>
+    <div class="film-shelf" id="our-films" role="list" aria-label="Filmes do Club Benares"></div>
+
+    <!-- Row 2: Community Films -->
+    <p class="section-label">FILMES DA COMUNIDADE</p>
+    <div class="community-panel">
+      <div>
+        <h2 class="community-heading">A tua história pode estar aqui</h2>
+        <p class="community-text">O Club Benares abre a sua plataforma a filmes feitos pela comunidade. Curtas, documentários, ensaios — de qualquer realizador de Lisboa e além.</p>
+        <a href="/contactos/" class="btn-glass">Submete o teu filme &rarr;</a>
+      </div>
+      <div class="placeholder-grid" aria-hidden="true">
+        <div class="placeholder-card"><i class="fa-solid fa-plus"></i><span>Em breve</span></div>
+        <div class="placeholder-card"><i class="fa-solid fa-plus"></i><span>Em breve</span></div>
+        <div class="placeholder-card"><i class="fa-solid fa-plus"></i><span>Em breve</span></div>
+        <div class="placeholder-card"><i class="fa-solid fa-plus"></i><span>Em breve</span></div>
+      </div>
+    </div>
+
+    <!-- Row 3: Em Breve -->
+    <p class="section-label">EM BREVE</p>
+    <div class="coming-soon-row">
+      <div id="coming-soon-films" style="display:flex; gap:1rem;"></div>
+    </div>
+    <p class="coming-soon-note">Novos filmes em produção</p>
+
+  </main>
+
+  <!-- ─── Join Section ──────────────────────────────────── -->
+  <section class="join-section">
+    <h2 class="join-heading">Faz parte da história</h2>
+    <p class="join-text">Club Benares é uma comunidade aberta. Vem aos eventos, conhece os realizadores, e traz o teu cinema.</p>
+    <div class="join-buttons">
+      <a href="/eventos/" class="btn-glass">Ver próximos eventos &rarr;</a>
+      <a href="https://www.instagram.com/thebenaresclub" target="_blank" rel="noopener" class="btn-glass">
+        <i class="fa-brands fa-instagram"></i> Seguir no Instagram
+      </a>
+    </div>
+  </section>
+
+  <!-- Shared Footer -->
+  <div id="footer-container"></div>
+
+  <script src="/shared.js"></script>
+  <script>
+    // ─── Film Data ───────────────────────────────────────
+    const films = [
+      {
+        title: 'INEXISTENTE',
+        year: '2023',
+        director: 'Charlie Chaves',
+        poster: '../cinemateca/movies/inexistente-thumb.jpg',
+        duration: '11min',
+        genre: 'Ficção',
+        coming_soon: false
+      },
+      {
+        title: 'EL ARTISTA COMPRENDIDO',
+        year: '2024',
+        director: 'Charlie Chaves',
+        poster: '../cinemateca/movies/elartistacomprendido-thumb.jpg',
+        duration: '3min',
+        genre: 'Ficção',
+        coming_soon: false
+      },
+      {
+        title: 'JAY GUPTA',
+        year: '2024',
+        director: 'Charlie Chaves',
+        poster: '../cinemateca/movies/jay-thumb.jpg',
+        duration: 'Curta',
+        genre: 'Ficção',
+        coming_soon: false
+      },
+      {
+        title: 'OTTO',
+        year: '2026',
+        director: 'Charlie Chaves',
+        poster: '../cinemateca/movies/otto-thumb.jpg',
+        coming_soon: true
+      }
+    ];
+
+    // ─── Render a single film card ───────────────────────
+    function renderCard(film, forComingSoon = false) {
+      const card = document.createElement('div');
+      card.className = 'film-card' + (film.coming_soon ? ' coming-soon' : '');
+      card.setAttribute('role', 'listitem');
+
+      const img = document.createElement('img');
+      img.src = film.poster;
+      img.alt = film.title;
+      img.loading = 'lazy';
+      card.appendChild(img);
+
+      if (film.coming_soon) {
+        const badge = document.createElement('div');
+        badge.className = 'coming-soon-badge';
+        badge.textContent = 'Em Breve';
+        card.appendChild(badge);
+
+        const lock = document.createElement('div');
+        lock.className = 'lock-icon';
+        lock.innerHTML = '<i class="fa-solid fa-lock"></i>';
+        card.appendChild(lock);
+      }
+
+      // Hover overlay (skip interaction for coming soon)
+      if (!film.coming_soon) {
+        const overlay = document.createElement('div');
+        overlay.className = 'card-hover-overlay';
+        overlay.innerHTML = `
+          <div class="card-hover-title">${film.title}</div>
+          <div class="card-hover-meta">${film.director} &middot; ${film.year}${film.duration ? ' &middot; ' + film.duration : ''}</div>
+          <a href="../cinemateca/" class="card-hover-btn">&#9654; Ver</a>
+        `;
+        card.appendChild(overlay);
+      } else {
+        // Dim overlay for coming soon
+        const overlay = document.createElement('div');
+        overlay.className = 'card-hover-overlay';
+        overlay.style.opacity = '0';
+        overlay.innerHTML = `
+          <div class="card-hover-title">${film.title}</div>
+          <div class="card-hover-meta">${film.director} &middot; ${film.year}</div>
+        `;
+        card.appendChild(overlay);
+      }
+
+      return card;
+    }
+
+    // ─── Populate shelves ────────────────────────────────
+    const ourFilmsShelf = document.getElementById('our-films');
+    const comingSoonShelf = document.getElementById('coming-soon-films');
+
+    films.forEach(film => {
+      if (!film.coming_soon) {
+        ourFilmsShelf.appendChild(renderCard(film));
+      } else {
+        comingSoonShelf.appendChild(renderCard(film, true));
+      }
+    });
+  </script>
+</body>
+</html>

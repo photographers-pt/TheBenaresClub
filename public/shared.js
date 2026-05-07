@@ -57,6 +57,7 @@ function createHeader() {
         <li data-debug="true"><a href="/pc.html">PC</a></li>
         <li data-debug="true"><a href="/computer-films/">Cine-PC</a></li>
         <li><a href="/cinemateca/">Cinemateca</a></li>
+        <li><a href="/stream/">Stream</a></li>
         <li><a href="/mercado/">Mercado</a></li>
         <li><a href="/comunidad/">Comunidad</a></li>
         <li><a href="/contactos/">Contactos</a></li>

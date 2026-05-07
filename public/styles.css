@@ -1,4 +1,18 @@
 :root {
+  --bg-base: #080706;
+  --bg-surface: rgba(255, 248, 238, 0.05);
+  --bg-elevated: rgba(255, 248, 238, 0.09);
+  --bg-hover: rgba(255, 248, 238, 0.13);
+  --text-primary: #f0e8d8;
+  --text-secondary: rgba(240, 232, 216, 0.58);
+  --text-muted: rgba(240, 232, 216, 0.32);
+  --border: rgba(255, 248, 238, 0.10);
+  --border-strong: rgba(255, 248, 238, 0.22);
+  --glass-blur: blur(20px) saturate(160%);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 40px;
   --bg-color: #000000;
   --text-color: #f0f0f0;
   --accent-color: #ffffff;
@@ -51,8 +65,8 @@ html, body {
 
 body {
   font-family: var(--font-family);
-  background-color: var(--bg-color);
-  color: var(--text-color);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
   line-height: 1.6;
 
   /* Universal layout - works on ANY screen */
@@ -77,15 +91,13 @@ main {
 
 /* HEADER */
 header {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(8, 7, 6, 0.7);
   color: var(--accent-color);
   text-align: center;
   padding: 0.75rem 0.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid var(--border);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 0 0 10px 10px;
   position: relative;
   display: flex;
   justify-content: center;
@@ -134,12 +146,10 @@ header h1 {
 
 /* NAV */
 nav {
-  background-color: rgba(0, 0, 0, 0.4);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 0 0 10px 10px;
+  background-color: rgba(8, 7, 6, 0.85);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
   transition: max-height 0.3s ease, opacity 0.3s ease;
   max-height: 0;
   overflow: hidden;
@@ -161,7 +171,7 @@ nav ul {
 }
 
 nav a {
-  color: var(--accent-color);
+  color: var(--text-secondary);
   text-decoration: none;
   font-weight: 500;
   font-size: 0.75rem;
@@ -169,12 +179,13 @@ nav a {
   border-radius: 10px;
   background: transparent;
   border: none;
-  transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease;
+  transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease, background-color 0.2s ease;
 }
 
 nav a:hover,
 nav a:focus {
-  color: #fff;
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
   text-shadow:
     0 0 5px rgba(255, 255, 255, 0.8),
     0 0 10px rgba(255, 255, 255, 0.6),
@@ -185,6 +196,7 @@ nav a:focus {
 
 nav a.active {
   color: #fff;
+  background-color: var(--bg-elevated);
   text-shadow:
     0 0 8px rgba(255, 255, 255, 1),
     0 0 15px rgba(255, 255, 255, 0.8),
@@ -200,14 +212,13 @@ nav a.active {
 =========================== */
 
 footer {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(8, 7, 6, 0.85);
   color: var(--accent-color);
   text-align: center;
   padding: 0.5rem 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
+  border-top: 1px solid var(--border);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
   border-radius: 10px 10px 0 0;
   font-size: 0.75rem;
   font-family: var(--font-family);
@@ -912,3 +923,90 @@ body.bg-contactos { background-image: url("media/B04\ Noticias.png"); }
   border-color: rgba(150, 150, 150, 0.4);
   color: #aaa;
 }
+
+/* ── Glass utility components ───────────────────── */
+.glass {
+  background: var(--bg-surface);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+}
+
+.glass-card {
+  background: var(--bg-surface);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.glass-card:hover {
+  background: var(--bg-elevated);
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--text-primary);
+  color: var(--bg-base);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 1.4rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+.btn-primary:hover { opacity: 0.88; }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 1.4rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: none;
+  backdrop-filter: var(--glass-blur);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.btn-ghost:hover {
+  background: var(--bg-elevated);
+  border-color: var(--border-strong);
+}
+
+.section-label {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.85rem;
+}
+
+.film-grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2a231a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #3a3028; }
