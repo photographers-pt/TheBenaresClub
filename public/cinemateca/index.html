@@ -812,7 +812,7 @@ const movies = [
 		year: '2026',
 		poster: './movies/otto-thumb.jpg',
 		video: '',
-		backgroundImage: '',
+		backgroundImage: './movies/otto-bg.jpg',
 		vimeoId: '',
 		description: 'Coming soon...',
 		crew: [
@@ -940,20 +940,22 @@ const movies = [
 				const movie = movies[index];
 				
 				card.addEventListener('mouseenter', () => {
-					console.log(`🎥 Hovering ${movie.title}`);
-					backgroundVideo.src = videoSrc;
-					backgroundVideo.style.opacity = '0.5';
-					// Also update background image for mobile
-					if (movie.backgroundImage) {
+					if (videoSrc) {
+						backgroundVideo.src = videoSrc;
+						backgroundVideo.style.opacity = '0.5';
+						backgroundImage.style.opacity = '0';
+					} else if (movie.backgroundImage) {
+						backgroundVideo.src = '';
+						backgroundVideo.style.opacity = '0';
 						backgroundImage.style.backgroundImage = `url('${movie.backgroundImage}')`;
+						backgroundImage.style.display = 'block';
 						backgroundImage.style.opacity = '0.5';
 					}
 				});
 				
 				card.addEventListener('mouseleave', () => {
-					console.log('⬅️ Mouse left poster');
 					backgroundVideo.style.opacity = '0.3';
-					backgroundImage.style.opacity = '0.5'; // Keep mobile background visible
+					backgroundImage.style.opacity = '0.3';
 				});
 				
 				// Touch event for mobile background changes
