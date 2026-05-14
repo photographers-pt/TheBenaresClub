@@ -50,19 +50,13 @@ function createHeader() {
 
     <nav aria-label="Menu principal" id="main-nav" class="active">
       <ul>
-        <!--<li><a href="/"><img src="/media/logo_small.png" alt="Logo" style="height:25px;"></a></li>-->
         <li><a href="/eventos/">Eventos</a></li>
-        <li><a href="/biblioteca/">Biblioteca</a></li>
-        <li data-debug="true"><a href="/cinemateca-tv.html">TV</a></li>
-        <li data-debug="true"><a href="/pc.html">PC</a></li>
-        <li data-debug="true"><a href="/computer-films/">Cine-PC</a></li>
         <li><a href="/cinemateca/">Cinemateca</a></li>
         <li><a href="/stream/">Stream</a></li>
+        <li><a href="/comunidad/">Comunidade</a></li>
         <li><a href="/mercado/">Mercado</a></li>
-        <li><a href="/comunidad/">Comunidad</a></li>
+        <li><a href="/biblioteca/">Biblioteca</a></li>
         <li><a href="/contactos/">Contactos</a></li>
-        <li data-debug="true"><a href="/movielog/">Movie Log</a></li>
-        <li data-debug="true"><a href="/sample.html">Sample</a></li>
       </ul>
     </nav>
   `;
@@ -281,30 +275,31 @@ function applyRandomBoxShadows() {
 // =================================
 
 document.addEventListener('DOMContentLoaded', function() {
-  console.log("DOM loaded, initializing header and footer");
-  
+
+  // Inject atmosphere orbs + vignette (fixed, behind everything)
+  if (!document.querySelector('.atmosphere')) {
+    const atm = document.createElement('div');
+    atm.className = 'atmosphere';
+    atm.innerHTML = '<div class="orb a"></div><div class="orb b"></div><div class="orb c"></div><div class="orb d"></div>';
+    document.body.insertBefore(atm, document.body.firstChild);
+    const vig = document.createElement('div');
+    vig.className = 'vignette';
+    document.body.insertBefore(vig, atm.nextSibling);
+  }
+
   // Insert header
   const headerContainer = document.getElementById('header-container');
   if (headerContainer) {
-    console.log("Header container found, inserting header");
     headerContainer.innerHTML = createHeader();
-    
-    // Initialize nav toggle after header is created
     initializeNavToggle();
-    
-    // Hide debug items initially
-    const debugItems = document.querySelectorAll('[data-debug="true"]');
-    debugItems.forEach(item => {
-      item.style.display = 'none';
-    });
-    }
-    
-    // Highlight current page
-    const currentPath = window.location.pathname;
-    const currentLink = document.querySelector(`nav a[href="${currentPath}"]`);
-    if (currentLink) {
-      currentLink.classList.add('active');
-    }
+  }
+
+  // Highlight current page
+  const currentPath = window.location.pathname;
+  const currentLink = document.querySelector(`nav a[href="${currentPath}"]`);
+  if (currentLink) {
+    currentLink.classList.add('active');
+  }
 
   // Insert footer
   const footerContainer = document.getElementById('footer-container');

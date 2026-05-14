@@ -695,13 +695,57 @@
     </div>
   </section>
 
+  <!-- ══ FILM STRIP MARQUEE ═══════════════════════════════════ -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>Night Lounge #1</span>
+      <span>Night Lounge #2</span>
+      <span>Battle Royale #1</span>
+      <span>CMCS Media Screening</span>
+      <span>MashUp #1 · Horror</span>
+      <span>Night Lounge #4</span>
+      <span>MashUp #2 · Romântico</span>
+      <span>MashUp #3 · Acção</span>
+      <span>MashUp #4</span>
+      <span>MashUp #5 · Indie Mix</span>
+      <!-- duplicate for infinite loop -->
+      <span>Night Lounge #1</span>
+      <span>Night Lounge #2</span>
+      <span>Battle Royale #1</span>
+      <span>CMCS Media Screening</span>
+      <span>MashUp #1 · Horror</span>
+      <span>Night Lounge #4</span>
+      <span>MashUp #2 · Romântico</span>
+      <span>MashUp #3 · Acção</span>
+      <span>MashUp #4</span>
+      <span>MashUp #5 · Indie Mix</span>
+    </div>
+  </div>
+
   <div class="page">
+
+    <!-- ══ MANIFESTO ════════════════════════════════════════════ -->
+    <section class="manifesto">
+      <p class="manifesto-quote">
+        <span class="m-strike">Não vendemos bilhetes.</span>
+        <em>Reservamos lugares</em> para quem ainda acredita em
+        projetar filmes numa parede, discuti-los até tarde
+        e rodar o próximo <em>entre amigos.</em>
+      </p>
+      <div class="manifesto-author">
+        <span class="m-line"></span>
+        <span><strong>Charlie Chaves</strong> &nbsp;·&nbsp; Fundador · Lisboa, 2023</span>
+      </div>
+    </section>
 
     <!-- ══ ABOUT / QUEM SOMOS ════════════════════════════════ -->
     <section class="about-section">
       <div class="about-left">
-        <p class="sec-label">Quem somos</p>
-        <h2 class="about-heading" id="about-heading">A comunidade<br><em>que faz cinema</em></h2>
+        <div class="s-head" style="margin-bottom:1.75rem; padding-bottom:1rem;">
+          <span class="s-num">01 · Quem somos</span>
+          <h2 class="s-title" id="about-heading">A comunidade <em>que faz cinema</em></h2>
+          <div class="s-actions"></div>
+        </div>
 
         <div class="lang-tabs">
           <button class="lang-tab active" data-lang="pt">
@@ -749,9 +793,10 @@ Convidamos-te a fazer parte do Club Benares, a participar nas nossas atividades 
 
     <!-- ══ CINEMATECA STRIP ═══════════════════════════════════ -->
     <section class="films-section">
-      <div class="films-header">
-        <p class="sec-label" style="margin:0">Os nossos filmes</p>
-        <a href="/cinemateca/" class="films-link">Ver Cinemateca →</a>
+      <div class="s-head">
+        <span class="s-num">02 · Os nossos filmes</span>
+        <h2 class="s-title" style="font-size:clamp(1.4rem,2.5vw,2rem)">Cinemateca</h2>
+        <div class="s-actions"><a href="/cinemateca/" class="pill">Ver todos →</a></div>
       </div>
       <div class="films-strip">
         <a href="/cinemateca/" class="film-card">
@@ -776,7 +821,15 @@ Convidamos-te a fazer parte do Club Benares, a participar nas nossas atividades 
 
     <!-- ══ EVENTS HISTORY ════════════════════════════════════ -->
     <section class="history-section">
-      <h2 class="history-heading">A nossa história</h2>
+      <div class="s-head">
+        <span class="s-num">03 · Arquivo</span>
+        <h2 class="s-title">A nossa <em>história</em></h2>
+        <div class="s-actions">
+          <a href="/eventos/" class="pill on">Todos</a>
+          <a href="/eventos/" class="pill">Eventos</a>
+          <a href="/cinemateca/" class="pill">Filmes</a>
+        </div>
+      </div>
 
       <!-- ── 2026 ── -->
       <div class="year-divider"><span>2026</span></div>
