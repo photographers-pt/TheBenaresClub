@@ -5,114 +5,820 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>.OK Festival — Club Benares</title>
   <meta name="description" content="Lisbon International Short-Film Championship. Cinco directores, cinco proyecciones, una sola noche." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/benares.css" />
+  <style>
+    /* ── OK PAGE OVERRIDES ──────────────────────────────────── */
+    :root {
+      --red:        #D40000;
+      --red-bright: #FF1A1A;
+      --red-dark:   #8A0000;
+      --red-muted:  rgba(212, 0, 0, 0.15);
+    }
+
+    /* Scoped font for heavy headers */
+    .ok-page { font-family: 'Inter', sans-serif; }
+
+    .ok-page .page-body {
+      background: #000;
+      overflow-x: hidden;
+    }
+
+    /* ─── HERO ───────────────────────────────────────────────── */
+    .ok-hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0;
+      overflow: hidden;
+      background: #000;
+    }
+
+    /* Diagonal red stripe overlay */
+    .ok-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          -55deg,
+          transparent,
+          transparent 48px,
+          rgba(212,0,0,0.04) 48px,
+          rgba(212,0,0,0.04) 50px
+        );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Red bleed from top-right */
+    .ok-hero::after {
+      content: '';
+      position: absolute;
+      top: -10%;
+      right: -5%;
+      width: 55vw;
+      height: 60vh;
+      background: radial-gradient(ellipse at top right, rgba(180,0,0,0.22) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .ok-hero__inner {
+      position: relative;
+      z-index: 1;
+      padding: 0 var(--pad);
+      max-width: var(--max-w);
+      margin: 0 auto;
+      width: 100%;
+      padding-bottom: 0;
+    }
+
+    /* Edition badge */
+    .ok-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--red-bright);
+      border: 1px solid var(--red);
+      padding: 0.45rem 0.9rem;
+      margin-bottom: 2.5rem;
+      margin-top: 100px;
+    }
+
+    .ok-badge__dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--red-bright);
+      box-shadow: 0 0 10px var(--red-bright);
+      animation: blink 1.2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.2; }
+    }
+
+    /* Main title */
+    .ok-hero__title {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(9rem, 22vw, 22rem);
+      line-height: 0.88;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin: 0;
+      text-transform: uppercase;
+      /* Red "bleeding" shadow */
+      text-shadow:
+        4px 4px 0 var(--red-dark),
+        8px 0 0 rgba(212,0,0,0.25);
+    }
+
+    .ok-hero__title span {
+      color: var(--red);
+      -webkit-text-stroke: 2px var(--red);
+      text-shadow:
+        0 0 40px rgba(212,0,0,0.6),
+        4px 4px 0 #5a0000;
+    }
+
+    /* Subtitle row */
+    .ok-hero__sub {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 1.5rem 0 0;
+      border-top: 3px solid var(--red);
+      margin-top: 1.5rem;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .ok-hero__championship {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(0.85rem, 2.2vw, 1.5rem);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .ok-hero__meta {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      text-align: right;
+    }
+
+    /* ─── FIGHT CARD SECTION ─────────────────────────────────── */
+    .ok-fight {
+      background: var(--red);
+      color: #fff;
+      padding: 5rem var(--pad);
+    }
+
+    .ok-fight__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .ok-fight__stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .ok-fight__stat--right {
+      text-align: right;
+    }
+
+    .ok-fight__n {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(4rem, 10vw, 9rem);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: #fff;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.35);
+    }
+
+    .ok-fight__label {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .ok-fight__vs {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      color: rgba(0,0,0,0.25);
+      text-align: center;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    /* ─── MAIN CONTENT GRID ─────────────────────────────────── */
+    .ok-content {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 5rem var(--pad);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .ok-desc {
+      padding-right: 4rem;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .ok-desc__tag {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .ok-desc__headline {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.05;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      color: #fff;
+      margin: 0 0 1.75rem;
+    }
+
+    .ok-desc__headline em {
+      font-style: italic;
+      font-family: 'Instrument Serif', Georgia, serif;
+      color: var(--red);
+      text-transform: none;
+    }
+
+    .ok-desc__body {
+      color: rgba(255,255,255,0.65);
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 48ch;
+      margin-bottom: 2.5rem;
+    }
+
+    .ok-cta-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    /* OK-specific buttons */
+    .btn-ok {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.8rem;
+      font-family: 'Anton', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--red);
+      color: #fff;
+      border: 2px solid var(--red);
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-ok:hover {
+      background: var(--red-bright);
+      border-color: var(--red-bright);
+      transform: translateY(-2px);
+    }
+
+    .btn-ok-ghost {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.85rem 1.8rem;
+      font-family: 'Anton', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.25);
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .btn-ok-ghost:hover {
+      border-color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* ─── SPECS (right column) ──────────────────────────────── */
+    .ok-specs {
+      padding-left: 4rem;
+    }
+
+    .ok-specs__title {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 2rem;
+    }
+
+    .ok-spec {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      padding: 1.25rem 0;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .ok-spec:first-of-type { border-top: none; }
+
+    .ok-spec__k {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .ok-spec__v {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      color: #fff;
+    }
+
+    /* ─── DEADLINE CARD ─────────────────────────────────────── */
+    .ok-deadline {
+      background: #000;
+      border-top: 4px solid var(--red);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ok-deadline::before {
+      content: 'DEADLINE';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(8rem, 20vw, 20rem);
+      color: rgba(212,0,0,0.04);
+      white-space: nowrap;
+      pointer-events: none;
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+
+    .ok-deadline__inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 5rem var(--pad);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .ok-deadline__eyebrow {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 1.5rem;
+    }
+
+    .ok-deadline__date {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(3rem, 7vw, 7rem);
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .ok-deadline__date span {
+      color: var(--red);
+    }
+
+    .ok-deadline__time {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 2.5rem;
+    }
+
+    .ok-deadline__rules {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .ok-drule {
+      padding: 1.25rem 1.5rem;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .ok-drule:last-child,
+    .ok-drule:nth-child(3) { border-right: none; }
+    .ok-drule:nth-child(4),
+    .ok-drule:nth-child(5),
+    .ok-drule:nth-child(6) { border-top: 1px solid rgba(255,255,255,0.08); }
+
+    .ok-drule__k {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 0.4rem;
+    }
+
+    .ok-drule__v {
+      font-size: 0.88rem;
+      color: #fff;
+    }
+
+    /* Deadline CTA side */
+    .ok-deadline__cta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1.5rem;
+    }
+
+    .ok-deadline__prize {
+      text-align: right;
+    }
+
+    .ok-deadline__prize-n {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(3rem, 6vw, 5rem);
+      letter-spacing: -0.02em;
+      color: var(--red);
+      line-height: 1;
+      text-shadow: 0 0 40px rgba(212,0,0,0.4);
+    }
+
+    .ok-deadline__prize-l {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-top: 0.3rem;
+    }
+
+    /* ─── HOW IT WORKS ──────────────────────────────────────── */
+    .ok-how {
+      background: #0a0a0a;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .ok-how__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 5rem var(--pad);
+    }
+
+    .ok-how__tag {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 3rem;
+    }
+
+    .ok-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .ok-step {
+      padding: 2rem 2rem 2rem 0;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      padding-right: 2rem;
+    }
+    .ok-step:first-child { padding-left: 0; }
+    .ok-step:last-child { border-right: none; padding-right: 0; }
+    .ok-step + .ok-step { padding-left: 2rem; }
+
+    .ok-step__num {
+      font-family: 'Anton', sans-serif;
+      font-size: 3.5rem;
+      color: var(--red);
+      opacity: 0.7;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .ok-step__title {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 0.6rem;
+    }
+
+    .ok-step__desc {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.65;
+    }
+
+    /* ─── PAST CHAMPIONS ────────────────────────────────────── */
+    .ok-champions {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 5rem var(--pad) 6rem;
+    }
+
+    .ok-champions__header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 3px solid var(--red);
+      padding-bottom: 1.25rem;
+      margin-bottom: 0;
+      gap: 2rem;
+    }
+
+    .ok-champions__title {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .ok-champions__count {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      white-space: nowrap;
+    }
+
+    .ok-champion-row {
+      display: grid;
+      grid-template-columns: 120px 1fr 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.2s;
+      cursor: default;
+    }
+
+    .ok-champion-row:hover {
+      background: rgba(212,0,0,0.04);
+      margin: 0 -1.5rem;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .ok-champion-row__edition {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
+    .ok-champion-row__film {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-style: italic;
+      font-size: 1.4rem;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+
+    .ok-champion-row__dir {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .ok-champion-row__crown {
+      font-size: 1.2rem;
+      opacity: 0.6;
+    }
+
+    /* ─── RESPONSIVE ────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .ok-fight__inner { grid-template-columns: 1fr; gap: 1.5rem; text-align: center; }
+      .ok-fight__stat--right { text-align: center; }
+      .ok-fight__vs { font-size: 3rem; }
+      .ok-content { grid-template-columns: 1fr; gap: 3rem; }
+      .ok-desc { padding-right: 0; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 3rem; }
+      .ok-specs { padding-left: 0; }
+      .ok-deadline__inner { grid-template-columns: 1fr; }
+      .ok-deadline__cta { align-items: flex-start; }
+      .ok-deadline__prize { text-align: left; }
+      .ok-deadline__rules { grid-template-columns: 1fr 1fr; }
+      .ok-drule:nth-child(2) { border-right: none; }
+      .ok-drule:nth-child(3) { border-top: 1px solid rgba(255,255,255,0.08); border-right: 1px solid rgba(255,255,255,0.08); }
+      .ok-steps { grid-template-columns: 1fr 1fr; gap: 0; }
+      .ok-step { border-bottom: 1px solid rgba(255,255,255,0.06); }
+      .ok-step:nth-child(2n) { border-right: none; }
+      .ok-champion-row { grid-template-columns: 80px 1fr; gap: 1rem; }
+      .ok-champion-row__dir,
+      .ok-champion-row__crown { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .ok-hero__title { font-size: clamp(6rem, 24vw, 10rem); }
+      .ok-badge { margin-top: 80px; }
+      .ok-fight { padding: 3rem var(--pad); }
+      .ok-deadline__rules { grid-template-columns: 1fr; }
+      .ok-drule { border-right: none; }
+      .ok-drule:nth-child(n) { border-right: none; border-top: 1px solid rgba(255,255,255,0.08); }
+      .ok-drule:first-child { border-top: none; }
+      .ok-steps { grid-template-columns: 1fr; }
+      .ok-step { border-right: none; padding-left: 0; }
+      .ok-step + .ok-step { padding-left: 0; }
+    }
+  </style>
 </head>
-<body>
+<body class="ok-page">
 <div class="page-body">
-  <main class="container">
 
-    <!-- Section Header -->
-    <header class="section-header">
-      <div class="section-header__left">
-        <span class="section-label">05 · .OK</span>
-        <h1 class="section-title">El festival del club.</h1>
+  <!-- ─── HERO ──────────────────────────────────────────────── -->
+  <section class="ok-hero">
+    <div class="ok-hero__inner">
+      <div class="ok-badge">
+        <span class="ok-badge__dot"></span>
+        Convocatoria abierta · Edición #2 · 2026
       </div>
-    </header>
-
-    <!-- Big .OK Title -->
-    <div style="padding: 2rem 0 3rem; border-bottom: 1px solid var(--gray-800);">
-      <p class="ok-hero-title">.OK</p>
-      <p style="font-family:var(--serif);font-size:clamp(1rem,2vw,1.4rem);color:var(--gray-300);letter-spacing:-0.01em;margin-top:0.75rem;">Lisbon International Short-Film Championship.</p>
+      <h1 class="ok-hero__title">.<span>OK</span></h1>
+      <div class="ok-hero__sub">
+        <span class="ok-hero__championship">Lisbon International&nbsp; Short&#8209;Film&nbsp; Championship</span>
+        <span class="ok-hero__meta">04 Jun 2026&nbsp; · &nbsp;Fábrica Braço de Prata&nbsp; · &nbsp;Lisboa</span>
+      </div>
     </div>
+  </section>
 
-    <!-- Description + Specs -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;padding:3.5rem 0;border-bottom:1px solid var(--gray-800);">
+  <!-- ─── FIGHT STATS BAR ───────────────────────────────────── -->
+  <div class="ok-fight">
+    <div class="ok-fight__inner">
+      <div class="ok-fight__stat">
+        <span class="ok-fight__n">5</span>
+        <span class="ok-fight__label">Directores seleccionados</span>
+      </div>
+      <div class="ok-fight__vs">VS</div>
+      <div class="ok-fight__stat ok-fight__stat--right">
+        <span class="ok-fight__n">1</span>
+        <span class="ok-fight__label">Ganador · voto en directo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── DESCRIPTION + SPECS ──────────────────────────────── -->
+  <div class="ok-content">
+    <div class="ok-desc">
+      <span class="ok-desc__tag">El formato</span>
+      <h2 class="ok-desc__headline">Cinco películas.<br/><em>Una sola noche.</em><br/>El público decide.</h2>
+      <p class="ok-desc__body">
+        El nuevo formato festival de competición de cortometrajes del club.
+        Cinco directores seleccionados, cinco proyecciones, una sola noche.
+        El público vota en directo. El ganador entra en el circuito nacional
+        y se proyecta también en Porto y Coimbra.
+      </p>
+      <div class="ok-cta-row">
+        <a href="#deadline" class="btn-ok">Enviar mi corto →</a>
+        <a href="#bases" class="btn-ok-ghost">Bases del concurso</a>
+      </div>
+    </div>
+    <div class="ok-specs">
+      <p class="ok-specs__title">Especificaciones de la convocatoria</p>
+      <div class="ok-spec">
+        <span class="ok-spec__k">Categorías</span>
+        <span class="ok-spec__v">Ficción · Documental · Experimental</span>
+      </div>
+      <div class="ok-spec">
+        <span class="ok-spec__k">Duración</span>
+        <span class="ok-spec__v">≤ 20 minutos</span>
+      </div>
+      <div class="ok-spec">
+        <span class="ok-spec__k">Formato</span>
+        <span class="ok-spec__v">MP4 / MOV · 1080p mínimo</span>
+      </div>
+      <div class="ok-spec">
+        <span class="ok-spec__k">Idiomas</span>
+        <span class="ok-spec__v">Cualquiera · subtítulos EN</span>
+      </div>
+      <div class="ok-spec">
+        <span class="ok-spec__k">Premio</span>
+        <span class="ok-spec__v">Tour nacional · €1.500</span>
+      </div>
+      <div class="ok-spec">
+        <span class="ok-spec__k">Voto</span>
+        <span class="ok-spec__v">Público en sala · noche del evento</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── DEADLINE ─────────────────────────────────────────── -->
+  <section class="ok-deadline" id="deadline">
+    <div class="ok-deadline__inner">
       <div>
-        <p style="font-size:1.05rem;color:var(--gray-200);line-height:1.8;max-width:480px;">
-          El nuevo formato festival de competición de cortometrajes del club. Cinco directores seleccionados, cinco proyecciones, una sola noche. El público vota en directo. El ganador entra en el circuito nacional y se proyecta también en Porto y Coimbra.
-        </p>
-        <div style="margin-top:2rem;display:flex;gap:0.75rem;flex-wrap:wrap;">
-          <a href="#deadline" class="btn btn-primary">Enviar mi corto →</a>
-          <a href="#bases" class="btn-ghost">Bases del concurso</a>
-        </div>
-      </div>
-      <div>
-        <p class="section-label" style="margin-bottom:1.25rem;">Especificaciones</p>
-        <div style="display:flex;flex-direction:column;gap:1.25rem;">
-          <div>
-            <p style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:0.25rem;">Categorías</p>
-            <p style="font-family:var(--sans);font-size:0.9rem;color:var(--gray-200);">Ficción · Documental · Experimental</p>
+        <p class="ok-deadline__eyebrow">Fecha límite de envío · .OK #2</p>
+        <p class="ok-deadline__date">22&nbsp;<span>Mayo</span><br/>2026</p>
+        <p class="ok-deadline__time">23:59 · hora de Lisboa (WET)</p>
+        <div class="ok-deadline__rules" id="bases">
+          <div class="ok-drule">
+            <p class="ok-drule__k">Duración</p>
+            <p class="ok-drule__v">≤ 20 min</p>
           </div>
-          <div>
-            <p style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:0.25rem;">Duración</p>
-            <p style="font-family:var(--sans);font-size:0.9rem;color:var(--gray-200);">≤ 20 minutos</p>
+          <div class="ok-drule">
+            <p class="ok-drule__k">Formato</p>
+            <p class="ok-drule__v">MP4 / MOV · 1080p+</p>
           </div>
-          <div>
-            <p style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:0.25rem;">Idiomas</p>
-            <p style="font-family:var(--sans);font-size:0.9rem;color:var(--gray-200);">Cualquiera · Subtítulos EN</p>
+          <div class="ok-drule">
+            <p class="ok-drule__k">Idiomas</p>
+            <p class="ok-drule__v">Cualquiera · subs EN</p>
           </div>
-          <div>
-            <p style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:0.25rem;">Formato</p>
-            <p style="font-family:var(--sans);font-size:0.9rem;color:var(--gray-200);">MP4 / MOV · 1080p mínimo</p>
+          <div class="ok-drule">
+            <p class="ok-drule__k">Selección</p>
+            <p class="ok-drule__v">5 directores</p>
           </div>
-          <div>
-            <p style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:0.25rem;">Premio</p>
-            <p style="font-family:var(--sans);font-size:0.9rem;color:var(--gray-200);">Tour nacional · €1.500</p>
+          <div class="ok-drule">
+            <p class="ok-drule__k">Voto</p>
+            <p class="ok-drule__v">Público · en directo</p>
+          </div>
+          <div class="ok-drule">
+            <p class="ok-drule__k">Circuito</p>
+            <p class="ok-drule__v">Lisboa · Porto · Coimbra</p>
           </div>
         </div>
       </div>
+      <div class="ok-deadline__cta">
+        <div class="ok-deadline__prize">
+          <p class="ok-deadline__prize-n">€1.500</p>
+          <p class="ok-deadline__prize-l">Premio al ganador</p>
+        </div>
+        <a href="/contactos/" class="btn-ok" style="font-size:1.1rem;padding:1.1rem 2.2rem;">
+          Subir mi corto →
+        </a>
+        <a href="#bases" class="btn-ok-ghost">Ver bases completas</a>
+      </div>
     </div>
+  </section>
 
-    <!-- Deadline Card -->
-    <div id="deadline" class="deadline-card">
-      <p class="deadline-card__eyebrow">Convocatoria abierta</p>
-      <h2 class="deadline-card__title">Deadline · .OK #2<br>22 May · 23:59 hora de Lisboa</h2>
-      <div class="deadline-card__rules" id="bases">
-        <div class="deadline-rule">
-          <span class="deadline-rule__label">Duración</span>
-          <span class="deadline-rule__value">≤ 20 minutos</span>
+  <!-- ─── HOW IT WORKS ─────────────────────────────────────── -->
+  <section class="ok-how">
+    <div class="ok-how__inner">
+      <p class="ok-how__tag">La noche · cómo funciona</p>
+      <div class="ok-steps">
+        <div class="ok-step">
+          <div class="ok-step__num">01</div>
+          <div class="ok-step__title">Envías tu corto</div>
+          <p class="ok-step__desc">Antes del deadline. El equipo del club revisa todos los envíos y selecciona cinco finalistas.</p>
         </div>
-        <div class="deadline-rule">
-          <span class="deadline-rule__label">Formato</span>
-          <span class="deadline-rule__value">MP4 / MOV · 1080p+</span>
+        <div class="ok-step">
+          <div class="ok-step__num">02</div>
+          <div class="ok-step__title">Se proyectan los 5</div>
+          <p class="ok-step__desc">Una noche. Cinco cortos. Orden aleatorio. El público los ve todos en la misma sala.</p>
         </div>
-        <div class="deadline-rule">
-          <span class="deadline-rule__label">Idiomas</span>
-          <span class="deadline-rule__value">Cualquiera · subs EN</span>
+        <div class="ok-step">
+          <div class="ok-step__num">03</div>
+          <div class="ok-step__title">El público vota</div>
+          <p class="ok-step__desc">Tras las proyecciones, votación en tiempo real. Sin jurado. Solo el criterio del público.</p>
         </div>
-        <div class="deadline-rule">
-          <span class="deadline-rule__label">Premio</span>
-          <span class="deadline-rule__value">Tour nacional · €1.500</span>
-        </div>
-        <div class="deadline-rule">
-          <span class="deadline-rule__label">Selección</span>
-          <span class="deadline-rule__value">5 directores</span>
-        </div>
-        <div class="deadline-rule">
-          <span class="deadline-rule__label">Voto</span>
-          <span class="deadline-rule__value">Público en directo</span>
+        <div class="ok-step">
+          <div class="ok-step__num">04</div>
+          <div class="ok-step__title">El ganador entra al circuito</div>
+          <p class="ok-step__desc">Tour nacional: Lisboa, Porto y Coimbra. Más €1.500 en premio directo al director.</p>
         </div>
       </div>
-      <a href="/contactos/" class="btn btn-primary">Subir mi corto →</a>
     </div>
+  </section>
 
-    <!-- Past Editions -->
-    <div style="margin-top:5rem;margin-bottom:1.5rem;">
-      <p class="section-label">Ediciones anteriores</p>
+  <!-- ─── PAST CHAMPIONS ───────────────────────────────────── -->
+  <section class="ok-champions">
+    <div class="ok-champions__header">
+      <span class="ok-champions__title">Hall of Champions</span>
+      <span class="ok-champions__count">1 edición completada</span>
     </div>
-
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;margin-bottom:5rem;">
-
-      <div style="padding:2rem;background:var(--gray-900);border:1px solid var(--gray-800);">
-        <p style="font-family:var(--mono);font-size:0.58rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:0.5rem;">.OK #1 · Mar 2025</p>
-        <p style="font-family:var(--serif);font-size:1.25rem;color:var(--white);letter-spacing:-0.01em;margin-bottom:0.3rem;">"Dá-me Ar"</p>
-        <p style="font-family:var(--mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-400);margin-bottom:1rem;">Director: Pedro Caldeira · Ganador</p>
-        <p style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);">27 Mar 2025 · Fábrica Braço de Prata</p>
-      </div>
-
+    <div class="ok-champion-row">
+      <span class="ok-champion-row__edition">.OK #1 · Mar 2025</span>
+      <span class="ok-champion-row__film">"Dá-me Ar"</span>
+      <span class="ok-champion-row__dir">Pedro Caldeira · Fábrica Braço de Prata</span>
+      <span class="ok-champion-row__crown">🏆</span>
     </div>
+  </section>
 
-  </main>
 </div>
 <script src="/benares-nav.js"></script>
 </body>
