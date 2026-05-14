@@ -85,9 +85,36 @@
     '<div class="nav__right">' +
       '<span class="nav__lang">ES / PT</span>' +
       '<a href="/ok/" class="btn-ghost btn-sm">Enviar corto →</a>' +
-    '</div>';
+    '</div>' +
+    '<button class="nav__burger" aria-label="Menú">' +
+      '<span></span><span></span><span></span>' +
+    '</button>';
+
+  var drawer = document.createElement('div');
+  drawer.className = 'nav__drawer';
+  drawer.innerHTML =
+    navLinks.map(function (l) {
+      var cls = isActive(l.href) ? ' class="active"' : '';
+      return '<a href="' + l.href + '"' + cls + '>' + l.label + '</a>';
+    }).join('') +
+    '<a href="/ok/" style="color:var(--white);margin-top:0.5rem">Enviar corto →</a>';
 
   document.body.insertBefore(nav, document.body.firstChild);
+  document.body.insertBefore(drawer, document.body.children[1]);
+
+  var burger = nav.querySelector('.nav__burger');
+  burger.addEventListener('click', function () {
+    burger.classList.toggle('open');
+    drawer.classList.toggle('open');
+  });
+
+  // Close drawer on link click
+  drawer.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      burger.classList.remove('open');
+      drawer.classList.remove('open');
+    });
+  });
 
   /* ── Footer Injection ──────────────────────────────────────── */
   var footer = document.createElement('footer');
