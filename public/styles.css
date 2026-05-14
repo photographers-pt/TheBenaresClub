@@ -56,11 +56,15 @@
   padding: 0;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 html, body {
   height: 100vh;
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* Prevent horizontal scroll only */
+  overflow-x: hidden;
 }
 
 body {

@@ -281,10 +281,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const atm = document.createElement('div');
     atm.className = 'atmosphere';
     atm.innerHTML = '<div class="orb a"></div><div class="orb b"></div><div class="orb c"></div><div class="orb d"></div>';
-    document.body.insertBefore(atm, document.body.firstChild);
+    document.body.appendChild(atm);
     const vig = document.createElement('div');
     vig.className = 'vignette';
-    document.body.insertBefore(vig, atm.nextSibling);
+    document.body.appendChild(vig);
   }
 
   // Insert header
