@@ -1,370 +1,229 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Comunidade | Club Benares</title>
-  <link rel="stylesheet" href="/styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="icon" href="/media/A00 Logo - Light.png" type="image/png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <style>
-    /* Grayscale filter for entire page */
-    body.bg-comunidade {
-      filter: grayscale(100%);
-    }
-
-    /* Corkboard styling */
-    .corkboard {
-      padding: 2rem;
-      min-height: calc(100vh - 200px);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: center;
-      align-items: flex-start;
-      overflow-y: auto;
-      position: relative;
-    }
-
-    /* Base sticky note styles */
-    .sticky-note {
-      width: 220px;
-      min-height: 220px;
-      padding: 20px 15px 15px 15px;
-      position: relative;
-      background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.85) 100%);
-      font-family: 'Kalam', cursive;
-      color: #333;
-      box-shadow: 
-        2px 2px 5px rgba(0,0,0,0.2),
-        inset -1px -1px 2px rgba(0,0,0,0.05);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      cursor: default;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Sticky note tape effect */
-    .sticky-note::before {
-      content: '';
-      position: absolute;
-      top: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 30px;
-      background: rgba(255,255,255,0.4);
-      border: 1px solid rgba(200,200,200,0.3);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-
-    /* Yellow sticky notes - now will be gray */
-    .sticky-yellow {
-      background: linear-gradient(135deg, #d0d0d0 0%, #b0b0b0 100%);
-    }
-    .sticky-yellow::before {
-      background: rgba(200,200,200,0.3);
-    }
-
-    /* Pink sticky notes - now will be gray */
-    .sticky-pink {
-      background: linear-gradient(135deg, #c0c0c0 0%, #a0a0a0 100%);
-    }
-    .sticky-pink::before {
-      background: rgba(180,180,180,0.3);
-    }
-
-    /* Blue sticky notes - now will be gray */
-    .sticky-blue {
-      background: linear-gradient(135deg, #909090 0%, #707070 100%);
-      color: white;
-    }
-    .sticky-blue::before {
-      background: rgba(120,120,120,0.3);
-    }
-    .sticky-blue a {
-      color: #f0f0f0 !important;
-    }
-
-    /* Green sticky notes - now will be gray */
-    .sticky-green {
-      background: linear-gradient(135deg, #b8b8b8 0%, #989898 100%);
-    }
-    .sticky-green::before {
-      background: rgba(160,160,160,0.3);
-    }
-
-    /* Orange sticky notes - now will be gray */
-    .sticky-orange {
-      background: linear-gradient(135deg, #c8c8c8 0%, #a8a8a8 100%);
-    }
-    .sticky-orange::before {
-      background: rgba(190,190,190,0.3);
-    }
-
-    /* Purple sticky notes - now will be gray */
-    .sticky-purple {
-      background: linear-gradient(135deg, #d8d8d8 0%, #b8b8b8 100%);
-    }
-    .sticky-purple::before {
-      background: rgba(210,210,210,0.3);
-    }
-
-    /* Rotation classes */
-    .tilt-left {
-      transform: rotate(-5deg);
-    }
-    .tilt-right {
-      transform: rotate(4deg);
-    }
-    .tilt-left-small {
-      transform: rotate(-2deg);
-    }
-    .tilt-right-small {
-      transform: rotate(3deg);
-    }
-    .tilt-left-large {
-      transform: rotate(-8deg);
-    }
-
-    /* Hover effects */
-    .sticky-note:hover {
-      transform: rotate(0deg) scale(1.05);
-      box-shadow: 
-        4px 4px 12px rgba(0,0,0,0.3),
-        inset -1px -1px 2px rgba(0,0,0,0.05);
-      z-index: 10;
-    }
-
-    /* Sticky note content */
-    .sticky-note h3 {
-      font-size: 1.3rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    .sticky-note p {
-      font-size: 1rem;
-      line-height: 1.4;
-      margin-bottom: 0.8rem;
-      flex-grow: 1;
-    }
-
-    .sticky-note a {
-      color: #2a2a2a;
-      text-decoration: none;
-      font-weight: 600;
-      border-bottom: 2px solid transparent;
-      transition: border-color 0.2s ease;
-      display: inline-block;
-      margin-top: auto;
-    }
-
-    .sticky-note a:hover {
-      border-bottom-color: currentColor;
-    }
-
-    /* Special handwritten-style list */
-    .sticky-list {
-      list-style: none;
-      padding: 0;
-      margin: 0.5rem 0;
-    }
-
-    .sticky-list li {
-      padding: 0.3rem 0;
-      position: relative;
-      padding-left: 1.2rem;
-    }
-
-    .sticky-list li::before {
-      content: '→';
-      position: absolute;
-      left: 0;
-      color: inherit;
-      opacity: 0.7;
-    }
-
-    /* Polaroid-style images */
-    .corkboard-photo {
-      width: 320px;
-      height: 260px;
-      position: relative;
-      background: white;
-      padding: 10px 10px 50px 10px;
-      box-shadow: 
-        2px 2px 8px rgba(0,0,0,0.3),
-        inset 0 0 2px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Photo frame effect */
-    .corkboard-photo::before {
-      content: '';
-      position: absolute;
-      top: -20px;
-      left: 50%;
-      transform: translateX(-50%) rotate(45deg);
-      width: 30px;
-      height: 30px;
-      background: radial-gradient(circle, #c0c0c0 0%, #808080 100%);
-      border-radius: 50%;
-      box-shadow: 
-        0 2px 4px rgba(0,0,0,0.3),
-        inset 0 -1px 2px rgba(255,255,255,0.5);
-      z-index: 1;
-    }
-
-    /* Push pin shadow */
-    .corkboard-photo::after {
-      content: '';
-      position: absolute;
-      top: -18px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.2);
-      filter: blur(3px);
-      z-index: 0;
-    }
-
-    /* Image container */
-    .photo-image {
-      width: 100%;
-      height: 180px;
-      background-size: cover;
-      background-position: center;
-      background-color: #f0f0f0;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Photo caption */
-    .photo-caption {
-      font-family: 'Kalam', cursive;
-      text-align: center;
-      color: #333;
-      font-size: 0.9rem;
-      padding-top: 10px;
-      font-weight: 400;
-    }
-
-    /* Different photo tilts */
-    .photo-tilt-left {
-      transform: rotate(-4deg);
-    }
-    .photo-tilt-right {
-      transform: rotate(3deg);
-    }
-    .photo-tilt-slight {
-      transform: rotate(-1deg);
-    }
-
-    /* Photo hover effect */
-    .corkboard-photo:hover {
-      transform: rotate(0deg) scale(1.02);
-      box-shadow: 
-        4px 4px 15px rgba(0,0,0,0.4),
-        inset 0 0 2px rgba(0,0,0,0.1);
-      z-index: 10;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      .corkboard {
-        padding: 1rem;
-        gap: 1.5rem;
-      }
-      
-      .sticky-note {
-        width: 180px;
-        min-height: 180px;
-        font-size: 0.9rem;
-      }
-
-      .corkboard-photo {
-        width: 320px;
-        height: 260px;
-      }
-
-      .photo-image {
-        height: 180px;
-      }
-    }
-
-    /* Keep main scrollable */
-    main {
-      overflow-y: auto !important;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comunidad — Club Benares</title>
+  <meta name="description" content="Los miembros y la galería del Club Benares. 93 personas, 10 ediciones." />
+  <link rel="stylesheet" href="/benares.css" />
 </head>
-<body class="bg-comunidade">
+<body>
+<div class="page-body">
+  <main class="container">
 
-  <!-- Header container where JavaScript will insert the header -->
-  <div id="header-container"></div>
+    <!-- Section Header -->
+    <header class="section-header">
+      <div class="section-header__left">
+        <span class="section-label">04 · Comunidad</span>
+        <h1 class="section-title">El club. En presente y pasado.</h1>
+      </div>
+      <div class="section-header__pills">
+        <div class="filter-bar" data-filter-group data-filter-target=".community-section" style="margin-bottom:0;">
+          <button class="filter-pill active" data-filter="all">Todo</button>
+          <button class="filter-pill" data-filter="miembros">Miembros</button>
+          <button class="filter-pill" data-filter="galeria">Galería</button>
+        </div>
+      </div>
+    </header>
 
-  <main>
-    <div class="corkboard">
-      
-      <!-- Welcome Note -->
-      <div class="sticky-note sticky-yellow tilt-left">
-        <h3>Bem-vindo!</h3>
-        <p>A nossa comunidade é um espaço de partilha, criatividade e conexão. Junte-se a nós!</p>
-        <a href="https://www.instagram.com/thebenaresclub" target="_blank">Seguir no Instagram →</a>
+    <!-- Members Section -->
+    <section class="community-section" data-cat="all miembros">
+
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1.75rem;flex-wrap:wrap;gap:0.5rem;">
+        <h2 style="font-family:var(--serif);font-size:1.6rem;letter-spacing:-0.02em;color:var(--white);">Miembros</h2>
+        <span style="font-family:var(--mono);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);">93 personas · 11 destacados</span>
       </div>
 
-      <!-- Events Reminder -->
-      <div class="sticky-note sticky-pink tilt-right-small">
-        <h3>Próximo Evento</h3>
-        <p>Não perca o nosso próximo encontro! Música ao vivo, arte e boa companhia.</p>
-        <a href="/eventos/">Ver Calendário →</a>
+      <div class="members-grid">
+
+        <div class="member-card">
+          <div class="member-card__avatar">CC</div>
+          <p class="member-card__name">Charlie Chaves</p>
+          <p class="member-card__role">Fundador · Director</p>
+        </div>
+
+        <div class="member-card">
+          <div class="member-card__avatar">PC</div>
+          <p class="member-card__name">Pedro Caldeira</p>
+          <p class="member-card__role">Director</p>
+        </div>
+
+        <div class="member-card">
+          <div class="member-card__avatar">HM</div>
+          <p class="member-card__name">Henrique Montes</p>
+          <p class="member-card__role">Guionista</p>
+        </div>
+
+        <div class="member-card">
+          <div class="member-card__avatar">JP</div>
+          <p class="member-card__name">João T. Pires</p>
+          <p class="member-card__role">Actor · Host</p>
+        </div>
+
+        <div class="member-card">
+          <div class="member-card__avatar">VN</div>
+          <p class="member-card__name">Valdir Neves</p>
+          <p class="member-card__role">Fotografía</p>
+        </div>
+
+        <div class="member-card">
+          <div class="member-card__avatar">KM</div>
+          <p class="member-card__name">Karen Mattos</p>
+          <p class="member-card__role">Fotografía</p>
+        </div>
+
+        <div class="member-card">
+          <div class="member-card__avatar">SM</div>
+          <p class="member-card__name">Santiago Machuca</p>
+          <p class="member-card__role">Fotografía</p>
+        </div>
+
+        <div class="member-card">
+          <div class="member-card__avatar">MA</div>
+          <p class="member-card__name">Miguel Aido</p>
+          <p class="member-card__role">Música</p>
+        </div>
+
+        <div class="member-card">
+          <div class="member-card__avatar">LS</div>
+          <p class="member-card__name">Leon Sukhodolskii</p>
+          <p class="member-card__role">Música</p>
+        </div>
+
+        <div class="member-card">
+          <div class="member-card__avatar">MF</div>
+          <p class="member-card__name">Mel Fox</p>
+          <p class="member-card__role">Fotografía</p>
+        </div>
+
+        <div class="member-card">
+          <div class="member-card__avatar">PG</div>
+          <p class="member-card__name">Paulo Graça</p>
+          <p class="member-card__role">Productor</p>
+        </div>
+
+        <div class="member-card member-card--overflow">
+          <div class="member-card__avatar">+82</div>
+          <p class="member-card__name">+82 Miembros</p>
+          <p class="member-card__role">Activos</p>
+        </div>
+
       </div>
 
-      <!-- Photo 1 - Event Photo -->
-      <div class="corkboard-photo photo-tilt-left">
-        <div class="photo-image" style="background-image: url('foto1.jpg');"></div>
-        <div class="photo-caption">Evento</div>
+    </section>
+
+    <div class="divider" style="margin:4rem 0;"></div>
+
+    <!-- Gallery Section -->
+    <section class="community-section" data-cat="all galeria">
+
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1.75rem;flex-wrap:wrap;gap:1rem;">
+        <h2 style="font-family:var(--serif);font-size:1.6rem;letter-spacing:-0.02em;color:var(--white);">Galería</h2>
+        <div style="display:flex;gap:0.5rem;">
+          <button class="filter-pill active" onclick="filterGallery(this,'all')">Todo</button>
+          <button class="filter-pill" onclick="filterGallery(this,'2026')">2026</button>
+          <button class="filter-pill" onclick="filterGallery(this,'2025')">2025</button>
+          <button class="filter-pill" onclick="filterGallery(this,'2024')">2024</button>
+        </div>
+      </div>
+      <p style="font-family:var(--mono);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:2rem;">10 ediciones</p>
+
+      <div class="gallery-grid">
+
+        <div class="gallery-card" data-year="2025">
+          <span class="gallery-card__label">.OK #1 · Mar 2025</span>
+          <div class="gallery-card__body">
+            <p class="gallery-card__title">.OK #1 "Dá-me Ar"</p>
+            <p class="gallery-card__meta">
+              27 Mar 2025<br>
+              Fábrica Braço de Prata<br>
+              Ganador: Pedro Caldeira
+            </p>
+          </div>
+        </div>
+
+        <div class="gallery-card" data-year="2025">
+          <span class="gallery-card__label">Night Lounge #2 · Ene 2025</span>
+          <div class="gallery-card__body">
+            <p class="gallery-card__title">Night Lounge #2</p>
+            <p class="gallery-card__meta">
+              30 Ene 2025<br>
+              ETIC Atmosferas<br>
+              Proyección informal + networking
+            </p>
+          </div>
+        </div>
+
+        <div class="gallery-card" data-year="2025">
+          <span class="gallery-card__label">CMCS · Abr 2025</span>
+          <div class="gallery-card__body">
+            <p class="gallery-card__title">CMCS Media Screening</p>
+            <p class="gallery-card__meta">
+              18 Abr 2025<br>
+              Fábrica Braço de Prata<br>
+              Proyección especial
+            </p>
+          </div>
+        </div>
+
+        <div class="gallery-card" data-year="2025">
+          <span class="gallery-card__label">MashUp #1 · Oct 2025</span>
+          <div class="gallery-card__body">
+            <p class="gallery-card__title">MashUp #1 · Horror</p>
+            <p class="gallery-card__meta">
+              16 Oct 2025<br>
+              Cossoul<br>
+              Con Cinecore
+            </p>
+          </div>
+        </div>
+
+        <div class="gallery-card" data-year="2025">
+          <span class="gallery-card__label">Night Lounge #4 · Nov 2025</span>
+          <div class="gallery-card__body">
+            <p class="gallery-card__title">Night Lounge #4</p>
+            <p class="gallery-card__meta">
+              15 Nov 2025<br>
+              Kreatori Café<br>
+              Con Filmmaking Lisboa Group
+            </p>
+          </div>
+        </div>
+
+        <div class="gallery-card" data-year="2025">
+          <span class="gallery-card__label">MashUp #2 · Nov 2025</span>
+          <div class="gallery-card__body">
+            <p class="gallery-card__title">MashUp #2 · Romántico</p>
+            <p class="gallery-card__meta">
+              27 Nov 2025<br>
+              Cossoul<br>
+              Música en directo: Miguel Aido
+            </p>
+          </div>
+        </div>
+
       </div>
 
-      <!-- Social Media -->
-      <div class="sticky-note sticky-purple tilt-right-small">
-        <h3>Redes Sociais</h3>
-        <ul class="sticky-list">
-          <li>Instagram: @thebenaresclub</li>
-          <li>Twitter: @benares_club</li>
-          <li>TikTok: @clubbenares</li>
-        </ul>
-        <a href="https://www.instagram.com/thebenaresclub" target="_blank">Todos os links →</a>
-      </div>
+    </section>
 
-      <!-- Photo 5 - Music Night -->
-      <div class="corkboard-photo photo-tilt-right">
-        <div class="photo-image" style="background-image: url('foto2.jpg');"></div>
-        <div class="photo-caption">Evento</div>
-      </div>
-
-      <!-- Discord Community -->
-      <div class="sticky-note sticky-blue tilt-left-small">
-        <h3>Discord</h3>
-        <p>Junte-se ao nosso servidor Discord para conversas diárias e eventos exclusivos online!</p>
-        <a href="https://discord.gg/benares" target="_blank">Entrar no Discord →</a>
-      </div>
-
-
-
-    </div>
+    <div style="margin-bottom:5rem;"></div>
 
   </main>
-  <div id="footer-container"></div>
-  <script src="/shared.js"></script>
+</div>
+
+<script>
+function filterGallery(btn, year) {
+  document.querySelectorAll('.gallery-card').forEach(function(card) {
+    if (year === 'all' || card.dataset.year === year) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+  btn.closest('div').querySelectorAll('.filter-pill').forEach(function(p) { p.classList.remove('active'); });
+  btn.classList.add('active');
+}
+</script>
+<script src="/benares-nav.js"></script>
 </body>
 </html>

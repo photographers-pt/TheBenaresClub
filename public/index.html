@@ -1,1006 +1,163 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Club Benares</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="icon" href="/media/A00 Logo - Light.png" type="image/png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    @font-face {
-      font-family: 'Extenda';
-      src: url('/fuentes/Extenda30Deca.woff2') format('woff2');
-      font-weight: normal;
-      font-style: normal;
-    }
-
-    @font-face {
-      font-family: 'DSEG7';
-      src: url('/fuentes/DSEG7Modern-Regular.woff2') format('woff2');
-           url('/fuentes/DSEG7Modern-Regular.woff') format('woff');
-      font-weight: normal;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: 'DSEG7';
-      src: url('/fuentes/DSEG7Modern-BoldItalic.woff2') format('woff2');
-           url('/fuentes/DSEG7Modern-BoldItalic.woff') format('woff');
-      font-weight: bold;
-      font-style: italic;
-      font-display: swap;
-    }
-
-    .bg-sample {
-      background-image: url('/media/B01 Club Benares.webp');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: scroll;
-      min-height: 100vh;
-    }
-
-    /* Override styles.css for this page only */
-    body {
-      overflow-y: auto !important;
-      overflow-x: hidden !important;
-      height: 100vh !important;
-      display: block !important;
-    }
-
-    html {
-      overflow: hidden !important;
-      height: 100vh !important;
-    }
-
-    main {
-      overflow: visible !important;
-      display: block !important;
-      padding: 3rem 2rem;
-      max-width: 1400px;
-      margin: 0 auto;
-      width: 100%;
-      padding-bottom: 80px; /* Space for fixed footer */
-    }
-
-    /* Fixed Footer */
-    #footer-container {
-      position: fixed !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      z-index: 1000 !important;
-    }
-
-    /* Title Section */
-    .title-section {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .title-section h1 {
-      font-family: 'Extenda', sans-serif;
-      font-size: 8rem;
-      font-weight: 100;
-      margin-bottom: 1rem;
-      line-height: 1;
-    }
-
-    .social-icons-main {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .social-icons-main a {
-      color: var(--accent-color);
-      font-size: 2rem;
-      transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease;
-    }
-
-    .social-icons-main a:hover {
-      color: #fff;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-      transform: scale(1.1);
-    }
-
-    /* Next Event Countdown */
-    .next-event-section {
-      background-color: rgba(15, 15, 15, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      padding: 2rem;
-      margin-bottom: 3rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1.5rem;
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .next-event-section a {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 10px;
-      color: var(--accent-color);
-      text-decoration: none;
-      font-size: 1rem;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .next-event-section a::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.3),
-        transparent
-      );
-      animation: shimmer 3s infinite;
-    }
-
-    @keyframes shimmer {
-      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-    }
-
-    .next-event-section a.paused::before {
-      animation-play-state: paused;
-    }
-
-    .next-event-section a:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.5);
-      color: #fff;
-      transform: scale(1.02);
-    }
-
-    #countdown {
-      font-family: 'DSEG7', monospace;
-      font-weight: bold;
-      font-style: italic;
-      font-size: 2rem;
-      color: red;
-    }
-
-    /* Story Section */
-    .story-section {
-      background-color: rgba(15, 15, 15, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      padding: 2rem;
-      margin-bottom: 3rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 2rem;
-      align-items: flex-start;
-    }
-
-    .story-section:hover {
-      border-color: rgba(255, 255, 255, 0.15);
-    }
-
-    .story-image-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      border-radius: 8px;
-      aspect-ratio: 1;
-    }
-
-    .story-image-wrapper img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .story-text-wrapper {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .story-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 0;
-      gap: 1rem;
-    }
-
-    .story-header h2 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      flex: 1;
-    }
-    
-    /* Language Switcher Inside Story */
-    .language-switcher {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .lang-btn {
-      padding: 0.4rem 0.8rem;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .lang-btn img {
-      height: 24px;
-      width: auto;
-      object-fit: contain;
-    }
-
-    .lang-btn.active {
-      background: rgba(255, 255, 255, 0.25);
-      border-color: rgba(255, 255, 255, 0.5);
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-    }
-
-    .lang-btn:hover {
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .story-toggle-btn {
-      background: none;
-      border: none;
-      color: var(--accent-color);
-      font-size: 1.5rem;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      padding: 0.5rem;
-      flex-shrink: 0;
-      display: none;
-    }
-
-    .story-toggle-btn.expanded {
-      transform: rotate(180deg);
-    }
-
-    /* Story Content with fade effect */
-    .story-content-wrapper {
-      position: relative;
-      max-height: none;
-      overflow: visible;
-      transition: max-height 0.3s ease;
-      grid-column: 1 / -1;
-    }
-
-    .story-content-wrapper.expanded {
-      max-height: none;
-    }
-
-    .story-content-wrapper::after {
-      display: none;
-    }
-
-    .story-content-wrapper.expanded::after {
-      display: none;
-    }
-
-    .story-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .story-section p {
-      font-size: 0.85rem;
-      line-height: 1.8;
-      color: #ddd;
-      margin: 0;
-      white-space: pre-wrap;
-    }
-
-    /* Events History */
-    .events-history {
-      margin-bottom: 2rem;
-    }
-
-    .event-section {
-      background-color: rgba(15, 15, 15, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      padding: 1rem 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .event-header {
-      margin-bottom: 1.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      padding-bottom: 1rem;
-    }
-
-    .event-title {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--accent-color);
-    }
-
-    .event-title a {
-      color: inherit;
-      text-decoration: none;
-      transition: text-decoration 0.3s ease;
-    }
-
-    .event-title a:hover {
-      text-decoration: underline;
-    }
-
-    .event-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      font-size: 0.9rem;
-      color: #bbb;
-    }
-
-    .event-meta span {
-      display: inline;
-    }
-
-    .event-meta span i {
-      margin-right: 0.5rem;
-    }
-
-    .event-meta i {
-      color: var(--accent-color);
-      font-size: 1rem;
-    }
-
-    .event-meta a {
-      color: #bbb;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .event-meta a:hover {
-      color: var(--accent-color);
-      text-decoration: underline;
-    }
-
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-    }
-
-    .photo-item {
-      aspect-ratio: 3/2;
-      overflow: hidden;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      position: relative;
-    }
-
-    .photo-item:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-    }
-
-    .photo-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: filter 0.3s ease;
-    }
-
-    /* Fullscreen Modal */
-    .fullscreen-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: rgba(0, 0, 0, 0.95);
-      z-index: 10000;
-      justify-content: center;
-      align-items: center;
-      backdrop-filter: blur(5px);
-    }
-
-    .fullscreen-modal.active {
-      display: flex;
-    }
-
-    .fullscreen-modal img {
-      max-width: 90%;
-      max-height: 90%;
-      object-fit: contain;
-      border-radius: 8px;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 2rem;
-      right: 2rem;
-      font-size: 3rem;
-      color: white;
-      cursor: pointer;
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      line-height: 1;
-      padding: 0;
-    }
-
-    .close-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: scale(1.1);
-    }
-
-    /* Mobile Responsive */
-    @media (max-width: 768px) {
-      .title-section h1 {
-        font-size: 4rem;
-      }
-
-      .next-event-section {
-        padding: 1.5rem 1rem;
-        font-size: 1.1rem;
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
-
-      .next-event-section a {
-        font-size: 0.9rem;
-        padding: 0.6rem 1.2rem;
-      }
-
-      .event-section {
-        padding: 1.5rem;
-      }
-
-      .event-title {
-        font-size: 1.25rem;
-      }
-
-      .event-meta {
-        flex-direction: column;
-        gap: 0.75rem;
-        font-size: 0.85rem;
-      }
-
-      .photo-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.5rem;
-      }
-
-      main {
-        padding: 2rem 1rem;
-      }
-
-      .close-btn {
-        top: 1rem;
-        right: 1rem;
-        width: 50px;
-        height: 50px;
-        font-size: 2rem;
-      }
-
-      .story-section {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        align-items: stretch;
-      }
-
-      .story-header {
-        flex-direction: row;
-        align-items: center;
-      }
-
-      .story-header h2 {
-        font-size: 1.2rem;
-      }
-
-      .language-switcher {
-        margin-bottom: 1rem;
-        gap: 0.5rem;
-      }
-
-      .lang-btn {
-        padding: 0.35rem 0.7rem;
-        font-size: 0.8rem;
-      }
-
-      .story-content-wrapper {
-        max-height: 60px;
-        overflow: hidden;
-        grid-column: 1;
-      }
-
-      .story-content-wrapper::after {
-        display: block;
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 40px;
-        background: linear-gradient(to bottom, transparent 0%, rgba(15, 15, 15, 0.6) 100%);
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-      }
-
-      .story-content-wrapper.expanded::after {
-        display: none;
-      }
-
-      .story-toggle-btn {
-        display: block;
-      }
-
-      .story-image-wrapper {
-        aspect-ratio: 16/9;
-      }
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Club Benares — Cine en Lisboa</title>
+  <meta name="description" content="Un club abierto a cineastas, estudiantes, aficionados y curiosos. Lisboa, desde 2023." />
+  <link rel="stylesheet" href="/benares.css" />
 </head>
-<body class="bg-sample">
+<body>
 
-  <!-- Header container where JavaScript will insert the header -->
-  <div id="header-container"></div>
-
-  <main>
-
-    <!-- Next Event Countdown -->
-    <div class="next-event-section">
-      Next event in<span id="countdown">XX</span>days
-      <a href="/eventos/">View Next Events</a>
+  <!-- Hero -->
+  <section class="hero">
+    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);background-size:80px 80px;pointer-events:none;z-index:0;"></div>
+    <div class="container" style="position:relative;z-index:1;">
+      <p class="hero__eyebrow">Club Benares · Lisboa · Est. 2023</p>
+      <h1 class="hero__headline">Cine para quienes aún<br>proyectan en una pared.</h1>
+      <p class="hero__sub">Un club abierto a cineastas, estudiantes, aficionados y curiosos.</p>
+      <div class="hero__ctas">
+        <a href="/eventos/" class="btn btn-primary">Próxima sesión →</a>
+        <a href="/ok/" class="btn-ghost">Enviar tu corto →</a>
+      </div>
     </div>
+  </section>
 
-    <!-- Events History -->
-    <div class="events-history">
-
-      <!-- Language Switcher - REMOVED FROM HERE -->
-
-      <!-- Expandable Story Section -->
-      <div class="story-section" id="story-section">
-        <div class="story-image-wrapper">
-          <img src="/media/about.jpg" alt="Club Benares">
-        </div>
-
-        <div class="story-text-wrapper">
-          <div class="story-header">
-            <h2 id="story-title">About Club Benares</h2>
-            <button class="story-toggle-btn" id="story-toggle-btn" aria-expanded="false">
-              <i class="fas fa-chevron-down"></i>
-            </button>
-          </div>
-
-          <div class="language-switcher">
-            <button class="lang-btn active" data-lang="en" id="lang-en">
-              <img src="/media/flag-england.png" alt="English">
-            </button>
-            <button class="lang-btn" data-lang="pt" id="lang-pt">
-              <img src="/media/flag-portugal.png" alt="Português">
-            </button>
-            <button class="lang-btn" data-lang="es" id="lang-es">
-              <img src="/media/flag-guatemala.png" alt="Español">
-            </button>
-          </div>
-          
-          <div class="story-content-wrapper" id="story-content-wrapper">
-            <div class="story-content">
-              <p id="story-text">Club Benares is a film community open to everyone who loves cinema. Founded by <strong>Charlie Chaves</strong> in 2023 in Lisbon, the club's original concept was to bring together a group of people, like a rock band, united by the desire to create independent films.<br><br>That idea remains alive, but the project has evolved. Today, Club Benares aims to be a space where professionals, students, amateurs, and enthusiasts can share experiences, exchange ideas, and collaborate on new projects.<br><br>Over time, the Club has grown and begun organizing events, screenings, debates, networking sessions, film productions, and festivals that bring artists and audiences together, <strong>strengthening the bonds within the community.</strong><br><br>We invite you to become part of Club Benares, to join our activities, and to enjoy the connection between people who share the same passion for cinema. Explore our website and discover all its sections and projects. <strong>We look forward to seeing you at our next event!</strong></p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Event 1 -->
-      <div class="event-section">
-        <div class="event-header">
-          <h2 class="event-title">Night Lounge #1</h2>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> December 6, 2024</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/eticoficial/" target="_blank">ETIC Atmosferas</a></span>
-            <span><i class="fas fa-camera"></i> Photos: <a href="https://www.instagram.com/santiago.photographyy/" target="_blank">Santiago Machuca</a> & <a href="https://www.instagram.com/val.nevs/" target="_blank">Valdir N.</a></span>
-          </div>
-        </div>
-        <div class="photo-grid">
-          <div class="photo-item">
-            <img src="./fotos/120px/night1-A.jpg" srcset="./fotos/320px/night1-A.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/night1-B.jpg" srcset="./fotos/320px/night1-B.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/night1-C.jpg" srcset="./fotos/320px/night1-C.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/night1-D.jpg" srcset="./fotos/320px/night1-D.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-        </div>
-      </div>
-
-      <div class="event-section">
-        <div class="event-header">
-          <h2 class="event-title">Night Lounge #2</h2>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> January 30, 2025</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/eticoficial/" target="_blank">ETIC Atmosferas</a></span>
-            <span><i class="fas fa-camera"></i> Photos: <a href="https://www.instagram.com/foxfecit/" target="_blank">Mel Fox</a></span>
-          </div>
-        </div>
-        <div class="photo-grid">
-          <div class="photo-item">
-            <img src="./fotos/120px/night2-A.jpg" srcset="./fotos/320px/night2-A.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/night2-B.jpg" srcset="./fotos/320px/night2-B.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/night2-C.jpg" srcset="./fotos/320px/night2-C.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/night2-D.jpg" srcset="./fotos/320px/night2-D.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-        </div>
-      </div>
-
-      <div class="event-section">
-        <div class="event-header">
-          <h2 class="event-title">Battle Royale #1</h2>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> March 27, 2025</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/fabricabracodeprata/" target="_blank">Fábrica Braço de Prata</a></span>
-            <span><i class="fas fa-trophy"></i> Winner: "Dá-me Ar" by <a href="https://www.instagram.com/mr.pedro.caldeira/" target="_blank">Pedro Caldeira</a> & Paulo Graça</span>
-            <span><i class="fas fa-award"></i> Runner-up: "Azul, Meia-Noite" by <a href="https://www.instagram.com/henriquemesquitamontes/" target="_blank">Henrique Mesquita Montes</a></span>
-            <span><i class="fas fa-microphone-lines"></i> Host: <a href="https://www.instagram.com/joao.the.silva/" target="_blank">João Tiago Pires</a></span>
-            <span><i class="fas fa-music"></i> Music: <a href="https://www.instagram.com/ni.shrubbery/" target="_blank">Leon Sukhodolskii</a></span>
-          </div>
-        </div>
-        <div class="photo-grid">
-          <div class="photo-item">
-            <img src="./fotos/120px/battle1-A.jpg" srcset="./fotos/320px/battle1-A.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/battle1-B.jpg" srcset="./fotos/320px/battle1-B.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/battle1-C.jpg" srcset="./fotos/320px/battle1-C.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/battle1-D.jpg" srcset="./fotos/320px/battle1-D.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-        </div>
-      </div>
-
-      <div class="event-section">
-        <div class="event-header">
-          <h2 class="event-title">Special <a href="https://www.instagram.com/cmcs_media/" target="_blank">CMCS Media</a> Film Screening</h2>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> April 18, 2025</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/fabricabracodeprata/" target="_blank">Fábrica Braço de Prata</a></span>
-            <span><i class="fas fa-star"></i> Extra thanks: <a href="https://www.instagram.com/nityamnow/" target="_blank">Nityam</a></span>
-            <span><i class="fas fa-camera"></i> Photos: <a href="https://www.instagram.com/val.nevs/" target="_blank">Valdir Neves</a></span>
-          </div>
-        </div>
-        <div class="photo-grid">
-          <div class="photo-item">
-            <img src="./fotos/120px/cmcs1-A.jpg" srcset="./fotos/320px/cmcs1-A.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/cmcs1-B.jpg" srcset="./fotos/320px/cmcs1-B.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/cmcs1-C.jpg" srcset="./fotos/320px/cmcs1-C.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/cmcs1-D.jpg" srcset="./fotos/320px/cmcs1-D.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-        </div>
-      </div>
-
-      <div class="event-section">
-        <div class="event-header">
-          <h2 class="event-title">MashUp #1 Club Benares & <a href="https://www.instagram.com/cinecore.lx/" target="_blank">Cinecore</a> | Horror Short-films Screening</h2>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> October 16, 2025</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/cossoul.sigc/" target="_blank">Cossoul</a></span>
-            <span><i class="fas fa-camera"></i> Photos: <a href="https://www.instagram.com/contraplonge/" target="_blank">Karen Mattos</a> & <a href="https://www.instagram.com/val.nevs/" target="_blank">Valdir Neves</a></span>
-          </div>
-        </div>
-        <div class="photo-grid">
-          <div class="photo-item">
-            <img src="./fotos/120px/mashup1-A.jpg" srcset="./fotos/320px/mashup1-A.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/mashup1-B.jpg" srcset="./fotos/320px/mashup1-B.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/mashup1-C.jpg" srcset="./fotos/320px/mashup1-C.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/mashup1-D.jpg" srcset="./fotos/320px/mashup1-D.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-        </div>
-      </div>
-
-      <div class="event-section">
-        <div class="event-header">
-          <h2 class="event-title">Night Lounge #4 | Screening with <a href="https://www.meetup.com/filmmaking-lisbon/" target="_blank">Filmmaking Lisboa Group</a>  & <a href="https://www.instagram.com/cmcs_media/" target="_blank">CMCS Media</a></h2>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> November 15, 2025</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/kreatorilx" target="_blank">Kreatori café e bar</a></span>
-            <span><i class="fas fa-camera"></i> Photos: <a href="https://www.instagram.com/val.nevs/" target="_blank">Valdir Neves</a> & <a href="https://www.instagram.com/fabianocafure/" target="_blank">Fabiano Cafure</a></span>
-          </div>
-        </div>
-        <div class="photo-grid">
-          <div class="photo-item">
-            <img src="./fotos/120px/night4-A.jpg" srcset="./fotos/320px/night4-A.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/night4-B.jpg" srcset="./fotos/320px/night4-B.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/night4-C.jpg" srcset="./fotos/320px/night4-C.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/night4-D.jpg" srcset="./fotos/320px/night4-D.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-        </div>
-      </div>
-
-      <div class="event-section">
-        <div class="event-header">
-          <h2 class="event-title">MashUp #2 Club Benares & <a href="https://www.instagram.com/cinecore.lx/" target="_blank">Cinecore</a> | Romantic Short-films Screening</h2>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> November 27, 2025</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/cossoul.sigc/" target="_blank">Cossoul</a></span>
-            <span><i class="fas fa-music"></i> Music: <a href="https://www.instagram.com/miguelaido_pt/" target="_blank">Miguel Aido</a></span>
-            <span><i class="fas fa-camera"></i> Photos: <a href="https://www.instagram.com/val.nevs/" target="_blank">Valdir Neves</a></span>
-          </div>
-        </div>
-        <div class="photo-grid">
-          <div class="photo-item">
-            <img src="./fotos/120px/mashup2-A.jpg" srcset="./fotos/320px/mashup2-A.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/mashup2-B.jpg" srcset="./fotos/320px/mashup2-B.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/mashup2-C.jpg" srcset="./fotos/320px/mashup2-C.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/mashup2-D.jpg" srcset="./fotos/320px/mashup2-D.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-        </div>
-      </div>
-
-      <div class="event-section">
-        <div class="event-header">
-          <h2 class="event-title">MashUp #3 Club Benares & <a href="https://www.instagram.com/cinecore.lx/" target="_blank">Cinecore</a> | Action Short-films Screening</h2>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> December 05, 2025</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/cossoul.sigc/" target="_blank">Cossoul</a></span>
-            <span><i class="fas fa-camera"></i> Photos: <a href="https://www.instagram.com/val.nevs/" target="_blank">Valdir Neves</a></span>
-          </div>
-        </div>
-        <div class="photo-grid">
-          <div class="photo-item">
-            <img src="./fotos/120px/mashup3-A.jpg" srcset="./fotos/320px/mashup3-A.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/mashup3-B.jpg" srcset="./fotos/320px/mashup3-B.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/mashup3-C.jpg" srcset="./fotos/320px/mashup3-C.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-          <div class="photo-item">
-            <img src="./fotos/120px/mashup3-D.jpg" srcset="./fotos/320px/mashup3-D.jpg 320w" sizes="(max-width: 768px) 50vw, 25vw" loading="lazy">
-          </div>
-        </div>
-      </div>
-
-      <div class="event-section">
-        <div class="event-header">
-          <h2 class="event-title">MashUp #4 Club Benares & <a href="https://www.instagram.com/cinecore.lx/" target="_blank">Cinecore</a></h2>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> March 16, 2026</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/cossoul.sigc/" target="_blank">Cossoul</a></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="event-section">
-        <div class="event-header">
-          <h2 class="event-title">MashUp #5 | Indie Mix</h2>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> May 7, 2026</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://maps.app.goo.gl/DFHBtixVSPdhJpGz6" target="_blank">Cossoul</a></span>
-          </div>
-        </div>
-        <div class="photo-grid">
-          <div class="photo-item">
-          </div>
-          <div class="photo-item">
-          </div>
-          <div class="photo-item">
-          </div>
-          <div class="photo-item">
-          </div>
-        </div>
-      </div>
-
+  <!-- Film Strip Ticker -->
+  <div class="ticker">
+    <div class="ticker__inner" aria-hidden="true">
+      <span class="ticker__item">Night Lounge #4</span>
+      <span class="ticker__item">MashUp #3 · Action</span>
+      <span class="ticker__item">.OK #1 "Dá-me Ar"</span>
+      <span class="ticker__item">CMCS Screening</span>
+      <span class="ticker__item">MashUp #5 · Indie Mix</span>
+      <span class="ticker__item">Night Lounge #2</span>
+      <span class="ticker__item">MashUp #1 · Horror</span>
+      <span class="ticker__item">.OK #2 · Indie Mix</span>
+      <span class="ticker__item">Circuito Nacional · Porto</span>
+      <span class="ticker__item">Night Lounge #4</span>
+      <span class="ticker__item">MashUp #3 · Action</span>
+      <span class="ticker__item">.OK #1 "Dá-me Ar"</span>
+      <span class="ticker__item">CMCS Screening</span>
+      <span class="ticker__item">MashUp #5 · Indie Mix</span>
+      <span class="ticker__item">Night Lounge #2</span>
+      <span class="ticker__item">MashUp #1 · Horror</span>
+      <span class="ticker__item">.OK #2 · Indie Mix</span>
+      <span class="ticker__item">Circuito Nacional · Porto</span>
     </div>
-
-  </main>
-
-  <div id="footer-container"></div>
-
-  <!-- Fullscreen Modal -->
-  <div class="fullscreen-modal" id="fullscreenModal">
-    <div class="close-btn" id="closeBtn">×</div>
-    <img src="" alt="Fullscreen Image" id="fullscreenImg">
   </div>
 
-  <!-- Load shared -->
-  <script src="/shared.js"></script>
+  <!-- Main -->
+  <main class="page-body">
+    <div class="container">
 
-  <script>
-    // Translations
-    const translations = {
-      en: {
-        title: "About Club Benares",
-        text: "Club Benares is a film community open to everyone who loves cinema. Founded by <strong>Charlie Chaves</strong> in 2023 in Lisbon, the club's original concept was to bring together a group of people, like a rock band, united by the desire to create independent films.\n\nThat idea remains alive, but the project has evolved. Today, Club Benares aims to be a space where professionals, students, amateurs, and enthusiasts can share experiences, exchange ideas, and collaborate on new projects.\n\nOver time, the Club has grown and begun organizing events, screenings, debates, networking sessions, film productions, and festivals that bring artists and audiences together, <strong>strengthening the bonds within the community.</strong>\n\nWe invite you to become part of Club Benares, to join our activities, and to enjoy the connection between people who share the same passion for cinema. Explore our website and discover all its sections and projects. <strong>We look forward to seeing you at our next event!</strong>"
-      },
-      pt: {
-        title: "Sobre Club Benares",
-        text: "Club Benares é uma comunidade de cinema aberta a todas as pessoas que amam o cinema. Fundado por <strong>Charlie Chaves</strong> em 2023 em Lisboa, o conceito original do Club era reunir uma equipa de pessoas, como uma banda de rock, interessadas em fazer cinema independente.\n\nEssa ideia continua viva, mas o projeto evoluiu. Hoje o Club Benares procura também criar um espaço onde profissionais, estudantes e amadores possam partilhar experiências, trocar ideias e desenvolver projetos em conjunto.\n\nCom o tempo, o Club cresceu e passou a organizar eventos, projeções, debates, sessões de networking, produções cinematográficas e festivais, promovendo o encontro entre artistas e o público e <strong>fortalecendo os laços dentro da comunidade.</strong>\n\nConvidamos-te a fazer parte do Club Benares, a participar nas nossas atividades e a viver a convivência entre pessoas que partilham a mesma paixão pelo cinema. Explora o nosso site e descobre cada um dos seus espaços e projetos. <strong>Esperamos ver-te no próximo evento!</strong>"
-      },
-      es: {
-        title: "Sobre Club Benares",
-        text: "Club Benares es una comunidad de cine abierta a todas las personas que aman el cine. Fundado por <strong>Charlie Chaves</strong> en 2023 en Lisboa, el concepto original del Club era reunir a un grupo de personas, como una banda de rock, unidas por el deseo de crear cine independiente.\n\nEsa idea sigue viva, pero el proyecto ha evolucionado. Hoy, Club Benares busca ser un espacio donde profesionales, estudiantes, aficionados y entusiastas puedan compartir experiencias, intercambiar ideas y colaborar en nuevos proyectos.\n\nCon el tiempo, el Club ha crecido y ha comenzado a organizar eventos, proyecciones, debates, sesiones de networking, producciones cinematográficas y festivales que reúnen a artistas y público, <strong>fortaleciendo los lazos dentro de la comunidad.</strong>\n\nTe invitamos a formar parte de Club Benares, a participar en nuestras actividades y a disfrutar del encuentro entre personas que comparten la misma pasión por el cine. Explora nuestro sitio web y descubre todas sus secciones y proyectos. <strong>¡Esperamos verte en el próximo evento!</strong>"
-      }
-    };
+      <!-- Countdown -->
+      <div style="padding:3.5rem 0 0;">
+        <p class="section-label" style="margin-bottom:1rem;">Próxima sesión</p>
+        <div class="countdown-card" id="countdown-timer">
+          <div class="countdown-card__session">
+            <p class="countdown-card__label">Próxima sesión · .OK #2 · Indie Mix</p>
+            <p class="countdown-card__title">.OK #2 — Indie Mix</p>
+            <p class="countdown-card__meta">
+              04 Jun 2026 · 20:00<br>
+              Fábrica Braço de Prata · Lisboa<br>
+              Gratuita · 23/80 plazas
+            </p>
+          </div>
+          <div class="countdown-card__timer">
+            <div class="countdown-card__unit">
+              <span class="countdown-card__num" data-unit="days">--</span>
+              <span class="countdown-card__unit-label">días</span>
+            </div>
+            <span class="countdown-colon">:</span>
+            <div class="countdown-card__unit">
+              <span class="countdown-card__num" data-unit="hours">--</span>
+              <span class="countdown-card__unit-label">horas</span>
+            </div>
+            <span class="countdown-colon">:</span>
+            <div class="countdown-card__unit">
+              <span class="countdown-card__num" data-unit="minutes">--</span>
+              <span class="countdown-card__unit-label">min</span>
+            </div>
+            <span class="countdown-colon">:</span>
+            <div class="countdown-card__unit">
+              <span class="countdown-card__num" data-unit="seconds">--</span>
+              <span class="countdown-card__unit-label">seg</span>
+            </div>
+          </div>
+          <div style="flex-shrink:0;">
+            <a href="/eventos/" class="btn btn-primary btn-sm">Reservar plaza →</a>
+          </div>
+        </div>
+      </div>
 
-    let currentLang = 'en';
+      <div class="divider" style="margin:4rem 0;"></div>
 
-    // Story expansion functionality
-    const storyToggleBtn = document.getElementById('story-toggle-btn');
-    const storyContentWrapper = document.getElementById('story-content-wrapper');
-    const storyText = document.getElementById('story-text');
-    const storyTitle = document.getElementById('story-title');
-    const storySection = document.getElementById('story-section');
-    const langBtns = document.querySelectorAll('.lang-btn');
+      <!-- Manifesto -->
+      <blockquote class="manifesto">
+        <p class="manifesto__quote">"No vendemos entradas. Reservamos butacas para gente que aún cree en proyectar películas en una pared, discutirlas hasta tarde y rodar la siguiente entre amigos."</p>
+        <cite class="manifesto__attr">— Charlie Chaves, Fundador · Lisboa, 2023</cite>
+      </blockquote>
 
-    // Click on story section or button to expand
-    storySection.addEventListener('click', function() {
-      storyContentWrapper.classList.toggle('expanded');
-      storyToggleBtn.classList.toggle('expanded');
-      storyToggleBtn.setAttribute('aria-expanded', storyContentWrapper.classList.contains('expanded'));
-    });
+      <!-- Stats -->
+      <div class="stat-row" style="margin:4rem 0;">
+        <div class="stat-item">
+          <span class="stat-item__num">93</span>
+          <span class="stat-item__label">Miembros</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-item__num">13</span>
+          <span class="stat-item__label">Ediciones</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-item__num">2023</span>
+          <span class="stat-item__label">Lisboa est.</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-item__num">48</span>
+          <span class="stat-item__label">Films catálogo</span>
+        </div>
+      </div>
 
-    // Language switching
-    langBtns.forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation(); // Prevent triggering story expansion
-        currentLang = this.dataset.lang;
-        
-        // Update active button
-        langBtns.forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        
-        // Update text
-        storyTitle.textContent = translations[currentLang].title;
-        storyText.innerHTML = translations[currentLang].text;
-      });
-    });
+      <!-- Quick Links Grid -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;margin-bottom:6rem;">
+        <a href="/ok/" class="quick-link-card" style="display:flex;flex-direction:column;justify-content:space-between;padding:2rem;background:var(--gray-900);border:1px solid var(--gray-800);min-height:180px;transition:background 0.2s;">
+          <span style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);">Festival</span>
+          <div>
+            <p style="font-family:var(--serif);font-style:italic;font-size:1.75rem;letter-spacing:-0.03em;color:var(--white);margin-bottom:0.3rem;">.OK</p>
+            <p style="font-family:var(--mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);">Deadline · 22 May · 23:59 →</p>
+          </div>
+        </a>
+        <a href="/eventos/" class="quick-link-card" style="display:flex;flex-direction:column;justify-content:space-between;padding:2rem;background:var(--gray-900);border:1px solid var(--gray-800);min-height:180px;transition:background 0.2s;">
+          <span style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);">Próximos</span>
+          <div>
+            <p style="font-family:var(--serif);font-size:1.75rem;letter-spacing:-0.03em;color:var(--white);margin-bottom:0.3rem;">Eventos</p>
+            <p style="font-family:var(--mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);">4 sesiones programadas →</p>
+          </div>
+        </a>
+        <a href="/streaming/" class="quick-link-card" style="display:flex;flex-direction:column;justify-content:space-between;padding:2rem;background:var(--gray-900);border:1px solid var(--gray-800);min-height:180px;transition:background 0.2s;">
+          <span style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);">Catálogo</span>
+          <div>
+            <p style="font-family:var(--serif);font-size:1.75rem;letter-spacing:-0.03em;color:var(--white);margin-bottom:0.3rem;">Streaming</p>
+            <p style="font-family:var(--mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);">48 films · 16 originales →</p>
+          </div>
+        </a>
+        <a href="/proyectos/" class="quick-link-card" style="display:flex;flex-direction:column;justify-content:space-between;padding:2rem;background:var(--gray-900);border:1px solid var(--gray-800);min-height:180px;transition:background 0.2s;">
+          <span style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);">Crowdfunding</span>
+          <div>
+            <p style="font-family:var(--serif);font-size:1.75rem;letter-spacing:-0.03em;color:var(--white);margin-bottom:0.3rem;">Proyectos</p>
+            <p style="font-family:var(--mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);">7 activos · €32k recaudados →</p>
+          </div>
+        </a>
+      </div>
 
-    // Countdown to next event
-    function updateCountdown() {
-      const eventDate = new Date('2026-05-07T00:00:00');
-      const now = new Date();
-      const difference = eventDate - now;
-      
-      const days = Math.ceil(difference / (1000 * 60 * 60 * 24));
-      
-      const countdownElement = document.getElementById('countdown');
-      
-      if (days > 0) {
-        countdownElement.textContent = days;
-      } else if (days === 0) {
-        countdownElement.textContent = '0';
-      } else {
-        countdownElement.textContent = '0';
-      }
-    }
-    
-    // Update countdown immediately and then every hour
-    updateCountdown();
-    setInterval(updateCountdown, 3600000); // Update every hour
+    </div>
+  </main>
 
-    // Pause shimmer animation when not in view for better performance
-    const eventButton = document.querySelector(".next-event-section a");
-    if (eventButton) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.remove("paused");
-          } else {
-            entry.target.classList.add("paused");
-          }
-        });
-      }, {
-        threshold: 0.1
-      });
-      
-      observer.observe(eventButton);
-    }
+  <style>
+    .quick-link-card:hover { background: var(--gray-800) !important; }
+  </style>
 
-    // Fullscreen image functionality (load full version only when clicked)
-    const photoItems = document.querySelectorAll('.photo-item');
-    const modal = document.getElementById('fullscreenModal');
-    const fullscreenImg = document.getElementById('fullscreenImg');
-    const closeBtn = document.getElementById('closeBtn');
-
-    photoItems.forEach(item => {
-      item.addEventListener('click', function() {
-        const img = this.querySelector('img');
-        const previewSrc = img.src;
-
-        // Automatically switch folder to the full-resolution version
-        const fullSrc = previewSrc
-          .replace('/120px/', '/full/')
-          .replace('/320px/', '/full/');
-
-        fullscreenImg.src = fullSrc;
-        modal.classList.add('active');
-      });
-    });
-
-    function closeFullscreen() {
-      modal.classList.remove('active');
-      fullscreenImg.src = ""; // unload full image to free memory
-    }
-
-    closeBtn.addEventListener('click', closeFullscreen);
-    modal.addEventListener('click', closeFullscreen);
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && modal.classList.contains('active')) {
-        closeFullscreen();
-      }
-    });
-
-  </script>
-
+  <script src="/benares-nav.js"></script>
 </body>
 </html>

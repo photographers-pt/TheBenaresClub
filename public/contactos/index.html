@@ -1,266 +1,143 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contatos | Club Benares</title>
-  <link rel="stylesheet" href="/styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="icon" href="/media/A00 Logo - Light.png" type="image/png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <style>
-    /* Container for the image with clickable areas */
-    .image-map-container {
-      position: relative;
-      display: inline-block;
-      margin: 2rem auto;
-      max-width: 90%;
-    }
-    
-    .Tablacontacto {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    
-    /* Base style for all clickable areas */
-    .clickable-area {
-      position: absolute;
-      cursor: pointer;
-      /* Transparent by default, but visible due to box-shadow from your debug script */
-      background-color: rgba(255, 255, 255, 0.01); /* Almost invisible but still catches clicks */
-      transition: background-color 0.3s ease;
-    }
-    
-    /* Hover effect for clickable areas */
-    .clickable-area:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(2px);
-    }
-    
-    /* Define your clickable zones based on the actual image layout */
-    
-    /* X (Twitter) - Left side - MOVED UP */
-    .area-twitter {
-      top: 29%;
-      left: 12%;
-      width: 10%;
-      height: 13%;
-    }
-    
-    /* Facebook - Bottom left - MOVED LEFT */
-    .area-facebook {
-      top: 68%;
-      left: 17%;
-      width: 10%;
-      height: 12%;
-    }
-    
-    /* Instagram - Bottom center-right - MOVED LEFT AND DOWN */
-    .area-instagram {
-      top: 76%;
-      left: 40%;
-      width: 12%;
-      height: 13%;
-    }
-    
-    /* TikTok - Top right - MOVED LEFT */
-    .area-tiktok {
-      top: 16%;
-      left: 73%;
-      width: 10%;
-      height: 12%;
-    }
-    
-    /* YouTube - Right side - MOVED LEFT */
-    .area-youtube {
-      top: 58%;
-      left: 78%;
-      width: 10%;
-      height: 12%;
-    }
-    
-    /* Email (Charlie@TheBenaresClub.com) - Top center - MOVED LEFT */
-    .area-email {
-      top: 18%;
-      left: 37%;
-      width: 26%;
-      height: 8%;
-    }
-    
-    /* Phone numbers - Top left - MOVED LEFT */
-    .area-phone {
-      top: 15%;
-      left: 6%;
-      width: 10%;
-      height: 13%;
-    }
-    
-    /* Central accessibility icon (if needed) */
-    .area-central {
-      top: 40%;
-      left: 39%;
-      width: 16%;
-      height: 20%;
-    }
-    
-    /* CB? text area (if clickable) */
-    .area-cb {
-      top: 25%;
-      left: 42%;
-      width: 15%;
-      height: 10%;
-    }
-    
-    /* Tooltip that appears on hover (optional) */
-    .area-tooltip {
-      position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.8);
-      color: white;
-      padding: 0.5rem;
-      border-radius: 4px;
-      font-size: 0.875rem;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      margin-bottom: 5px;
-    }
-    
-    .clickable-area:hover .area-tooltip {
-      opacity: 1;
-    }
-    
-    /* Center the container */
-    main {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contacto — Club Benares</title>
+  <meta name="description" content="Háblanos de cerca. hola@thebenaresclub.com · Rua das Janelas Verdes 12 · Lisboa." />
+  <link rel="stylesheet" href="/benares.css" />
 </head>
-<body class="bg-contactos">
+<body>
+<div class="page-body">
+  <main class="container">
 
-  <!-- Header container where JavaScript will insert the header -->
-  <div id="header-container"></div>
+    <!-- Section Header -->
+    <header class="section-header">
+      <div class="section-header__left">
+        <span class="section-label">10 · Contacto</span>
+        <h1 class="section-title">Háblanos. De cerca.</h1>
+      </div>
+    </header>
 
-  <main>
-    <!-- Image with clickable areas -->
-    <div class="image-map-container">
-      <img class="Tablacontacto" src="Tabla_Contactos.png" alt="Tabla de Contactos">
-      
-      <!-- Clickable areas overlaid on the image -->
-      
-      <!-- Email - Top center -->
-      <a href="mailto:charlie@thebenaresclub.com" class="clickable-area area-email">
-        <span class="area-tooltip">Charlie@TheBenaresClub.com</span>
-      </a>
-      
-      <!-- Phone - Top left (if visible in your image) -->
-      <a href="tel:+351931677965" class="clickable-area area-phone">
-        <span class="area-tooltip">Call Us</span>
-      </a>
-      
-      <!-- X (Twitter) - Left side -->
-      <a href="https://x.com/thebenaresclub" target="_blank" class="clickable-area area-twitter">
-        <span class="area-tooltip">X</span>
-      </a>
-      
-      <!-- Facebook - Bottom left -->
-      <a href="https://www.facebook.com/people/Club-Benares/100092833234889/" target="_blank" class="clickable-area area-facebook">
-        <span class="area-tooltip">Facebook</span>
-      </a>
-      
-      <!-- Instagram - Bottom center -->
-      <a href="https://www.instagram.com/thebenaresclub" target="_blank" class="clickable-area area-instagram">
-        <span class="area-tooltip">Instagram</span>
-      </a>
-      
-      <!-- TikTok - Top right -->
-      <a href="https://tiktok.com/@thebenaresclub" target="_blank" class="clickable-area area-tiktok">
-        <span class="area-tooltip">TikTok</span>
-      </a>
-      
-      <!-- YouTube - Right side -->
-      <a href="https://www.youtube.com/@TheBenaresClub" target="_blank" class="clickable-area area-youtube">
-        <span class="area-tooltip">YouTube</span>
-      </a>
-      
-      <!-- Optional: Central icon (uncomment if needed) -->
-      <!--
-      <a href="index.html" class="clickable-area area-central">
-        <span class="area-tooltip">Accessibility</span>
-      </a>
-      -->
-      
-      <!-- Optional: CB? area (uncomment if needed) -->
-      <!--
-      <a href="index.html" class="clickable-area area-cb">
-        <span class="area-tooltip">Club Benares</span>
-      </a>
-      -->
+    <!-- Contact Grid -->
+    <div class="form-grid">
+
+      <!-- Left: Info -->
+      <div>
+        <h2 style="font-family:var(--serif);font-style:italic;font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-0.02em;color:var(--white);margin-bottom:2rem;">Olá, cuéntanos.</h2>
+
+        <div style="display:flex;flex-direction:column;gap:1.5rem;">
+
+          <div>
+            <p style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:0.3rem;">Email</p>
+            <a href="mailto:hola@thebenaresclub.com" style="font-size:0.95rem;color:var(--gray-200);">hola@thebenaresclub.com</a>
+          </div>
+
+          <div>
+            <p style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:0.3rem;">Estudio</p>
+            <p style="font-size:0.95rem;color:var(--gray-200);">Rua das Janelas Verdes 12<br>Lisboa, Portugal</p>
+          </div>
+
+          <div>
+            <p style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:0.3rem;">Horario</p>
+            <p style="font-size:0.95rem;color:var(--gray-200);">Lun–Vie · 11:00–19:00</p>
+          </div>
+
+          <div>
+            <p style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:0.3rem;">Social</p>
+            <a href="https://instagram.com/thebenaresclub" target="_blank" rel="noopener" style="font-size:0.95rem;color:var(--gray-200);">@thebenaresclub</a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div>
+        <form onsubmit="return false;">
+
+          <div class="form-group">
+            <label class="form-label">Motivo</label>
+            <div class="motivo-chips">
+              <button type="button" class="motivo-chip active">Asistir</button>
+              <button type="button" class="motivo-chip">Colaborar</button>
+              <button type="button" class="motivo-chip">Prensa</button>
+              <button type="button" class="motivo-chip">Partners</button>
+              <button type="button" class="motivo-chip">Tienda</button>
+              <button type="button" class="motivo-chip">Otro</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="name">Nombre</label>
+            <input class="form-input" type="text" id="name" name="name" placeholder="Tu nombre completo" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input class="form-input" type="email" id="email" name="email" placeholder="tu@email.com" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="message">Mensaje</label>
+            <textarea class="form-textarea" id="message" name="message" placeholder="Cuéntanos qué tienes en mente..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Enviar mensaje →</button>
+
+        </form>
+      </div>
+
     </div>
-    
-    <!-- Keep the original buttons as fallback or additional elements -->
-    <div style="display: none;">
-      <a href="https://www.instagram.com/thebenaresclub" target="_blank">
-        <button id="IG-logo"></button>
-      </a>
-      
-      <a href="https://www.facebook.com/people/Club-Benares/100092833234889/" target="_blank">
-        <button id="FB-logo"></button>
-      </a>
-      
-      <a href="https://www.youtube.com/@TheBenaresClub" target="_blank">
-        <button id="YT-logo"></button>
-      </a>
-      
-      <a href="https://x.com/thebenaresclub" target="_blank">
-        <button id="X-logo"></button>
-      </a>
-      
-      <a href="https://tiktok.com/@thebenaresclub" target="_blank">
-        <button id="TK-logo"></button>
-      </a>
-      
-      <a href="mailto:charlie@thebenaresclub.com" target="_blank">
-        <button id="Charlie-logo"></button>
-      </a>
+
+    <!-- Team Cards -->
+    <div style="margin-top:2rem;margin-bottom:2rem;">
+      <p class="section-label">Equipo</p>
     </div>
+
+    <div class="team-cards">
+
+      <div class="team-card">
+        <div class="team-card__avatar">CC</div>
+        <p class="team-card__name">Charlie Chaves</p>
+        <p class="team-card__role">Fundador · Colaboraciones</p>
+        <a href="mailto:charlie@thebenaresclub.com" class="team-card__email">charlie@thebenaresclub.com</a>
+      </div>
+
+      <div class="team-card">
+        <div class="team-card__avatar">MC</div>
+        <p class="team-card__name">Mariana Costa</p>
+        <p class="team-card__role">Eventos</p>
+        <a href="mailto:eventos@thebenaresclub.com" class="team-card__email">eventos@thebenaresclub.com</a>
+      </div>
+
+      <div class="team-card">
+        <div class="team-card__avatar">TR</div>
+        <p class="team-card__name">Tiago Reis</p>
+        <p class="team-card__role">Tienda</p>
+        <a href="mailto:tienda@thebenaresclub.com" class="team-card__email">tienda@thebenaresclub.com</a>
+      </div>
+
+    </div>
+
+    <!-- Join Section -->
+    <div class="join-bar">
+      <div>
+        <p class="join-bar__title">Únete a la comunidad.</p>
+        <p class="join-bar__sub">Newsletter semanal · Discord activo · 312 online ahora</p>
+      </div>
+      <div class="join-bar__actions">
+        <form onsubmit="return false;" style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+          <input class="form-input" type="email" placeholder="tu@email.com" style="width:220px;" />
+          <button type="submit" class="btn btn-primary btn-sm">Newsletter →</button>
+        </form>
+        <a href="#" class="btn-ghost btn-sm">Discord · 312 online →</a>
+      </div>
+    </div>
+
+    <div style="margin-bottom:5rem;"></div>
 
   </main>
-  <div id="footer-container"></div>
-
-  <script>
-    // Optional: Add click feedback or tracking
-    document.querySelectorAll('.clickable-area').forEach(area => {
-      area.addEventListener('click', function(e) {
-        // You can add analytics or visual feedback here
-        console.log('Clicked area:', this.className);
-        
-        // Optional: Add a ripple effect on click
-        this.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
-        setTimeout(() => {
-          this.style.backgroundColor = 'rgba(255, 255, 255, 0.01)';
-        }, 300);
-      });
-    });
-    
-    // Optional: Show bounds of clickable areas for debugging
-    // Remove this in production
-    const debugMode = true; // Set to false to hide debug visuals
-    if (debugMode) {
-      document.querySelectorAll('.clickable-area').forEach(area => {
-        area.style.border = '1px dashed rgba(255, 255, 255, 0)';
-      });
-    }
-  </script>
-
-  <script src="/shared.js"></script>
+</div>
+<script src="/benares-nav.js"></script>
 </body>
 </html>

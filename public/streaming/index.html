@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Streaming — Club Benares</title>
+  <meta name="description" content="Cine de los nuestros, cuando quieras. 48 films, 16 originales, 19 h de contenido." />
+  <link rel="stylesheet" href="/benares.css" />
+</head>
+<body>
+<div class="page-body">
+  <main class="container">
+
+    <!-- Section Header -->
+    <header class="section-header">
+      <div class="section-header__left">
+        <span class="section-label">06 · Streaming</span>
+        <h1 class="section-title">Cine de los nuestros,<br>cuando quieras.</h1>
+      </div>
+    </header>
+
+    <!-- Featured Film -->
+    <div class="featured-block" style="display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center;margin-bottom:0;">
+      <div>
+        <p class="featured-block__eyebrow">Original · Ficción · 2026</p>
+        <h2 class="featured-block__title">Lisboa, ao Amanhecer.</h2>
+        <p class="featured-block__meta">
+          Dir. Charlie Chaves · DP Valdir Neves · Música Miguel Aido<br>
+          18 min · 16mm · Ficción · 2026
+        </p>
+        <div class="featured-block__actions">
+          <a href="#" class="btn btn-primary">▶ Ver ahora</a>
+          <a href="#" class="btn-ghost">Trailer →</a>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0.75rem;align-items:flex-end;">
+        <span style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);">Original Benares</span>
+        <div style="width:120px;height:160px;background:linear-gradient(135deg,var(--gray-800),var(--dark));border:1px solid var(--gray-700);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-size:2.5rem;color:var(--gray-700);">B</div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stat-row" style="margin:0 0 3rem;">
+      <div class="stat-item">
+        <span class="stat-item__num">48</span>
+        <span class="stat-item__label">Films</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__num">16</span>
+        <span class="stat-item__label">Originales</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__num">19h</span>
+        <span class="stat-item__label">Contenido</span>
+      </div>
+    </div>
+
+    <!-- Plans -->
+    <div style="margin-top:2rem;">
+      <p class="section-label" style="margin-bottom:2rem;">Planes</p>
+    </div>
+    <div class="plans-grid" style="margin-top:2.5rem;">
+
+      <div class="plan-card">
+        <p class="plan-card__name">Free</p>
+        <p class="plan-card__price">€0</p>
+        <p class="plan-card__period">para siempre</p>
+        <ul class="plan-card__features">
+          <li class="plan-card__feature">3 films por mes</li>
+          <li class="plan-card__feature">Calidad 720p</li>
+          <li class="plan-card__feature plan-card__feature--dim">Sin originales</li>
+          <li class="plan-card__feature plan-card__feature--dim">Sin descargas</li>
+        </ul>
+        <a href="/contactos/" class="btn-ghost btn-sm" style="text-align:center;">Empezar gratis</a>
+      </div>
+
+      <div class="plan-card plan-card--featured">
+        <p class="plan-card__name">Mensual</p>
+        <p class="plan-card__price">€4,99</p>
+        <p class="plan-card__period">por mes</p>
+        <ul class="plan-card__features">
+          <li class="plan-card__feature">Catálogo completo</li>
+          <li class="plan-card__feature">HD 1080p</li>
+          <li class="plan-card__feature">Originales incluidos</li>
+          <li class="plan-card__feature">Acceso prioritario</li>
+        </ul>
+        <a href="/contactos/" class="btn btn-primary btn-sm" style="text-align:center;">Suscribirme →</a>
+      </div>
+
+      <div class="plan-card">
+        <p class="plan-card__name">Anual</p>
+        <p class="plan-card__price">€49</p>
+        <p class="plan-card__period">por año · ahorra 18%</p>
+        <ul class="plan-card__features">
+          <li class="plan-card__feature">Todo lo del mensual</li>
+          <li class="plan-card__feature">Discord exclusivo</li>
+          <li class="plan-card__feature">1 entrada gratis .OK</li>
+          <li class="plan-card__feature">Nombre en créditos</li>
+        </ul>
+        <a href="/contactos/" class="btn-ghost btn-sm" style="text-align:center;">Suscripción anual →</a>
+      </div>
+
+    </div>
+
+    <!-- Film Catalog -->
+    <div style="margin-top:4rem;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+        <p class="section-label">Catálogo</p>
+        <div class="filter-bar" data-filter-group data-filter-target=".film-card" style="margin-bottom:0;">
+          <button class="filter-pill active" data-filter="all">Todo</button>
+          <button class="filter-pill" data-filter="original">Originales</button>
+          <button class="filter-pill" data-filter="miembro">De miembros</button>
+          <button class="filter-pill" data-filter="documental">Documentales</button>
+          <button class="filter-pill" data-filter="corto">Cortos</button>
+          <button class="filter-pill" data-filter="experimental">Experimental</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="films-grid">
+
+      <div class="film-card" data-cat="original corto">
+        <div class="film-card__thumb">
+          <span class="film-card__thumb-glyph">L</span>
+          <span class="film-card__badge film-card__badge--pro">Pro</span>
+          <div class="film-card__play">▶</div>
+        </div>
+        <div class="film-card__info">
+          <p class="film-card__title">Lisboa, ao Amanhecer</p>
+          <p class="film-card__meta">Original · Ficción · 2026<br>18 min · Charlie Chaves</p>
+        </div>
+      </div>
+
+      <div class="film-card" data-cat="corto">
+        <div class="film-card__thumb">
+          <span class="film-card__thumb-glyph">D</span>
+          <span class="film-card__badge film-card__badge--free">Free</span>
+          <div class="film-card__play">▶</div>
+        </div>
+        <div class="film-card__info">
+          <p class="film-card__title">Dá-me Ar</p>
+          <p class="film-card__meta">.OK #1 · Drama · 2025<br>14 min · Pedro Caldeira</p>
+        </div>
+      </div>
+
+      <div class="film-card" data-cat="corto experimental">
+        <div class="film-card__thumb">
+          <span class="film-card__thumb-glyph">A</span>
+          <span class="film-card__badge film-card__badge--pro">Pro</span>
+          <div class="film-card__play">▶</div>
+        </div>
+        <div class="film-card__info">
+          <p class="film-card__title">Azul, Meia-Noite</p>
+          <p class="film-card__meta">.OK #1 · Experimental · 2025<br>11 min · H. Mesquita Montes</p>
+        </div>
+      </div>
+
+      <div class="film-card" data-cat="original corto miembro">
+        <div class="film-card__thumb">
+          <span class="film-card__thumb-glyph">S</span>
+          <span class="film-card__badge film-card__badge--pro">Pro</span>
+          <div class="film-card__play">▶</div>
+        </div>
+        <div class="film-card__info">
+          <p class="film-card__title">Silentes</p>
+          <p class="film-card__meta">Original · Horror · 2026<br>9 min · Karen Mattos</p>
+        </div>
+      </div>
+
+      <div class="film-card" data-cat="documental miembro">
+        <div class="film-card__thumb">
+          <span class="film-card__thumb-glyph">E</span>
+          <span class="film-card__badge film-card__badge--pro">Pro</span>
+          <div class="film-card__play">▶</div>
+        </div>
+        <div class="film-card__info">
+          <p class="film-card__title">El último rodaje</p>
+          <p class="film-card__meta">Documental · 2024<br>32 min · Santiago Machuca</p>
+        </div>
+      </div>
+
+      <div class="film-card" data-cat="corto miembro">
+        <div class="film-card__thumb">
+          <span class="film-card__thumb-glyph">T</span>
+          <span class="film-card__badge film-card__badge--pro">Pro</span>
+          <div class="film-card__play">▶</div>
+        </div>
+        <div class="film-card__info">
+          <p class="film-card__title">Tinta Roja</p>
+          <p class="film-card__meta">Drama · 2024<br>22 min · Leon Sukhodolskii</p>
+        </div>
+      </div>
+
+      <div class="film-card" data-cat="documental miembro">
+        <div class="film-card__thumb">
+          <span class="film-card__thumb-glyph">M</span>
+          <span class="film-card__badge film-card__badge--pro">Pro</span>
+          <div class="film-card__play">▶</div>
+        </div>
+        <div class="film-card__info">
+          <p class="film-card__title">MashUp · Serie</p>
+          <p class="film-card__meta">Documental · 2025<br>6 episodios · Varios</p>
+        </div>
+      </div>
+
+      <div class="film-card" data-cat="corto miembro">
+        <div class="film-card__thumb">
+          <span class="film-card__thumb-glyph">C</span>
+          <span class="film-card__badge film-card__badge--free">Free</span>
+          <div class="film-card__play">▶</div>
+        </div>
+        <div class="film-card__info">
+          <p class="film-card__title">Café de las 4</p>
+          <p class="film-card__meta">De miembro · Comedia · 2025<br>8 min · Mel Fox</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-bottom:5rem;"></div>
+
+  </main>
+</div>
+<script src="/benares-nav.js"></script>
+</body>
+</html>
