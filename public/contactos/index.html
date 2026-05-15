@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <script>(function(){var t=localStorage.getItem('theme');var l=localStorage.getItem('lang')||'pt';if(t==='light')document.documentElement.classList.add('light');document.documentElement.setAttribute('data-lang',l);})();</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contacto — Club Benares</title>
@@ -11,78 +12,81 @@
 <div class="page-body">
   <main class="container">
 
-    <!-- Section Header -->
     <header class="section-header">
       <div class="section-header__left">
-        <span class="section-label">10 · Contacto</span>
-        <h1 class="section-title">Háblanos. De cerca.</h1>
+        <span class="section-label" data-i18n="con.label">10 · Contacto</span>
+        <h1 class="section-title" data-i18n-html="con.title">Háblanos. <em>De cerca.</em></h1>
+      </div>
+      <div class="section-header__pills">
+        <span class="section-label" style="font-size:0.6rem;" data-i18n="con.response">Respuesta media · 14 h</span>
       </div>
     </header>
 
-    <!-- Contact Grid -->
     <div class="form-grid">
 
       <!-- Left: Info -->
       <div>
-        <h2 style="font-family:var(--serif);font-style:italic;font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-0.02em;color:var(--white);margin-bottom:2rem;">Olá, cuéntanos.</h2>
+        <h2 style="font-family:var(--serif);font-style:italic;font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-0.02em;color:var(--white);margin-bottom:2rem;" data-i18n-html="con.hello">Olá, cuéntanos.</h2>
+        <p style="color:var(--gray-400);font-size:0.95rem;line-height:1.7;margin-bottom:2rem;max-width:40ch;" data-i18n="con.body">Para colaboraciones, prensa, partnerships o simplemente para preguntar cómo funcionan las sesiones, escríbenos. Leemos todo. Respondemos rápido.</p>
 
         <div style="display:flex;flex-direction:column;gap:1.5rem;">
-
           <div>
             <p style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:0.3rem;">Email</p>
             <a href="mailto:hola@thebenaresclub.com" style="font-size:0.95rem;color:var(--gray-200);">hola@thebenaresclub.com</a>
           </div>
-
           <div>
-            <p style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:0.3rem;">Estudio</p>
+            <p style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:0.3rem;" data-i18n="con.studio.label">Estudio</p>
             <p style="font-size:0.95rem;color:var(--gray-200);">Rua das Janelas Verdes 12<br>Lisboa, Portugal</p>
           </div>
-
           <div>
-            <p style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:0.3rem;">Horario</p>
-            <p style="font-size:0.95rem;color:var(--gray-200);">Lun–Vie · 11:00–19:00</p>
+            <p style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:0.3rem;" data-i18n="con.hours.label">Horario</p>
+            <p style="font-size:0.95rem;color:var(--gray-200);" data-i18n="con.hours.value">Lun–Vie · 11:00–19:00</p>
           </div>
-
           <div>
             <p style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:0.3rem;">Social</p>
             <a href="https://instagram.com/thebenaresclub" target="_blank" rel="noopener" style="font-size:0.95rem;color:var(--gray-200);">@thebenaresclub</a>
           </div>
-
         </div>
       </div>
 
       <!-- Right: Form -->
       <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;">
+          <span style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);" data-i18n="con.active">Formulario activo</span>
+          <span style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);" data-i18n="con.response">Respuesta media · 14 h</span>
+        </div>
         <form onsubmit="return false;">
 
           <div class="form-group">
-            <label class="form-label">Motivo</label>
+            <label class="form-label" data-i18n="con.form.motivo.label">¿Sobre qué nos escribes?</label>
             <div class="motivo-chips">
-              <button type="button" class="motivo-chip active">Asistir</button>
-              <button type="button" class="motivo-chip">Colaborar</button>
-              <button type="button" class="motivo-chip">Prensa</button>
-              <button type="button" class="motivo-chip">Partners</button>
-              <button type="button" class="motivo-chip">Tienda</button>
-              <button type="button" class="motivo-chip">Otro</button>
+              <button type="button" class="motivo-chip active" data-i18n="con.chip.attend">Asistir</button>
+              <button type="button" class="motivo-chip" data-i18n="con.chip.collab">Colaborar</button>
+              <button type="button" class="motivo-chip" data-i18n="con.chip.press">Prensa</button>
+              <button type="button" class="motivo-chip" data-i18n="con.chip.partners">Partners</button>
+              <button type="button" class="motivo-chip" data-i18n="con.chip.shop">Tienda</button>
+              <button type="button" class="motivo-chip" data-i18n="con.chip.other">Otro</button>
             </div>
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="name">Nombre</label>
-            <input class="form-input" type="text" id="name" name="name" placeholder="Tu nombre completo" />
+            <label class="form-label" for="name" data-i18n="con.form.name">Nombre</label>
+            <input class="form-input" type="text" id="name" name="name" data-i18n-placeholder="con.form.placeholder.name" placeholder="Charlie Chaves" />
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="email">Email</label>
-            <input class="form-input" type="email" id="email" name="email" placeholder="tu@email.com" />
+            <label class="form-label" for="email" data-i18n="con.form.email">Email</label>
+            <input class="form-input" type="email" id="email" name="email" placeholder="hola@thebenaresclub.com" />
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="message">Mensaje</label>
-            <textarea class="form-textarea" id="message" name="message" placeholder="Cuéntanos qué tienes en mente..."></textarea>
+            <label class="form-label" for="message" data-i18n="con.form.message">Mensaje</label>
+            <textarea class="form-textarea" id="message" name="message" data-i18n-placeholder="con.form.placeholder.message" placeholder="Cuéntanos qué tienes en mente..."></textarea>
           </div>
 
-          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Enviar mensaje →</button>
+          <p style="font-family:var(--mono);font-size:0.58rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-600);margin-bottom:1rem;" data-i18n="con.form.note">Tus datos sólo se usan para responderte. No spam.</p>
+
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;" data-i18n="con.form.send">Enviar mensaje →</button>
 
         </form>
       </div>
@@ -90,47 +94,43 @@
     </div>
 
     <!-- Team Cards -->
-    <div style="margin-top:2rem;margin-bottom:2rem;">
-      <p class="section-label">Equipo</p>
+    <div style="margin-top:3rem;margin-bottom:1.5rem;">
+      <p class="section-label" data-i18n="con.team.label">Equipo</p>
     </div>
 
     <div class="team-cards">
-
       <div class="team-card">
         <div class="team-card__avatar">CC</div>
         <p class="team-card__name">Charlie Chaves</p>
-        <p class="team-card__role">Fundador · Colaboraciones</p>
+        <p class="team-card__role" data-i18n="con.team.charlie.role">Fundador · Colaboraciones</p>
         <a href="mailto:charlie@thebenaresclub.com" class="team-card__email">charlie@thebenaresclub.com</a>
       </div>
-
       <div class="team-card">
         <div class="team-card__avatar">MC</div>
         <p class="team-card__name">Mariana Costa</p>
-        <p class="team-card__role">Eventos</p>
+        <p class="team-card__role" data-i18n="con.team.mariana.role">Eventos</p>
         <a href="mailto:eventos@thebenaresclub.com" class="team-card__email">eventos@thebenaresclub.com</a>
       </div>
-
       <div class="team-card">
         <div class="team-card__avatar">TR</div>
         <p class="team-card__name">Tiago Reis</p>
-        <p class="team-card__role">Tienda</p>
+        <p class="team-card__role" data-i18n="con.team.tiago.role">Tienda</p>
         <a href="mailto:tienda@thebenaresclub.com" class="team-card__email">tienda@thebenaresclub.com</a>
       </div>
-
     </div>
 
     <!-- Join Section -->
-    <div class="join-bar">
+    <div class="join-bar" style="margin-top:3rem;">
       <div>
-        <p class="join-bar__title">Únete a la comunidad.</p>
-        <p class="join-bar__sub">Newsletter semanal · Discord activo · 312 online ahora</p>
+        <p class="join-bar__title" data-i18n-html="con.newsletter.title">Newsletter <em>mensual.</em></p>
+        <p class="join-bar__sub" data-i18n="con.newsletter.body">Una vez al mes. Próximas sesiones, cortos destacados, y una recomendación cinéfila firmada por un miembro.</p>
       </div>
       <div class="join-bar__actions">
         <form onsubmit="return false;" style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-          <input class="form-input" type="email" placeholder="tu@email.com" style="width:220px;" />
-          <button type="submit" class="btn btn-primary btn-sm">Newsletter →</button>
+          <input class="form-input" type="email" placeholder="hola@thebenaresclub.com" style="width:220px;" />
+          <button type="submit" class="btn btn-primary btn-sm" data-i18n="con.newsletter.cta">Newsletter →</button>
         </form>
-        <a href="#" class="btn-ghost btn-sm">Discord · 312 online →</a>
+        <a href="#" class="btn-ghost btn-sm" data-i18n="con.discord.cta">Discord · 312 online →</a>
       </div>
     </div>
 
@@ -138,6 +138,7 @@
 
   </main>
 </div>
+<script src="/benares-i18n.js"></script>
 <script src="/benares-nav.js"></script>
 </body>
 </html>

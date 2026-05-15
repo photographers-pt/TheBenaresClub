@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme');
+      var l = localStorage.getItem('lang') || 'pt';
+      if (t === 'light') document.documentElement.classList.add('light');
+      document.documentElement.setAttribute('data-lang', l);
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Club Benares — Cine en Lisboa</title>
@@ -13,12 +21,12 @@
   <section class="hero">
     <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);background-size:80px 80px;pointer-events:none;z-index:0;"></div>
     <div class="container" style="position:relative;z-index:1;">
-      <p class="hero__eyebrow">Club Benares · Lisboa · Est. 2023</p>
-      <h1 class="hero__headline">Cine para quienes aún<br>proyectan en una pared.</h1>
-      <p class="hero__sub">Un club abierto a cineastas, estudiantes, aficionados y curiosos.</p>
+      <p class="hero__eyebrow" data-i18n="home.eyebrow">Lisboa · Comunidad de cine independiente · est. 2023</p>
+      <h1 class="hero__headline" data-i18n-html="home.h1">Cine para<br/>quienes aún<br/><em>proyectan</em> en una pared.</h1>
+      <p class="hero__sub" data-i18n="home.lede">Un club abierto a cineastas, estudiantes, aficionados y curiosos.</p>
       <div class="hero__ctas">
-        <a href="/eventos/" class="btn btn-primary">Próxima sesión →</a>
-        <a href="/ok/" class="btn-ghost">Enviar tu corto →</a>
+        <a href="/eventos/" class="btn btn-primary" data-i18n="home.cta1">Reservar plaza →</a>
+        <a href="/ok/" class="btn-ghost" data-i18n="home.cta2">Enviar tu corto →</a>
       </div>
     </div>
   </section>
@@ -53,7 +61,7 @@
 
       <!-- Countdown -->
       <div style="padding:3.5rem 0 0;">
-        <p class="section-label" style="margin-bottom:1rem;">Próxima sesión</p>
+        <p class="section-label" style="margin-bottom:1rem;" data-i18n="home.next">Próxima sesión</p>
         <div class="countdown-card" id="countdown-timer">
           <div class="countdown-card__session">
             <p class="countdown-card__label">Próxima sesión · .OK #2 · Indie Mix</p>
@@ -67,26 +75,26 @@
           <div class="countdown-card__timer">
             <div class="countdown-card__unit">
               <span class="countdown-card__num" data-unit="days">--</span>
-              <span class="countdown-card__unit-label">días</span>
+              <span class="countdown-card__unit-label" data-i18n="home.countdown.days">Días</span>
             </div>
             <span class="countdown-colon">:</span>
             <div class="countdown-card__unit">
               <span class="countdown-card__num" data-unit="hours">--</span>
-              <span class="countdown-card__unit-label">horas</span>
+              <span class="countdown-card__unit-label" data-i18n="home.countdown.hours">Horas</span>
             </div>
             <span class="countdown-colon">:</span>
             <div class="countdown-card__unit">
               <span class="countdown-card__num" data-unit="minutes">--</span>
-              <span class="countdown-card__unit-label">min</span>
+              <span class="countdown-card__unit-label" data-i18n="home.countdown.mins">Min</span>
             </div>
             <span class="countdown-colon">:</span>
             <div class="countdown-card__unit">
               <span class="countdown-card__num" data-unit="seconds">--</span>
-              <span class="countdown-card__unit-label">seg</span>
+              <span class="countdown-card__unit-label" data-i18n="home.countdown.secs">Seg</span>
             </div>
           </div>
           <div style="flex-shrink:0;">
-            <a href="/eventos/" class="btn btn-primary btn-sm">Reservar plaza →</a>
+            <a href="/eventos/" class="btn btn-primary btn-sm" data-i18n="home.reserve">Reservar plaza →</a>
           </div>
         </div>
       </div>
@@ -95,19 +103,19 @@
 
       <!-- Manifesto -->
       <blockquote class="manifesto">
-        <p class="manifesto__quote">"No vendemos entradas. Reservamos butacas para gente que aún cree en proyectar películas en una pared, discutirlas hasta tarde y rodar la siguiente entre amigos."</p>
-        <cite class="manifesto__attr">— Charlie Chaves, Fundador · Lisboa, 2023</cite>
+        <p class="manifesto__quote" data-i18n-html="home.manifesto">"No vendemos entradas. Reservamos butacas para gente que aún cree en proyectar películas en una pared, discutirlas hasta tarde y rodar la siguiente entre amigos."</p>
+        <cite class="manifesto__attr" data-i18n="home.manifesto.author">— Charlie Chaves, Fundador · Lisboa, 2023</cite>
       </blockquote>
 
       <!-- Stats -->
       <div class="stat-row" style="margin:4rem 0;">
         <div class="stat-item">
           <span class="stat-item__num">93</span>
-          <span class="stat-item__label">Miembros</span>
+          <span class="stat-item__label" data-i18n="home.stat.members">miembros</span>
         </div>
         <div class="stat-item">
           <span class="stat-item__num">13</span>
-          <span class="stat-item__label">Ediciones</span>
+          <span class="stat-item__label" data-i18n="home.stat.editions">ediciones</span>
         </div>
         <div class="stat-item">
           <span class="stat-item__num">2023</span>
@@ -115,7 +123,7 @@
         </div>
         <div class="stat-item">
           <span class="stat-item__num">48</span>
-          <span class="stat-item__label">Films catálogo</span>
+          <span class="stat-item__label">Films</span>
         </div>
       </div>
 
@@ -131,21 +139,21 @@
         <a href="/eventos/" class="quick-link-card" style="display:flex;flex-direction:column;justify-content:space-between;padding:2rem;background:var(--gray-900);border:1px solid var(--gray-800);min-height:180px;transition:background 0.2s;">
           <span style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);">Próximos</span>
           <div>
-            <p style="font-family:var(--serif);font-size:1.75rem;letter-spacing:-0.03em;color:var(--white);margin-bottom:0.3rem;">Eventos</p>
+            <p style="font-family:var(--serif);font-size:1.75rem;letter-spacing:-0.03em;color:var(--white);margin-bottom:0.3rem;" data-i18n="nav.eventos">Eventos</p>
             <p style="font-family:var(--mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);">4 sesiones programadas →</p>
           </div>
         </a>
         <a href="/streaming/" class="quick-link-card" style="display:flex;flex-direction:column;justify-content:space-between;padding:2rem;background:var(--gray-900);border:1px solid var(--gray-800);min-height:180px;transition:background 0.2s;">
           <span style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);">Catálogo</span>
           <div>
-            <p style="font-family:var(--serif);font-size:1.75rem;letter-spacing:-0.03em;color:var(--white);margin-bottom:0.3rem;">Streaming</p>
-            <p style="font-family:var(--mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);">48 films · 16 originales →</p>
+            <p style="font-family:var(--serif);font-size:1.75rem;letter-spacing:-0.03em;color:var(--white);margin-bottom:0.3rem;" data-i18n="nav.streaming">Streaming</p>
+            <p style="font-family:var(--mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);" data-i18n="str.stats">48 films · 16 originales →</p>
           </div>
         </a>
         <a href="/proyectos/" class="quick-link-card" style="display:flex;flex-direction:column;justify-content:space-between;padding:2rem;background:var(--gray-900);border:1px solid var(--gray-800);min-height:180px;transition:background 0.2s;">
           <span style="font-family:var(--mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);">Crowdfunding</span>
           <div>
-            <p style="font-family:var(--serif);font-size:1.75rem;letter-spacing:-0.03em;color:var(--white);margin-bottom:0.3rem;">Proyectos</p>
+            <p style="font-family:var(--serif);font-size:1.75rem;letter-spacing:-0.03em;color:var(--white);margin-bottom:0.3rem;" data-i18n="nav.proyectos">Proyectos</p>
             <p style="font-family:var(--mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);">7 activos · €32k recaudados →</p>
           </div>
         </a>
@@ -158,6 +166,7 @@
     .quick-link-card:hover { background: var(--gray-800) !important; }
   </style>
 
+  <script src="/benares-i18n.js"></script>
   <script src="/benares-nav.js"></script>
 </body>
 </html>

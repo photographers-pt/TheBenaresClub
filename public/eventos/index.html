@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme');
+      var l = localStorage.getItem('lang') || 'pt';
+      if (t === 'light') document.documentElement.classList.add('light');
+      document.documentElement.setAttribute('data-lang', l);
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Eventos — Club Benares</title>
@@ -14,17 +22,17 @@
     <!-- Section Header -->
     <header class="section-header">
       <div class="section-header__left">
-        <span class="section-label">02 · Eventos</span>
-        <h1 class="section-title">Lo que viene.</h1>
+        <span class="section-label" data-i18n="ev.label">02 · Eventos</span>
+        <h1 class="section-title" data-i18n-html="ev.title">Lo que <em>viene.</em></h1>
       </div>
       <div class="section-header__pills">
-        <a href="/ok/" class="btn-ghost btn-sm">Enviar corto →</a>
+        <a href="/ok/" class="btn-ghost btn-sm" data-i18n="nav.cta">Enviar corto →</a>
       </div>
     </header>
 
     <!-- Filter -->
     <div class="filter-bar" data-filter-group data-filter-target=".event-row">
-      <button class="filter-pill active" data-filter="all">Todos</button>
+      <button class="filter-pill active" data-filter="all" data-i18n="ev.filter.all">Todos</button>
       <button class="filter-pill" data-filter="ok">.OK</button>
       <button class="filter-pill" data-filter="nightlounge">Night Lounge</button>
       <button class="filter-pill" data-filter="mashup">MashUp</button>
@@ -50,7 +58,7 @@
         </div>
         <div class="event-row__places">
           <span class="event-row__places-num">23/80</span>
-          <span class="event-row__places-label">plazas</span>
+          <span class="event-row__places-label" data-i18n="ev.places">plazas</span>
         </div>
         <div class="event-row__arrow">→</div>
       </a>
@@ -71,7 +79,7 @@
         </div>
         <div class="event-row__places">
           <span class="event-row__places-num">47/60</span>
-          <span class="event-row__places-label">plazas</span>
+          <span class="event-row__places-label" data-i18n="ev.places">plazas</span>
         </div>
         <div class="event-row__arrow">→</div>
       </a>
@@ -92,7 +100,7 @@
         </div>
         <div class="event-row__places">
           <span class="event-row__places-num">58/70</span>
-          <span class="event-row__places-label">plazas</span>
+          <span class="event-row__places-label" data-i18n="ev.places">plazas</span>
         </div>
         <div class="event-row__arrow">→</div>
       </a>
@@ -107,12 +115,12 @@
           <div class="event-row__meta">
             <span>Porto</span>
             <span>Por confirmar</span>
-            <span>Pre-registro abierto</span>
+            <span data-i18n="ev.prereg">Pre-registro abierto</span>
           </div>
         </div>
         <div class="event-row__places">
           <span class="event-row__places-num">—</span>
-          <span class="event-row__places-label">pre-registro</span>
+          <span class="event-row__places-label" data-i18n="ev.available">disponibles</span>
         </div>
         <div class="event-row__arrow">→</div>
       </div>
@@ -124,19 +132,19 @@
 
     <!-- Featured Past Edition -->
     <div style="margin-bottom:1.5rem;">
-      <span class="section-label">Última edición destacada</span>
+      <span class="section-label" data-i18n="ev.chronicle.label">Última edición destacada</span>
     </div>
 
     <div class="featured-block">
       <p class="featured-block__eyebrow">Edición pasada · MashUp #5 · Indie Mix</p>
-      <h2 class="featured-block__title">MashUp #5 — Indie Mix</h2>
+      <h2 class="featured-block__title" data-i18n-html="ev.chronicle.title">La última <em>edición.</em></h2>
       <p class="featured-block__meta">
         07 May 2026 · Cossoul · Lisboa<br>
-        142 asistentes · 5 cortos · 5 directores
+        142 <span data-i18n="ev.attendance">Asistencia</span> · 5 <span data-i18n="ev.films">Cortos</span> · 5 <span data-i18n="ev.directors">Directores</span>
       </p>
       <div class="featured-block__actions">
-        <a href="/comunidad/" class="btn btn-primary btn-sm">Ver crónica →</a>
-        <a href="/comunidad/" class="btn-ghost btn-sm">Galería de fotos →</a>
+        <a href="/comunidad/" class="btn btn-primary btn-sm" data-i18n="ev.fullchronicle">Ver crónica completa →</a>
+        <a href="/comunidad/" class="btn-ghost btn-sm" data-i18n="ev.gallery">Galería de fotos →</a>
       </div>
     </div>
 
@@ -186,6 +194,7 @@
 
   </main>
 </div>
+<script src="/benares-i18n.js"></script>
 <script src="/benares-nav.js"></script>
 </body>
 </html>

@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme');
+      var l = localStorage.getItem('lang') || 'pt';
+      if (t === 'light') document.documentElement.classList.add('light');
+      document.documentElement.setAttribute('data-lang', l);
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Streaming — Club Benares</title>
@@ -14,8 +22,8 @@
     <!-- Section Header -->
     <header class="section-header">
       <div class="section-header__left">
-        <span class="section-label">06 · Streaming</span>
-        <h1 class="section-title">Cine de los nuestros,<br>cuando quieras.</h1>
+        <span class="section-label" data-i18n="str.label">06 · Streaming</span>
+        <h1 class="section-title" data-i18n-html="str.title">Cine de los nuestros,<br><em>cuando quieras.</em></h1>
       </div>
     </header>
 
@@ -29,8 +37,8 @@
           18 min · 16mm · Ficción · 2026
         </p>
         <div class="featured-block__actions">
-          <a href="#" class="btn btn-primary">▶ Ver ahora</a>
-          <a href="#" class="btn-ghost">Trailer →</a>
+          <a href="#" class="btn btn-primary" data-i18n="str.watch">▶ Ver ahora</a>
+          <a href="#" class="btn-ghost" data-i18n="str.trailer">Trailer →</a>
         </div>
       </div>
       <div style="display:flex;flex-direction:column;gap:0.75rem;align-items:flex-end;">
@@ -47,7 +55,7 @@
       </div>
       <div class="stat-item">
         <span class="stat-item__num">16</span>
-        <span class="stat-item__label">Originales</span>
+        <span class="stat-item__label" data-i18n="str.filter.originals">Originales</span>
       </div>
       <div class="stat-item">
         <span class="stat-item__num">19h</span>
@@ -62,7 +70,7 @@
     <div class="plans-grid" style="margin-top:2.5rem;">
 
       <div class="plan-card">
-        <p class="plan-card__name">Free</p>
+        <p class="plan-card__name" data-i18n="str.plan.free">Free</p>
         <p class="plan-card__price">€0</p>
         <p class="plan-card__period">para siempre</p>
         <ul class="plan-card__features">
@@ -71,11 +79,11 @@
           <li class="plan-card__feature plan-card__feature--dim">Sin originales</li>
           <li class="plan-card__feature plan-card__feature--dim">Sin descargas</li>
         </ul>
-        <a href="/contactos/" class="btn-ghost btn-sm" style="text-align:center;">Empezar gratis</a>
+        <a href="/contactos/" class="btn-ghost btn-sm" style="text-align:center;" data-i18n="str.plan.free.cta">Empezar gratis</a>
       </div>
 
       <div class="plan-card plan-card--featured">
-        <p class="plan-card__name">Mensual</p>
+        <p class="plan-card__name" data-i18n="str.plan.monthly">Mensual</p>
         <p class="plan-card__price">€4,99</p>
         <p class="plan-card__period">por mes</p>
         <ul class="plan-card__features">
@@ -84,11 +92,11 @@
           <li class="plan-card__feature">Originales incluidos</li>
           <li class="plan-card__feature">Acceso prioritario</li>
         </ul>
-        <a href="/contactos/" class="btn btn-primary btn-sm" style="text-align:center;">Suscribirme →</a>
+        <a href="/contactos/" class="btn btn-primary btn-sm" style="text-align:center;" data-i18n="str.plan.monthly.cta">Suscribirme →</a>
       </div>
 
       <div class="plan-card">
-        <p class="plan-card__name">Anual</p>
+        <p class="plan-card__name" data-i18n="str.plan.yearly">Anual</p>
         <p class="plan-card__price">€49</p>
         <p class="plan-card__period">por año · ahorra 18%</p>
         <ul class="plan-card__features">
@@ -97,7 +105,7 @@
           <li class="plan-card__feature">1 entrada gratis .OK</li>
           <li class="plan-card__feature">Nombre en créditos</li>
         </ul>
-        <a href="/contactos/" class="btn-ghost btn-sm" style="text-align:center;">Suscripción anual →</a>
+        <a href="/contactos/" class="btn-ghost btn-sm" style="text-align:center;" data-i18n="str.plan.yearly.cta">Suscripción anual →</a>
       </div>
 
     </div>
@@ -107,12 +115,12 @@
       <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
         <p class="section-label">Catálogo</p>
         <div class="filter-bar" data-filter-group data-filter-target=".film-card" style="margin-bottom:0;">
-          <button class="filter-pill active" data-filter="all">Todo</button>
-          <button class="filter-pill" data-filter="original">Originales</button>
-          <button class="filter-pill" data-filter="miembro">De miembros</button>
-          <button class="filter-pill" data-filter="documental">Documentales</button>
-          <button class="filter-pill" data-filter="corto">Cortos</button>
-          <button class="filter-pill" data-filter="experimental">Experimental</button>
+          <button class="filter-pill active" data-filter="all" data-i18n="str.filter.all">Todo</button>
+          <button class="filter-pill" data-filter="original" data-i18n="str.filter.originals">Originales</button>
+          <button class="filter-pill" data-filter="miembro" data-i18n="str.filter.members">De miembros</button>
+          <button class="filter-pill" data-filter="documental" data-i18n="str.filter.docs">Documentales</button>
+          <button class="filter-pill" data-filter="corto" data-i18n="str.filter.shorts">Cortos</button>
+          <button class="filter-pill" data-filter="experimental" data-i18n="str.filter.exp">Experimental</button>
         </div>
       </div>
     </div>
@@ -221,6 +229,7 @@
 
   </main>
 </div>
+<script src="/benares-i18n.js"></script>
 <script src="/benares-nav.js"></script>
 </body>
 </html>

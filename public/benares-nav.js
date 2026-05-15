@@ -6,15 +6,21 @@
 (function () {
   'use strict';
 
+  /* ── Apply saved theme immediately (belt-and-suspenders) ── */
+  (function () {
+    var t = localStorage.getItem('theme');
+    if (t === 'light') document.documentElement.classList.add('light');
+  })();
+
   /* ── Custom Cursor ─────────────────────────────────────────── */
-  const cursor = document.createElement('div');
+  var cursor = document.createElement('div');
   cursor.className = 'cursor';
   document.body.appendChild(cursor);
 
-  let mx = window.innerWidth / 2;
-  let my = window.innerHeight / 2;
-  let cx = mx;
-  let cy = my;
+  var mx = window.innerWidth / 2;
+  var my = window.innerHeight / 2;
+  var cx = mx;
+  var cy = my;
 
   document.addEventListener('mousemove', function (e) {
     mx = e.clientX;
@@ -62,29 +68,49 @@
     return path.startsWith(href);
   }
 
-  var navLinks = [
-    { href: '/eventos/',   label: 'Eventos' },
-    { href: '/ok/',        label: '.OK' },
-    { href: '/streaming/', label: 'Streaming' },
-    { href: '/proyectos/', label: 'Proyectos' },
-    { href: '/comunidad/', label: 'Comunidad' },
-    { href: '/mercado/',   label: 'Tienda' },
-    { href: '/contactos/', label: 'Contacto' },
+  /* Nav link definitions — keys match i18n keys */
+  var navDefs = [
+    { href: '/eventos/',   key: 'nav.eventos' },
+    { href: '/ok/',        key: 'nav.ok' },
+    { href: '/streaming/', key: 'nav.streaming' },
+    { href: '/proyectos/', key: 'nav.proyectos' },
+    { href: '/comunidad/', key: 'nav.comunidad' },
+    { href: '/mercado/',   key: 'nav.mercado' },
+    { href: '/contactos/', key: 'nav.contactos' },
   ];
+
+  function buildNavLinks() {
+    return navDefs.map(function (l) {
+      var cls = isActive(l.href) ? ' class="active"' : '';
+      return '<a href="' + l.href + '"' + cls + ' data-i18n="' + l.key + '">' + l.key + '</a>';
+    }).join('');
+  }
+
+  function buildDrawerLinks() {
+    return navDefs.map(function (l) {
+      var cls = isActive(l.href) ? ' class="active"' : '';
+      return '<a href="' + l.href + '"' + cls + ' data-i18n="' + l.key + '">' + l.key + '</a>';
+    }).join('') +
+    '<a href="/ok/" style="color:var(--white);margin-top:0.5rem" data-i18n="nav.cta">nav.cta</a>';
+  }
 
   var nav = document.createElement('nav');
   nav.className = 'nav';
   nav.innerHTML =
     '<a href="/" class="nav__logo">Club Benares</a>' +
     '<div class="nav__links">' +
-      navLinks.map(function (l) {
-        var cls = isActive(l.href) ? ' class="active"' : '';
-        return '<a href="' + l.href + '"' + cls + '>' + l.label + '</a>';
-      }).join('') +
+      buildNavLinks() +
     '</div>' +
     '<div class="nav__right">' +
-      '<span class="nav__lang">ES / PT</span>' +
-      '<a href="/ok/" class="btn-ghost btn-sm">Enviar corto →</a>' +
+      '<div class="lang-switcher">' +
+        '<button class="lang-btn" data-lang="pt">PT</button>' +
+        '<span class="lang-sep">·</span>' +
+        '<button class="lang-btn" data-lang="es">ES</button>' +
+        '<span class="lang-sep">·</span>' +
+        '<button class="lang-btn" data-lang="en">EN</button>' +
+      '</div>' +
+      '<button class="theme-toggle" aria-label="Toggle theme">☾</button>' +
+      '<a href="/ok/" class="btn-ghost btn-sm" data-i18n="nav.cta">nav.cta</a>' +
     '</div>' +
     '<button class="nav__burger" aria-label="Menú">' +
       '<span></span><span></span><span></span>' +
@@ -92,23 +118,55 @@
 
   var drawer = document.createElement('div');
   drawer.className = 'nav__drawer';
-  drawer.innerHTML =
-    navLinks.map(function (l) {
-      var cls = isActive(l.href) ? ' class="active"' : '';
-      return '<a href="' + l.href + '"' + cls + '>' + l.label + '</a>';
-    }).join('') +
-    '<a href="/ok/" style="color:var(--white);margin-top:0.5rem">Enviar corto →</a>';
+  drawer.innerHTML = buildDrawerLinks();
 
   document.body.insertBefore(nav, document.body.firstChild);
   document.body.insertBefore(drawer, document.body.children[1]);
 
+  /* ── Lang switcher wiring ───────────────────────────────────── */
+  function updateLangButtons(lang) {
+    nav.querySelectorAll('.lang-btn').forEach(function (btn) {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+  }
+
+  nav.querySelectorAll('.lang-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var lang = btn.dataset.lang;
+      if (window.BenaresI18n) {
+        window.BenaresI18n.setLang(lang);
+      }
+      updateLangButtons(lang);
+    });
+  });
+
+  /* Set initial active state */
+  var savedLang = localStorage.getItem('lang') || 'pt';
+  updateLangButtons(savedLang);
+
+  /* ── Theme toggle wiring ────────────────────────────────────── */
+  var themeBtn = nav.querySelector('.theme-toggle');
+
+  function updateThemeIcon() {
+    var isLight = document.documentElement.classList.contains('light');
+    themeBtn.textContent = isLight ? '☀' : '☾';
+  }
+
+  updateThemeIcon();
+
+  themeBtn.addEventListener('click', function () {
+    var isLight = document.documentElement.classList.toggle('light');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    updateThemeIcon();
+  });
+
+  /* ── Burger ──────────────────────────────────────────────────── */
   var burger = nav.querySelector('.nav__burger');
   burger.addEventListener('click', function () {
     burger.classList.toggle('open');
     drawer.classList.toggle('open');
   });
 
-  // Close drawer on link click
   drawer.querySelectorAll('a').forEach(function (a) {
     a.addEventListener('click', function () {
       burger.classList.remove('open');
@@ -124,11 +182,11 @@
       '<div class="footer__grid">' +
         '<div>' +
           '<div class="footer__brand">Club Benares</div>' +
-          '<p class="footer__desc">Un club abierto a cineastas, estudiantes, aficionados y curiosos. Lisboa, desde 2023.</p>' +
+          '<p class="footer__desc" data-i18n="footer.desc">footer.desc</p>' +
           '<p class="footer__desc" style="margin-top:0.5rem;color:var(--gray-600);">@thebenaresclub</p>' +
         '</div>' +
         '<div>' +
-          '<div class="footer__col-title">Eventos</div>' +
+          '<div class="footer__col-title" data-i18n="footer.events">footer.events</div>' +
           '<div class="footer__links">' +
             '<a href="/eventos/">.OK Festival</a>' +
             '<a href="/eventos/">Night Lounge</a>' +
@@ -137,7 +195,7 @@
           '</div>' +
         '</div>' +
         '<div>' +
-          '<div class="footer__col-title">Comunidad</div>' +
+          '<div class="footer__col-title" data-i18n="footer.community">footer.community</div>' +
           '<div class="footer__links">' +
             '<a href="/comunidad/">Miembros</a>' +
             '<a href="/comunidad/">Galería</a>' +
@@ -146,7 +204,7 @@
           '</div>' +
         '</div>' +
         '<div>' +
-          '<div class="footer__col-title">Tienda</div>' +
+          '<div class="footer__col-title" data-i18n="footer.shop">footer.shop</div>' +
           '<div class="footer__links">' +
             '<a href="/mercado/">Accesorios</a>' +
             '<a href="/mercado/">LUTs</a>' +
@@ -155,7 +213,7 @@
           '</div>' +
         '</div>' +
         '<div>' +
-          '<div class="footer__col-title">Contacto</div>' +
+          '<div class="footer__col-title" data-i18n="footer.contact">footer.contact</div>' +
           '<div class="footer__links">' +
             '<a href="/contactos/">hola@thebenaresclub.com</a>' +
             '<a href="/contactos/">Colaborar</a>' +
@@ -165,12 +223,17 @@
         '</div>' +
       '</div>' +
       '<div class="footer__bottom">' +
-        '<div class="footer__legal">© 2026 Club Benares · Lisboa · Todos los derechos reservados</div>' +
+        '<div class="footer__legal" data-i18n="footer.legal">footer.legal</div>' +
         '<div class="footer__wordmark">Club Benares</div>' +
       '</div>' +
     '</div>';
 
   document.body.appendChild(footer);
+
+  /* ── Apply i18n after nav + footer injection ─────────────────── */
+  if (window.BenaresI18n) {
+    window.BenaresI18n.apply();
+  }
 
   /* ── Filter Pills ──────────────────────────────────────────── */
   document.querySelectorAll('[data-filter-group]').forEach(function (group) {

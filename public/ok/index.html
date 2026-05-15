@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme');
+      var l = localStorage.getItem('lang') || 'pt';
+      if (t === 'light') document.documentElement.classList.add('light');
+      document.documentElement.setAttribute('data-lang', l);
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>.OK Festival — Club Benares</title>
@@ -65,9 +73,21 @@
       background: #ff6060 !important;
     }
 
-    /* Lang */
-    .nav__lang {
-      color: rgba(255,180,180,0.4) !important;
+    /* Lang / theme */
+    .lang-btn {
+      color: rgba(255,180,180,0.5) !important;
+    }
+    .lang-btn.active {
+      color: #fff !important;
+    }
+    .lang-sep {
+      color: rgba(255,180,180,0.25) !important;
+    }
+    .theme-toggle {
+      color: rgba(255,180,180,0.5) !important;
+    }
+    .theme-toggle:hover {
+      color: #fff !important;
     }
 
     /* CTA button — branco sobre corinto */
@@ -729,11 +749,11 @@
     <div class="ok-hero__inner">
       <div class="ok-badge">
         <span class="ok-badge__dot"></span>
-        Convocatoria abierta · Edición #2 · 2026
+        <span data-i18n="ok.badge">Convocatoria abierta · Edición #2 · 2026</span>
       </div>
       <h1 class="ok-hero__title">.OK</h1>
       <div class="ok-hero__sub">
-        <span class="ok-hero__championship">Lisbon International&nbsp; Short&#8209;Film&nbsp; Championship</span>
+        <span class="ok-hero__championship" data-i18n="ok.championship">Lisbon International&nbsp; Short&#8209;Film&nbsp; Championship</span>
         <span class="ok-hero__meta">04 Jun 2026 · Fábrica Braço de Prata · Lisboa</span>
       </div>
     </div>
@@ -744,12 +764,12 @@
     <div class="ok-fight__inner">
       <div class="ok-fight__stat">
         <span class="ok-fight__n">5</span>
-        <span class="ok-fight__label">Directores seleccionados</span>
+        <span class="ok-fight__label" data-i18n="ok.directors">Directores seleccionados</span>
       </div>
       <div class="ok-fight__vs">VS</div>
       <div class="ok-fight__stat ok-fight__stat--right">
         <span class="ok-fight__n">1</span>
-        <span class="ok-fight__label">Ganador · voto en directo</span>
+        <span class="ok-fight__label" data-i18n="ok.winner">Ganador · voto en directo</span>
       </div>
     </div>
   </div>
@@ -757,27 +777,27 @@
   <!-- DESCRIPTION + SPECS -->
   <div class="ok-content">
     <div class="ok-desc">
-      <span class="ok-desc__tag">El formato</span>
-      <h2 class="ok-desc__headline">Cinco películas.<br/><em>Una sola noche.</em><br/>El público decide.</h2>
-      <p class="ok-desc__body">
+      <span class="ok-desc__tag" data-i18n="ok.format.tag">El formato</span>
+      <h2 class="ok-desc__headline" data-i18n-html="ok.headline">Cinco películas.<br/><em>Una sola noche.</em><br/>El público decide.</h2>
+      <p class="ok-desc__body" data-i18n="ok.body">
         El nuevo formato festival de competición de cortometrajes del club.
         Cinco directores seleccionados, cinco proyecciones, una sola noche.
         El público vota en directo. El ganador entra en el circuito nacional
         y se proyecta también en Porto y Coimbra.
       </p>
       <div class="ok-cta-row">
-        <a href="#deadline" class="btn-ok">Enviar mi corto →</a>
-        <a href="#bases" class="btn-ok-ghost">Bases del concurso</a>
+        <a href="#deadline" class="btn-ok" data-i18n="ok.cta1">Enviar mi corto →</a>
+        <a href="#bases" class="btn-ok-ghost" data-i18n="ok.cta2">Bases del concurso</a>
       </div>
     </div>
     <div class="ok-specs">
       <p class="ok-specs__title">Especificaciones de la convocatoria</p>
-      <div class="ok-spec"><span class="ok-spec__k">Categorías</span><span class="ok-spec__v">Ficción · Documental · Experimental</span></div>
-      <div class="ok-spec"><span class="ok-spec__k">Duración</span><span class="ok-spec__v">≤ 20 minutos</span></div>
-      <div class="ok-spec"><span class="ok-spec__k">Formato</span><span class="ok-spec__v">MP4 / MOV · 1080p mínimo</span></div>
-      <div class="ok-spec"><span class="ok-spec__k">Idiomas</span><span class="ok-spec__v">Cualquiera · subtítulos EN</span></div>
-      <div class="ok-spec"><span class="ok-spec__k">Premio</span><span class="ok-spec__v">Tour nacional · €1.500</span></div>
-      <div class="ok-spec"><span class="ok-spec__k">Voto</span><span class="ok-spec__v">Público en sala · noche del evento</span></div>
+      <div class="ok-spec"><span class="ok-spec__k" data-i18n="ok.spec.cats">Categorías</span><span class="ok-spec__v">Ficción · Documental · Experimental</span></div>
+      <div class="ok-spec"><span class="ok-spec__k" data-i18n="ok.spec.dur">Duración</span><span class="ok-spec__v">≤ 20 minutos</span></div>
+      <div class="ok-spec"><span class="ok-spec__k" data-i18n="ok.spec.format">Formato</span><span class="ok-spec__v">MP4 / MOV · 1080p mínimo</span></div>
+      <div class="ok-spec"><span class="ok-spec__k" data-i18n="ok.spec.lang">Idiomas</span><span class="ok-spec__v">Cualquiera · subtítulos EN</span></div>
+      <div class="ok-spec"><span class="ok-spec__k" data-i18n="ok.spec.prize">Premio</span><span class="ok-spec__v">Tour nacional · €1.500</span></div>
+      <div class="ok-spec"><span class="ok-spec__k" data-i18n="ok.spec.vote">Voto</span><span class="ok-spec__v">Público en sala · noche del evento</span></div>
     </div>
   </div>
 
@@ -785,25 +805,25 @@
   <section class="ok-deadline" id="deadline">
     <div class="ok-deadline__inner">
       <div>
-        <p class="ok-deadline__eyebrow">Fecha límite de envío · .OK #2</p>
+        <p class="ok-deadline__eyebrow" data-i18n="ok.deadline.eyebrow">Fecha límite de envío · .OK #2</p>
         <p class="ok-deadline__date">22 Mayo<br/>2026</p>
-        <p class="ok-deadline__time">23:59 · hora de Lisboa (WET)</p>
+        <p class="ok-deadline__time" data-i18n="ok.deadline.time">23:59 · hora de Lisboa (WET)</p>
         <div class="ok-deadline__rules" id="bases">
-          <div class="ok-drule"><p class="ok-drule__k">Duración</p><p class="ok-drule__v">≤ 20 min</p></div>
-          <div class="ok-drule"><p class="ok-drule__k">Formato</p><p class="ok-drule__v">MP4 / MOV · 1080p+</p></div>
-          <div class="ok-drule"><p class="ok-drule__k">Idiomas</p><p class="ok-drule__v">Cualquiera · subs EN</p></div>
+          <div class="ok-drule"><p class="ok-drule__k" data-i18n="ok.spec.dur">Duración</p><p class="ok-drule__v">≤ 20 min</p></div>
+          <div class="ok-drule"><p class="ok-drule__k" data-i18n="ok.spec.format">Formato</p><p class="ok-drule__v">MP4 / MOV · 1080p+</p></div>
+          <div class="ok-drule"><p class="ok-drule__k" data-i18n="ok.spec.lang">Idiomas</p><p class="ok-drule__v">Cualquiera · subs EN</p></div>
           <div class="ok-drule"><p class="ok-drule__k">Selección</p><p class="ok-drule__v">5 directores</p></div>
-          <div class="ok-drule"><p class="ok-drule__k">Voto</p><p class="ok-drule__v">Público · en directo</p></div>
+          <div class="ok-drule"><p class="ok-drule__k" data-i18n="ok.spec.vote">Voto</p><p class="ok-drule__v">Público · en directo</p></div>
           <div class="ok-drule"><p class="ok-drule__k">Circuito</p><p class="ok-drule__v">Lisboa · Porto · Coimbra</p></div>
         </div>
       </div>
       <div class="ok-deadline__cta">
         <div>
           <p class="ok-deadline__prize-n">€1.500</p>
-          <p class="ok-deadline__prize-l">Premio al ganador</p>
+          <p class="ok-deadline__prize-l" data-i18n="ok.prize.label">Premio al ganador</p>
         </div>
-        <a href="/contactos/" class="btn-ok" style="font-size:1.1rem;padding:1.1rem 2.2rem;">Subir mi corto →</a>
-        <a href="#bases" class="btn-ok-ghost">Ver bases completas</a>
+        <a href="/contactos/" class="btn-ok" style="font-size:1.1rem;padding:1.1rem 2.2rem;" data-i18n="ok.upload">Subir mi corto →</a>
+        <a href="#bases" class="btn-ok-ghost" data-i18n="ok.rules">Ver bases completas</a>
       </div>
     </div>
   </section>
@@ -811,27 +831,27 @@
   <!-- HOW IT WORKS -->
   <section class="ok-how">
     <div class="ok-how__inner">
-      <p class="ok-how__tag">La noche · cómo funciona</p>
+      <p class="ok-how__tag" data-i18n="ok.how.tag">La noche · cómo funciona</p>
       <div class="ok-steps">
         <div class="ok-step">
           <div class="ok-step__num">01</div>
-          <div class="ok-step__title">Envías tu corto</div>
-          <p class="ok-step__desc">Antes del deadline. El equipo del club revisa todos los envíos y selecciona cinco finalistas.</p>
+          <div class="ok-step__title" data-i18n="ok.step1.title">Envías tu corto</div>
+          <p class="ok-step__desc" data-i18n="ok.step1.desc">Antes del deadline. El equipo del club revisa todos los envíos y selecciona cinco finalistas.</p>
         </div>
         <div class="ok-step">
           <div class="ok-step__num">02</div>
-          <div class="ok-step__title">Se proyectan los 5</div>
-          <p class="ok-step__desc">Una noche. Cinco cortos. Orden aleatorio. El público los ve todos en la misma sala.</p>
+          <div class="ok-step__title" data-i18n="ok.step2.title">Se proyectan los 5</div>
+          <p class="ok-step__desc" data-i18n="ok.step2.desc">Una noche. Cinco cortos. Orden aleatorio. El público los ve todos en la misma sala.</p>
         </div>
         <div class="ok-step">
           <div class="ok-step__num">03</div>
-          <div class="ok-step__title">El público vota</div>
-          <p class="ok-step__desc">Tras las proyecciones, votación en tiempo real. Sin jurado. Solo el criterio del público.</p>
+          <div class="ok-step__title" data-i18n="ok.step3.title">El público vota</div>
+          <p class="ok-step__desc" data-i18n="ok.step3.desc">Tras las proyecciones, votación en tiempo real. Sin jurado. Solo el criterio del público.</p>
         </div>
         <div class="ok-step">
           <div class="ok-step__num">04</div>
-          <div class="ok-step__title">El ganador al circuito</div>
-          <p class="ok-step__desc">Tour nacional: Lisboa, Porto y Coimbra. Más €1.500 en premio directo al director.</p>
+          <div class="ok-step__title" data-i18n="ok.step4.title">El ganador al circuito</div>
+          <p class="ok-step__desc" data-i18n="ok.step4.desc">Tour nacional: Lisboa, Porto y Coimbra. Más €1.500 en premio directo al director.</p>
         </div>
       </div>
     </div>
@@ -840,8 +860,8 @@
   <!-- CHAMPIONS -->
   <section class="ok-champions">
     <div class="ok-champions__header">
-      <span class="ok-champions__title">Hall of Champions</span>
-      <span class="ok-champions__count">1 edición completada</span>
+      <span class="ok-champions__title" data-i18n="ok.champions.title">Hall of Champions</span>
+      <span class="ok-champions__count" data-i18n="ok.champions.count">1 edición completada</span>
     </div>
     <div class="ok-champion-row">
       <span class="ok-champion-row__edition">.OK #1 · Mar 2025</span>
@@ -852,6 +872,7 @@
   </section>
 
 </div>
+<script src="/benares-i18n.js"></script>
 <script src="/benares-nav.js"></script>
 </body>
 </html>

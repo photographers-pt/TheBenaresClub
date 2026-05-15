@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme');
+      var l = localStorage.getItem('lang') || 'pt';
+      if (t === 'light') document.documentElement.classList.add('light');
+      document.documentElement.setAttribute('data-lang', l);
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Comunidad — Club Benares</title>
@@ -14,14 +22,14 @@
     <!-- Section Header -->
     <header class="section-header">
       <div class="section-header__left">
-        <span class="section-label">04 · Comunidad</span>
-        <h1 class="section-title">El club. En presente y pasado.</h1>
+        <span class="section-label" data-i18n="com.label">04 · Comunidad</span>
+        <h1 class="section-title" data-i18n-html="com.title">El club. <em>En presente y pasado.</em></h1>
       </div>
       <div class="section-header__pills">
         <div class="filter-bar" data-filter-group data-filter-target=".community-section" style="margin-bottom:0;">
-          <button class="filter-pill active" data-filter="all">Todo</button>
-          <button class="filter-pill" data-filter="miembros">Miembros</button>
-          <button class="filter-pill" data-filter="galeria">Galería</button>
+          <button class="filter-pill active" data-filter="all" data-i18n="com.filter.all">Todo</button>
+          <button class="filter-pill" data-filter="miembros" data-i18n="com.filter.members">Miembros</button>
+          <button class="filter-pill" data-filter="galeria" data-i18n="com.filter.gallery">Galería</button>
         </div>
       </div>
     </header>
@@ -30,8 +38,8 @@
     <section class="community-section" data-cat="all miembros">
 
       <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1.75rem;flex-wrap:wrap;gap:0.5rem;">
-        <h2 style="font-family:var(--serif);font-size:1.6rem;letter-spacing:-0.02em;color:var(--white);">Miembros</h2>
-        <span style="font-family:var(--mono);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);">93 personas · 11 destacados</span>
+        <h2 style="font-family:var(--serif);font-size:1.6rem;letter-spacing:-0.02em;color:var(--white);" data-i18n-html="com.members.title">Miembros <em>activos.</em></h2>
+        <span style="font-family:var(--mono);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);" data-i18n="com.members.count">93 personas · 11 destacados</span>
       </div>
 
       <div class="members-grid">
@@ -104,7 +112,7 @@
 
         <div class="member-card member-card--overflow">
           <div class="member-card__avatar">+82</div>
-          <p class="member-card__name">+82 Miembros</p>
+          <p class="member-card__name">+82 <span data-i18n="com.filter.members">Miembros</span></p>
           <p class="member-card__role">Activos</p>
         </div>
 
@@ -118,15 +126,15 @@
     <section class="community-section" data-cat="all galeria">
 
       <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1.75rem;flex-wrap:wrap;gap:1rem;">
-        <h2 style="font-family:var(--serif);font-size:1.6rem;letter-spacing:-0.02em;color:var(--white);">Galería</h2>
+        <h2 style="font-family:var(--serif);font-size:1.6rem;letter-spacing:-0.02em;color:var(--white);" data-i18n-html="com.gallery.title">Galería <em>· ediciones pasadas.</em></h2>
         <div style="display:flex;gap:0.5rem;">
-          <button class="filter-pill active" onclick="filterGallery(this,'all')">Todo</button>
+          <button class="filter-pill active" onclick="filterGallery(this,'all')" data-i18n="com.filter.all">Todo</button>
           <button class="filter-pill" onclick="filterGallery(this,'2026')">2026</button>
           <button class="filter-pill" onclick="filterGallery(this,'2025')">2025</button>
           <button class="filter-pill" onclick="filterGallery(this,'2024')">2024</button>
         </div>
       </div>
-      <p style="font-family:var(--mono);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:2rem;">10 ediciones</p>
+      <p style="font-family:var(--mono);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:2rem;" data-i18n="com.gallery.count">10 ediciones</p>
 
       <div class="gallery-grid">
 
@@ -224,6 +232,7 @@ function filterGallery(btn, year) {
   btn.classList.add('active');
 }
 </script>
+<script src="/benares-i18n.js"></script>
 <script src="/benares-nav.js"></script>
 </body>
 </html>
