@@ -219,18 +219,454 @@
   </main>
 </div>
 
+<style>
+/* ── Modal overlay ───────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.82);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-box {
+  background: var(--gray-900, #0f0f0f);
+  border: 1px solid var(--gray-700, #333);
+  max-width: 560px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 2.5rem;
+  position: relative;
+  transform: translateY(12px);
+  transition: transform 0.25s ease;
+}
+.modal-overlay.open .modal-box {
+  transform: translateY(0);
+}
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  color: var(--gray-500, #555);
+  font-size: 1.4rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+.modal-close:hover { color: var(--white, #fff); }
+.modal-avatar {
+  width: 64px;
+  height: 64px;
+  background: var(--gray-800, #1a1a1a);
+  border: 1px solid var(--gray-700, #333);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono, monospace);
+  font-size: 1.1rem;
+  color: var(--gray-400, #666);
+  letter-spacing: 0.05em;
+  margin-bottom: 1.25rem;
+}
+.modal-name {
+  font-family: var(--serif, serif);
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+  color: var(--white, #fff);
+  margin-bottom: 0.25rem;
+}
+.modal-role {
+  font-family: var(--mono, monospace);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray-500, #555);
+  margin-bottom: 1.5rem;
+}
+.modal-bio {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--gray-400, #666);
+  margin-bottom: 1.5rem;
+}
+.modal-section-title {
+  font-family: var(--mono, monospace);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray-600, #444);
+  margin-bottom: 0.6rem;
+}
+.modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+.modal-tag {
+  font-family: var(--mono, monospace);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gray-400, #666);
+  border: 1px solid var(--gray-700, #333);
+  padding: 0.2rem 0.6rem;
+}
+.modal-link {
+  display: inline-block;
+  font-family: var(--mono, monospace);
+  font-size: 0.7rem;
+  color: var(--gray-300, #aaa);
+  text-decoration: none;
+  border-bottom: 1px solid var(--gray-700, #333);
+  padding-bottom: 1px;
+  margin-right: 1rem;
+}
+.modal-link:hover { color: var(--white, #fff); border-color: var(--gray-400, #666); }
+/* Gallery modal specifics */
+.modal-event-date {
+  font-family: var(--mono, monospace);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray-500, #555);
+  margin-bottom: 1.25rem;
+}
+.modal-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.modal-photo-placeholder {
+  aspect-ratio: 4/3;
+  background: var(--gray-800, #1a1a1a);
+  border: 1px solid var(--gray-700, #333);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono, monospace);
+  font-size: 0.55rem;
+  color: var(--gray-600, #444);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.modal-stat-row {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.modal-stat { display: flex; flex-direction: column; gap: 0.2rem; }
+.modal-stat__num {
+  font-family: var(--serif, serif);
+  font-size: 1.4rem;
+  letter-spacing: -0.03em;
+  color: var(--white, #fff);
+}
+.modal-stat__label {
+  font-family: var(--mono, monospace);
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gray-500, #555);
+}
+</style>
+
+<!-- Member Modal -->
+<div class="modal-overlay" id="member-modal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Cerrar" onclick="closeModal('member-modal')">×</button>
+    <div class="modal-avatar" id="mm-avatar"></div>
+    <p class="modal-name" id="mm-name"></p>
+    <p class="modal-role" id="mm-role"></p>
+    <p class="modal-bio" id="mm-bio"></p>
+    <p class="modal-section-title">Proyectos</p>
+    <div class="modal-tags" id="mm-projects"></div>
+    <p class="modal-section-title">Habilidades</p>
+    <div class="modal-tags" id="mm-skills"></div>
+    <div style="margin-top:1.5rem;">
+      <a href="https://instagram.com/thebenaresclub" target="_blank" rel="noopener" class="modal-link">Instagram →</a>
+      <a href="mailto:charlie@thebenaresclub.com" class="modal-link" id="mm-email">Email →</a>
+    </div>
+  </div>
+</div>
+
+<!-- Gallery Event Modal -->
+<div class="modal-overlay" id="gallery-modal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Cerrar" onclick="closeModal('gallery-modal')">×</button>
+    <p class="modal-section-title" id="gm-label"></p>
+    <p class="modal-name" id="gm-title"></p>
+    <p class="modal-event-date" id="gm-date"></p>
+    <div class="modal-photo-grid">
+      <div class="modal-photo-placeholder">Foto 01</div>
+      <div class="modal-photo-placeholder">Foto 02</div>
+      <div class="modal-photo-placeholder">Foto 03</div>
+    </div>
+    <div class="modal-stat-row">
+      <div class="modal-stat">
+        <span class="modal-stat__num" id="gm-attendance">—</span>
+        <span class="modal-stat__label">Asistentes</span>
+      </div>
+      <div class="modal-stat">
+        <span class="modal-stat__num" id="gm-films">—</span>
+        <span class="modal-stat__label">Curtas</span>
+      </div>
+      <div class="modal-stat">
+        <span class="modal-stat__num" id="gm-venue">—</span>
+        <span class="modal-stat__label">Espacio</span>
+      </div>
+    </div>
+    <p class="modal-section-title">Ganador</p>
+    <p style="font-family:var(--serif,serif);font-size:1.1rem;color:var(--white,#fff);margin-bottom:1.5rem;" id="gm-winner"></p>
+    <p class="modal-section-title">Curtas proyectadas</p>
+    <div class="modal-tags" id="gm-films-list"></div>
+  </div>
+</div>
+
 <script>
+/* ── Gallery year filter ─────────────────────────────────── */
 function filterGallery(btn, year) {
   document.querySelectorAll('.gallery-card').forEach(function(card) {
-    if (year === 'all' || card.dataset.year === year) {
-      card.style.display = '';
-    } else {
-      card.style.display = 'none';
-    }
+    card.style.display = (year === 'all' || card.dataset.year === year) ? '' : 'none';
   });
   btn.closest('div').querySelectorAll('.filter-pill').forEach(function(p) { p.classList.remove('active'); });
   btn.classList.add('active');
 }
+
+/* ── Modal helpers ───────────────────────────────────────── */
+function openModal(id) {
+  var el = document.getElementById(id);
+  el.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('modal-overlay')) {
+    e.target.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(function(m) {
+      m.classList.remove('open');
+    });
+    document.body.style.overflow = '';
+  }
+});
+
+/* ── Member data ─────────────────────────────────────────── */
+var memberData = {
+  'CC': {
+    name: 'Charlie Chaves', role: 'Fundador · Director',
+    bio: 'Fundador do Club Benares em 2023. Realiza curtas de ficção com foco em personagens urbanos e atmosferas noturnas. Organizador de todas as edições do .OK Festival.',
+    projects: ['.OK Festival', 'Os Dias Lentos', 'Night Lounge'],
+    skills: ['Realização', 'Produção', 'Curadoria'],
+    email: 'charlie@thebenaresclub.com'
+  },
+  'PC': {
+    name: 'Pedro Caldeira', role: 'Director',
+    bio: 'Realizador português com formação em ETIC. Vencedor da 1.ª edição do .OK Festival com "Dá-me Ar". Trabalha com histórias de memória e identidade.',
+    projects: ['Dá-me Ar', 'Marés'],
+    skills: ['Realização', 'Fotografia', 'Edição'],
+    email: 'charlie@thebenaresclub.com'
+  },
+  'HM': {
+    name: 'Henrique Montes', role: 'Guionista',
+    bio: 'Escreve histórias que vivem no espaço entre o real e o estranho. Tem dois projetos em desenvolvimento no clube.',
+    projects: ['Sin título #07', 'Antología MashUp'],
+    skills: ['Guião', 'Story development', 'Diálogo'],
+    email: 'charlie@thebenaresclub.com'
+  },
+  'JP': {
+    name: 'João T. Pires', role: 'Actor · Host',
+    bio: 'Ator de teatro e cinema independente. Co-apresentador das sessões Night Lounge. Colabora em projetos de vários membros do clube.',
+    projects: ['Night Lounge', 'Silentes 2'],
+    skills: ['Interpretação', 'Apresentação', 'Casting'],
+    email: 'charlie@thebenaresclub.com'
+  },
+  'VN': {
+    name: 'Valdir Neves', role: 'Fotografia · Documentação',
+    bio: 'Fotógrafo e documentarista dos eventos do Club Benares. As suas imagens são o registo visual de todas as edições desde 2023.',
+    projects: ['Lisboa en 16mm', '.OK #1 Arquivo'],
+    skills: ['Fotografia', 'Vídeo', 'Arquivo'],
+    email: 'charlie@thebenaresclub.com'
+  },
+  'KM': {
+    name: 'Karen Mattos', role: 'Fotografía · Dirección',
+    bio: 'Fotógrafa e realizadora com olhar documental. "Silentes 2" é o seu mais recente projeto no clube, uma exploração do silêncio urbano.',
+    projects: ['Silentes 2'],
+    skills: ['Fotografia', 'Direção', 'Sound design'],
+    email: 'charlie@thebenaresclub.com'
+  },
+  'SM': {
+    name: 'Santiago Machuca', role: 'Fotografía',
+    bio: 'Fotógrafo argentino radicado em Lisboa. Especialista em película analógica e preto e branco. Colabora como DP em várias produções do clube.',
+    projects: ['Antología MashUp', '04 de la mañana'],
+    skills: ['Película', 'DP', 'Analógico'],
+    email: 'charlie@thebenaresclub.com'
+  },
+  'MA': {
+    name: 'Miguel Aido', role: 'Música',
+    bio: 'Compositor e músico. Cria as bandas sonoras originais para curtas do clube e atua ao vivo nas sessões MashUp.',
+    projects: ['MashUp #2', 'Os Dias Lentos'],
+    skills: ['Composição', 'Som ao vivo', 'Banda sonora'],
+    email: 'charlie@thebenaresclub.com'
+  },
+  'LS': {
+    name: 'Leon Sukhodolskii', role: 'Música',
+    bio: 'Músico experimental e produtor de som. Colabora no design sonoro de projetos experimentais do clube.',
+    projects: ['04 de la mañana'],
+    skills: ['Produção', 'Sound design', 'Experimental'],
+    email: 'charlie@thebenaresclub.com'
+  },
+  'MF': {
+    name: 'Mel Fox', role: 'Fotografía · Realización',
+    bio: 'Realizadora de cinema experimental. O seu projeto "04 de la mañana" explora a solidão nas cidades às altas horas da madrugada.',
+    projects: ['04 de la mañana'],
+    skills: ['Experimental', 'Realização', 'Edição'],
+    email: 'charlie@thebenaresclub.com'
+  },
+  'PG': {
+    name: 'Paulo Graça', role: 'Produtor',
+    bio: 'Produtor executivo com experiência em cinema independente e publicidade. Apoia os projetos do clube com produção e logística.',
+    projects: ['Marés', 'Antología MashUp'],
+    skills: ['Produção executiva', 'Logística', 'Orçamento'],
+    email: 'charlie@thebenaresclub.com'
+  }
+};
+
+/* ── Gallery event data ──────────────────────────────────── */
+var galleryData = [
+  {
+    label: '.OK #1 · Mar 2025',
+    title: '.OK #1 "Dá-me Ar"',
+    date: '27 Março 2025 · Fábrica Braço de Prata · Lisboa',
+    attendance: '84', films: '5', venue: 'FBP',
+    winner: '"Dá-me Ar" — Pedro Caldeira',
+    filmsList: ['Dá-me Ar', 'Noite Branca', 'O Corredor', 'Sem Nome', 'Deriva']
+  },
+  {
+    label: 'Night Lounge #2 · Ene 2025',
+    title: 'Night Lounge #2',
+    date: '30 Janeiro 2025 · ETIC Atmosferas · Lisboa',
+    attendance: '42', films: '8', venue: 'ETIC',
+    winner: 'Sessão informal — sem votação',
+    filmsList: ['Piloto A', 'Piloto B', 'Trailer Pack', 'Roughs MashUp', 'Experimental', 'Doc Lisbon', 'Short #3', 'Work in Progress']
+  },
+  {
+    label: 'CMCS · Abr 2025',
+    title: 'CMCS Media Screening',
+    date: '18 Abril 2025 · Fábrica Braço de Prata · Lisboa',
+    attendance: '61', films: '6', venue: 'FBP',
+    winner: 'Sessão especial — sem votação',
+    filmsList: ['Trabalho A', 'Trabalho B', 'Trabalho C', 'Trabalho D', 'Trabalho E', 'Trabalho F']
+  },
+  {
+    label: 'MashUp #1 · Out 2025',
+    title: 'MashUp #1 · Horror',
+    date: '16 Outubro 2025 · Cossoul · Lisboa',
+    attendance: '73', films: '7', venue: 'Cossoul',
+    winner: '"Silentes" — Karen Mattos',
+    filmsList: ['Silentes', 'Noite Fria', 'O Espelho', 'Carne', 'Vazio', '3AM', 'Pulse']
+  },
+  {
+    label: 'Night Lounge #4 · Nov 2025',
+    title: 'Night Lounge #4',
+    date: '15 Novembro 2025 · Kreatori Café · Lisboa',
+    attendance: '38', films: '9', venue: 'Kreatori',
+    winner: 'Sessão networking — sem votação',
+    filmsList: ['Clip A', 'Clip B', 'Trailer Pack', 'Demo', 'Short #1', 'Short #2', 'Short #3', 'Short #4', 'Short #5']
+  },
+  {
+    label: 'MashUp #2 · Nov 2025',
+    title: 'MashUp #2 · Romántico',
+    date: '27 Novembro 2025 · Cossoul · Lisboa',
+    attendance: '91', films: '6', venue: 'Cossoul',
+    winner: '"Marés" — Pedro Caldeira',
+    filmsList: ['Marés', 'Dois', 'A Última Tarde', 'Enquanto', 'Bloom', 'Deriva']
+  }
+];
+
+/* ── Wire member cards ───────────────────────────────────── */
+document.querySelectorAll('.member-card:not(.member-card--overflow)').forEach(function(card) {
+  card.style.cursor = 'pointer';
+  card.addEventListener('click', function() {
+    var initials = card.querySelector('.member-card__avatar').textContent.trim();
+    var data = memberData[initials];
+    if (!data) return;
+    document.getElementById('mm-avatar').textContent = initials;
+    document.getElementById('mm-name').textContent = data.name;
+    document.getElementById('mm-role').textContent = data.role;
+    document.getElementById('mm-bio').textContent = data.bio;
+    document.getElementById('mm-email').href = 'mailto:' + data.email;
+
+    var proj = document.getElementById('mm-projects');
+    proj.innerHTML = '';
+    data.projects.forEach(function(p) {
+      var tag = document.createElement('span');
+      tag.className = 'modal-tag';
+      tag.textContent = p;
+      proj.appendChild(tag);
+    });
+
+    var skills = document.getElementById('mm-skills');
+    skills.innerHTML = '';
+    data.skills.forEach(function(s) {
+      var tag = document.createElement('span');
+      tag.className = 'modal-tag';
+      tag.textContent = s;
+      skills.appendChild(tag);
+    });
+
+    openModal('member-modal');
+  });
+});
+
+/* ── Wire gallery cards ──────────────────────────────────── */
+document.querySelectorAll('.gallery-card').forEach(function(card, i) {
+  card.style.cursor = 'pointer';
+  card.addEventListener('click', function() {
+    var data = galleryData[i];
+    if (!data) return;
+    document.getElementById('gm-label').textContent = data.label;
+    document.getElementById('gm-title').textContent = data.title;
+    document.getElementById('gm-date').textContent = data.date;
+    document.getElementById('gm-attendance').textContent = data.attendance;
+    document.getElementById('gm-films').textContent = data.films;
+    document.getElementById('gm-venue').textContent = data.venue;
+    document.getElementById('gm-winner').textContent = data.winner;
+
+    var filmsList = document.getElementById('gm-films-list');
+    filmsList.innerHTML = '';
+    data.filmsList.forEach(function(f) {
+      var tag = document.createElement('span');
+      tag.className = 'modal-tag';
+      tag.textContent = f;
+      filmsList.appendChild(tag);
+    });
+
+    openModal('gallery-modal');
+  });
+});
 </script>
 <script src="/benares-i18n.js"></script>
 <script src="/benares-nav.js"></script>

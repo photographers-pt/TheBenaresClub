@@ -215,7 +215,7 @@
         '<div>' +
           '<div class="footer__col-title" data-i18n="footer.contact">footer.contact</div>' +
           '<div class="footer__links">' +
-            '<a href="/contactos/">hola@thebenaresclub.com</a>' +
+            '<a href="/contactos/">charlie@thebenaresclub.com</a>' +
             '<a href="/contactos/">Colaborar</a>' +
             '<a href="/contactos/">Prensa</a>' +
             '<a href="/contactos/">Partners</a>' +
