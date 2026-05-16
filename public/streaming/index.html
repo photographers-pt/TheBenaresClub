@@ -14,6 +14,359 @@
   <title>Streaming — Club Benares</title>
   <meta name="description" content="Cine de los nuestros, cuando quieras. 48 films, 16 originales, 19 h de contenido." />
   <link rel="stylesheet" href="/benares.css" />
+  <style>
+    /* ── Modal base ──────────────────────────────────────── */
+    .str-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.22s ease;
+    }
+    .str-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .str-box {
+      background: #0a0a0a;
+      border: 1px solid #2a2a2a;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(14px);
+      transition: transform 0.22s ease;
+    }
+    .str-overlay.open .str-box { transform: translateY(0); }
+
+    .str-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.25rem;
+      background: none;
+      border: none;
+      color: #555;
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0;
+      z-index: 2;
+    }
+    .str-close:hover { color: #fff; }
+
+    /* ── Payment modal ───────────────────────────────────── */
+    #pay-modal .str-box { max-width: 460px; }
+
+    .pay-header {
+      padding: 2rem 2.5rem 1.5rem;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .pay-badge {
+      font-family: var(--mono, monospace);
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #555;
+      margin-bottom: 0.5rem;
+    }
+    .pay-plan-name {
+      font-family: var(--serif, serif);
+      font-size: 1.6rem;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+    .pay-plan-price {
+      font-family: var(--mono, monospace);
+      font-size: 0.7rem;
+      color: #666;
+      letter-spacing: 0.06em;
+    }
+
+    .pay-form { padding: 1.75rem 2.5rem 2.5rem; }
+
+    .pay-field { margin-bottom: 1.25rem; }
+    .pay-label {
+      display: block;
+      font-family: var(--mono, monospace);
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #555;
+      margin-bottom: 0.4rem;
+    }
+    .pay-input {
+      width: 100%;
+      background: #111;
+      border: 1px solid #222;
+      color: #ddd;
+      font-family: var(--mono, monospace);
+      font-size: 0.85rem;
+      padding: 0.7rem 0.9rem;
+      outline: none;
+      transition: border-color 0.15s;
+      box-sizing: border-box;
+    }
+    .pay-input:focus { border-color: #555; }
+    .pay-input::placeholder { color: #444; }
+
+    .pay-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .pay-card-wrap {
+      position: relative;
+    }
+    .pay-card-icon {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--mono, monospace);
+      font-size: 0.6rem;
+      color: #444;
+      pointer-events: none;
+    }
+
+    .pay-submit {
+      width: 100%;
+      background: #fff;
+      color: #000;
+      border: none;
+      font-family: var(--mono, monospace);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 0.9rem 1.5rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.15s, color 0.15s;
+    }
+    .pay-submit:hover { background: #ddd; }
+
+    .pay-secure {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      justify-content: center;
+    }
+    .pay-secure span {
+      font-family: var(--mono, monospace);
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #444;
+    }
+
+    .pay-features {
+      border-top: 1px solid #1a1a1a;
+      padding: 1.25rem 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .pay-feature-tag {
+      font-family: var(--mono, monospace);
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #555;
+      border: 1px solid #222;
+      padding: 0.2rem 0.5rem;
+    }
+
+    /* ── Payment success state ───────────────────────────── */
+    .pay-success {
+      display: none;
+      padding: 3rem 2.5rem;
+      text-align: center;
+    }
+    .pay-success__icon {
+      font-size: 2.5rem;
+      margin-bottom: 1.25rem;
+      color: #fff;
+    }
+    .pay-success__title {
+      font-family: var(--serif, serif);
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .pay-success__sub {
+      font-family: var(--mono, monospace);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #555;
+    }
+
+    /* ── Film preview modal ──────────────────────────────── */
+    #film-modal .str-box { max-width: 580px; }
+
+    .film-modal-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #0d0d0d;
+      border-bottom: 1px solid #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .film-modal-glyph {
+      font-family: var(--serif, serif);
+      font-style: italic;
+      font-size: 6rem;
+      color: #1e1e1e;
+      user-select: none;
+    }
+
+    /* Free: play button overlay */
+    .film-modal-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+    .film-modal-play__btn {
+      width: 56px;
+      height: 56px;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .film-modal-play__btn:hover { border-color: #fff; color: #fff; }
+    .film-modal-play__label {
+      font-family: var(--mono, monospace);
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* Pro: lock overlay */
+    .film-modal-lock {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      backdrop-filter: blur(3px);
+    }
+    .film-modal-lock__icon {
+      font-size: 1.8rem;
+      color: rgba(255,255,255,0.5);
+    }
+    .film-modal-lock__text {
+      font-family: var(--mono, monospace);
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.45);
+      text-align: center;
+      max-width: 22ch;
+      line-height: 1.6;
+    }
+    .film-modal-lock__cta {
+      font-family: var(--mono, monospace);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #fff;
+      background: none;
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 0.45rem 1.1rem;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .film-modal-lock__cta:hover { border-color: #fff; background: rgba(255,255,255,0.06); }
+
+    .film-modal-body { padding: 1.75rem 2.25rem 2.25rem; }
+    .film-modal-eyebrow {
+      font-family: var(--mono, monospace);
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #555;
+      margin-bottom: 0.4rem;
+    }
+    .film-modal-title {
+      font-family: var(--serif, serif);
+      font-size: 1.6rem;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+    .film-modal-meta {
+      font-family: var(--mono, monospace);
+      font-size: 0.62rem;
+      color: #555;
+      letter-spacing: 0.06em;
+      margin-bottom: 1.25rem;
+    }
+    .film-modal-synopsis {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: #888;
+      margin-bottom: 1.5rem;
+    }
+    .film-modal-crew {
+      border-top: 1px solid #1a1a1a;
+      padding-top: 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .film-modal-crew-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .film-modal-crew-role {
+      font-family: var(--mono, monospace);
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #444;
+    }
+    .film-modal-crew-name {
+      font-family: var(--mono, monospace);
+      font-size: 0.72rem;
+      color: #aaa;
+    }
+
+    /* ── Tags row ────────────────────────────────────────── */
+    .film-modal-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+    .film-modal-tag {
+      font-family: var(--mono, monospace);
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #555;
+      border: 1px solid #222;
+      padding: 0.15rem 0.5rem;
+    }
+  </style>
 </head>
 <body>
 <div class="page-body">
@@ -37,8 +390,8 @@
           18 min · 16mm · Ficción · 2026
         </p>
         <div class="featured-block__actions">
-          <a href="#" class="btn btn-primary" data-i18n="str.watch">▶ Ver ahora</a>
-          <a href="#" class="btn-ghost" data-i18n="str.trailer">Trailer →</a>
+          <button class="btn btn-primary" data-film="0" data-i18n="str.watch">▶ Ver ahora</button>
+          <button class="btn-ghost" data-film="0" data-i18n="str.trailer">Trailer →</button>
         </div>
       </div>
       <div style="display:flex;flex-direction:column;gap:0.75rem;align-items:flex-end;">
@@ -79,7 +432,10 @@
           <li class="plan-card__feature plan-card__feature--dim">Sin originales</li>
           <li class="plan-card__feature plan-card__feature--dim">Sin descargas</li>
         </ul>
-        <a href="/contactos/" class="btn-ghost btn-sm" style="text-align:center;" data-i18n="str.plan.free.cta">Empezar gratis</a>
+        <button class="btn-ghost btn-sm" style="text-align:center;width:100%;"
+          data-plan="free" data-plan-price="€0" data-plan-period="para siempre"
+          data-plan-features="3 films por mes|Calidad 720p"
+          data-i18n="str.plan.free.cta">Empezar gratis</button>
       </div>
 
       <div class="plan-card plan-card--featured">
@@ -92,7 +448,10 @@
           <li class="plan-card__feature">Originales incluidos</li>
           <li class="plan-card__feature">Acceso prioritario</li>
         </ul>
-        <a href="/contactos/" class="btn btn-primary btn-sm" style="text-align:center;" data-i18n="str.plan.monthly.cta">Suscribirme →</a>
+        <button class="btn btn-primary btn-sm" style="text-align:center;width:100%;"
+          data-plan="Mensual Pro" data-plan-price="€4,99 / mes" data-plan-period="por mes · cancela cuando quieras"
+          data-plan-features="Catálogo completo|HD 1080p|Originales incluidos|Acceso prioritario"
+          data-i18n="str.plan.monthly.cta">Suscribirme →</button>
       </div>
 
       <div class="plan-card">
@@ -105,7 +464,10 @@
           <li class="plan-card__feature">1 entrada gratis .OK</li>
           <li class="plan-card__feature">Nombre en créditos</li>
         </ul>
-        <a href="/contactos/" class="btn-ghost btn-sm" style="text-align:center;" data-i18n="str.plan.yearly.cta">Suscripción anual →</a>
+        <button class="btn-ghost btn-sm" style="text-align:center;width:100%;"
+          data-plan="Anual Pro" data-plan-price="€49 / año" data-plan-period="ahorra 18% · cancela cuando quieras"
+          data-plan-features="Todo lo del mensual|WhatsApp exclusivo|1 entrada gratis .OK|Nombre en créditos"
+          data-i18n="str.plan.yearly.cta">Suscripción anual →</button>
       </div>
 
     </div>
@@ -127,7 +489,7 @@
 
     <div class="films-grid">
 
-      <div class="film-card" data-cat="original corto">
+      <div class="film-card" data-cat="original corto" data-film="0" style="cursor:pointer;">
         <div class="film-card__thumb">
           <span class="film-card__thumb-glyph">L</span>
           <span class="film-card__badge film-card__badge--pro">Pro</span>
@@ -139,7 +501,7 @@
         </div>
       </div>
 
-      <div class="film-card" data-cat="corto">
+      <div class="film-card" data-cat="corto" data-film="1" style="cursor:pointer;">
         <div class="film-card__thumb">
           <span class="film-card__thumb-glyph">D</span>
           <span class="film-card__badge film-card__badge--free">Free</span>
@@ -151,7 +513,7 @@
         </div>
       </div>
 
-      <div class="film-card" data-cat="corto experimental">
+      <div class="film-card" data-cat="corto experimental" data-film="2" style="cursor:pointer;">
         <div class="film-card__thumb">
           <span class="film-card__thumb-glyph">A</span>
           <span class="film-card__badge film-card__badge--pro">Pro</span>
@@ -163,7 +525,7 @@
         </div>
       </div>
 
-      <div class="film-card" data-cat="original corto miembro">
+      <div class="film-card" data-cat="original corto miembro" data-film="3" style="cursor:pointer;">
         <div class="film-card__thumb">
           <span class="film-card__thumb-glyph">S</span>
           <span class="film-card__badge film-card__badge--pro">Pro</span>
@@ -175,7 +537,7 @@
         </div>
       </div>
 
-      <div class="film-card" data-cat="documental miembro">
+      <div class="film-card" data-cat="documental miembro" data-film="4" style="cursor:pointer;">
         <div class="film-card__thumb">
           <span class="film-card__thumb-glyph">E</span>
           <span class="film-card__badge film-card__badge--pro">Pro</span>
@@ -187,7 +549,7 @@
         </div>
       </div>
 
-      <div class="film-card" data-cat="corto miembro">
+      <div class="film-card" data-cat="corto miembro" data-film="5" style="cursor:pointer;">
         <div class="film-card__thumb">
           <span class="film-card__thumb-glyph">T</span>
           <span class="film-card__badge film-card__badge--pro">Pro</span>
@@ -199,7 +561,7 @@
         </div>
       </div>
 
-      <div class="film-card" data-cat="documental miembro">
+      <div class="film-card" data-cat="documental miembro" data-film="6" style="cursor:pointer;">
         <div class="film-card__thumb">
           <span class="film-card__thumb-glyph">M</span>
           <span class="film-card__badge film-card__badge--pro">Pro</span>
@@ -211,7 +573,7 @@
         </div>
       </div>
 
-      <div class="film-card" data-cat="corto miembro">
+      <div class="film-card" data-cat="corto miembro" data-film="7" style="cursor:pointer;">
         <div class="film-card__thumb">
           <span class="film-card__thumb-glyph">C</span>
           <span class="film-card__badge film-card__badge--free">Free</span>
@@ -229,6 +591,314 @@
 
   </main>
 </div>
+
+<!-- ══ Payment Modal ══════════════════════════════════════════ -->
+<div class="str-overlay" id="pay-modal">
+  <div class="str-box">
+    <button class="str-close" onclick="closeStrModal('pay-modal')">×</button>
+
+    <!-- Default: form -->
+    <div id="pay-form-wrap">
+      <div class="pay-header">
+        <p class="pay-badge">Club Benares · Suscripción</p>
+        <p class="pay-plan-name" id="pay-name">Mensual Pro</p>
+        <p class="pay-plan-price" id="pay-price">€4,99 / mes · cancela cuando quieras</p>
+      </div>
+
+      <div class="pay-form">
+        <div class="pay-field">
+          <label class="pay-label" for="pay-email">Email</label>
+          <input class="pay-input" type="email" id="pay-email" placeholder="tu@email.com" autocomplete="email" />
+        </div>
+        <div class="pay-field">
+          <label class="pay-label" for="pay-fullname">Nombre completo</label>
+          <input class="pay-input" type="text" id="pay-fullname" placeholder="Charlie Chaves" autocomplete="name" />
+        </div>
+        <div class="pay-field pay-card-wrap">
+          <label class="pay-label" for="pay-card">Número de tarjeta</label>
+          <input class="pay-input" type="text" id="pay-card" placeholder="0000  0000  0000  0000" maxlength="19" inputmode="numeric" />
+          <span class="pay-card-icon">VISA · MC</span>
+        </div>
+        <div class="pay-row">
+          <div class="pay-field">
+            <label class="pay-label" for="pay-exp">Caducidad</label>
+            <input class="pay-input" type="text" id="pay-exp" placeholder="MM / AA" maxlength="7" inputmode="numeric" />
+          </div>
+          <div class="pay-field">
+            <label class="pay-label" for="pay-cvc">CVC</label>
+            <input class="pay-input" type="text" id="pay-cvc" placeholder="•••" maxlength="4" inputmode="numeric" />
+          </div>
+        </div>
+        <button class="pay-submit" id="pay-submit-btn">Confirmar suscripción →</button>
+        <div class="pay-secure">
+          <span>⚿ Pago seguro · SSL cifrado · Sin permanencia</span>
+        </div>
+      </div>
+
+      <div class="pay-features" id="pay-features"></div>
+    </div>
+
+    <!-- Success state -->
+    <div class="pay-success" id="pay-success">
+      <div class="pay-success__icon">✓</div>
+      <p class="pay-success__title">Bienvenido al club.</p>
+      <p class="pay-success__sub" id="pay-success-plan">Suscripción activa · Mensual Pro</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Film Preview Modal ═════════════════════════════════════ -->
+<div class="str-overlay" id="film-modal">
+  <div class="str-box">
+    <button class="str-close" onclick="closeStrModal('film-modal')">×</button>
+
+    <div class="film-modal-thumb">
+      <span class="film-modal-glyph" id="fm-glyph">L</span>
+
+      <!-- Free: play overlay -->
+      <div class="film-modal-play" id="fm-play-overlay">
+        <div class="film-modal-play__btn">▶</div>
+        <span class="film-modal-play__label">Ver ahora · Gratis</span>
+      </div>
+
+      <!-- Pro: lock overlay -->
+      <div class="film-modal-lock" id="fm-lock-overlay">
+        <div class="film-modal-lock__icon">⊘</div>
+        <p class="film-modal-lock__text">Contenido exclusivo Pro<br>Suscríbete para ver este film completo</p>
+        <button class="film-modal-lock__cta" id="fm-subscribe-btn">Suscribirme →</button>
+      </div>
+    </div>
+
+    <div class="film-modal-body">
+      <p class="film-modal-eyebrow" id="fm-eyebrow"></p>
+      <p class="film-modal-title" id="fm-title"></p>
+      <p class="film-modal-meta" id="fm-meta"></p>
+      <div class="film-modal-tags" id="fm-tags"></div>
+      <p class="film-modal-synopsis" id="fm-synopsis"></p>
+      <div class="film-modal-crew" id="fm-crew"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── Film data ───────────────────────────────────────────── */
+var films = [
+  {
+    glyph: 'L', pro: true,
+    eyebrow: 'Original Benares · Ficción · 2026',
+    title: 'Lisboa, ao Amanhecer',
+    meta: '18 min · 16mm · Rodado en Lisboa',
+    tags: ['Original', 'Ficción', '16mm', '2026'],
+    synopsis: 'Un músico insomne recorre Lisboa a pie desde la medianoche hasta el amanecer. Un retrato íntimo de la ciudad dormida y de los que no pueden descansar. Rodado en 16mm durante tres noches consecutivas sin luz artificial.',
+    crew: [{ role: 'Dirección', name: 'Charlie Chaves' }, { role: 'Fotografía', name: 'Valdir Neves' }, { role: 'Música', name: 'Miguel Aido' }, { role: 'Producción', name: 'Paulo Graça' }]
+  },
+  {
+    glyph: 'D', pro: false,
+    eyebrow: '.OK Festival #1 · Drama · 2025',
+    title: 'Dá-me Ar',
+    meta: '14 min · Digital · Vencedor .OK #1',
+    tags: ['Free', 'Drama', 'Festival', '2025'],
+    synopsis: 'Una joven asmática vuelve al apartamento de su abuela fallecida para vaciar sus cosas. Entre las cajas descubre cartas nunca enviadas. Un estudio sobre el duelo y el silencio de lo no dicho. Ganador del voto público en .OK #1.',
+    crew: [{ role: 'Dirección', name: 'Pedro Caldeira' }, { role: 'Reparto', name: 'Ana Lopes, Rui Matos' }, { role: 'Producción', name: 'Club Benares' }]
+  },
+  {
+    glyph: 'A', pro: true,
+    eyebrow: '.OK Festival #1 · Experimental · 2025',
+    title: 'Azul, Meia-Noite',
+    meta: '11 min · Digital · Experimental',
+    tags: ['Pro', 'Experimental', 'Festival', '2025'],
+    synopsis: 'Una exploración audiovisual de la soledad urbana. Sin diálogos. La ciudad como organismo vivo que respira, late y a veces se detiene. Construida a partir de 400 planos de Lisboa filmados durante seis meses.',
+    crew: [{ role: 'Dirección', name: 'H. Mesquita Montes' }, { role: 'Montaje', name: 'H. Mesquita Montes' }, { role: 'Sonido', name: 'Leon Sukhodolskii' }]
+  },
+  {
+    glyph: 'S', pro: true,
+    eyebrow: 'Original Benares · Horror · 2026',
+    title: 'Silentes',
+    meta: '9 min · Digital · Horror',
+    tags: ['Pro', 'Original', 'Horror', '2026'],
+    synopsis: 'Cinco personas en una sala de espera que nunca abre. Nadie habla. Nadie se mueve. Pero algo observa. Un ejercicio de terror sin efectos, construido solo con tensión y silencio.',
+    crew: [{ role: 'Dirección', name: 'Karen Mattos' }, { role: 'Fotografía', name: 'Santiago Machuca' }, { role: 'Sound design', name: 'Leon Sukhodolskii' }]
+  },
+  {
+    glyph: 'E', pro: true,
+    eyebrow: 'Documental · 2024',
+    title: 'El último rodaje',
+    meta: '32 min · Digital · Documental',
+    tags: ['Pro', 'Documental', '2024'],
+    synopsis: 'El documental sigue a tres directores durante el rodaje de sus primeros cortometrajes. Tres formas distintas de enfrentarse a la cámara, al equipo y al miedo de mostrar algo propio por primera vez.',
+    crew: [{ role: 'Dirección', name: 'Santiago Machuca' }, { role: 'Fotografía', name: 'Valdir Neves' }, { role: 'Producción', name: 'Club Benares' }]
+  },
+  {
+    glyph: 'T', pro: true,
+    eyebrow: 'Drama · 2024',
+    title: 'Tinta Roja',
+    meta: '22 min · Digital · Drama',
+    tags: ['Pro', 'Drama', '2024'],
+    synopsis: 'Un escritor en bloqueo creativo empieza a recibir páginas escritas que no recuerda haber escrito. La letra es la suya pero las historias no le pertenecen. Un thriller íntimo sobre la autoría y el inconsciente.',
+    crew: [{ role: 'Dirección', name: 'Leon Sukhodolskii' }, { role: 'Reparto', name: 'João T. Pires' }, { role: 'Guión', name: 'H. Mesquita Montes' }]
+  },
+  {
+    glyph: 'M', pro: true,
+    eyebrow: 'Serie Documental · 2025 · 6 episodios',
+    title: 'MashUp · Serie',
+    meta: '6 episodios · 8–15 min c/u · Documental',
+    tags: ['Pro', 'Documental', 'Serie', '2025'],
+    synopsis: 'Serie documental que sigue cada edición del festival MashUp. Detrás de cámaras, entrevistas a los directores y el proceso de selección. Un registro de cómo nace el cine independiente en Lisboa.',
+    crew: [{ role: 'Dirección', name: 'Valdir Neves' }, { role: 'Producción', name: 'Club Benares' }, { role: 'Montaje', name: 'Karen Mattos' }]
+  },
+  {
+    glyph: 'C', pro: false,
+    eyebrow: 'De miembro · Comedia · 2025',
+    title: 'Café de las 4',
+    meta: '8 min · Digital · Comedia',
+    tags: ['Free', 'Comedia', '2025'],
+    synopsis: 'A las 4 de la mañana, una cafetería se convierte en el único lugar del mundo. Tres personajes, una conversación que no debería ocurrir. Una comedia breve sobre las confesiones que solo pueden hacerse de noche.',
+    crew: [{ role: 'Dirección', name: 'Mel Fox' }, { role: 'Reparto', name: 'João T. Pires, Ana Lopes' }, { role: 'Fotografía', name: 'Santiago Machuca' }]
+  }
+];
+
+/* ── Modal helpers ───────────────────────────────────────── */
+function openStrModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeStrModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('str-overlay')) {
+    e.target.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.str-overlay.open').forEach(function(m) {
+      m.classList.remove('open');
+    });
+    document.body.style.overflow = '';
+  }
+});
+
+/* ── Open film modal ─────────────────────────────────────── */
+function openFilmModal(idx) {
+  var f = films[idx];
+  if (!f) return;
+
+  document.getElementById('fm-glyph').textContent = f.glyph;
+  document.getElementById('fm-play-overlay').style.display = f.pro ? 'none' : 'flex';
+  document.getElementById('fm-lock-overlay').style.display = f.pro ? 'flex' : 'none';
+  document.getElementById('fm-eyebrow').textContent = f.eyebrow;
+  document.getElementById('fm-title').textContent = f.title;
+  document.getElementById('fm-meta').textContent = f.meta;
+  document.getElementById('fm-synopsis').textContent = f.synopsis;
+
+  var tagsEl = document.getElementById('fm-tags');
+  tagsEl.innerHTML = '';
+  f.tags.forEach(function(t) {
+    var s = document.createElement('span');
+    s.className = 'film-modal-tag';
+    s.textContent = t;
+    tagsEl.appendChild(s);
+  });
+
+  var crewEl = document.getElementById('fm-crew');
+  crewEl.innerHTML = '';
+  f.crew.forEach(function(c) {
+    var div = document.createElement('div');
+    div.className = 'film-modal-crew-item';
+    div.innerHTML = '<span class="film-modal-crew-role">' + c.role + '</span><span class="film-modal-crew-name">' + c.name + '</span>';
+    crewEl.appendChild(div);
+  });
+
+  openStrModal('film-modal');
+}
+
+/* ── Wire film cards and featured buttons ────────────────── */
+document.querySelectorAll('[data-film]').forEach(function(el) {
+  el.addEventListener('click', function(e) {
+    e.preventDefault();
+    openFilmModal(parseInt(el.dataset.film, 10));
+  });
+});
+
+/* ── Subscribe from film modal → payment modal ───────────── */
+document.getElementById('fm-subscribe-btn').addEventListener('click', function() {
+  closeStrModal('film-modal');
+  openPayModal('Mensual Pro', '€4,99 / mes', 'por mes · cancela cuando quieras', 'Catálogo completo|HD 1080p|Originales incluidos|Acceso prioritario');
+});
+
+/* ── Open payment modal ──────────────────────────────────── */
+function openPayModal(name, price, period, features) {
+  // Reset to form state
+  document.getElementById('pay-form-wrap').style.display = '';
+  document.getElementById('pay-success').style.display = 'none';
+
+  document.getElementById('pay-name').textContent = name;
+  document.getElementById('pay-price').textContent = price + ' · ' + period;
+  document.getElementById('pay-success-plan').textContent = 'Suscripción activa · ' + name;
+
+  var featEl = document.getElementById('pay-features');
+  featEl.innerHTML = '';
+  (features || '').split('|').forEach(function(f) {
+    if (!f) return;
+    var s = document.createElement('span');
+    s.className = 'pay-feature-tag';
+    s.textContent = '✓ ' + f;
+    featEl.appendChild(s);
+  });
+
+  openStrModal('pay-modal');
+}
+
+/* Wire plan card buttons */
+document.querySelectorAll('[data-plan]').forEach(function(btn) {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    openPayModal(
+      btn.dataset.plan,
+      btn.dataset.planPrice,
+      btn.dataset.planPeriod,
+      btn.dataset.planFeatures
+    );
+  });
+});
+
+/* ── Card input formatting ───────────────────────────────── */
+document.getElementById('pay-card').addEventListener('input', function() {
+  var v = this.value.replace(/\D/g, '').slice(0, 16);
+  this.value = v.replace(/(.{4})/g, '$1  ').trim();
+});
+document.getElementById('pay-exp').addEventListener('input', function() {
+  var v = this.value.replace(/\D/g, '').slice(0, 4);
+  if (v.length >= 3) v = v.slice(0,2) + ' / ' + v.slice(2);
+  this.value = v;
+});
+document.getElementById('pay-cvc').addEventListener('input', function() {
+  this.value = this.value.replace(/\D/g, '').slice(0, 4);
+});
+
+/* ── Payment submit ──────────────────────────────────────── */
+document.getElementById('pay-submit-btn').addEventListener('click', function() {
+  var email = document.getElementById('pay-email').value.trim();
+  var name  = document.getElementById('pay-fullname').value.trim();
+  var card  = document.getElementById('pay-card').value.replace(/\s/g,'');
+  var exp   = document.getElementById('pay-exp').value.trim();
+  var cvc   = document.getElementById('pay-cvc').value.trim();
+
+  if (!email || !name || card.length < 16 || exp.length < 7 || cvc.length < 3) {
+    this.textContent = 'Completa todos los campos →';
+    var btn = this;
+    setTimeout(function() { btn.textContent = 'Confirmar suscripción →'; }, 2000);
+    return;
+  }
+
+  // Show success
+  document.getElementById('pay-form-wrap').style.display = 'none';
+  document.getElementById('pay-success').style.display = 'block';
+});
+</script>
 <script src="/benares-i18n.js"></script>
 <script src="/benares-nav.js"></script>
 </body>
