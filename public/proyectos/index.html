@@ -7,6 +7,407 @@
   <title>Proyectos — Club Benares</title>
   <meta name="description" content="Lo que vendrá. Si tú quieres. Crowdfunding para proyectos de cine independiente en Lisboa." />
   <link rel="stylesheet" href="/benares.css" />
+  <style>
+    /* ── Modal base ──────────────────────────────────────── */
+    .prj-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.22s ease;
+    }
+    .prj-overlay.open { opacity: 1; pointer-events: auto; }
+    .prj-box {
+      background: #0a0a0a;
+      border: 1px solid #2a2a2a;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(14px);
+      transition: transform 0.22s ease;
+    }
+    .prj-overlay.open .prj-box { transform: translateY(0); }
+    .prj-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.25rem;
+      background: none;
+      border: none;
+      color: #555;
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0;
+      z-index: 2;
+    }
+    .prj-close:hover { color: #fff; }
+
+    /* ── Project detail modal ────────────────────────────── */
+    #proj-modal .prj-box { max-width: 600px; }
+
+    .pm-header {
+      padding: 2rem 2.5rem 1.5rem;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .pm-type {
+      font-family: var(--mono, monospace);
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #555;
+      margin-bottom: 0.4rem;
+    }
+    .pm-title {
+      font-family: var(--serif, serif);
+      font-size: 1.8rem;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 0.6rem;
+    }
+    .pm-funding-row {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 0.6rem;
+    }
+    .pm-pct {
+      font-family: var(--serif, serif);
+      font-size: 1.6rem;
+      letter-spacing: -0.03em;
+      color: #fff;
+    }
+    .pm-amounts {
+      font-family: var(--mono, monospace);
+      font-size: 0.62rem;
+      color: #555;
+      letter-spacing: 0.06em;
+    }
+    .pm-bar-track {
+      height: 2px;
+      background: #1e1e1e;
+      margin-bottom: 0.5rem;
+    }
+    .pm-bar-fill {
+      height: 100%;
+      background: #fff;
+      transition: width 1s cubic-bezier(.16,1,.3,1);
+    }
+    .pm-stats {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .pm-stat { display: flex; flex-direction: column; gap: 0.15rem; }
+    .pm-stat__num {
+      font-family: var(--mono, monospace);
+      font-size: 0.85rem;
+      color: #ccc;
+    }
+    .pm-stat__label {
+      font-family: var(--mono, monospace);
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #444;
+    }
+
+    .pm-body { padding: 1.75rem 2.5rem; }
+    .pm-section-title {
+      font-family: var(--mono, monospace);
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #444;
+      margin-bottom: 0.6rem;
+    }
+    .pm-synopsis {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: #888;
+      margin-bottom: 1.75rem;
+    }
+    .pm-needs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.75rem;
+    }
+    .pm-need-tag {
+      font-family: var(--mono, monospace);
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #555;
+      border: 1px solid #222;
+      padding: 0.2rem 0.55rem;
+    }
+
+    .pm-director {
+      border-top: 1px solid #1a1a1a;
+      padding-top: 1.5rem;
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      margin-bottom: 1.75rem;
+    }
+    .pm-director__avatar {
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono, monospace);
+      font-size: 0.85rem;
+      color: #555;
+      letter-spacing: 0.05em;
+    }
+    .pm-director__info { flex: 1; }
+    .pm-director__role {
+      font-family: var(--mono, monospace);
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #444;
+      margin-bottom: 0.2rem;
+    }
+    .pm-director__name {
+      font-family: var(--serif, serif);
+      font-size: 1.1rem;
+      color: #ddd;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.4rem;
+    }
+    .pm-director__bio {
+      font-size: 0.82rem;
+      line-height: 1.65;
+      color: #666;
+    }
+    .pm-director__films {
+      margin-top: 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+    .pm-director__film-tag {
+      font-family: var(--mono, monospace);
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #444;
+      border: 1px solid #1e1e1e;
+      padding: 0.15rem 0.45rem;
+    }
+
+    .pm-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .pm-btn-donate {
+      font-family: var(--mono, monospace);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 0.65rem 1.4rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .pm-btn-donate:hover { background: #ddd; }
+    .pm-btn-help {
+      font-family: var(--mono, monospace);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: none;
+      color: #666;
+      border: 1px solid #2a2a2a;
+      padding: 0.65rem 1.4rem;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+      text-decoration: none;
+    }
+    .pm-btn-help:hover { border-color: #555; color: #aaa; }
+
+    /* ── Donation modal ──────────────────────────────────── */
+    #don-modal .prj-box { max-width: 460px; }
+
+    .don-header {
+      padding: 2rem 2.5rem 1.5rem;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .don-badge {
+      font-family: var(--mono, monospace);
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #555;
+      margin-bottom: 0.4rem;
+    }
+    .don-project-name {
+      font-family: var(--serif, serif);
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .don-body { padding: 1.75rem 2.5rem 2.5rem; }
+    .don-label {
+      font-family: var(--mono, monospace);
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #555;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+    .don-amounts {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .don-amount-btn {
+      background: none;
+      border: 1px solid #2a2a2a;
+      color: #888;
+      font-family: var(--mono, monospace);
+      font-size: 0.72rem;
+      padding: 0.55rem 0.25rem;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+      letter-spacing: 0.04em;
+    }
+    .don-amount-btn:hover { border-color: #555; color: #ccc; }
+    .don-amount-btn.active { background: #fff; color: #000; border-color: #fff; }
+
+    .don-custom-wrap {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+    .don-currency {
+      position: absolute;
+      left: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--mono, monospace);
+      font-size: 0.8rem;
+      color: #555;
+      pointer-events: none;
+    }
+    .don-custom-input {
+      width: 100%;
+      background: #111;
+      border: 1px solid #222;
+      color: #ddd;
+      font-family: var(--mono, monospace);
+      font-size: 0.85rem;
+      padding: 0.65rem 0.9rem 0.65rem 2rem;
+      outline: none;
+      box-sizing: border-box;
+      transition: border-color 0.15s;
+    }
+    .don-custom-input:focus { border-color: #555; }
+    .don-custom-input::placeholder { color: #333; }
+
+    .don-field { margin-bottom: 1.1rem; }
+    .don-input {
+      width: 100%;
+      background: #111;
+      border: 1px solid #222;
+      color: #ddd;
+      font-family: var(--mono, monospace);
+      font-size: 0.82rem;
+      padding: 0.65rem 0.9rem;
+      outline: none;
+      box-sizing: border-box;
+      transition: border-color 0.15s;
+    }
+    .don-input:focus { border-color: #555; }
+    .don-input::placeholder { color: #444; }
+
+    .don-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .don-card-wrap { position: relative; }
+    .don-card-icon {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--mono, monospace);
+      font-size: 0.58rem;
+      color: #333;
+      pointer-events: none;
+    }
+
+    .don-submit {
+      width: 100%;
+      background: #fff;
+      color: #000;
+      border: none;
+      font-family: var(--mono, monospace);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 0.9rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.15s;
+    }
+    .don-submit:hover { background: #ddd; }
+
+    .don-note {
+      font-family: var(--mono, monospace);
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #333;
+      text-align: center;
+      margin-top: 0.75rem;
+    }
+
+    /* ── Donation success ────────────────────────────────── */
+    .don-success {
+      display: none;
+      padding: 3rem 2.5rem;
+      text-align: center;
+    }
+    .don-success__icon { font-size: 2.5rem; color: #fff; margin-bottom: 1.25rem; }
+    .don-success__title {
+      font-family: var(--serif, serif);
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+    .don-success__sub {
+      font-family: var(--mono, monospace);
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    /* ── Make project cards clickable ───────────────────── */
+    .project-card { cursor: pointer; }
+    .project-card__actions button,
+    .project-card__actions a { position: relative; z-index: 2; }
+  </style>
 </head>
 <body>
 <div class="page-body">
@@ -67,15 +468,15 @@
       </div>
 
       <div class="featured-block__actions">
-        <a href="/contactos/" class="btn btn-primary" data-i18n="proj.donate">Apoyar este proyecto →</a>
-        <a href="/contactos/" class="btn-ghost" data-i18n="proj.help">Más información</a>
+        <button class="btn btn-primary" data-donate="0" data-i18n="proj.donate">Apoyar este proyecto →</button>
+        <button class="btn-ghost" data-proj="0" data-i18n="proj.help">Más información</button>
       </div>
     </div>
 
     <!-- Projects Grid -->
     <div class="projects-grid">
 
-      <div class="project-card" data-cat="all">
+      <div class="project-card" data-cat="all" data-proj="1">
         <p class="project-card__type" data-i18n="proj.type.short">Cortometraje</p>
         <p class="project-card__title">Sin título #07</p>
         <p class="project-card__director">Henrique Mesquita Montes</p>
@@ -89,12 +490,12 @@
           <span class="project-card__need-tag" data-i18n="proj.need.camera">Cámara</span>
         </div>
         <div class="project-card__actions">
-          <a href="/contactos/" class="btn btn-primary btn-sm" data-i18n="proj.donate">Donar →</a>
-          <a href="/contactos/" class="btn-ghost btn-sm" data-i18n="proj.help">Ayudar</a>
+          <button class="btn btn-primary btn-sm" data-donate="1" data-i18n="proj.donate">Donar →</button>
+          <button class="btn-ghost btn-sm" data-proj="1" data-i18n="proj.help">Ayudar</button>
         </div>
       </div>
 
-      <div class="project-card" data-cat="all">
+      <div class="project-card" data-cat="all" data-proj="2">
         <p class="project-card__type" data-i18n="proj.type.feature">Largometraje</p>
         <p class="project-card__title">Marés</p>
         <p class="project-card__director">Pedro Caldeira</p>
@@ -108,12 +509,12 @@
           <span class="project-card__need-tag" data-i18n="proj.need.catering">Catering</span>
         </div>
         <div class="project-card__actions">
-          <a href="/contactos/" class="btn btn-primary btn-sm" data-i18n="proj.donate">Donar →</a>
-          <a href="/contactos/" class="btn-ghost btn-sm" data-i18n="proj.help">Ayudar</a>
+          <button class="btn btn-primary btn-sm" data-donate="2" data-i18n="proj.donate">Donar →</button>
+          <button class="btn-ghost btn-sm" data-proj="2" data-i18n="proj.help">Ayudar</button>
         </div>
       </div>
 
-      <div class="project-card" data-cat="all">
+      <div class="project-card" data-cat="all" data-proj="3">
         <p class="project-card__type" data-i18n="proj.type.anthology">Antología</p>
         <p class="project-card__title">Antología MashUp</p>
         <p class="project-card__director" data-i18n="proj.anthology.dir">Seis directores</p>
@@ -126,12 +527,12 @@
           <span class="project-card__need-tag" data-i18n="proj.need.post">Post-producción</span>
         </div>
         <div class="project-card__actions">
-          <a href="/contactos/" class="btn btn-primary btn-sm" data-i18n="proj.donate">Donar →</a>
-          <a href="/contactos/" class="btn-ghost btn-sm" data-i18n="proj.help">Ayudar</a>
+          <button class="btn btn-primary btn-sm" data-donate="3" data-i18n="proj.donate">Donar →</button>
+          <button class="btn-ghost btn-sm" data-proj="3" data-i18n="proj.help">Ayudar</button>
         </div>
       </div>
 
-      <div class="project-card" data-cat="all">
+      <div class="project-card" data-cat="all" data-proj="4">
         <p class="project-card__type" data-i18n="proj.type.docseries">Doc serie</p>
         <p class="project-card__title">Lisboa en 16mm</p>
         <p class="project-card__director">Valdir Neves</p>
@@ -145,12 +546,12 @@
           <span class="project-card__need-tag" data-i18n="proj.need.distrib">Distribución</span>
         </div>
         <div class="project-card__actions">
-          <a href="/contactos/" class="btn btn-primary btn-sm" data-i18n="proj.donate">Donar →</a>
-          <a href="/contactos/" class="btn-ghost btn-sm" data-i18n="proj.help">Ayudar</a>
+          <button class="btn btn-primary btn-sm" data-donate="4" data-i18n="proj.donate">Donar →</button>
+          <button class="btn-ghost btn-sm" data-proj="4" data-i18n="proj.help">Ayudar</button>
         </div>
       </div>
 
-      <div class="project-card" data-cat="all">
+      <div class="project-card" data-cat="all" data-proj="5">
         <p class="project-card__type" data-i18n="proj.type.short">Cortometraje</p>
         <p class="project-card__title">Silentes 2</p>
         <p class="project-card__director">Karen Mattos</p>
@@ -163,12 +564,12 @@
           <span class="project-card__need-tag" data-i18n="proj.need.sfx">Maquillaje SFX</span>
         </div>
         <div class="project-card__actions">
-          <a href="/contactos/" class="btn btn-primary btn-sm" data-i18n="proj.donate">Donar →</a>
-          <a href="/contactos/" class="btn-ghost btn-sm" data-i18n="proj.help">Ayudar</a>
+          <button class="btn btn-primary btn-sm" data-donate="5" data-i18n="proj.donate">Donar →</button>
+          <button class="btn-ghost btn-sm" data-proj="5" data-i18n="proj.help">Ayudar</button>
         </div>
       </div>
 
-      <div class="project-card" data-cat="all">
+      <div class="project-card" data-cat="all" data-proj="6">
         <p class="project-card__type" data-i18n="proj.type.experimental">Experimental</p>
         <p class="project-card__title">04 de la mañana</p>
         <p class="project-card__director">Mel Fox</p>
@@ -181,8 +582,8 @@
           <span class="project-card__need-tag" data-i18n="proj.need.outreach">Difusión</span>
         </div>
         <div class="project-card__actions">
-          <a href="/contactos/" class="btn btn-primary btn-sm" data-i18n="proj.donate">Donar →</a>
-          <a href="/contactos/" class="btn-ghost btn-sm" data-i18n="proj.help">Ayudar</a>
+          <button class="btn btn-primary btn-sm" data-donate="6" data-i18n="proj.donate">Donar →</button>
+          <button class="btn-ghost btn-sm" data-proj="6" data-i18n="proj.help">Ayudar</button>
         </div>
       </div>
 
@@ -199,6 +600,420 @@
 
   </main>
 </div>
+
+<!-- ══ Project detail modal ═══════════════════════════════════ -->
+<div class="prj-overlay" id="proj-modal">
+  <div class="prj-box">
+    <button class="prj-close" onclick="closePrjModal('proj-modal')">×</button>
+
+    <div class="pm-header">
+      <p class="pm-type" id="pm-type"></p>
+      <p class="pm-title" id="pm-title"></p>
+      <div class="pm-funding-row">
+        <span class="pm-pct" id="pm-pct"></span>
+        <span class="pm-amounts" id="pm-amounts"></span>
+      </div>
+      <div class="pm-bar-track">
+        <div class="pm-bar-fill" id="pm-bar" style="width:0%"></div>
+      </div>
+      <div class="pm-stats">
+        <div class="pm-stat">
+          <span class="pm-stat__num" id="pm-donors"></span>
+          <span class="pm-stat__label">Donantes</span>
+        </div>
+        <div class="pm-stat">
+          <span class="pm-stat__num" id="pm-days"></span>
+          <span class="pm-stat__label">Días restantes</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pm-body">
+      <p class="pm-section-title">El proyecto</p>
+      <p class="pm-synopsis" id="pm-synopsis"></p>
+
+      <p class="pm-section-title">Necesidades actuales</p>
+      <div class="pm-needs" id="pm-needs"></div>
+
+      <p class="pm-section-title">El director</p>
+      <div class="pm-director">
+        <div class="pm-director__avatar" id="pm-dir-avatar"></div>
+        <div class="pm-director__info">
+          <p class="pm-director__role" id="pm-dir-role"></p>
+          <p class="pm-director__name" id="pm-dir-name"></p>
+          <p class="pm-director__bio" id="pm-dir-bio"></p>
+          <div class="pm-director__films" id="pm-dir-films"></div>
+        </div>
+      </div>
+
+      <div class="pm-actions">
+        <button class="pm-btn-donate" id="pm-donate-btn">Apoyar este proyecto →</button>
+        <a href="https://chat.whatsapp.com/J8qhnP2IcprAgI8ycbuhMR" target="_blank" rel="noopener" class="pm-btn-help">Hablar con el equipo →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Donation modal ═════════════════════════════════════════ -->
+<div class="prj-overlay" id="don-modal">
+  <div class="prj-box">
+    <button class="prj-close" onclick="closePrjModal('don-modal')">×</button>
+
+    <div id="don-form-wrap">
+      <div class="don-header">
+        <p class="don-badge">Club Benares · Donación</p>
+        <p class="don-project-name" id="don-proj-name"></p>
+      </div>
+
+      <div class="don-body">
+        <label class="don-label">¿Cuánto quieres aportar?</label>
+        <div class="don-amounts">
+          <button class="don-amount-btn" data-amount="5">€5</button>
+          <button class="don-amount-btn active" data-amount="10">€10</button>
+          <button class="don-amount-btn" data-amount="25">€25</button>
+          <button class="don-amount-btn" data-amount="50">€50</button>
+          <button class="don-amount-btn" data-amount="100">€100</button>
+        </div>
+        <div class="don-custom-wrap">
+          <span class="don-currency">€</span>
+          <input class="don-custom-input" type="number" id="don-custom" placeholder="Otro importe" min="1" />
+        </div>
+
+        <div class="don-field">
+          <label class="don-label" for="don-name">Nombre</label>
+          <input class="don-input" type="text" id="don-name" placeholder="Charlie Chaves" autocomplete="name" />
+        </div>
+        <div class="don-field">
+          <label class="don-label" for="don-email">Email</label>
+          <input class="don-input" type="email" id="don-email" placeholder="tu@email.com" autocomplete="email" />
+        </div>
+        <div class="don-field don-card-wrap">
+          <label class="don-label" for="don-card">Número de tarjeta</label>
+          <input class="don-input" type="text" id="don-card" placeholder="0000  0000  0000  0000" maxlength="19" inputmode="numeric" />
+          <span class="don-card-icon">VISA · MC</span>
+        </div>
+        <div class="don-row">
+          <div class="don-field">
+            <label class="don-label" for="don-exp">Caducidad</label>
+            <input class="don-input" type="text" id="don-exp" placeholder="MM / AA" maxlength="7" inputmode="numeric" />
+          </div>
+          <div class="don-field">
+            <label class="don-label" for="don-cvc">CVC</label>
+            <input class="don-input" type="text" id="don-cvc" placeholder="•••" maxlength="4" inputmode="numeric" />
+          </div>
+        </div>
+        <button class="don-submit" id="don-submit-btn">Donar <span id="don-submit-amount">€10</span> →</button>
+        <p class="don-note">⚿ Pago seguro · 100% va al proyecto · Sin comisiones</p>
+      </div>
+    </div>
+
+    <div class="don-success" id="don-success">
+      <div class="don-success__icon">♥</div>
+      <p class="don-success__title">Gracias por apoyar.</p>
+      <p class="don-success__sub" id="don-success-sub"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── Project data ────────────────────────────────────────── */
+var projects = [
+  {
+    type: 'Largometraje documental',
+    title: 'Os Dias Lentos',
+    pct: 56, raised: '€8.420', goal: '€15.000',
+    donors: 184, days: 38,
+    synopsis: 'Un retrato íntimo de cinco personas que viven a un ritmo diferente al de la ciudad. Rodado durante seis meses en Lisboa, sigue a un músico callejero, una traductora jubilada, un repartidor nocturno, un fotógrafo analógico y una actriz que ya no actúa. Sin narración. Sin música añadida. Solo los sonidos de la ciudad y las voces de quienes la habitan despacio.',
+    needs: ['Post-producción', 'Diseño de sonido', 'Subtítulos', 'Distribución festival'],
+    director: {
+      initials: 'CC', role: 'Director · Fundador',
+      name: 'Charlie Chaves',
+      bio: 'Fundador del Club Benares en 2023. Trabaja en el cruce entre el documental y la ficción con un foco en los márgenes urbanos de Lisboa. "Os Dias Lentos" es su primer largometraje.',
+      films: ['Lisboa ao Amanhecer', '.OK #1 (organizador)', 'Night Lounge (host)']
+    }
+  },
+  {
+    type: 'Cortometraje',
+    title: 'Sin título #07',
+    pct: 34, raised: '€1.190', goal: '€3.500',
+    donors: 31, days: 55,
+    synopsis: 'Una actriz de doblaje recibe la noticia de que su voz ha sido clonada por una IA. La copia habla por ella en anuncios, audiolibros y series. Decide reunirse con la versión sintética de sí misma. Una exploración de identidad, autoría y el cuerpo como instrumento.',
+    needs: ['Sonido directo', 'Localizaciones', 'Cámara', 'Actriz secundaria'],
+    director: {
+      initials: 'HM', role: 'Guionista · Director',
+      name: 'Henrique Mesquita Montes',
+      bio: 'Guionista y director con base en Lisboa. Sus proyectos oscilan entre el thriller psicológico y lo fantástico cotidiano. "Sin título #07" es el segundo cortometraje que dirige dentro del Club Benares.',
+      films: ['Azul Meia-Noite', 'Antología MashUp (guión)']
+    }
+  },
+  {
+    type: 'Largometraje',
+    title: 'Marés',
+    pct: 25, raised: '€5.400', goal: '€22.000',
+    donors: 72, days: 61,
+    synopsis: 'Dos hermanos regresan a la casa de verano de su infancia para venderla. Cinco días en la costa alentejana, entre silencios, reproches no dichos y una relación que el tiempo ha cambiado sin que ninguno lo haya notado. Un largometraje sobre la memoria y la distancia entre las personas que se conocen demasiado.',
+    needs: ['DP voluntario', 'Iluminación', 'Catering rodaje', 'Montadora'],
+    director: {
+      initials: 'PC', role: 'Director',
+      name: 'Pedro Caldeira',
+      bio: 'Realizador formado en ETIC Lisboa. Ganador del voto público en la 1.ª edición del .OK Festival con "Dá-me Ar". Sus films exploran el duelo, la memoria y el no-dicho. "Marés" es su primer largometraje.',
+      films: ['Dá-me Ar (.OK #1)', 'Noite Branca']
+    }
+  },
+  {
+    type: 'Antología',
+    title: 'Antología MashUp',
+    pct: 66, raised: '€11.800', goal: '€18.000',
+    donors: 147, days: 22,
+    synopsis: 'Seis directores. Seis historias. Una ciudad. Un proyecto coral que reúne a miembros del Club Benares en torno a una pregunta común: ¿qué significa vivir en Lisboa en 2026? Cada corto tiene entre 8 y 15 minutos, un estilo visual propio y un género diferente. El resultado se proyectará en el .OK Festival y se distribuirá en la plataforma de streaming del club.',
+    needs: ['Patrocinador principal', 'Post-producción conjunta', 'Diseño gráfico'],
+    director: {
+      initials: '6D', role: 'Proyecto colectivo · 6 directores',
+      name: 'Colectivo Benares',
+      bio: 'Proyecto impulsado por el Club Benares con la participación de Charlie Chaves, Karen Mattos, Mel Fox, Henrique Montes, Pedro Caldeira y Valdir Neves. Cada director lleva su propio capítulo con plena autonomía creativa.',
+      films: ['MashUp #1 Horror', 'MashUp #2 Romántico', 'Night Lounge (series)']
+    }
+  },
+  {
+    type: 'Doc serie',
+    title: 'Lisboa en 16mm',
+    pct: 30, raised: '€2.700', goal: '€9.000',
+    donors: 48, days: 44,
+    synopsis: 'Una serie documental en seis episodios filmada íntegramente en película 16mm. Cada episodio retrata un barrio de Lisboa a través de sus habitantes menos visibles: los que trabajan de noche, los que llevan décadas en el mismo sitio, los que llegaron hace poco. Sin guión. Pura observación.',
+    needs: ['Película 16mm (rollos)', 'Revelado laboratorio', 'Distribución digital', 'Subtítulos EN/ES'],
+    director: {
+      initials: 'VN', role: 'Director · Fotógrafo',
+      name: 'Valdir Neves',
+      bio: 'Fotógrafo y documentalista. Lleva tres años documentando todas las ediciones del Club Benares. Especialista en fotografía analógica. "Lisboa en 16mm" es su primer proyecto como director principal.',
+      films: ['Archivo .OK (fotógrafo)', 'MashUp · Serie (director foto)', 'El último rodaje (foto)']
+    }
+  },
+  {
+    type: 'Cortometraje',
+    title: 'Silentes 2',
+    pct: 75, raised: '€4.100', goal: '€5.500',
+    donors: 93, days: 14,
+    synopsis: 'La continuación de "Silentes". Cinco nuevos personajes. Esta vez en espacios abiertos: una playa fuera de temporada, un parking subterráneo, una rotonda vacía a las 5 de la mañana. El mismo silencio, otros miedos. La secuela amplía el universo del primero con un presupuesto de producción mayor y maquillaje SFX.',
+    needs: ['Sound design', 'Maquillaje SFX', 'Colorista'],
+    director: {
+      initials: 'KM', role: 'Directora · Fotógrafa',
+      name: 'Karen Mattos',
+      bio: 'Directora y fotógrafa con mirada documental. "Silentes" fue uno de los cortos más votados en el MashUp #1. Trabaja con películas de bajo presupuesto y equipos pequeños, con especial atención a la atmósfera sonora.',
+      films: ['Silentes (MashUp #1)', 'Antología MashUp']
+    }
+  },
+  {
+    type: 'Experimental',
+    title: '04 de la mañana',
+    pct: 37, raised: '€820', goal: '€2.200',
+    donors: 28, days: 70,
+    synopsis: 'Una exploración de qué ocurre en una ciudad cuando la mayoría duerme. Sin personajes fijos. Sin narrativa lineal. Solo imágenes: la luz de un kiosko, un gato, una ambulancia que pasa, una ventana encendida. Un ensayo visual sobre la presencia y la ausencia. Compuesto con música en directo de Leon Sukhodolskii.',
+    needs: ['Soporte económico (producción)', 'Difusión y festivales', 'Diseño de sonido'],
+    director: {
+      initials: 'MF', role: 'Directora · Experimental',
+      name: 'Mel Fox',
+      bio: 'Realizadora de cine experimental con base en Lisboa. Trabaja en el límite entre el ensayo visual y el documental de observación. "04 de la mañana" es su propuesta más ambiciosa hasta la fecha.',
+      films: ['Café de las 4', 'Antología MashUp']
+    }
+  }
+];
+
+/* ── Modal helpers ───────────────────────────────────────── */
+var currentDonateProject = '';
+
+function openPrjModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closePrjModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('prj-overlay')) {
+    e.target.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.prj-overlay.open').forEach(function(m) {
+      m.classList.remove('open');
+    });
+    document.body.style.overflow = '';
+  }
+});
+
+/* ── Open project detail modal ───────────────────────────── */
+function openProjDetail(idx) {
+  var p = projects[idx];
+  if (!p) return;
+
+  document.getElementById('pm-type').textContent = p.type;
+  document.getElementById('pm-title').textContent = p.title;
+  document.getElementById('pm-pct').textContent = p.pct + '%';
+  document.getElementById('pm-amounts').textContent = p.raised + ' de ' + p.goal;
+  document.getElementById('pm-donors').textContent = p.donors;
+  document.getElementById('pm-days').textContent = p.days;
+  document.getElementById('pm-synopsis').textContent = p.synopsis;
+
+  // Animate bar
+  var bar = document.getElementById('pm-bar');
+  bar.style.width = '0%';
+  setTimeout(function() { bar.style.width = p.pct + '%'; }, 60);
+
+  // Needs
+  var needsEl = document.getElementById('pm-needs');
+  needsEl.innerHTML = '';
+  p.needs.forEach(function(n) {
+    var s = document.createElement('span');
+    s.className = 'pm-need-tag';
+    s.textContent = n;
+    needsEl.appendChild(s);
+  });
+
+  // Director
+  document.getElementById('pm-dir-avatar').textContent = p.director.initials;
+  document.getElementById('pm-dir-role').textContent = p.director.role;
+  document.getElementById('pm-dir-name').textContent = p.director.name;
+  document.getElementById('pm-dir-bio').textContent = p.director.bio;
+
+  var filmsEl = document.getElementById('pm-dir-films');
+  filmsEl.innerHTML = '';
+  p.director.films.forEach(function(f) {
+    var s = document.createElement('span');
+    s.className = 'pm-director__film-tag';
+    s.textContent = f;
+    filmsEl.appendChild(s);
+  });
+
+  // Wire donate button
+  document.getElementById('pm-donate-btn').dataset.donateFrom = idx;
+
+  openPrjModal('proj-modal');
+}
+
+/* ── Open donation modal ─────────────────────────────────── */
+function openDonation(idx) {
+  var p = projects[idx];
+  if (!p) return;
+
+  // Reset state
+  document.getElementById('don-form-wrap').style.display = '';
+  document.getElementById('don-success').style.display = 'none';
+  document.getElementById('don-custom').value = '';
+  document.getElementById('don-name').value = '';
+  document.getElementById('don-email').value = '';
+  document.getElementById('don-card').value = '';
+  document.getElementById('don-exp').value = '';
+  document.getElementById('don-cvc').value = '';
+
+  // Set default amount
+  document.querySelectorAll('.don-amount-btn').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.amount === '10');
+  });
+  updateDonSubmitLabel('10');
+
+  document.getElementById('don-proj-name').textContent = p.title;
+  document.getElementById('don-success-sub').textContent = 'Tu donación para "' + p.title + '" está confirmada.\nEl equipo te lo agradece.';
+  currentDonateProject = p.title;
+
+  openPrjModal('don-modal');
+}
+
+/* ── Amount selection ────────────────────────────────────── */
+function updateDonSubmitLabel(amount) {
+  document.getElementById('don-submit-amount').textContent = '€' + amount;
+}
+
+document.querySelectorAll('.don-amount-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.don-amount-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('don-custom').value = '';
+    updateDonSubmitLabel(btn.dataset.amount);
+  });
+});
+
+document.getElementById('don-custom').addEventListener('input', function() {
+  if (this.value) {
+    document.querySelectorAll('.don-amount-btn').forEach(function(b) { b.classList.remove('active'); });
+    updateDonSubmitLabel(this.value);
+  }
+});
+
+/* ── Wire project cards (click on card body → detail modal) ── */
+document.querySelectorAll('.project-card[data-proj]').forEach(function(card) {
+  card.addEventListener('click', function(e) {
+    if (e.target.closest('button,a')) return;
+    openProjDetail(parseInt(card.dataset.proj, 10));
+  });
+});
+
+/* ── Wire [data-proj] buttons (Ayudar / Más información) ─── */
+document.querySelectorAll('[data-proj]').forEach(function(el) {
+  if (el.classList.contains('project-card')) return;
+  el.addEventListener('click', function(e) {
+    e.stopPropagation();
+    openProjDetail(parseInt(el.dataset.proj, 10));
+  });
+});
+
+/* ── Wire [data-donate] buttons ──────────────────────────── */
+document.querySelectorAll('[data-donate]').forEach(function(btn) {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    openDonation(parseInt(btn.dataset.donate, 10));
+  });
+});
+
+/* ── Donate from inside project detail modal ─────────────── */
+document.getElementById('pm-donate-btn').addEventListener('click', function() {
+  var idx = parseInt(this.dataset.donateFrom || 0, 10);
+  closePrjModal('proj-modal');
+  setTimeout(function() { openDonation(idx); }, 180);
+});
+
+/* ── Card formatting ─────────────────────────────────────── */
+document.getElementById('don-card').addEventListener('input', function() {
+  var v = this.value.replace(/\D/g,'').slice(0,16);
+  this.value = v.replace(/(.{4})/g,'$1  ').trim();
+});
+document.getElementById('don-exp').addEventListener('input', function() {
+  var v = this.value.replace(/\D/g,'').slice(0,4);
+  if (v.length >= 3) v = v.slice(0,2) + ' / ' + v.slice(2);
+  this.value = v;
+});
+document.getElementById('don-cvc').addEventListener('input', function() {
+  this.value = this.value.replace(/\D/g,'').slice(0,4);
+});
+
+/* ── Donation submit ─────────────────────────────────────── */
+document.getElementById('don-submit-btn').addEventListener('click', function() {
+  var name  = document.getElementById('don-name').value.trim();
+  var email = document.getElementById('don-email').value.trim();
+  var card  = document.getElementById('don-card').value.replace(/\s/g,'');
+  var exp   = document.getElementById('don-exp').value.trim();
+  var cvc   = document.getElementById('don-cvc').value.trim();
+
+  var activeBtn = document.querySelector('.don-amount-btn.active');
+  var custom    = document.getElementById('don-custom').value.trim();
+  var amount    = activeBtn ? activeBtn.dataset.amount : custom;
+
+  if (!name || !email || card.length < 16 || exp.length < 7 || cvc.length < 3 || !amount) {
+    this.textContent = 'Completa todos los campos →';
+    var btn = this;
+    setTimeout(function() {
+      btn.innerHTML = 'Donar <span id="don-submit-amount">€' + (amount || '?') + '</span> →';
+    }, 2000);
+    return;
+  }
+
+  document.getElementById('don-form-wrap').style.display = 'none';
+  document.getElementById('don-success').style.display = 'block';
+});
+</script>
 <script src="/benares-i18n.js"></script>
 <script src="/benares-nav.js"></script>
 </body>
