@@ -271,7 +271,7 @@
   /* ── Countdown Timer ───────────────────────────────────────── */
   var countdownEl = document.getElementById('countdown-timer');
   if (countdownEl) {
-    var target = new Date('2026-06-04T20:00:00');
+    var target = new Date('2027-04-02T20:00:00');
     var days    = countdownEl.querySelector('[data-unit="days"]');
     var hours   = countdownEl.querySelector('[data-unit="hours"]');
     var minutes = countdownEl.querySelector('[data-unit="minutes"]');

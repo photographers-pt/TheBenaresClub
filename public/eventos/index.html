@@ -59,6 +59,55 @@
     }
     .ev-close:hover { color: #fff; }
 
+    /* ── .OK red theme ───────────────────────────────────── */
+    .event-row--ok {
+      border-left: 2px solid #9b0000;
+      background: linear-gradient(90deg, rgba(90,0,0,0.18) 0%, transparent 60%);
+    }
+    .event-row--ok .event-row__title { color: #e84040; }
+    .event-row--ok .event-row__places-num { color: #e84040; }
+    .event-row--ok .event-row__arrow { color: #9b0000; }
+    .event-row--ok:hover { background: linear-gradient(90deg, rgba(120,0,0,0.28) 0%, transparent 60%); }
+
+    /* .OK modal red palette */
+    .ev-box--ok {
+      border-color: #5a0000;
+      background: #080000;
+    }
+    .ev-box--ok .ev-modal-stripe {
+      background: linear-gradient(135deg, #1a0000 0%, #080000 100%);
+      border-bottom-color: #2d0000;
+    }
+    .ev-box--ok .ev-modal-type { color: #7a2020; }
+    .ev-box--ok .ev-modal-title { color: #e84040; }
+    .ev-box--ok .ev-modal-pill { border-color: #3a0000; color: #b06060; }
+    .ev-box--ok .ev-modal-pill--accent { border-color: #6a0000; color: #e84040; }
+    .ev-box--ok .ev-modal-cap { border-bottom-color: #1e0000; }
+    .ev-box--ok .ev-modal-cap-track { background: #1e0000; }
+    .ev-box--ok .ev-modal-cap-fill { background: #c00000; }
+    .ev-box--ok .ev-modal-cap-label { color: #5a2020; }
+    .ev-box--ok .ev-modal-cap-num { color: #c06060; }
+    .ev-box--ok .ev-modal-cap-spots { color: #7a3030; }
+    .ev-box--ok .ev-modal-body { background: #080000; }
+    .ev-box--ok .ev-modal-section { color: #4a1515; }
+    .ev-box--ok .ev-modal-desc { color: #9a6060; }
+    .ev-box--ok .ev-modal-program-item { border-bottom-color: #1a0000; }
+    .ev-box--ok .ev-modal-program-time { color: #5a2020; }
+    .ev-box--ok .ev-modal-program-name { color: #c07070; }
+    .ev-box--ok .ev-modal-program-note { color: #6a3030; }
+    .ev-box--ok .ev-modal-guest__avatar { background: #1a0000; border-color: #3a0000; color: #6a2020; }
+    .ev-box--ok .ev-modal-guest__name { color: #c07070; }
+    .ev-box--ok .ev-modal-guest__role { color: #5a2020; }
+    .ev-box--ok .ev-modal-cta { border-top-color: #1e0000; background: #050000; }
+    .ev-box--ok .ev-modal-cta-price__amount { color: #e84040; }
+    .ev-box--ok .ev-modal-cta-price__note { color: #5a2020; }
+    .ev-box--ok .ev-modal-btn-ticket { background: #c00000; color: #fff; }
+    .ev-box--ok .ev-modal-btn-ticket:hover { background: #e00000; }
+    .ev-box--ok .ev-modal-btn-ticket--ghost { background: none; color: #7a3030; border-color: #3a0000; }
+    .ev-box--ok .ev-modal-btn-ticket--ghost:hover { border-color: #8a0000; color: #c06060; background: none; }
+    .ev-box--ok .ev-close { color: #5a2020; }
+    .ev-box--ok .ev-close:hover { color: #e84040; }
+
     /* ── Header stripe ───────────────────────────────────── */
     .ev-modal-stripe {
       padding: 2rem 2.5rem 1.75rem;
@@ -307,85 +356,29 @@
       </div>
     </header>
 
-    <!-- Filter -->
+    <!-- Filter (single event — bar kept for future use) -->
     <div class="filter-bar" data-filter-group data-filter-target=".event-row">
       <button class="filter-pill active" data-filter="all" data-i18n="ev.filter.all">Todos</button>
       <button class="filter-pill" data-filter="ok">.OK</button>
-      <button class="filter-pill" data-filter="nightlounge">Night Lounge</button>
-      <button class="filter-pill" data-filter="mashup">MashUp</button>
-      <button class="filter-pill" data-filter="screening">Screening</button>
     </div>
 
     <!-- Upcoming Events -->
     <div class="event-list">
 
-      <div class="event-row" data-cat="ok" data-ev="0">
-        <div class="event-row__date">04<span>Jun 2026</span></div>
+      <div class="event-row event-row--ok" data-cat="ok" data-ev="0">
+        <div class="event-row__date">02<span>Abr 2027</span></div>
         <div class="event-row__info">
-          <p class="event-row__title">.OK #2 · Indie Mix</p>
+          <p class="event-row__title">.OK #2 · Lisbon Short-Film Championship</p>
           <div class="event-row__meta">
-            <span>Fábrica Braço de Prata</span>
+            <span>Por confirmar</span>
             <span>Lisboa</span>
             <span>20:00</span>
-            <span>Gratuita</span>
-          </div>
-        </div>
-        <div class="event-row__places">
-          <span class="event-row__places-num">23/80</span>
-          <span class="event-row__places-label" data-i18n="ev.places">plazas</span>
-        </div>
-        <div class="event-row__arrow">→</div>
-      </div>
-
-      <div class="event-row" data-cat="nightlounge" data-ev="1">
-        <div class="event-row__date">26<span>Jun 2026</span></div>
-        <div class="event-row__info">
-          <p class="event-row__title">Night Lounge #5</p>
-          <div class="event-row__meta">
-            <span>Kreatori Café</span>
-            <span>Lisboa</span>
-            <span>20:30</span>
-            <span>Gratuita</span>
-          </div>
-        </div>
-        <div class="event-row__places">
-          <span class="event-row__places-num">47/60</span>
-          <span class="event-row__places-label" data-i18n="ev.places">plazas</span>
-        </div>
-        <div class="event-row__arrow">→</div>
-      </div>
-
-      <div class="event-row" data-cat="mashup" data-ev="2">
-        <div class="event-row__date">17<span>Jul 2026</span></div>
-        <div class="event-row__info">
-          <p class="event-row__title">MashUp #6 · Cinecore · Sci-fi</p>
-          <div class="event-row__meta">
-            <span>Cossoul</span>
-            <span>Lisboa</span>
-            <span>21:00</span>
-            <span>Con Cinecore</span>
-          </div>
-        </div>
-        <div class="event-row__places">
-          <span class="event-row__places-num">58/70</span>
-          <span class="event-row__places-label" data-i18n="ev.places">plazas</span>
-        </div>
-        <div class="event-row__arrow">→</div>
-      </div>
-
-      <div class="event-row" data-cat="screening" data-ev="3" style="opacity:0.7;">
-        <div class="event-row__date">12<span>Sep 2026</span></div>
-        <div class="event-row__info">
-          <p class="event-row__title">Circuito Nacional · Porto</p>
-          <div class="event-row__meta">
-            <span>Porto</span>
-            <span>Por confirmar</span>
-            <span data-i18n="ev.prereg">Pre-registro abierto</span>
+            <span>Candidatura abierta</span>
           </div>
         </div>
         <div class="event-row__places">
           <span class="event-row__places-num">—</span>
-          <span class="event-row__places-label" data-i18n="ev.available">disponibles</span>
+          <span class="event-row__places-label" data-i18n="ev.places">plazas</span>
         </div>
         <div class="event-row__arrow">→</div>
       </div>
@@ -518,115 +511,34 @@
 /* ── Event data ──────────────────────────────────────────── */
 var events = [
   {
-    type: '.OK Festival · Edición #2',
-    title: '.OK #2 · Indie Mix',
+    type: '.OK Festival · Edición #2 · 2027',
+    title: '.OK #2 · Lisbon Short-Film Championship',
+    ok: true,
     pills: [
-      { text: '04 Jun 2026', accent: true },
+      { text: '02 Abr 2027', accent: true },
       { text: '20:00 – 23:30' },
-      { text: 'Fábrica Braço de Prata', accent: true },
-      { text: 'Lisboa' },
-      { text: 'Entrada gratuita' }
+      { text: 'Lisboa', accent: true },
+      { text: 'Espacio por confirmar' },
+      { text: 'Candidatura abierta' }
     ],
-    capacity: 80, taken: 57,
-    desc: 'La segunda edición del festival de competición de cortometrajes del Club Benares. Cinco directores seleccionados proyectan sus trabajos ante el público de Lisboa. Al final de la noche, el voto del público decide el ganador, que accede al Circuito Nacional y se estrena también en Porto y Coimbra. Formato íntimo, sin alfombra roja. Solo cine y conversación.',
+    capacity: null, taken: null,
+    desc: 'La segunda edición del .OK Festival, el campeonato de cortometrajes del Club Benares. Cinco directores seleccionados proyectan sus trabajos en una sola noche ante el público de Lisboa. Al final de la velada, el voto del público decide el ganador, que accede al Circuito Nacional. Formato íntimo, sin alfombra roja. Solo cine, conversación y decisión colectiva.',
     program: [
-      { time: '20:00', name: 'Puertas + Acreditación', note: 'Recogida de pase en puerta · Solo con reserva confirmada' },
-      { time: '20:30', name: 'Presentación de la velada', note: 'A cargo de João T. Pires' },
-      { time: '20:45', name: 'Proyección de los 5 cortos seleccionados', note: '5 × ~12 min + Q&A rápido tras cada uno' },
+      { time: '20:00', name: 'Puertas + Acreditación', note: 'Solo con reserva confirmada' },
+      { time: '20:30', name: 'Presentación de la velada', note: 'A cargo de Charlie Chaves' },
+      { time: '20:45', name: 'Proyección de los 5 cortos finalistas', note: '5 × ~12 min + Q&A breve tras cada uno' },
       { time: '22:30', name: 'Votación del público', note: 'Formulario anónimo en sala · 15 minutos' },
-      { time: '22:50', name: 'Anuncio del ganador + palabras del director', note: '' },
-      { time: '23:00', name: 'Networking libre', note: 'Barra disponible · Fin previsto 23:30' }
+      { time: '22:50', name: 'Anuncio del ganador', note: 'Palabras del director ganador' },
+      { time: '23:00', name: 'Networking libre', note: 'Fin previsto 23:30' }
     ],
     guests: [
       { initials: 'CC', name: 'Charlie Chaves', role: 'Organizador' },
-      { initials: 'JP', name: 'João T. Pires', role: 'Presentador' },
-      { initials: 'VN', name: 'Valdir Neves', role: 'Fotografía' }
+      { initials: 'VN', name: 'Valdir Neves', role: 'Fotografía del evento' }
     ],
-    price: 'Gratuita',
-    priceNote: 'Reserva obligatoria · Aforo limitado a 80 personas',
+    price: 'Entrada gratuita',
+    priceNote: 'Reserva obligatoria · Candidatura de cortos abierta',
     ticketUrl: 'https://www.meetup.com/thebenaresclub/',
     ticketLabel: 'Reservar plaza →'
-  },
-  {
-    type: 'Night Lounge · Sesión #5',
-    title: 'Night Lounge #5',
-    pills: [
-      { text: '26 Jun 2026', accent: true },
-      { text: '20:30 – 23:00' },
-      { text: 'Kreatori Café', accent: true },
-      { text: 'Lisboa' },
-      { text: 'Entrada gratuita' }
-    ],
-    capacity: 60, taken: 47,
-    desc: 'Las sesiones Night Lounge son el formato más abierto del club: proyecciones informales de trabajos en proceso, pilots, rough cuts y experimentos visuales de los miembros. Sin jurado, sin competición. Solo feedback honesto y buena conversación entre cineastas. Traer trabajo propio es bienvenido pero no obligatorio.',
-    program: [
-      { time: '20:30', name: 'Llegada + presentaciones', note: 'Ambiente informal desde el inicio' },
-      { time: '21:00', name: 'Bloque de proyecciones', note: '8–12 trabajos cortos · 3–8 min cada uno' },
-      { time: '22:15', name: 'Ronda de feedback abierto', note: 'Moderada por Charlie Chaves' },
-      { time: '22:45', name: 'Networking libre', note: 'Fin previsto 23:00' }
-    ],
-    guests: [
-      { initials: 'CC', name: 'Charlie Chaves', role: 'Host' },
-      { initials: 'JP', name: 'João T. Pires', role: 'Co-host' }
-    ],
-    price: 'Gratuita',
-    priceNote: 'Reserva recomendada · Aforo 60 personas',
-    ticketUrl: 'https://www.meetup.com/thebenaresclub/',
-    ticketLabel: 'Reservar plaza →'
-  },
-  {
-    type: 'MashUp · Sesión #6 · con Cinecore',
-    title: 'MashUp #6 · Sci-fi',
-    pills: [
-      { text: '17 Jul 2026', accent: true },
-      { text: '21:00 – 00:00' },
-      { text: 'Cossoul', accent: true },
-      { text: 'Lisboa' },
-      { text: 'Con Cinecore' }
-    ],
-    capacity: 70, taken: 58,
-    desc: 'El formato MashUp reúne a dos comunidades de cine independiente en una sola noche. Esta edición está dedicada al Sci-fi y se realiza en colaboración con Cinecore Lisboa. Se proyectarán 6–8 cortometrajes de temática ciencia ficción de ambas comunidades, seguidos de conversación con los directores. Habrá música en directo al inicio de la velada.',
-    program: [
-      { time: '21:00', name: 'Puertas + DJ set ambiente', note: 'Selección musical de Leon Sukhodolskii' },
-      { time: '21:30', name: 'Bienvenida Benares × Cinecore', note: '' },
-      { time: '21:45', name: 'Bloque de cortos Sci-fi', note: '7 cortos · selección de ambas comunidades' },
-      { time: '23:15', name: 'Mesa redonda con directores', note: 'Moderada por Cinecore + Benares' },
-      { time: '23:45', name: 'Networking libre', note: 'Barra disponible · Fin previsto medianoche' }
-    ],
-    guests: [
-      { initials: 'CC', name: 'Charlie Chaves', role: 'Club Benares' },
-      { initials: 'LS', name: 'Leon Sukhodolskii', role: 'Música en directo' },
-      { initials: 'CK', name: 'Cinecore LX', role: 'Co-organizador' }
-    ],
-    price: 'Gratuita',
-    priceNote: 'Reserva obligatoria · Espacio 70 personas',
-    ticketUrl: 'https://www.eventbrite.com/',
-    ticketLabel: 'Reservar en Eventbrite →'
-  },
-  {
-    type: 'Circuito Nacional · Screening',
-    title: 'Circuito Nacional · Porto',
-    pills: [
-      { text: '12 Sep 2026', accent: true },
-      { text: 'Hora por confirmar' },
-      { text: 'Porto', accent: true },
-      { text: 'Espacio por confirmar' },
-      { text: 'Pre-registro abierto' }
-    ],
-    capacity: null, taken: null,
-    desc: 'El Circuito Nacional lleva los mejores cortos del .OK Festival a otras ciudades de Portugal. Esta edición llegará a Porto con los cinco cortometrajes finalistas de .OK #2 y el corto ganador. El espacio definitivo y el horario se confirmarán en Junio 2026. Inscríbete en el pre-registro para recibir toda la información en cuanto esté disponible.',
-    program: [
-      { time: 'TBC', name: 'Proyección de los 5 finalistas .OK #2', note: 'Selección definitiva tras la edición de Lisboa' },
-      { time: 'TBC', name: 'Presentación del corto ganador', note: 'Con palabras del director' },
-      { time: 'TBC', name: 'Debate abierto + networking', note: '' }
-    ],
-    guests: [
-      { initials: 'CC', name: 'Charlie Chaves', role: 'Club Benares' }
-    ],
-    price: 'Por confirmar',
-    priceNote: 'Pre-registro gratuito · Detalles en Junio 2026',
-    ticketUrl: 'https://chat.whatsapp.com/J8qhnP2IcprAgI8ycbuhMR',
-    ticketLabel: 'Pre-registrarme →'
   }
 ];
 
@@ -721,6 +633,14 @@ function openEvent(idx) {
     });
   } else {
     document.getElementById('em-guests-wrap').style.display = 'none';
+  }
+
+  /* Apply red theme for .OK events */
+  var box = document.querySelector('.ev-box');
+  if (ev.ok) {
+    box.classList.add('ev-box--ok');
+  } else {
+    box.classList.remove('ev-box--ok');
   }
 
   openEvModal();
