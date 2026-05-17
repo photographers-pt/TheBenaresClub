@@ -13,7 +13,7 @@
     pt: {
       /* nav / footer */
       'nav.eventos':   'Eventos',
-      'nav.ok':        '.OK',
+      'nav.ok':        '.KO',
       'nav.streaming': 'Streaming',
       'nav.proyectos': 'Projetos',
       'nav.comunidad': 'Comunidade',
@@ -74,7 +74,7 @@
       'com.gallery.count':  '10 edições',
 
       /* ok */
-      'ok.badge':           'Candidatura aberta · Edição #2 · 2026',
+      'ok.badge':           'Candidatura aberta · Edição #1 · 2027',
       'ok.championship':    'Lisbon International Short-Film Championship',
       'ok.directors':       'Realizadores seleccionados',
       'ok.winner':          'Vencedor · voto ao vivo',
@@ -89,7 +89,7 @@
       'ok.spec.lang':       'Idiomas',
       'ok.spec.prize':      'Prémio',
       'ok.spec.vote':       'Votação',
-      'ok.deadline.eyebrow':'Data limite de envio · .OK #2',
+      'ok.deadline.eyebrow':'Data limite de envio · .KO #1',
       'ok.deadline.time':   '23:59 · hora de Lisboa (WET)',
       'ok.upload':          'Enviar a minha curta →',
       'ok.rules':           'Ver bases completas',
@@ -104,7 +104,7 @@
       'ok.step4.title':     'O vencedor ao circuito',
       'ok.step4.desc':      'Tour nacional: Lisboa, Porto e Coimbra. Mais €1.500 em prémio directo ao realizador.',
       'ok.champions.title': 'Hall of Champions',
-      'ok.champions.count': '1 edição completa',
+      'ok.champions.count': 'Primeira edição · 02 Abr 2027',
 
       /* streaming */
       'str.label':             '06 · Streaming',
@@ -236,7 +236,7 @@
     es: {
       /* nav / footer */
       'nav.eventos':   'Eventos',
-      'nav.ok':        '.OK',
+      'nav.ok':        '.KO',
       'nav.streaming': 'Streaming',
       'nav.proyectos': 'Proyectos',
       'nav.comunidad': 'Comunidad',
@@ -297,7 +297,7 @@
       'com.gallery.count':  '10 ediciones',
 
       /* ok */
-      'ok.badge':           'Convocatoria abierta · Edición #2 · 2026',
+      'ok.badge':           'Convocatoria abierta · Edición #1 · 2027',
       'ok.championship':    'Lisbon International Short‑Film Championship',
       'ok.directors':       'Directores seleccionados',
       'ok.winner':          'Ganador · voto en directo',
@@ -312,7 +312,7 @@
       'ok.spec.lang':       'Idiomas',
       'ok.spec.prize':      'Premio',
       'ok.spec.vote':       'Voto',
-      'ok.deadline.eyebrow':'Fecha límite de envío · .OK #2',
+      'ok.deadline.eyebrow':'Fecha límite de envío · .KO #1',
       'ok.deadline.time':   '23:59 · hora de Lisboa (WET)',
       'ok.upload':          'Subir mi corto →',
       'ok.rules':           'Ver bases completas',
@@ -327,7 +327,7 @@
       'ok.step4.title':     'El ganador al circuito',
       'ok.step4.desc':      'Tour nacional: Lisboa, Porto y Coimbra. Más €1.500 en premio directo al director.',
       'ok.champions.title': 'Hall of Champions',
-      'ok.champions.count': '1 edición completada',
+      'ok.champions.count': 'Primera edición · 02 Abr 2027',
 
       /* streaming */
       'str.label':             '06 · Streaming',
@@ -459,7 +459,7 @@
     en: {
       /* nav / footer */
       'nav.eventos':   'Events',
-      'nav.ok':        '.OK',
+      'nav.ok':        '.KO',
       'nav.streaming': 'Streaming',
       'nav.proyectos': 'Projects',
       'nav.comunidad': 'Community',
@@ -520,7 +520,7 @@
       'com.gallery.count':  '10 editions',
 
       /* ok */
-      'ok.badge':           'Open submission · Edition #2 · 2026',
+      'ok.badge':           'Open submission · Edition #1 · 2027',
       'ok.championship':    'Lisbon International Short‑Film Championship',
       'ok.directors':       'Directors selected',
       'ok.winner':          'Winner · live vote',
@@ -535,7 +535,7 @@
       'ok.spec.lang':       'Languages',
       'ok.spec.prize':      'Prize',
       'ok.spec.vote':       'Voting',
-      'ok.deadline.eyebrow':'Submission deadline · .OK #2',
+      'ok.deadline.eyebrow':'Submission deadline · .KO #1',
       'ok.deadline.time':   '23:59 · Lisbon time (WET)',
       'ok.upload':          'Upload my film →',
       'ok.rules':           'See full rules',
@@ -550,7 +550,7 @@
       'ok.step4.title':     'Winner joins the circuit',
       'ok.step4.desc':      'National tour: Lisbon, Porto and Coimbra. Plus €1,500 prize directly to the director.',
       'ok.champions.title': 'Hall of Champions',
-      'ok.champions.count': '1 completed edition',
+      'ok.champions.count': 'First edition · 02 Apr 2027',
 
       /* streaming */
       'str.label':             '06 · Streaming',

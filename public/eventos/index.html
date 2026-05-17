@@ -359,7 +359,7 @@
     <!-- Filter (single event — bar kept for future use) -->
     <div class="filter-bar" data-filter-group data-filter-target=".event-row">
       <button class="filter-pill active" data-filter="all" data-i18n="ev.filter.all">Todos</button>
-      <button class="filter-pill" data-filter="ok">.OK</button>
+      <button class="filter-pill" data-filter="ok">.KO</button>
     </div>
 
     <!-- Upcoming Events -->
@@ -368,7 +368,7 @@
       <div class="event-row event-row--ok" data-cat="ok" data-ev="0">
         <div class="event-row__date">02<span>Abr 2027</span></div>
         <div class="event-row__info">
-          <p class="event-row__title">.OK #2 · Lisbon Short-Film Championship</p>
+          <p class="event-row__title">.KO #1 · Lisbon Short-Film Championship</p>
           <div class="event-row__meta">
             <span>Por confirmar</span>
             <span>Lisboa</span>
@@ -435,10 +435,10 @@
           <p style="font-family:var(--mono);font-size:0.58rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);">Con Cinecore · Cossoul</p>
         </div>
 
-        <div style="padding:1.25rem;background:var(--gray-900);border:1px solid var(--gray-800);">
-          <p style="font-family:var(--mono);font-size:0.58rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:0.4rem;">27 Mar 2025</p>
-          <p style="font-family:var(--serif);font-size:1rem;color:var(--white);margin-bottom:0.2rem;">.OK #1 "Dá-me Ar"</p>
-          <p style="font-family:var(--mono);font-size:0.58rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);">Ganador: Pedro Caldeira · FBP</p>
+        <div style="padding:1.25rem;background:rgba(100,0,0,0.18);border:1px solid rgba(180,0,0,0.3);opacity:0.8;">
+          <p style="font-family:var(--mono);font-size:0.58rem;text-transform:uppercase;letter-spacing:0.1em;color:#7a2020;margin-bottom:0.4rem;">02 Abr 2027 · Próximo</p>
+          <p style="font-family:var(--serif);font-size:1rem;color:#e84040;margin-bottom:0.2rem;">.KO #1 · Gran Estreno</p>
+          <p style="font-family:var(--mono);font-size:0.58rem;text-transform:uppercase;letter-spacing:0.08em;color:#7a2020;">Lisbon Short-Film Championship</p>
         </div>
 
         <div style="padding:1.25rem;background:var(--gray-900);border:1px solid var(--gray-800);">
@@ -511,8 +511,8 @@
 /* ── Event data ──────────────────────────────────────────── */
 var events = [
   {
-    type: '.OK Festival · Edición #2 · 2027',
-    title: '.OK #2 · Lisbon Short-Film Championship',
+    type: '.KO Festival · Edición #1 · 2027',
+    title: '.KO #1 · Lisbon Short-Film Championship',
     ok: true,
     pills: [
       { text: '02 Abr 2027', accent: true },
@@ -522,7 +522,7 @@ var events = [
       { text: 'Candidatura abierta' }
     ],
     capacity: null, taken: null,
-    desc: 'La segunda edición del .OK Festival, el campeonato de cortometrajes del Club Benares. Cinco directores seleccionados proyectan sus trabajos en una sola noche ante el público de Lisboa. Al final de la velada, el voto del público decide el ganador, que accede al Circuito Nacional. Formato íntimo, sin alfombra roja. Solo cine, conversación y decisión colectiva.',
+    desc: 'El gran estreno del .KO Festival, el campeonato de cortometrajes del Club Benares. Cinco directores seleccionados proyectan sus trabajos en una sola noche ante el público de Lisboa. Al final de la velada, el voto del público decide el ganador, que accede al Circuito Nacional. Formato íntimo, sin alfombra roja. Solo cine, conversación y decisión colectiva.',
     program: [
       { time: '20:00', name: 'Puertas + Acreditación', note: 'Solo con reserva confirmada' },
       { time: '20:30', name: 'Presentación de la velada', note: 'A cargo de Charlie Chaves' },

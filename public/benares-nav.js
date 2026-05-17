@@ -188,7 +188,7 @@
         '<div>' +
           '<div class="footer__col-title" data-i18n="footer.events">footer.events</div>' +
           '<div class="footer__links">' +
-            '<a href="/eventos/">.OK Festival</a>' +
+            '<a href="/eventos/">.KO Festival</a>' +
             '<a href="/eventos/">Night Lounge</a>' +
             '<a href="/eventos/">MashUp</a>' +
             '<a href="/eventos/">Circuito Nacional</a>' +
