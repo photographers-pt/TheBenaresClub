@@ -335,6 +335,10 @@
       transition: border-color 0.15s, color 0.15s;
     }
     .ev-modal-btn-ticket--ghost:hover { border-color: #555; color: #ccc; background: none; }
+    .ev-modal-btn-ticket--submit { background: #0d0d0d; color: #c00000; border: 1px solid #3a0000; transition: background 0.15s, border-color 0.15s; }
+    .ev-modal-btn-ticket--submit:hover { background: #1a0000; border-color: #8a0000; }
+    .ev-box--ok .ev-modal-btn-ticket--submit { background: #1a0000; color: #fff; border-color: #5a0000; }
+    .ev-box--ok .ev-modal-btn-ticket--submit:hover { background: #2a0000; border-color: #900000; }
 
     /* ── Make event rows clickable ───────────────────────── */
     .event-row { cursor: pointer; }
@@ -499,6 +503,9 @@
         <a id="em-ticket-btn" href="#" target="_blank" rel="noopener" class="ev-modal-btn-ticket">
           Reservar plaza →
         </a>
+        <a id="em-submit-btn" href="#" target="_blank" rel="noopener" class="ev-modal-btn-ticket ev-modal-btn-ticket--submit" style="display:none">
+          Enviar mi corto →
+        </a>
         <a href="https://chat.whatsapp.com/J8qhnP2IcprAgI8ycbuhMR" target="_blank" rel="noopener" class="ev-modal-btn-ticket ev-modal-btn-ticket--ghost">
           WhatsApp →
         </a>
@@ -538,7 +545,9 @@ var events = [
     price: 'Entrada gratuita',
     priceNote: 'Reserva obligatoria · Candidatura de cortos abierta',
     ticketUrl: 'https://www.meetup.com/thebenaresclub/',
-    ticketLabel: 'Reservar plaza →'
+    ticketLabel: 'Reservar plaza →',
+    submitUrl: 'https://filmfreeway.com/TheBenaresClub',
+    submitLabel: 'Enviar mi corto →'
   }
 ];
 
@@ -573,6 +582,15 @@ function openEvent(idx) {
   var ticketBtn = document.getElementById('em-ticket-btn');
   ticketBtn.href = ev.ticketUrl;
   ticketBtn.textContent = ev.ticketLabel;
+
+  var submitBtn = document.getElementById('em-submit-btn');
+  if (ev.submitUrl) {
+    submitBtn.href = ev.submitUrl;
+    submitBtn.textContent = ev.submitLabel || 'Enviar mi corto →';
+    submitBtn.style.display = '';
+  } else {
+    submitBtn.style.display = 'none';
+  }
 
   /* Pills */
   var pillsEl = document.getElementById('em-pills');
