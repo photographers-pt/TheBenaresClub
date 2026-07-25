@@ -3,644 +3,456 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Os filmes do Club Benares. Curtas-metragens produzidas pela comunidade.">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Club Benares">
-  <meta property="og:title" content="Cinemateca | Club Benares">
-  <meta property="og:description" content="Os filmes do Club Benares. Curtas-metragens produzidas pela comunidade.">
-  <meta property="og:image" content="/media/B01 Club Benares.webp">
-  <meta name="theme-color" content="#080706">
-  <title>Cinemateca | Club Benares</title>
-
+  <title>Cinemateca — The Benares Club</title>
   <link rel="stylesheet" href="/styles.css">
-  <link rel="icon" href="/media/A00 Logo - Light.png" type="image/png">
   <style>
-    /* Cinema page overrides */
-    html, body {
-      overflow-x: hidden;
-      overflow-y: hidden;
-      height: 100vh;
-    }
-
     body {
       background: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-family);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
     }
 
-    #header-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
+    main {
+      padding: 0 0 6rem;
     }
 
-    #footer-container {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-    }
-
-    main.cinema-main {
-      position: fixed;
-      top: 80px;
-      bottom: 60px;
-      left: 0;
-      right: 0;
+    /* Hero */
+    .cinemateca-hero {
+      position: relative;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      z-index: 1;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 60vh;
+      padding: 8rem 2rem 5rem;
+      overflow: hidden;
     }
 
-    /* Background image on hover */
-    .cinema-bg {
-      position: fixed;
+    .cinemateca-hero::after {
+      content: '';
+      position: absolute;
       inset: 0;
-      z-index: 0;
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
-      transition: opacity 0.5s ease, background-image 0.3s ease;
+      background: linear-gradient(to bottom, transparent 50%, var(--bg-base) 100%);
       pointer-events: none;
     }
-    .cinema-bg.visible {
-      opacity: 0.35;
-    }
 
-    /* Posters grid */
-    .posters-grid {
-      display: flex;
-      gap: 1.5rem;
-      align-items: flex-end;
-      padding: 3rem 3rem 1rem;
-      overflow-x: auto;
-      overflow-y: visible;
-      scroll-snap-type: x proximity;
-      scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
-      cursor: grab;
-      user-select: none;
-      min-width: min-content;
-    }
-
-    .posters-grid:active { cursor: grabbing; }
-
-    .posters-grid::-webkit-scrollbar { height: 4px; }
-    .posters-grid::-webkit-scrollbar-track {
-      background: rgba(240, 232, 216, 0.04);
-      margin: 0 3rem;
-    }
-    .posters-grid::-webkit-scrollbar-thumb {
-      background: rgba(240, 232, 216, 0.2);
-      border-radius: 4px;
-    }
-
-    /* Poster card */
-    .poster-card {
-      position: relative;
-      width: 200px;
-      height: 300px;
-      flex-shrink: 0;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                  box-shadow 0.4s ease;
-      background: rgba(255, 248, 238, 0.04);
-      border: 1px solid var(--border);
-      scroll-snap-align: center;
-    }
-
-    .poster-card:hover {
-      transform: translateY(-36px);
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
-      border-color: var(--border-strong);
-      z-index: 10;
-    }
-
-    .poster-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.4s ease;
-    }
-
-    .poster-card:hover img { transform: scale(1.04); }
-
-    .poster-info {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 2rem 1.2rem 1.2rem;
-      background: linear-gradient(to top, rgba(8, 7, 6, 0.95), transparent);
-      transform: translateY(100%);
-      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .poster-card:hover .poster-info { transform: translateY(0); }
-
-    .poster-disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-      filter: grayscale(40%);
-    }
-
-    .poster-disabled:hover {
-      transform: none;
-      box-shadow: none;
-    }
-
-    .poster-disabled:hover .poster-info { transform: translateY(100%); }
-
-    .poster-lock {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-      opacity: 0;
-      transition: opacity 0.3s;
-      z-index: 2;
-    }
-
-    .poster-disabled:hover .poster-lock { opacity: 1; }
-
-    .poster-title {
-      font-family: var(--font-family);
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin: 0 0 0.25rem;
-    }
-
-    .poster-meta {
-      font-family: var(--font-family);
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin: 0;
-      letter-spacing: 0.08em;
-    }
-
-    /* Responsive poster sizes */
-    @media (max-width: 1024px) {
-      .poster-card { width: 180px; height: 270px; }
-    }
-    @media (max-width: 768px) {
-      .poster-card { width: 150px; height: 225px; }
-      .posters-grid { padding: 2rem 2rem 1rem; gap: 1rem; }
-    }
-    @media (max-width: 480px) {
-      .poster-card { width: 130px; height: 195px; }
-      .posters-grid { padding: 1.5rem 1.5rem 0.5rem; gap: 0.75rem; }
-    }
-
-    @media (hover: none) and (pointer: coarse) {
-      .poster-card:hover { transform: none; }
-      .posters-grid { cursor: default; }
-    }
-
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(8, 7, 6, 0.94);
-      z-index: 10000;
-      overflow-y: auto;
-      padding: 2rem 0;
-    }
-
-    .modal.active { display: block; }
-
-    .modal-content {
-      position: relative;
-      width: 90%;
-      max-width: 1300px;
-      background: rgba(255, 248, 238, 0.04);
-      backdrop-filter: blur(20px) saturate(160%);
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-lg);
-      padding: 3rem;
-      margin: 2rem auto;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      background: rgba(240, 232, 216, 0.08);
-      border: 1px solid var(--border-strong);
-      color: var(--text-primary);
-      font-size: 1.4rem;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-      z-index: 10001;
-    }
-
-    .modal-close:hover {
-      background: rgba(240, 232, 216, 0.14);
-    }
-
-    .modal-body {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 3rem;
-      margin-top: 1rem;
-    }
-
-    @media (max-width: 1024px) {
-      .modal-body { grid-template-columns: 1fr; }
-      .modal-content { padding: 2rem; }
-    }
-
-    @media (max-width: 768px) {
-      .modal-content { width: 95%; padding: 1.5rem; margin: 1rem auto; }
-      .modal-close { top: 0.75rem; right: 0.75rem; }
-    }
-
-    .modal-left {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    .video-container {
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%;
-      background: #000;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-    }
-
-    .video-container video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      background: #000;
-    }
-
-    .modal-title {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-weight: 300;
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      color: var(--text-primary);
-      margin: 0 0 0.4rem;
-    }
-
-    .modal-year {
-      font-family: var(--font-family);
-      font-size: 0.8rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin: 0 0 1.5rem;
-    }
-
-    .modal-description {
-      font-family: var(--font-family);
-      font-size: 0.95rem;
-      line-height: 1.75;
-      color: var(--text-secondary);
-      margin: 0;
-      white-space: pre-line;
-    }
-
-    .modal-right { color: var(--text-primary); }
-
-    .modal-section-title {
-      font-family: var(--font-family);
-      font-size: 0.68rem;
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin: 0 0 1.2rem;
+      margin: 0 0 1.25rem;
     }
 
-    .cast-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .cast-member {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .cast-photo {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid var(--border);
-    }
-
-    .cast-name {
-      font-family: var(--font-family);
-      font-size: 0.9rem;
-      font-weight: 500;
+    .hero-title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(3.5rem, 8vw, 6rem);
+      font-weight: 300;
+      line-height: 1.05;
       color: var(--text-primary);
-      text-decoration: none;
-      display: block;
+      margin: 0 0 1.25rem;
     }
 
-    .cast-name:hover { color: var(--text-secondary); }
-
-    .cast-character {
-      font-family: var(--font-family);
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin: 0.2rem 0 0;
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin: 0 0 2.5rem;
+      max-width: 36ch;
     }
 
-    .crew-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .crew-member {
-      padding: 0.6rem 0.9rem;
-      background: rgba(255, 248, 238, 0.03);
-      border: 1px solid var(--border);
+    .hero-cta {
+      display: inline-block;
+      padding: 0.75rem 2.25rem;
+      border: 1px solid var(--border-strong);
       border-radius: var(--radius-sm);
-    }
-
-    .crew-name {
-      font-family: var(--font-family);
       font-size: 0.85rem;
       font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
       color: var(--text-primary);
       text-decoration: none;
-      display: block;
+      background: rgba(255, 248, 238, 0.04);
+      backdrop-filter: var(--glass-blur);
+      transition: border-color 0.2s ease, background 0.2s ease;
     }
 
-    .crew-name:hover { color: var(--text-secondary); }
+    .hero-cta:hover {
+      background: rgba(255, 248, 238, 0.08);
+      border-color: rgba(240, 232, 216, 0.35);
+    }
 
-    .crew-roles {
-      font-family: var(--font-family);
+    /* Section headers */
+    .section-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-eyebrow {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin: 0 0 0.6rem;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      padding: 5rem 0;
+    }
+
+    section + section {
+      border-top: 1px solid var(--border);
+    }
+
+    /* Film shelf */
+    .film-shelf {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.75rem;
+    }
+
+    .film-card {
+      background: rgba(255, 248, 238, 0.04);
+      backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(240, 232, 216, 0.08);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s ease;
+    }
+
+    .film-card:hover {
+      border-color: rgba(240, 232, 216, 0.18);
+    }
+
+    .film-poster {
+      aspect-ratio: 2 / 3;
+      width: 100%;
+      object-fit: cover;
+      display: block;
+      background: rgba(255, 248, 238, 0.03);
+    }
+
+    .film-poster-placeholder {
+      aspect-ratio: 2 / 3;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 248, 238, 0.03);
+      color: var(--text-muted);
+      font-size: 2.5rem;
+    }
+
+    .film-info {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      flex: 1;
+    }
+
+    .film-title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin: 0;
+      line-height: 1.25;
+    }
+
+    .film-meta {
       font-size: 0.75rem;
       color: var(--text-muted);
-      margin: 0.2rem 0 0;
+      margin: 0;
+    }
+
+    .film-description {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin: 0.25rem 0 0.75rem;
+    }
+
+    .film-action {
+      display: inline-block;
+      margin-top: auto;
+      padding: 0.6rem 1.25rem;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      text-decoration: none;
+      background: transparent;
+      text-align: center;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .film-action:hover {
+      background: rgba(255, 248, 238, 0.06);
+      border-color: rgba(240, 232, 216, 0.35);
+    }
+
+    /* Coming Soon */
+    .coming-soon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .coming-soon-card {
+      background: rgba(255, 248, 238, 0.03);
+      border: 1px solid rgba(240, 232, 216, 0.08);
+      border-radius: var(--radius-md);
+      padding: 1.5rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .coming-soon-title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .coming-soon-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.55rem;
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      width: fit-content;
+    }
+
+    /* Community Em Breve */
+    .em-breve {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: rgba(255, 248, 238, 0.02);
+      border: 1px solid rgba(240, 232, 216, 0.08);
+      border-radius: var(--radius-lg);
+    }
+
+    .em-breve p {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      margin: 0 0 0.75rem;
+    }
+
+    .em-breve span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .film-shelf {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+
+      .coming-soon-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      section {
+        padding: 3.5rem 0;
+      }
     }
   </style>
 </head>
-
 <body>
+
+  <div id="grain"></div>
   <div id="header-container"></div>
+  <main>
 
-  <div class="cinema-bg" id="cinemaBg"></div>
+    <!-- Hero -->
+    <section class="cinemateca-hero">
+      <p class="hero-eyebrow">The Benares Club</p>
+      <h1 class="hero-title">Cinemateca</h1>
+      <p class="hero-subtitle">Cinema para ver em casa — uma selecção para sócios.</p>
+      <a href="/cinemateca/" class="hero-cta">Entrar na Cinemateca</a>
+    </section>
 
-  <main class="cinema-main">
-    <div class="posters-grid" id="postersGrid"></div>
-  </main>
-
-  <div id="movieModal" class="modal">
-    <div class="modal-content">
-      <button class="modal-close" onclick="closeModal()" aria-label="Fechar">&times;</button>
-      <div class="modal-body">
-        <div class="modal-left">
-          <div class="video-container">
-            <video id="modalVideo" controls playsinline></video>
-          </div>
-          <div>
-            <h1 id="modalTitle" class="modal-title"></h1>
-            <p id="modalYear" class="modal-year"></p>
-            <p id="modalDescription" class="modal-description"></p>
-          </div>
+    <!-- Film Shelf -->
+    <section id="films-section">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow">Em exibição</p>
+          <h2 class="section-title">Filmes disponíveis</h2>
         </div>
-        <div class="modal-right">
-          <p class="modal-section-title">Cast</p>
-          <div id="castList" class="cast-list"></div>
-          <p class="modal-section-title">Equipa</p>
-          <div id="crewList" class="crew-list"></div>
+        <div class="film-shelf" id="film-shelf"></div>
+      </div>
+    </section>
+
+    <!-- Coming Soon -->
+    <section id="coming-soon-section">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow">A chegar</p>
+          <h2 class="section-title">Em breve na Cinemateca</h2>
+        </div>
+        <div class="coming-soon-grid" id="coming-soon-grid"></div>
+      </div>
+    </section>
+
+    <!-- Community Films -->
+    <section id="community-section">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow">Comunidade</p>
+          <h2 class="section-title">Filmes dos sócios</h2>
+        </div>
+        <div class="em-breve">
+          <p>Em breve</p>
+          <span>Os sócios poderão partilhar os seus filmes aqui.</span>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
+
+  </main>
 
   <div id="footer-container"></div>
-  <script src="/shared.js"></script>
+
   <script>
-    const movies = [
+    const films = [
       {
-        title: 'Inexistente',
-        year: '2023',
-        poster: './movies/inexistente-thumb.jpg',
-        video: './movies/inexistente.mp4',
-        backgroundImage: './movies/inexistente-bg.jpg',
-        description: 'Helder visita a antiga casa do seu melhor amigo, Pedro, quem desapareceu há um tempo atras sem deixar rasto. O objetivo do Helder é redescobrir memórias esquecidas, mas acabará por descobrir ainda mais.\n\nHelder visits the abandoned house of his best friend, Pedro, who disappeared a while ago without leaving a trace.',
-        crew: [
-          { name: 'Charlie Chaves', roles: ['Realizador', 'Produtor'], link: 'https://www.instagram.com/charliechavess' },
-          { name: 'João Nobre', roles: ['Fotografia', 'Som', 'Montagem'], link: '' },
-          { name: 'Locutor "Serviço Social"', roles: ['Agradecimentos Especiais'], link: '' },
-          { name: 'Pedro Senna Nunes', roles: ['Agradecimentos Especiais'], link: '' },
-          { name: 'Mario Quezada', roles: ['Agradecimentos Especiais'], link: '' }
-        ],
-        cast: [
-          { name: 'Alessandro Barboza', character: 'Pedro Amaral', photo: './talent/placeholder.jpg', profile: '' },
-          { name: 'Pedro Antonie de Saint', character: 'Helder Saramago', photo: './talent/placeholder.jpg', profile: '' }
-        ]
+        title: "Pather Panchali",
+        year: "1955",
+        director: "Satyajit Ray",
+        description: "A infância de Apu numa aldeia rural da Índia. Um retrato de beleza imperturbável.",
+        poster: null,
+        icon: "🎬"
       },
       {
-        title: 'El Artista Comprendido',
-        year: '2024',
-        poster: './movies/elartistacomprendido-thumb.jpg',
-        video: './movies/elartistacomprendido.mp4',
-        backgroundImage: './movies/elartistacomprendido-bg.jpg',
-        description: 'Um jovem artista finaliza a sua obra-prima, mas a cada dia que passa, fica mais insatisfeito com o resultado final, por isso decide descartar o seu trabalho. Posteriormente, um crítico de arte encontra a sua obra...',
-        crew: [
-          { name: 'Charlie Chaves', roles: ['Realização', 'Produção', 'Ator'], link: 'https://www.instagram.com/charliechavess' },
-          { name: 'Nityam', roles: ['Assistente Realização', 'Produção', 'Câmara'], link: 'https://www.instagram.com/nityamnow' },
-          { name: 'Patricia Pontes', roles: ['Assistente Realização'], link: 'https://www.instagram.com/pontes_filmworks' },
-          { name: 'Gonçalo Pereira', roles: ['Operador de Câmara'], link: 'https://www.instagram.com/goncalopereiraaa_' },
-          { name: 'João Formiga', roles: ['Assistente de Câmara'], link: 'https://www.instagram.com/joaoformiga' },
-          { name: 'Valdir Neves', roles: ['Operador de Som'], link: 'https://www.instagram.com/val.nevs' },
-          { name: 'Inês Pinheiro', roles: ['Agradecimentos Especiais'], link: 'https://www.instagram.com/neespera' }
-        ],
-        cast: [
-          { name: 'Charlie Chaves', character: 'O Artista', photo: './talent/artista.jpg', profile: 'https://www.instagram.com/charliechavess' },
-          { name: 'Bruno de Franclieu', character: 'O Crítico de Arte', photo: './talent/critico.jpg', profile: 'https://www.linkedin.com/in/bruno-de-franclieu-b6899aa4/' }
-        ]
+        title: "In the Mood for Love",
+        year: "2000",
+        director: "Wong Kar-wai",
+        description: "Dois vizinhos descobrem que os seus cônjuges têm um caso. Melancolia e desejo contidos.",
+        poster: null,
+        icon: "🌹"
       },
       {
-        title: 'Jay Gupta',
-        year: '2025',
-        poster: './movies/jay-thumb.jpg',
-        video: './movies/jay.mp4',
-        backgroundImage: './movies/jay-bg.jpg',
-        description: 'Coming soon...',
-        crew: [
-          { name: 'Charlie Chaves', roles: ['Ideia Original', 'Realização', 'Escrita', 'Montagem', 'Produção'], link: 'https://www.instagram.com/charliechavess' },
-          { name: 'Nityam', roles: ['Realização', 'Escrita', 'Montagem'], link: 'https://www.instagram.com/nityamnow' },
-          { name: 'Inês Serra', roles: ['Assistente Realização', 'Produção'], link: 'https://www.instagram.com/_nene.05_/' },
-          { name: 'Rasmus', roles: ['Fotografia'], link: 'https://www.instagram.com/wrasmus/' },
-          { name: 'Valdir Neves', roles: ['Som', 'Stills'], link: 'https://www.instagram.com/val.nevs/' },
-          { name: 'Fabio Duarte', roles: ['Som'], link: '' },
-          { name: 'Lia Paladino', roles: ['Assistente de Montagem'], link: 'https://www.instagram.com/liapaladinoo/' },
-          { name: 'José Machado', roles: ['Assistente de Produção'], link: 'https://www.instagram.com/zemariamachado__/' }
-        ],
-        cast: [
-          { name: 'Akshay Tharabole', character: 'Jay Gupta', photo: './talent/jay.jpg', profile: 'https://www.instagram.com/akzzz_0.2/' },
-          { name: 'Nilesh Suryawanshi', character: 'Akash', photo: './talent/akash.jpg', profile: 'https://www.instagram.com/champ_nilnilesh/' },
-          { name: 'Varsha Mehra', character: 'Veera', photo: './talent/veera.jpg', profile: 'https://www.instagram.com/varsha_dabhi/' },
-          { name: 'Yacine Meziti', character: 'Fábio', photo: './talent/fabio.jpg', profile: 'https://www.instagram.com/alchemist__777/' },
-          { name: 'Francisco Lopes', character: 'Gustavo', photo: './talent/gustavo.jpg', profile: 'https://www.instagram.com/flsantos793/' }
-        ]
+        title: "Stalker",
+        year: "1979",
+        director: "Andrei Tarkovsky",
+        description: "Uma jornada pela Zona — lugar de perigo e de esperança — em busca do quarto dos desejos.",
+        poster: null,
+        icon: "🌿"
       },
       {
-        title: 'OTTO',
-        year: '2026',
-        disabled: true,
-        poster: './movies/otto-thumb.jpg',
-        video: '',
-        backgroundImage: './movies/otto-bg.jpg',
-        description: 'Coming soon...',
-        crew: [
-          { name: 'Charlie Chaves', roles: ['Realização', 'Produção'], link: 'https://www.instagram.com/charliechavess' },
-          { name: 'Nityam', roles: ['Realização'], link: 'https://www.instagram.com/nityamnow' },
-          { name: 'Valdir Neves', roles: ['Som', 'Stills'], link: 'https://www.instagram.com/val.nevs/' },
-          { name: 'Inês Serra', roles: ['Produção'], link: 'https://www.instagram.com/_nene.05_/' }
-        ],
-        cast: []
+        title: "Jeanne Dielman",
+        year: "1975",
+        director: "Chantal Akerman",
+        description: "Três dias na vida de uma dona de casa. A rotina como linguagem cinematográfica radical.",
+        poster: null,
+        icon: "🕯️"
+      },
+      {
+        title: "Yi Yi",
+        year: "2000",
+        director: "Edward Yang",
+        description: "Uma família de Taipei atravessa um verão de mudanças. Três gerações, uma só ternura.",
+        poster: null,
+        icon: "🏙️"
+      },
+      {
+        title: "La Dolce Vita",
+        year: "1960",
+        director: "Federico Fellini",
+        description: "Um jornalista vaga pela Roma noturna em busca de sentido. Prazer e vazio em igual medida.",
+        poster: null,
+        icon: "✨"
       }
     ];
 
-    function openModal(index) {
-      const movie = movies[index];
-      document.getElementById('modalTitle').textContent = movie.title;
-      document.getElementById('modalYear').textContent = movie.year;
-      document.getElementById('modalDescription').textContent = movie.description;
+    const comingSoon = [
+      { title: "Cleo de 5 à 7", year: "1962", director: "Agnès Varda" },
+      { title: "A Margem do Paraíso", year: "2004", director: "Fatih Akin" },
+      { title: "Amarcord", year: "1973", director: "Federico Fellini" },
+      { title: "Tokyo Story", year: "1953", director: "Yasujirō Ozu" }
+    ];
 
-      const video = document.getElementById('modalVideo');
-      video.src = movie.video || '';
-
-      document.getElementById('castList').innerHTML = movie.cast && movie.cast.length
-        ? movie.cast.map(a => `
-            <div class="cast-member">
-              <img src="${a.photo}" alt="${a.name}" class="cast-photo" onerror="this.style.display='none'">
-              <div>
-                <a href="${a.profile || '#'}" target="_blank" class="cast-name">${a.name}</a>
-                <p class="cast-character">${a.character}</p>
-              </div>
-            </div>`).join('')
-        : '<p style="color:var(--text-muted);font-size:0.85rem">Sem informação de cast.</p>';
-
-      document.getElementById('crewList').innerHTML = movie.crew && movie.crew.length
-        ? movie.crew.map(m => `
-            <div class="crew-member">
-              <a href="${m.link || '#'}" target="_blank" class="crew-name">${m.name}</a>
-              <p class="crew-roles">${m.roles.join(', ')}</p>
-            </div>`).join('')
-        : '<p style="color:var(--text-muted);font-size:0.85rem">Sem informação de equipa.</p>';
-
-      document.getElementById('movieModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      document.getElementById('movieModal').classList.remove('active');
-      document.body.style.overflow = '';
-      const v = document.getElementById('modalVideo');
-      v.pause();
-      v.src = '';
-    }
-
-    document.addEventListener('click', e => {
-      if (e.target === document.getElementById('movieModal')) closeModal();
+    // Render film shelf
+    const shelf = document.getElementById('film-shelf');
+    films.forEach(film => {
+      const card = document.createElement('div');
+      card.className = 'film-card';
+      const posterHTML = film.poster
+        ? `<img class="film-poster" src="${film.poster}" alt="${film.title}" loading="lazy">`
+        : `<div class="film-poster-placeholder">${film.icon}</div>`;
+      card.innerHTML = `
+        ${posterHTML}
+        <div class="film-info">
+          <h3 class="film-title">${film.title}</h3>
+          <p class="film-meta">${film.year} · ${film.director}</p>
+          <p class="film-description">${film.description}</p>
+          <a href="/cinemateca/" class="film-action">Ver na Cinemateca</a>
+        </div>
+      `;
+      shelf.appendChild(card);
     });
 
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeModal();
-    });
-
-    function loadPosters() {
-      const grid = document.getElementById('postersGrid');
-      grid.innerHTML = movies.map((movie, i) => `
-        <div class="poster-card${movie.disabled ? ' poster-disabled' : ''}" data-index="${i}">
-          <img src="${movie.poster}" alt="${movie.title}" loading="lazy">
-          ${movie.disabled ? '<div class="poster-lock">🔒</div>' : ''}
-          <div class="poster-info">
-            <p class="poster-title">${movie.title}</p>
-            <p class="poster-meta">${movie.year}</p>
-          </div>
-        </div>`).join('');
-
-      const bg = document.getElementById('cinemaBg');
-
-      grid.querySelectorAll('.poster-card').forEach(card => {
-        const i = parseInt(card.dataset.index);
-        const movie = movies[i];
-
-        card.addEventListener('mouseenter', () => {
-          if (movie.backgroundImage) {
-            bg.style.backgroundImage = `url('${movie.backgroundImage}')`;
-            bg.classList.add('visible');
-          }
-        });
-
-        card.addEventListener('mouseleave', () => {
-          bg.classList.remove('visible');
-        });
-
-        card.addEventListener('click', () => {
-          if (!movie.disabled) openModal(i);
-        });
-      });
-    }
-
-    function initDragScroll() {
-      const slider = document.getElementById('postersGrid');
-      let isDown = false, startX, scrollLeft;
-
-      slider.addEventListener('mousedown', e => {
-        isDown = true;
-        startX = e.pageX - slider.offsetLeft;
-        scrollLeft = slider.scrollLeft;
-      });
-
-      slider.addEventListener('mouseleave', () => { isDown = false; });
-      slider.addEventListener('mouseup', () => { isDown = false; });
-
-      slider.addEventListener('mousemove', e => {
-        if (!isDown) return;
-        e.preventDefault();
-        slider.scrollLeft = scrollLeft - (e.pageX - slider.offsetLeft - startX) * 2;
-      });
-
-      let touchStartX = 0, touchScrollLeft = 0;
-      slider.addEventListener('touchstart', e => {
-        touchStartX = e.touches[0].pageX;
-        touchScrollLeft = slider.scrollLeft;
-      }, { passive: true });
-
-      slider.addEventListener('touchmove', e => {
-        slider.scrollLeft = touchScrollLeft + (touchStartX - e.touches[0].pageX) * 1.5;
-      }, { passive: true });
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      loadPosters();
-      initDragScroll();
+    // Render coming soon
+    const comingGrid = document.getElementById('coming-soon-grid');
+    comingSoon.forEach(film => {
+      const card = document.createElement('div');
+      card.className = 'coming-soon-card';
+      card.innerHTML = `
+        <span class="badge">Em breve</span>
+        <h4 class="coming-soon-title">${film.title}</h4>
+        <p class="coming-soon-meta">${film.year} · ${film.director}</p>
+      `;
+      comingGrid.appendChild(card);
     });
   </script>
+
+  <script src="/shared.js"></script>
 </body>
 </html>

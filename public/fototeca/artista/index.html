@@ -339,7 +339,7 @@
     <audio id="open-book-sound" src="/A Side/A00 Club Benares/Materiales/Audios/Open Book Sound Effect.mp3" preload="auto"></audio>
     <audio id="close-book-sound" src="/A Side/A00 Club Benares/Materiales/Audios/Close Book Sound Effect.mp3" preload="auto"></audio>
     
-    <a href="/biblioteca/" class="back-button">←</a>
+    <a href="/fototeca/" class="back-button">←</a>
     
     <div class="book-container">
         <img src="pages.jpg" alt="Open Book" class="book-image">
@@ -530,11 +530,11 @@
                     coverOverlay.classList.add('hidden');
                 } else {
                     // If on black area, exit
-                    window.location.href = '/biblioteca/';
+                    window.location.href = '/fototeca/';
                 }
             } else {
                 // Clicked on overlay background (not on image), exit
-                window.location.href = '/biblioteca/';
+                window.location.href = '/fototeca/';
             }
         });
 
@@ -573,7 +573,7 @@
             if (e.target.closest('.back-button') || e.target.closest('.content-wrapper')) return;
             
             // Click outside book, exit
-            window.location.href = '/biblioteca/';
+            window.location.href = '/fototeca/';
         });
     </script>
 </body>

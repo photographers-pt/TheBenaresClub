@@ -52,10 +52,9 @@ function createHeader() {
       <ul>
         <li><a href="/eventos/">Eventos</a></li>
         <li><a href="/cinemateca/">Cinemateca</a></li>
-        <li><a href="/stream/">Stream</a></li>
         <li><a href="/comunidad/">Comunidade</a></li>
         <li><a href="/mercado/">Mercado</a></li>
-        <li><a href="/biblioteca/">Biblioteca</a></li>
+        <li><a href="/fototeca/">Fototeca</a></li>
         <li><a href="/contactos/">Contactos</a></li>
       </ul>
     </nav>
