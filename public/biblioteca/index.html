@@ -1,150 +1,218 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Os livros interativos do Club Benares. Explora os bastidores dos nossos filmes.">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Club Benares">
-  <meta property="og:title" content="Biblioteca | Club Benares">
-  <meta property="og:description" content="Os livros interativos do Club Benares. Explora os bastidores dos nossos filmes.">
-  <meta property="og:image" content="https://club-benares.pages.dev/media/B01 Club Benares.webp">
-  <meta property="og:url" content="https://club-benares.pages.dev/biblioteca/">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#000000">
-  <title>Biblioteca | Club Benares</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="icon" href="/media/A00 Logo - Light.png" type="image/png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biblioteca — The Benares Club</title>
+  <link rel="stylesheet" href="/styles.css" />
   <style>
-    /* Custom fonts */
-    @font-face {
-      font-family: 'Yuji';
-      src: url('./Fontes/YujiBoku-Regular.ttf') format('truetype');
+    /* ── Page layout ── */
+    body {
+      background: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-family);
+      min-height: 100vh;
+      margin: 0;
     }
 
-    @font-face {
-      font-family: 'INX';
-      src: url('./Fontes/Afrah-Bold.ttf') format('truetype');
-    }
-    
-    @font-face {
-      font-family: 'Montserrat';
-      src: url('../media/fontes/Montserrat-VariableFont_wght.ttf') format('truetype');
-    }
-    
-    /* Biblioteca specific styles */
     main {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 6rem 2rem 8rem;
     }
-    
-    .fade-container {
-      position: relative;
-      display: inline-block;
-      max-width: 900px;
-      width: 100%;
-      height: 100%;
-    }
-    
-    .Imagenes-Portas-Landing {
-      position: absolute;
-      display: flex;
-      gap: 1%;
-      align-items: flex-end;
-      left: 20%;
-      top: 50%;
-      transform: translateY(-50%);
-      flex-direction: row;
-    }
-    
-    .LIVRO {
+
+    /* ── Section header ── */
+    .section-eyebrow {
       display: block;
-      transition: transform 0.3s ease, filter 0.3s ease;
+      font-family: var(--font-family);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
     }
-    
-    .LIVRO a {
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      color: var(--text-primary);
+      line-height: 1.1;
+      margin: 0 0 1.25rem;
+    }
+
+    .section-description {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 540px;
+      line-height: 1.65;
+      margin: 0 0 4rem;
+    }
+
+    /* ── Books grid ── */
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      max-width: 680px;
+    }
+
+    @media (max-width: 540px) {
+      .books-grid {
+        gap: 1.25rem;
+      }
+    }
+
+    /* ── Book card ── */
+    .book-card {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .book-cover-link {
       display: block;
       text-decoration: none;
     }
-    
-    .LIVRO:hover {
-      transform: scale(1.05);
-      filter: brightness(1.2);
+
+    .book-cover-wrap {
+      position: relative;
+      aspect-ratio: 2 / 3;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: rgba(255, 248, 238, 0.04);
+      backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(240, 232, 216, 0.08);
+      transition: border-color 0.25s ease, transform 0.25s ease;
     }
-    
-    .LIVRO img {
-      height: 450px;
-      width: auto;
-      border-radius: 2px;
-      box-shadow: none;
+
+    .book-cover-link:hover .book-cover-wrap {
+      border-color: rgba(240, 232, 216, 0.22);
+      transform: translateY(-3px);
+    }
+
+    .book-cover-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       display: block;
     }
-    
-    /* Responsive adjustments */
-    @media (max-width: 1200px) {
-      .Imagenes-Portas-Landing {
-        left: 10%;
-      }
+
+    /* ── Coming-soon card ── */
+    .book-cover-wrap.soon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: default;
     }
-    
-    @media (max-width: 768px) {
-      .LIVRO img {
-        height: 300px;
-      }
+
+    .soon-label {
+      font-family: var(--font-family);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ── Book meta ── */
+    .book-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .book-title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1rem;
+      color: var(--text-primary);
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    .book-author {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .book-meta.muted .book-title,
+    .book-meta.muted .book-author {
+      color: var(--text-muted);
     }
   </style>
 </head>
-<body class="bg-biblioteca">
+<body>
 
-  <!-- Header container where JavaScript will insert the header -->
+  <div id="grain"></div>
   <div id="header-container"></div>
 
   <main>
-    <div class="fade-container" id="fade">
-      <!-- Book container - books flow left to right -->
-      <div class="Imagenes-Portas-Landing">
+    <span class="section-eyebrow">01 · Biblioteca</span>
+    <h1 class="section-title">Biblioteca</h1>
+    <p class="section-description">
+      Uma colecção de livros publicados pelo The Benares Club — entre ficção, fotografia e formas que resistem à classificação.
+    </p>
 
-        <div class="LIVRO">
-          <a href="../biblioteca/inexistente/">
-            <img class="INX" src="../media/04_Arquivo_Nacional_-_INX.png" alt="I N E X I S T E N T E">
-          </a>
+    <div class="books-grid">
+
+      <!-- Book 1: Inexistente -->
+      <div class="book-card">
+        <a class="book-cover-link" href="/biblioteca/inexistente/">
+          <div class="book-cover-wrap">
+            <img src="/biblioteca/inexistente/cover.jpg" alt="Capa de Inexistente" />
+          </div>
+        </a>
+        <div class="book-meta">
+          <p class="book-title">Inexistente</p>
+          <p class="book-author">The Benares Club</p>
         </div>
-
-        <div class="LIVRO">
-          <a href="../biblioteca/artista/">
-            <img class="EAC" src="../media/04_Arquivo_Nacional_-_EAC.png" alt="El Artista Comprendido">
-          </a>
-        </div>
-
-
-
-<!--
-        <div class="LIVRO">
-          <a href="../biblioteca/INX.html">
-            <img class="EAC" src="../media/book-side.png" alt="El Artista Comprendido">
-          </a>
-        </div>
-
-        <div class="LIVRO">
-          <a href="../biblioteca/EAC.html">
-            <img class="EAC" src="../media/book-side.png" alt="El Artista Comprendido">
-          </a>
-        </div>
--->
-
-
-
       </div>
+
+      <!-- Book 2: Artista -->
+      <div class="book-card">
+        <a class="book-cover-link" href="/biblioteca/artista/">
+          <div class="book-cover-wrap">
+            <img src="/biblioteca/artista/cover.jpg" alt="Capa de Artista" />
+          </div>
+        </a>
+        <div class="book-meta">
+          <p class="book-title">Artista</p>
+          <p class="book-author">The Benares Club</p>
+        </div>
+      </div>
+
+      <!-- Placeholder 3 -->
+      <div class="book-card">
+        <div class="book-cover-wrap soon">
+          <span class="soon-label">Em breve</span>
+        </div>
+        <div class="book-meta muted">
+          <p class="book-title">Em breve</p>
+          <p class="book-author">&nbsp;</p>
+        </div>
+      </div>
+
+      <!-- Placeholder 4 -->
+      <div class="book-card">
+        <div class="book-cover-wrap soon">
+          <span class="soon-label">Em breve</span>
+        </div>
+        <div class="book-meta muted">
+          <p class="book-title">Em breve</p>
+          <p class="book-author">&nbsp;</p>
+        </div>
+      </div>
+
     </div>
   </main>
 
   <div id="footer-container"></div>
-  <script src="/shared.js"></script>
 
+  <script src="/shared.js"></script>
 </body>
 </html>

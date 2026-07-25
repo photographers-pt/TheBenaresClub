@@ -1,659 +1,408 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Comunidade de cinema em Lisboa. Projeções, debates, produções independentes e eventos que reúnem cineastas e apaixonados pelo cinema.">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Club Benares">
-  <meta property="og:title" content="Club Benares — Comunidade de Cinema em Lisboa">
-  <meta property="og:description" content="Comunidade de cinema em Lisboa. Projeções, debates, produções independentes e eventos que reúnem cineastas e apaixonados pelo cinema.">
-  <meta property="og:image" content="https://club-benares.pages.dev/media/B01 Club Benares.webp">
-  <meta property="og:url" content="https://club-benares.pages.dev/">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#080706">
-  <title>Club Benares</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="icon" href="/media/A00 Logo - Light.png" type="image/png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Benares Club</title>
+  <meta name="description" content="Um clube de fotografia e cinema em Lisboa." />
+  <link rel="stylesheet" href="/styles.css" />
   <style>
-    @font-face {
-      font-family: 'Extenda';
-      src: url('/fuentes/Extenda30Deca.woff2') format('woff2');
-      font-weight: normal;
-      font-style: normal;
-    }
-    @font-face {
-      font-family: 'DSEG7';
-      src: url('/fuentes/DSEG7Modern-BoldItalic.woff2') format('woff2'),
-           url('/fuentes/DSEG7Modern-BoldItalic.woff') format('woff');
-      font-weight: bold;
-      font-style: italic;
-      font-display: swap;
-    }
-
-    /* ── Reset / base ─────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
 
-    body {
-      background: var(--bg-base, #080706);
-      color: var(--text-primary, #f0e8d8);
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* Body in normal flow — header is injected by shared.js */
-    main { overflow-x: hidden; }
-
-    /* ── Film grain overlay ───────────────────────────────── */
-    #grain {
-      position: fixed; inset: 0; z-index: 9998; pointer-events: none;
-      opacity: 0.045; mix-blend-mode: overlay;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 200px 200px;
-    }
-
-    /* ── HERO ─────────────────────────────────────────────── */
+    /* Hero */
     .hero {
       position: relative;
-      min-height: 92vh;
+      min-height: 100svh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
       overflow: hidden;
     }
-
     .hero-bg {
       position: absolute;
       inset: 0;
-      background-image: url('/media/B01 Club Benares.webp');
+      background-image: url('/images/B01 Club Benares.webp');
       background-size: cover;
-      background-position: center 30%;
+      background-position: center;
+      filter: brightness(0.38);
       z-index: 0;
     }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to top,
-        #080706 0%,
-        rgba(8,7,6,0.75) 35%,
-        rgba(8,7,6,0.3) 70%,
-        rgba(8,7,6,0.15) 100%
-      );
-      z-index: 1;
-    }
-
     .hero-content {
       position: relative;
-      z-index: 2;
-      padding: 0 4rem 5rem;
+      z-index: 1;
       max-width: 760px;
     }
-
     .hero-eyebrow {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
+      font-family: var(--font-family);
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--text-muted, rgba(240,232,216,0.35));
-      margin-bottom: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
     }
-
-    .hero-title {
-      font-family: 'Fraunces', Georgia, serif;
-      font-size: clamp(2.8rem, 6vw, 5rem);
-      font-weight: 500;
+    .hero h1 {
+      font-family: var(--font-serif);
       font-style: italic;
-      line-height: 1.08;
-      letter-spacing: -0.02em;
-      color: var(--text-primary, #f0e8d8);
-      margin-bottom: 1.25rem;
-    }
-
-    .hero-desc {
-      font-size: 1rem;
       font-weight: 300;
-      line-height: 1.7;
-      color: var(--text-secondary, rgba(240,232,216,0.6));
-      max-width: 520px;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      line-height: 1.05;
+      color: var(--text-primary);
       margin-bottom: 2rem;
     }
-
-    .hero-actions {
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      align-items: center;
-      margin-bottom: 3.5rem;
+    .hero-sub {
+      font-family: var(--font-family);
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
     }
 
-    .btn-solid {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.6rem;
-      background: var(--text-primary, #f0e8d8);
-      color: #080706;
-      border-radius: var(--radius-pill, 40px);
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-decoration: none;
-      letter-spacing: 0.04em;
-      transition: opacity 0.2s;
-    }
-    .btn-solid:hover { opacity: 0.85; }
-
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.6rem;
-      background: rgba(255,248,238,0.06);
-      color: var(--text-primary, #f0e8d8);
-      border: 1px solid rgba(255,248,238,0.18);
-      border-radius: var(--radius-pill, 40px);
-      font-size: 0.85rem;
-      font-weight: 500;
-      text-decoration: none;
-      letter-spacing: 0.04em;
-      backdrop-filter: blur(10px);
-      transition: background 0.2s, border-color 0.2s;
-    }
-    .btn-outline:hover {
-      background: rgba(255,248,238,0.11);
-      border-color: rgba(255,248,238,0.32);
-    }
-
-    /* Countdown inside hero */
-    .hero-countdown {
-      display: inline-flex;
-      align-items: center;
-      gap: 1rem;
-      background: rgba(8,7,6,0.6);
-      border: 1px solid rgba(255,248,238,0.12);
-      backdrop-filter: blur(20px) saturate(160%);
-      border-radius: var(--radius-md, 12px);
-      padding: 0.85rem 1.4rem;
-      width: fit-content;
-    }
-
-    .countdown-number {
-      font-family: 'DSEG7', monospace;
-      font-weight: bold;
-      font-style: italic;
-      font-size: 2.2rem;
-      color: #e03535;
-      line-height: 1;
-      min-width: 2.5ch;
-    }
-
+    /* Countdown */
+    .countdown-wrap { margin-bottom: 3rem; }
     .countdown-label {
-      display: flex;
-      flex-direction: column;
-      gap: 0.1rem;
-    }
-
-    .countdown-label span:first-child {
-      font-size: 0.75rem;
-      font-weight: 600;
+      font-family: var(--font-family);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-primary, #f0e8d8);
+      color: var(--text-muted);
+      margin-bottom: 1rem;
     }
-
-    .countdown-label a {
-      font-size: 0.72rem;
-      color: var(--text-muted, rgba(240,232,216,0.35));
-      text-decoration: none;
-      letter-spacing: 0.05em;
-      transition: color 0.2s;
+    .countdown {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      align-items: flex-start;
     }
-    .countdown-label a:hover { color: var(--text-secondary, rgba(240,232,216,0.6)); }
-
-    /* Hero scroll cue */
-    .hero-scroll {
-      position: absolute;
-      bottom: 2rem;
-      right: 4rem;
-      z-index: 2;
+    .cd-unit {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0.4rem;
-      opacity: 0.35;
     }
-    .hero-scroll span {
+    .cd-num {
+      font-family: 'Courier New', monospace;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1;
+      min-width: 2.4ch;
+      text-align: center;
+    }
+    .cd-lbl {
+      font-family: var(--font-family);
       font-size: 0.6rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      writing-mode: vertical-rl;
+      color: var(--text-muted);
     }
-    .hero-scroll i { font-size: 0.75rem; animation: bounceDown 1.6s ease infinite; }
-    @keyframes bounceDown {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(4px); }
-    }
-
-    /* ── PAGE WRAPPER ─────────────────────────────────────── */
-    .page {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 3rem 120px;
-    }
-
-    /* ── SECTION LABEL ────────────────────────────────────── */
-    .sec-label {
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-muted, rgba(240,232,216,0.32));
-      margin-bottom: 0.6rem;
-    }
-
-    /* ── ABOUT ────────────────────────────────────────────── */
-    .about-section {
-      padding: 5rem 0 4rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: start;
-      border-bottom: 1px solid var(--border, rgba(255,248,238,0.08));
-    }
-
-    .about-left {}
-
-    .about-heading {
-      font-family: 'Fraunces', Georgia, serif;
-      font-size: clamp(2rem, 3.5vw, 3rem);
-      font-weight: 500;
-      font-style: italic;
-      line-height: 1.15;
-      color: var(--text-primary, #f0e8d8);
-      margin-bottom: 1.75rem;
-    }
-
-    .about-heading em {
-      font-style: normal;
-      color: var(--text-muted, rgba(240,232,216,0.32));
-    }
-
-    .lang-tabs {
-      display: flex;
-      gap: 0.35rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .lang-tab {
-      padding: 0.3rem 0.75rem;
-      background: transparent;
-      border: 1px solid var(--border, rgba(255,248,238,0.08));
-      border-radius: var(--radius-pill, 40px);
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .lang-tab img { height: 14px; width: auto; border-radius: 2px; }
-    .lang-tab span { font-size: 0.72rem; color: var(--text-muted, rgba(240,232,216,0.35)); letter-spacing: 0.04em; }
-    .lang-tab.active {
-      background: var(--bg-elevated, rgba(255,248,238,0.09));
-      border-color: var(--border-strong, rgba(255,248,238,0.22));
-    }
-    .lang-tab.active span { color: var(--text-primary, #f0e8d8); }
-    .lang-tab:hover { border-color: var(--border-strong, rgba(255,248,238,0.22)); }
-
-    .about-text {
-      font-size: 0.9rem;
-      font-weight: 300;
-      line-height: 1.85;
-      color: var(--text-secondary, rgba(240,232,216,0.58));
-      white-space: pre-wrap;
-    }
-
-    .about-right {
-      position: relative;
-    }
-
-    .about-img-wrap {
-      position: relative;
-      border-radius: var(--radius-md, 12px);
-      overflow: hidden;
-      aspect-ratio: 4/5;
-    }
-
-    .about-img-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: grayscale(15%);
-    }
-
-    .about-img-caption {
-      margin-top: 0.75rem;
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-muted, rgba(240,232,216,0.32));
-    }
-
-    /* Stats row */
-    .about-stats {
-      display: flex;
-      gap: 2rem;
-      margin-top: 2.5rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border, rgba(255,248,238,0.08));
-    }
-    .stat-item {}
-    .stat-number {
-      font-family: 'Fraunces', Georgia, serif;
-      font-size: 2rem;
-      font-weight: 600;
-      color: var(--text-primary, #f0e8d8);
+    .cd-sep {
+      font-family: 'Courier New', monospace;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      color: var(--text-muted);
       line-height: 1;
-      margin-bottom: 0.25rem;
-    }
-    .stat-label {
-      font-size: 0.72rem;
-      font-weight: 400;
-      color: var(--text-muted, rgba(240,232,216,0.35));
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      padding-top: 0.1em;
     }
 
-    /* ── CINEMATECA STRIP ─────────────────────────────────── */
-    .films-section {
-      padding: 4rem 0 3.5rem;
-      border-bottom: 1px solid var(--border, rgba(255,248,238,0.08));
-    }
-
-    .films-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 1.5rem;
-    }
-
-    .films-title {
-      font-family: 'Fraunces', Georgia, serif;
-      font-size: 1.4rem;
-      font-weight: 400;
-      font-style: italic;
-      color: var(--text-primary, #f0e8d8);
-    }
-
-    .films-link {
-      font-size: 0.78rem;
-      color: var(--text-muted, rgba(240,232,216,0.35));
-      text-decoration: none;
-      letter-spacing: 0.06em;
-      transition: color 0.2s;
-    }
-    .films-link:hover { color: var(--text-primary, #f0e8d8); }
-
-    .films-strip {
-      display: flex;
-      gap: 1rem;
-      overflow-x: auto;
-      padding-bottom: 0.5rem;
-      scrollbar-width: none;
-    }
-    .films-strip::-webkit-scrollbar { display: none; }
-
-    .film-card {
-      flex-shrink: 0;
-      width: 110px;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      transition: transform 0.25s;
-    }
-    .film-card:hover { transform: translateY(-4px); }
-
-    .film-card-poster {
-      width: 110px;
-      height: 165px;
-      object-fit: cover;
-      border-radius: var(--radius-sm, 8px);
-      display: block;
-      border: 1px solid var(--border, rgba(255,248,238,0.08));
-    }
-
-    .film-card.coming .film-card-poster {
-      opacity: 0.38;
-      filter: grayscale(60%);
-    }
-
-    .film-card-name {
-      font-size: 0.72rem;
-      color: var(--text-secondary, rgba(240,232,216,0.58));
-      line-height: 1.3;
-    }
-    .film-card-soon {
-      font-size: 0.65rem;
-      color: var(--text-muted, rgba(240,232,216,0.32));
-      font-style: italic;
-    }
-
-    /* ── EVENTS HISTORY ───────────────────────────────────── */
-    .history-section {
-      padding: 4rem 0 0;
-    }
-
-    .history-heading {
-      font-family: 'Fraunces', Georgia, serif;
-      font-size: 1.4rem;
-      font-weight: 400;
-      font-style: italic;
-      color: var(--text-primary, #f0e8d8);
-      margin-bottom: 3rem;
-    }
-
-    /* Year separator */
-    .year-divider {
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-      margin-bottom: 2rem;
-    }
-    .year-divider span {
-      font-family: 'Fraunces', Georgia, serif;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-muted, rgba(240,232,216,0.32));
-      letter-spacing: 0.12em;
-    }
-    .year-divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border, rgba(255,248,238,0.08));
-    }
-
-    /* Event block */
-    .event-block {
-      margin-bottom: 4rem;
-    }
-
-    .event-header {
-      margin-bottom: 1.25rem;
-    }
-
-    .event-name {
-      font-family: 'Fraunces', Georgia, serif;
-      font-size: 1.25rem;
-      font-weight: 500;
-      color: var(--text-primary, #f0e8d8);
-      margin-bottom: 0.5rem;
-      line-height: 1.3;
-    }
-    .event-name a {
-      color: inherit;
-      text-decoration: none;
-    }
-    .event-name a:hover { text-decoration: underline; }
-
-    .event-meta {
+    /* Buttons */
+    .hero-ctas {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem 1.5rem;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .btn {
+      display: inline-block;
+      font-family: var(--font-family);
       font-size: 0.8rem;
-      color: var(--text-muted, rgba(240,232,216,0.32));
-    }
-    .event-meta span { display: flex; align-items: center; gap: 0.4rem; }
-    .event-meta i { color: var(--text-muted, rgba(240,232,216,0.32)); font-size: 0.7rem; }
-    .event-meta a { color: inherit; text-decoration: none; transition: color 0.2s; }
-    .event-meta a:hover { color: var(--text-secondary, rgba(240,232,216,0.58)); }
-
-    /* ── PHOTO GRID (magazine style) ─────────────────────── */
-    .photo-grid {
-      display: grid;
-      grid-template-columns: 1.55fr 1fr;
-      grid-template-rows: auto auto;
-      gap: 4px;
-      border-radius: var(--radius-md, 12px);
-      overflow: hidden;
-    }
-
-    /* 4-photo layout: A spans rows, B/C/D stack right */
-    .photo-grid.has-4 { grid-template-rows: 1fr 1fr; }
-
-    .photo-item {
-      position: relative;
-      overflow: hidden;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.75rem 2rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: var(--text-primary);
       cursor: pointer;
-      background: var(--bg-surface, rgba(255,248,238,0.04));
-      aspect-ratio: 3/2;
+      transition: border-color 0.2s, background 0.2s;
     }
-    /* First photo is taller (portrait feel) */
-    .photo-grid.has-4 .photo-item:first-child {
-      grid-row: 1 / span 2;
-      aspect-ratio: unset;
+    .btn:hover {
+      border-color: var(--text-secondary);
+      background: rgba(240, 232, 216, 0.06);
+    }
+    .btn-primary { border-color: rgba(240, 232, 216, 0.5); }
+    .btn-primary:hover {
+      border-color: var(--text-primary);
+      background: rgba(240, 232, 216, 0.1);
     }
 
-    .photo-item img {
+    /* Sections */
+    .section { padding: 7rem 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .s-head { margin-bottom: 4rem; }
+    .s-eyebrow {
+      font-family: var(--font-family);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+    .s-title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      color: var(--text-primary);
+      line-height: 1.15;
+    }
+    .divider { width: 100%; height: 1px; background: var(--border); }
+
+    /* Manifesto */
+    .manifesto { background: rgba(255, 248, 238, 0.02); }
+    .manifesto-inner { max-width: 760px; margin: 0 auto; text-align: center; }
+    .manifesto blockquote {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+      color: var(--text-primary);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    .manifesto cite {
+      font-family: var(--font-family);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-style: normal;
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    @media (max-width: 720px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+    .lang-tabs {
+      display: flex;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-bottom: 2rem;
+      width: fit-content;
+    }
+    .lang-tab {
+      padding: 0.5rem 1.2rem;
+      font-family: var(--font-family);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .lang-tab + .lang-tab { border-left: 1px solid var(--border-strong); }
+    .lang-tab.active, .lang-tab:hover {
+      background: rgba(240, 232, 216, 0.07);
+      color: var(--text-primary);
+    }
+    .about-text { display: none; }
+    .about-text.active { display: block; }
+    .about-text p {
+      font-family: var(--font-family);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 1.2rem;
+    }
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    @media (max-width: 480px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+    .stat-item {
+      padding: 1.5rem;
+      background: rgba(255, 248, 238, 0.04);
+      backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      text-align: center;
+    }
+    .stat-num {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .stat-label {
+      font-family: var(--font-family);
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .about-img-col img {
       width: 100%;
-      height: 100%;
+      border-radius: var(--radius-md);
+      object-fit: cover;
+      aspect-ratio: 3/4;
+      display: block;
+      border: 1px solid var(--border);
+    }
+
+    /* Films */
+    .films-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+    .film-card {
+      background: rgba(255, 248, 238, 0.04);
+      backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .film-card:hover { border-color: var(--border-strong); }
+    .film-card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; }
+    .film-card-body { padding: 1rem 1.2rem 1.2rem; }
+    .film-title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1rem;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+    }
+    .film-meta {
+      font-family: var(--font-family);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    /* History */
+    .history-list { display: flex; flex-direction: column; gap: 3rem; }
+    .history-entry {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+    @media (max-width: 700px) {
+      .history-entry { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+    .history-photo {
+      position: relative;
+      cursor: pointer;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .history-photo img {
+      width: 100%;
+      aspect-ratio: 4/3;
       object-fit: cover;
       display: block;
-      transition: transform 0.45s ease, filter 0.3s ease;
-      filter: grayscale(8%);
+      transition: transform 0.3s;
     }
-    .photo-item:hover img {
-      transform: scale(1.04);
-      filter: grayscale(0%);
-    }
-
-    /* Click hint overlay */
-    .photo-item::after {
-      content: '';
+    .history-photo:hover img { transform: scale(1.03); }
+    .history-photo-hint {
       position: absolute;
-      inset: 0;
-      background: rgba(8,7,6,0);
-      transition: background 0.3s;
+      bottom: 0.75rem;
+      right: 0.75rem;
+      font-family: var(--font-family);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: rgba(8, 7, 6, 0.6);
+      padding: 0.3rem 0.6rem;
+      border-radius: var(--radius-sm);
     }
-    .photo-item:hover::after {
-      background: rgba(8,7,6,0.12);
+    .history-info { padding-top: 0.25rem; }
+    .history-year {
+      font-family: 'Courier New', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .history-name {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .history-desc {
+      font-family: var(--font-family);
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
     }
 
-    /* Upcoming event (no photos) */
-    .event-upcoming {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.25rem 1.5rem;
-      border: 1px dashed var(--border, rgba(255,248,238,0.10));
-      border-radius: var(--radius-md, 12px);
-      color: var(--text-muted, rgba(240,232,216,0.32));
-      font-size: 0.82rem;
-      letter-spacing: 0.05em;
-    }
-    .event-upcoming i { font-size: 0.9rem; }
-
-    /* ── LIGHTBOX ─────────────────────────────────────────── */
-    #lightbox {
-      display: none;
+    /* Lightbox */
+    .lightbox-overlay {
       position: fixed;
       inset: 0;
-      z-index: 10000;
-      background: rgba(8,7,6,0.96);
-      backdrop-filter: blur(6px);
-      justify-content: center;
+      background: rgba(8, 7, 6, 0.92);
+      z-index: 1000;
+      display: none;
       align-items: center;
-      cursor: zoom-out;
+      justify-content: center;
+      padding: 2rem;
     }
-    #lightbox.open { display: flex; }
-
-    #lightbox img {
-      max-width: 90vw;
-      max-height: 88vh;
+    .lightbox-overlay.open { display: flex; }
+    .lightbox-inner { position: relative; max-width: 900px; width: 100%; }
+    .lightbox-inner img {
+      width: 100%;
+      max-height: 80svh;
       object-fit: contain;
-      border-radius: 4px;
-      box-shadow: 0 0 80px rgba(0,0,0,0.8);
-      cursor: default;
+      border-radius: var(--radius-md);
+      display: block;
     }
-
-    #lightbox-close {
+    .lightbox-close {
       position: absolute;
-      top: 1.5rem;
-      right: 1.75rem;
-      background: rgba(255,248,238,0.08);
-      border: 1px solid rgba(255,248,238,0.14);
-      color: var(--text-primary, #f0e8d8);
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      top: -2.5rem;
+      right: 0;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.4rem;
       cursor: pointer;
-      font-size: 1.1rem;
-      transition: background 0.2s;
+      padding: 0.25rem 0.5rem;
+      line-height: 1;
+      font-family: var(--font-family);
+      transition: color 0.2s;
     }
-    #lightbox-close:hover { background: rgba(255,248,238,0.16); }
-
-    /* ── FIXED FOOTER SPACING ─────────────────────────────── */
-    #footer-container {
-      position: fixed !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      z-index: 1000 !important;
-    }
-
-    /* ── RESPONSIVE ───────────────────────────────────────── */
-    @media (max-width: 900px) {
-      .hero-content { padding: 0 2rem 4rem; }
-      .hero-scroll { right: 2rem; }
-      .page { padding: 0 1.5rem 120px; }
-      .about-section { grid-template-columns: 1fr; gap: 2.5rem; }
-      .about-right { order: -1; }
-      .about-img-wrap { aspect-ratio: 16/9; }
-      .photo-grid { grid-template-columns: 1fr 1fr; }
-      .photo-grid.has-4 .photo-item:first-child { grid-row: unset; aspect-ratio: 3/2; }
-    }
-
-    @media (max-width: 600px) {
-      .hero-title { font-size: 2.2rem; }
-      .hero-actions { gap: 0.5rem; }
-      .btn-solid, .btn-outline { font-size: 0.8rem; padding: 0.65rem 1.2rem; }
-      .about-stats { flex-wrap: wrap; gap: 1.5rem; }
-      .photo-grid { grid-template-columns: 1fr 1fr; gap: 3px; }
-      .event-name { font-size: 1.05rem; }
+    .lightbox-close:hover { color: var(--text-primary); }
+    .lightbox-caption {
+      text-align: center;
+      margin-top: 1rem;
+      font-family: var(--font-family);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
     }
   </style>
 </head>
@@ -664,442 +413,329 @@
 
 <main>
 
-  <!-- ══ HERO ══════════════════════════════════════════════ -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-content">
-      <p class="hero-eyebrow">Lisboa, Portugal · Desde 2023</p>
-      <h1 class="hero-title">Uma comunidade<br>de cinema em Lisboa</h1>
-      <p class="hero-desc">Projeções, debates, curtas-metragens independentes e eventos que reúnem cineastas e apaixonados pelo cinema.</p>
+      <p class="hero-eyebrow">Lisboa &mdash; Fotografia &amp; Cinema</p>
+      <h1>The Benares<br>Club</h1>
+      <p class="hero-sub">Um espaço para olhares inquietos. Encontros de imagem, luz e conversa.</p>
 
-      <div class="hero-actions">
-        <a href="/eventos/" class="btn-solid"><i class="fas fa-calendar-alt"></i> Próximo evento</a>
-        <a href="/cinemateca/" class="btn-outline"><i class="fas fa-film"></i> Os nossos filmes</a>
-        <a href="https://www.instagram.com/thebenaresclub" class="btn-outline" target="_blank" rel="noopener"><i class="fab fa-instagram"></i> Instagram</a>
-      </div>
-
-      <div class="hero-countdown">
-        <span class="countdown-number" id="countdown">--</span>
-        <div class="countdown-label">
-          <span>dias para o próximo evento</span>
-          <a href="/eventos/">MashUp #5 — 7 Mai 2026 →</a>
+      <div class="countdown-wrap">
+        <p class="countdown-label">Próximo encontro em</p>
+        <div class="countdown" id="countdown">
+          <div class="cd-unit">
+            <span class="cd-num" id="cd-days">00</span>
+            <span class="cd-lbl">dias</span>
+          </div>
+          <span class="cd-sep">:</span>
+          <div class="cd-unit">
+            <span class="cd-num" id="cd-hours">00</span>
+            <span class="cd-lbl">horas</span>
+          </div>
+          <span class="cd-sep">:</span>
+          <div class="cd-unit">
+            <span class="cd-num" id="cd-mins">00</span>
+            <span class="cd-lbl">min</span>
+          </div>
+          <span class="cd-sep">:</span>
+          <div class="cd-unit">
+            <span class="cd-num" id="cd-secs">00</span>
+            <span class="cd-lbl">seg</span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="hero-scroll">
-      <span>Scroll</span>
-      <i class="fas fa-chevron-down"></i>
+      <div class="hero-ctas">
+        <a href="#about" class="btn btn-primary">Sobre o clube</a>
+        <a href="#history" class="btn">Encontros</a>
+        <a href="#films" class="btn">Cinemateca</a>
+      </div>
     </div>
   </section>
 
-  <!-- ══ FILM STRIP MARQUEE ═══════════════════════════════════ -->
-  <div class="marquee-wrap">
-    <div class="marquee-track">
-      <span>Night Lounge #1</span>
-      <span>Night Lounge #2</span>
-      <span>Battle Royale #1</span>
-      <span>CMCS Media Screening</span>
-      <span>MashUp #1 · Horror</span>
-      <span>Night Lounge #4</span>
-      <span>MashUp #2 · Romântico</span>
-      <span>MashUp #3 · Acção</span>
-      <span>MashUp #4</span>
-      <span>MashUp #5 · Indie Mix</span>
-      <!-- duplicate for infinite loop -->
-      <span>Night Lounge #1</span>
-      <span>Night Lounge #2</span>
-      <span>Battle Royale #1</span>
-      <span>CMCS Media Screening</span>
-      <span>MashUp #1 · Horror</span>
-      <span>Night Lounge #4</span>
-      <span>MashUp #2 · Romântico</span>
-      <span>MashUp #3 · Acção</span>
-      <span>MashUp #4</span>
-      <span>MashUp #5 · Indie Mix</span>
-    </div>
-  </div>
+  <div class="divider"></div>
 
-  <div class="page">
-
-    <!-- ══ MANIFESTO ════════════════════════════════════════════ -->
-    <section class="manifesto">
-      <p class="manifesto-quote">
-        <span class="m-strike">Não vendemos bilhetes.</span>
-        <em>Reservamos lugares</em> para quem ainda acredita em
-        projetar filmes numa parede, discuti-los até tarde
-        e rodar o próximo <em>entre amigos.</em>
+  <!-- Manifesto -->
+  <section class="section manifesto" id="manifesto">
+    <div class="section-inner manifesto-inner">
+      <div class="s-head" style="text-align:center;">
+        <p class="s-eyebrow">Manifesto</p>
+        <h2 class="s-title">O que nos move</h2>
+      </div>
+      <blockquote>
+        &ldquo;A fotografia é a arte de congelar o tempo sem o matar. Cinema é deixá-lo respirar de novo.&rdquo;
+      </blockquote>
+      <cite>&mdash; The Benares Club</cite>
+      <p style="margin-top:2.5rem; font-family:var(--font-family); font-size:0.95rem; line-height:1.8; color:var(--text-secondary); max-width:600px; margin-left:auto; margin-right:auto;">
+        Reunimo-nos porque acreditamos que ver bem é um acto colectivo. Trazemos câmaras, filmes, e perguntas sem resposta. O resto acontece.
       </p>
-      <div class="manifesto-author">
-        <span class="m-line"></span>
-        <span><strong>Charlie Chaves</strong> &nbsp;·&nbsp; Fundador · Lisboa, 2023</span>
-      </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ══ ABOUT / QUEM SOMOS ════════════════════════════════ -->
-    <section class="about-section">
-      <div class="about-left">
-        <div class="s-head" style="margin-bottom:1.75rem; padding-bottom:1rem;">
-          <span class="s-num">01 · Quem somos</span>
-          <h2 class="s-title" id="about-heading">A comunidade <em>que faz cinema</em></h2>
-          <div class="s-actions"></div>
-        </div>
+  <div class="divider"></div>
 
-        <div class="lang-tabs">
-          <button class="lang-tab active" data-lang="pt">
-            <img src="/media/flag-portugal.png" alt="PT"><span>PT</span>
-          </button>
-          <button class="lang-tab" data-lang="en">
-            <img src="/media/flag-england.png" alt="EN"><span>EN</span>
-          </button>
-          <button class="lang-tab" data-lang="es">
-            <img src="/media/flag-guatemala.png" alt="ES"><span>ES</span>
-          </button>
-        </div>
-
-        <p class="about-text" id="about-text">Club Benares é uma comunidade de cinema aberta a todas as pessoas que amam o cinema. Fundado por <strong>Charlie Chaves</strong> em 2023 em Lisboa, o conceito original do Club era reunir uma equipa de pessoas, como uma banda de rock, interessadas em fazer cinema independente.
-
-Essa ideia continua viva, mas o projeto evoluiu. Hoje o Club Benares procura também criar um espaço onde profissionais, estudantes e amadores possam partilhar experiências, trocar ideias e desenvolver projetos em conjunto.
-
-Com o tempo, o Club cresceu e passou a organizar eventos, projeções, debates, sessões de networking, produções cinematográficas e festivais, promovendo o encontro entre artistas e o público e <strong>fortalecendo os laços dentro da comunidade.</strong>
-
-Convidamos-te a fazer parte do Club Benares, a participar nas nossas atividades e a viver a convivência entre pessoas que partilham a mesma paixão pelo cinema. <strong>Esperamos ver-te no próximo evento!</strong></p>
-
-        <div class="about-stats">
-          <div class="stat-item">
-            <div class="stat-number">+10</div>
-            <div class="stat-label">Eventos</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number">3</div>
-            <div class="stat-label">Filmes</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number">2023</div>
-            <div class="stat-label">Fundação</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="about-right">
-        <div class="about-img-wrap">
-          <img src="/media/about.jpg" alt="Club Benares — comunidade">
-        </div>
-        <p class="about-img-caption">Club Benares · Lisboa</p>
-      </div>
-    </section>
-
-    <!-- ══ CINEMATECA STRIP ═══════════════════════════════════ -->
-    <section class="films-section">
+  <!-- About -->
+  <section class="section" id="about">
+    <div class="section-inner">
       <div class="s-head">
-        <span class="s-num">02 · Os nossos filmes</span>
-        <h2 class="s-title" style="font-size:clamp(1.4rem,2.5vw,2rem)">Cinemateca</h2>
-        <div class="s-actions"><a href="/cinemateca/" class="pill">Ver todos →</a></div>
+        <p class="s-eyebrow">Sobre</p>
+        <h2 class="s-title">O clube</h2>
       </div>
-      <div class="films-strip">
-        <a href="/cinemateca/" class="film-card">
-          <img class="film-card-poster" src="/cinemateca/movies/inexistente-thumb.jpg" alt="I N E X I S T E N T E" loading="lazy">
-          <span class="film-card-name">I N E X I S T E N T E</span>
-        </a>
-        <a href="/cinemateca/" class="film-card">
-          <img class="film-card-poster" src="/cinemateca/movies/elartistacomprendido-thumb.jpg" alt="El Artista Comprendido" loading="lazy">
-          <span class="film-card-name">El Artista Comprendido</span>
-        </a>
-        <a href="/cinemateca/" class="film-card">
-          <img class="film-card-poster" src="/cinemateca/movies/jay-thumb.jpg" alt="Jay Gupta" loading="lazy">
-          <span class="film-card-name">Jay Gupta</span>
-        </a>
-        <a href="/cinemateca/" class="film-card coming">
-          <img class="film-card-poster" src="/cinemateca/movies/otto-thumb.jpg" alt="OTTO" loading="lazy">
-          <span class="film-card-name">OTTO</span>
-          <span class="film-card-soon">— em breve</span>
-        </a>
-      </div>
-    </section>
 
-    <!-- ══ EVENTS HISTORY ════════════════════════════════════ -->
-    <section class="history-section">
+      <div class="about-grid">
+        <div class="about-text-col">
+          <div class="lang-tabs" role="tablist" aria-label="Idioma">
+            <button class="lang-tab active" role="tab" aria-selected="true" data-lang="pt">PT</button>
+            <button class="lang-tab" role="tab" aria-selected="false" data-lang="en">EN</button>
+            <button class="lang-tab" role="tab" aria-selected="false" data-lang="es">ES</button>
+          </div>
+
+          <div class="about-text active" id="about-pt">
+            <p>The Benares Club nasceu da vontade de criar um espaço informal onde fotógrafos, cineastas e curiosos se possam encontrar, partilhar trabalho e aprender em conjunto.</p>
+            <p>Organizamos sessões regulares em Lisboa: projeções, workshops, conversas sobre imagem e saídas fotográficas pela cidade. Não há hierarquias nem currículos &mdash; só olhares.</p>
+            <p>O nome evoca Varanasi, a cidade dos rituais e da luz rasante. Um lembrete de que a imagem mais forte é sempre a que nos obriga a parar.</p>
+          </div>
+          <div class="about-text" id="about-en">
+            <p>The Benares Club was born from the desire to create an informal space where photographers, filmmakers and curious minds can meet, share work and learn together.</p>
+            <p>We organise regular sessions in Lisbon: screenings, workshops, conversations about the image and photo walks through the city. No hierarchies, no CVs &mdash; just ways of seeing.</p>
+            <p>The name evokes Varanasi, the city of rituals and raking light. A reminder that the strongest image is always the one that forces us to stop.</p>
+          </div>
+          <div class="about-text" id="about-es">
+            <p>The Benares Club nació del deseo de crear un espacio informal donde fotógrafos, cineastas y curiosos puedan reunirse, compartir trabajo y aprender juntos.</p>
+            <p>Organizamos sesiones regulares en Lisboa: proyecciones, talleres, conversaciones sobre la imagen y salidas fotográficas por la ciudad. Sin jerarquías, sin currículums &mdash; solo miradas.</p>
+            <p>El nombre evoca Varanasi, la ciudad de los rituales y la luz rasante. Un recordatorio de que la imagen más poderosa siempre es la que nos obliga a detenernos.</p>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat-item">
+              <div class="stat-num">47</div>
+              <div class="stat-label">Encontros</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">120+</div>
+              <div class="stat-label">Membros</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">2019</div>
+              <div class="stat-label">Fundação</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-img-col">
+          <img src="/images/about-club.webp" alt="Membros do Benares Club numa sessão" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Films / Cinemateca -->
+  <section class="section" id="films">
+    <div class="section-inner">
       <div class="s-head">
-        <span class="s-num">03 · Arquivo</span>
-        <h2 class="s-title">A nossa <em>história</em></h2>
-        <div class="s-actions">
-          <a href="/eventos/" class="pill on">Todos</a>
-          <a href="/eventos/" class="pill">Eventos</a>
-          <a href="/cinemateca/" class="pill">Filmes</a>
-        </div>
+        <p class="s-eyebrow">Cinemateca</p>
+        <h2 class="s-title">Filmes que nos formaram</h2>
       </div>
-
-      <!-- ── 2026 ── -->
-      <div class="year-divider"><span>2026</span></div>
-
-      <div class="event-block">
-        <div class="event-header">
-          <h3 class="event-name">MashUp #5 | Indie Mix</h3>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> 7 de Maio, 2026</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://maps.app.goo.gl/DFHBtixVSPdhJpGz6" target="_blank">Cossoul</a></span>
+      <div class="films-grid" id="films-grid">
+        <div class="film-card">
+          <img src="/images/films/pather-panchali.webp" alt="Pather Panchali" loading="lazy" />
+          <div class="film-card-body">
+            <p class="film-title">Pather Panchali</p>
+            <p class="film-meta">Satyajit Ray &middot; 1955</p>
           </div>
         </div>
-        <div class="event-upcoming"><i class="fas fa-clock"></i> Fotos em breve</div>
-      </div>
-
-      <div class="event-block">
-        <div class="event-header">
-          <h3 class="event-name">MashUp #4 Club Benares & <a href="https://www.instagram.com/cinecore.lx/" target="_blank">Cinecore</a></h3>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> 16 de Março, 2026</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/cossoul.sigc/" target="_blank">Cossoul</a></span>
+        <div class="film-card">
+          <img src="/images/films/stalker.webp" alt="Stalker" loading="lazy" />
+          <div class="film-card-body">
+            <p class="film-title">Stalker</p>
+            <p class="film-meta">Andrei Tarkovsky &middot; 1979</p>
           </div>
         </div>
-        <div class="event-upcoming"><i class="fas fa-images"></i> Fotos em breve</div>
-      </div>
-
-      <!-- ── 2025 ── -->
-      <div class="year-divider"><span>2025</span></div>
-
-      <div class="event-block">
-        <div class="event-header">
-          <h3 class="event-name">MashUp #3 Club Benares & <a href="https://www.instagram.com/cinecore.lx/" target="_blank">Cinecore</a> | Action Short-films</h3>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> 5 de Dezembro, 2025</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/cossoul.sigc/" target="_blank">Cossoul</a></span>
-            <span><i class="fas fa-camera"></i> <a href="https://www.instagram.com/val.nevs/" target="_blank">Valdir Neves</a></span>
+        <div class="film-card">
+          <img src="/images/films/jeanne-dielman.webp" alt="Jeanne Dielman" loading="lazy" />
+          <div class="film-card-body">
+            <p class="film-title">Jeanne Dielman</p>
+            <p class="film-meta">Chantal Akerman &middot; 1975</p>
           </div>
         </div>
-        <div class="photo-grid has-4">
-          <div class="photo-item"><img src="./fotos/120px/mashup3-A.jpg" srcset="./fotos/320px/mashup3-A.jpg 320w" sizes="(max-width:900px) 50vw, 33vw" loading="lazy" alt="MashUp #3 A"></div>
-          <div class="photo-item"><img src="./fotos/120px/mashup3-B.jpg" srcset="./fotos/320px/mashup3-B.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="MashUp #3 B"></div>
-          <div class="photo-item"><img src="./fotos/120px/mashup3-C.jpg" srcset="./fotos/320px/mashup3-C.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="MashUp #3 C"></div>
-          <div class="photo-item"><img src="./fotos/120px/mashup3-D.jpg" srcset="./fotos/320px/mashup3-D.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="MashUp #3 D"></div>
-        </div>
-      </div>
-
-      <div class="event-block">
-        <div class="event-header">
-          <h3 class="event-name">MashUp #2 Club Benares & <a href="https://www.instagram.com/cinecore.lx/" target="_blank">Cinecore</a> | Romantic Short-films</h3>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> 27 de Novembro, 2025</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/cossoul.sigc/" target="_blank">Cossoul</a></span>
-            <span><i class="fas fa-music"></i> <a href="https://www.instagram.com/miguelaido_pt/" target="_blank">Miguel Aido</a></span>
-            <span><i class="fas fa-camera"></i> <a href="https://www.instagram.com/val.nevs/" target="_blank">Valdir Neves</a></span>
+        <div class="film-card">
+          <img src="/images/films/in-the-mood.webp" alt="In the Mood for Love" loading="lazy" />
+          <div class="film-card-body">
+            <p class="film-title">In the Mood for Love</p>
+            <p class="film-meta">Wong Kar-wai &middot; 2000</p>
           </div>
         </div>
-        <div class="photo-grid has-4">
-          <div class="photo-item"><img src="./fotos/120px/mashup2-A.jpg" srcset="./fotos/320px/mashup2-A.jpg 320w" sizes="(max-width:900px) 50vw, 33vw" loading="lazy" alt="MashUp #2 A"></div>
-          <div class="photo-item"><img src="./fotos/120px/mashup2-B.jpg" srcset="./fotos/320px/mashup2-B.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="MashUp #2 B"></div>
-          <div class="photo-item"><img src="./fotos/120px/mashup2-C.jpg" srcset="./fotos/320px/mashup2-C.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="MashUp #2 C"></div>
-          <div class="photo-item"><img src="./fotos/120px/mashup2-D.jpg" srcset="./fotos/320px/mashup2-D.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="MashUp #2 D"></div>
-        </div>
-      </div>
-
-      <div class="event-block">
-        <div class="event-header">
-          <h3 class="event-name">Night Lounge #4 | <a href="https://www.meetup.com/filmmaking-lisbon/" target="_blank">Filmmaking Lisboa</a> & <a href="https://www.instagram.com/cmcs_media/" target="_blank">CMCS Media</a></h3>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> 15 de Novembro, 2025</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/kreatorilx" target="_blank">Kreatori café e bar</a></span>
-            <span><i class="fas fa-camera"></i> <a href="https://www.instagram.com/val.nevs/" target="_blank">Valdir Neves</a> & <a href="https://www.instagram.com/fabianocafure/" target="_blank">Fabiano Cafure</a></span>
+        <div class="film-card">
+          <img src="/images/films/touki-bouki.webp" alt="Touki Bouki" loading="lazy" />
+          <div class="film-card-body">
+            <p class="film-title">Touki Bouki</p>
+            <p class="film-meta">Djibril Diop Mambéty &middot; 1973</p>
           </div>
         </div>
-        <div class="photo-grid has-4">
-          <div class="photo-item"><img src="./fotos/120px/night4-A.jpg" srcset="./fotos/320px/night4-A.jpg 320w" sizes="(max-width:900px) 50vw, 33vw" loading="lazy" alt="Night Lounge #4 A"></div>
-          <div class="photo-item"><img src="./fotos/120px/night4-B.jpg" srcset="./fotos/320px/night4-B.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="Night Lounge #4 B"></div>
-          <div class="photo-item"><img src="./fotos/120px/night4-C.jpg" srcset="./fotos/320px/night4-C.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="Night Lounge #4 C"></div>
-          <div class="photo-item"><img src="./fotos/120px/night4-D.jpg" srcset="./fotos/320px/night4-D.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="Night Lounge #4 D"></div>
-        </div>
-      </div>
-
-      <div class="event-block">
-        <div class="event-header">
-          <h3 class="event-name">MashUp #1 Club Benares & <a href="https://www.instagram.com/cinecore.lx/" target="_blank">Cinecore</a> | Horror Short-films</h3>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> 16 de Outubro, 2025</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/cossoul.sigc/" target="_blank">Cossoul</a></span>
-            <span><i class="fas fa-camera"></i> <a href="https://www.instagram.com/contraplonge/" target="_blank">Karen Mattos</a> & <a href="https://www.instagram.com/val.nevs/" target="_blank">Valdir Neves</a></span>
+        <div class="film-card">
+          <img src="/images/films/holy-motors.webp" alt="Holy Motors" loading="lazy" />
+          <div class="film-card-body">
+            <p class="film-title">Holy Motors</p>
+            <p class="film-meta">Leos Carax &middot; 2012</p>
           </div>
         </div>
-        <div class="photo-grid has-4">
-          <div class="photo-item"><img src="./fotos/120px/mashup1-A.jpg" srcset="./fotos/320px/mashup1-A.jpg 320w" sizes="(max-width:900px) 50vw, 33vw" loading="lazy" alt="MashUp #1 A"></div>
-          <div class="photo-item"><img src="./fotos/120px/mashup1-B.jpg" srcset="./fotos/320px/mashup1-B.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="MashUp #1 B"></div>
-          <div class="photo-item"><img src="./fotos/120px/mashup1-C.jpg" srcset="./fotos/320px/mashup1-C.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="MashUp #1 C"></div>
-          <div class="photo-item"><img src="./fotos/120px/mashup1-D.jpg" srcset="./fotos/320px/mashup1-D.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="MashUp #1 D"></div>
-        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- History -->
+  <section class="section" id="history">
+    <div class="section-inner">
+      <div class="s-head">
+        <p class="s-eyebrow">Arquivo</p>
+        <h2 class="s-title">Encontros passados</h2>
       </div>
 
-      <!-- ── 2025 early ── -->
-      <div class="event-block">
-        <div class="event-header">
-          <h3 class="event-name">Special <a href="https://www.instagram.com/cmcs_media/" target="_blank">CMCS Media</a> Film Screening</h3>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> 18 de Abril, 2025</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/fabricabracodeprata/" target="_blank">Fábrica Braço de Prata</a></span>
-            <span><i class="fas fa-star"></i> <a href="https://www.instagram.com/nityamnow/" target="_blank">Nityam</a></span>
-            <span><i class="fas fa-camera"></i> <a href="https://www.instagram.com/val.nevs/" target="_blank">Valdir Neves</a></span>
+      <div class="history-list">
+
+        <div class="history-entry">
+          <div class="history-photo" data-src="/images/events/encontro-luz-rasante.webp" data-caption="Luz Rasante — Lisboa, 2024">
+            <img src="/images/events/encontro-luz-rasante.webp" alt="Luz Rasante" loading="lazy" />
+            <span class="history-photo-hint">ver foto</span>
+          </div>
+          <div class="history-info">
+            <p class="history-year">2024</p>
+            <h3 class="history-name">Luz Rasante</h3>
+            <p class="history-desc">Uma tarde dedicada à luz de final de dia em Lisboa. Percorremos o Mouraria e o Castelo com câmaras analógicas, depois partilhámos os rolos revelados na sessão seguinte.</p>
           </div>
         </div>
-        <div class="photo-grid has-4">
-          <div class="photo-item"><img src="./fotos/120px/cmcs1-A.jpg" srcset="./fotos/320px/cmcs1-A.jpg 320w" sizes="(max-width:900px) 50vw, 33vw" loading="lazy" alt="CMCS A"></div>
-          <div class="photo-item"><img src="./fotos/120px/cmcs1-B.jpg" srcset="./fotos/320px/cmcs1-B.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="CMCS B"></div>
-          <div class="photo-item"><img src="./fotos/120px/cmcs1-C.jpg" srcset="./fotos/320px/cmcs1-C.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="CMCS C"></div>
-          <div class="photo-item"><img src="./fotos/120px/cmcs1-D.jpg" srcset="./fotos/320px/cmcs1-D.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="CMCS D"></div>
-        </div>
-      </div>
 
-      <div class="event-block">
-        <div class="event-header">
-          <h3 class="event-name">Battle Royale #1</h3>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> 27 de Março, 2025</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/fabricabracodeprata/" target="_blank">Fábrica Braço de Prata</a></span>
-            <span><i class="fas fa-trophy"></i> <a href="https://www.instagram.com/mr.pedro.caldeira/" target="_blank">Pedro Caldeira</a> & Paulo Graça — "Dá-me Ar"</span>
-            <span><i class="fas fa-microphone-lines"></i> <a href="https://www.instagram.com/joao.the.silva/" target="_blank">João Tiago Pires</a></span>
+        <div class="history-entry">
+          <div class="history-photo" data-src="/images/events/encontro-silencio.webp" data-caption="O Silêncio das Imagens — Lisboa, 2023">
+            <img src="/images/events/encontro-silencio.webp" alt="O Silêncio das Imagens" loading="lazy" />
+            <span class="history-photo-hint">ver foto</span>
+          </div>
+          <div class="history-info">
+            <p class="history-year">2023</p>
+            <h3 class="history-name">O Silêncio das Imagens</h3>
+            <p class="history-desc">Sessão de projeção e debate em torno do silêncio como linguagem visual. Vimos excertos de Tarkovsky, Agnès Varda e Pedro Costa, e conversámos até tarde.</p>
           </div>
         </div>
-        <div class="photo-grid has-4">
-          <div class="photo-item"><img src="./fotos/120px/battle1-A.jpg" srcset="./fotos/320px/battle1-A.jpg 320w" sizes="(max-width:900px) 50vw, 33vw" loading="lazy" alt="Battle Royale #1 A"></div>
-          <div class="photo-item"><img src="./fotos/120px/battle1-B.jpg" srcset="./fotos/320px/battle1-B.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="Battle Royale #1 B"></div>
-          <div class="photo-item"><img src="./fotos/120px/battle1-C.jpg" srcset="./fotos/320px/battle1-C.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="Battle Royale #1 C"></div>
-          <div class="photo-item"><img src="./fotos/120px/battle1-D.jpg" srcset="./fotos/320px/battle1-D.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="Battle Royale #1 D"></div>
-        </div>
-      </div>
 
-      <!-- ── 2024 ── -->
-      <div class="year-divider"><span>2024</span></div>
-
-      <div class="event-block">
-        <div class="event-header">
-          <h3 class="event-name">Night Lounge #2</h3>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> 30 de Janeiro, 2025</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/eticoficial/" target="_blank">ETIC Atmosferas</a></span>
-            <span><i class="fas fa-camera"></i> <a href="https://www.instagram.com/foxfecit/" target="_blank">Mel Fox</a></span>
+        <div class="history-entry">
+          <div class="history-photo" data-src="/images/events/encontro-retrato.webp" data-caption="Retrato e Tempo — Lisboa, 2023">
+            <img src="/images/events/encontro-retrato.webp" alt="Retrato e Tempo" loading="lazy" />
+            <span class="history-photo-hint">ver foto</span>
+          </div>
+          <div class="history-info">
+            <p class="history-year">2023</p>
+            <h3 class="history-name">Retrato e Tempo</h3>
+            <p class="history-desc">Workshop sobre retrato fotográfico com enfoque no factor tempo — a espera, o momento de relaxamento, e o que acontece depois do clique.</p>
           </div>
         </div>
-        <div class="photo-grid has-4">
-          <div class="photo-item"><img src="./fotos/120px/night2-A.jpg" srcset="./fotos/320px/night2-A.jpg 320w" sizes="(max-width:900px) 50vw, 33vw" loading="lazy" alt="Night Lounge #2 A"></div>
-          <div class="photo-item"><img src="./fotos/120px/night2-B.jpg" srcset="./fotos/320px/night2-B.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="Night Lounge #2 B"></div>
-          <div class="photo-item"><img src="./fotos/120px/night2-C.jpg" srcset="./fotos/320px/night2-C.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="Night Lounge #2 C"></div>
-          <div class="photo-item"><img src="./fotos/120px/night2-D.jpg" srcset="./fotos/320px/night2-D.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="Night Lounge #2 D"></div>
-        </div>
-      </div>
 
-      <div class="event-block">
-        <div class="event-header">
-          <h3 class="event-name">Night Lounge #1</h3>
-          <div class="event-meta">
-            <span><i class="fas fa-calendar-alt"></i> 6 de Dezembro, 2024</span>
-            <span><i class="fas fa-map-marker-alt"></i> <a href="https://www.instagram.com/eticoficial/" target="_blank">ETIC Atmosferas</a></span>
-            <span><i class="fas fa-camera"></i> <a href="https://www.instagram.com/santiago.photographyy/" target="_blank">Santiago Machuca</a> & <a href="https://www.instagram.com/val.nevs/" target="_blank">Valdir N.</a></span>
+        <div class="history-entry">
+          <div class="history-photo" data-src="/images/events/encontro-fundacao.webp" data-caption="Primeiro Encontro — Lisboa, 2019">
+            <img src="/images/events/encontro-fundacao.webp" alt="Primeiro Encontro" loading="lazy" />
+            <span class="history-photo-hint">ver foto</span>
+          </div>
+          <div class="history-info">
+            <p class="history-year">2019</p>
+            <h3 class="history-name">Primeiro Encontro</h3>
+            <p class="history-desc">O início. Seis pessoas, uma mesa, muitas câmaras e a ideia de que fazia sentido criar um espaço assim em Lisboa. O clube começou aqui.</p>
           </div>
         </div>
-        <div class="photo-grid has-4">
-          <div class="photo-item"><img src="./fotos/120px/night1-A.jpg" srcset="./fotos/320px/night1-A.jpg 320w" sizes="(max-width:900px) 50vw, 33vw" loading="lazy" alt="Night Lounge #1 A"></div>
-          <div class="photo-item"><img src="./fotos/120px/night1-B.jpg" srcset="./fotos/320px/night1-B.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="Night Lounge #1 B"></div>
-          <div class="photo-item"><img src="./fotos/120px/night1-C.jpg" srcset="./fotos/320px/night1-C.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="Night Lounge #1 C"></div>
-          <div class="photo-item"><img src="./fotos/120px/night1-D.jpg" srcset="./fotos/320px/night1-D.jpg 320w" sizes="(max-width:900px) 50vw, 25vw" loading="lazy" alt="Night Lounge #1 D"></div>
-        </div>
-      </div>
 
-    </section>
-  </div><!-- .page -->
+      </div>
+    </div>
+  </section>
+
 </main>
+
+<!-- Lightbox -->
+<div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Visualizar foto">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Fechar">&times;</button>
+    <img src="" alt="" id="lightbox-img" />
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+  </div>
+</div>
 
 <div id="footer-container"></div>
 
-<!-- Lightbox -->
-<div id="lightbox">
-  <button id="lightbox-close" aria-label="Fechar"><i class="fas fa-xmark"></i></button>
-  <img src="" alt="" id="lightbox-img">
-</div>
-
 <script src="/shared.js"></script>
 <script>
-  // ── Countdown ──────────────────────────────────────────────
-  function updateCountdown() {
-    const target = new Date('2026-05-07T00:00:00');
-    const diff = target - new Date();
-    const days = Math.max(0, Math.ceil(diff / 86400000));
-    document.getElementById('countdown').textContent = days;
-  }
-  updateCountdown();
-  setInterval(updateCountdown, 3600000);
-
-  // ── Language switcher ─────────────────────────────────────
-  const translations = {
-    pt: {
-      heading: 'A comunidade<br><em>que faz cinema</em>',
-      text: `Club Benares é uma comunidade de cinema aberta a todas as pessoas que amam o cinema. Fundado por <strong>Charlie Chaves</strong> em 2023 em Lisboa, o conceito original do Club era reunir uma equipa de pessoas, como uma banda de rock, interessadas em fazer cinema independente.
-
-Essa ideia continua viva, mas o projeto evoluiu. Hoje o Club Benares procura também criar um espaço onde profissionais, estudantes e amadores possam partilhar experiências, trocar ideias e desenvolver projetos em conjunto.
-
-Com o tempo, o Club cresceu e passou a organizar eventos, projeções, debates, sessões de networking, produções cinematográficas e festivais, promovendo o encontro entre artistas e o público e <strong>fortalecendo os laços dentro da comunidade.</strong>
-
-Convidamos-te a fazer parte do Club Benares, a participar nas nossas atividades e a viver a convivência entre pessoas que partilham a mesma paixão pelo cinema. <strong>Esperamos ver-te no próximo evento!</strong>`
-    },
-    en: {
-      heading: 'The community<br><em>that makes films</em>',
-      text: `Club Benares is a film community open to everyone who loves cinema. Founded by <strong>Charlie Chaves</strong> in 2023 in Lisbon, the club's original concept was to bring together a group of people, like a rock band, united by the desire to create independent films.
-
-That idea remains alive, but the project has evolved. Today, Club Benares aims to be a space where professionals, students, amateurs, and enthusiasts can share experiences, exchange ideas, and collaborate on new projects.
-
-Over time, the Club has grown and begun organising events, screenings, debates, networking sessions, film productions, and festivals that bring artists and audiences together, <strong>strengthening the bonds within the community.</strong>
-
-We invite you to become part of Club Benares, to join our activities, and to enjoy the connection between people who share the same passion for cinema. <strong>We look forward to seeing you at our next event!</strong>`
-    },
-    es: {
-      heading: 'La comunidad<br><em>que hace cine</em>',
-      text: `Club Benares es una comunidad de cine abierta a todas las personas que aman el cine. Fundado por <strong>Charlie Chaves</strong> en 2023 en Lisboa, el concepto original del Club era reunir a un grupo de personas, como una banda de rock, unidas por el deseo de crear cine independiente.
-
-Esa idea sigue viva, pero el proyecto ha evolucionado. Hoy, Club Benares busca ser un espacio donde profesionales, estudiantes, aficionados y entusiastas puedan compartir experiencias, intercambiar ideas y colaborar en nuevos proyectos.
-
-Con el tiempo, el Club ha crecido y ha comenzado a organizar eventos, proyecciones, debates, sesiones de networking, producciones cinematográficas y festivales que reúnen a artistas y público, <strong>fortaleciendo los lazos dentro de la comunidad.</strong>
-
-Te invitamos a formar parte de Club Benares, a participar en nuestras actividades y a disfrutar del encuentro entre personas que comparten la misma pasión por el cine. <strong>¡Esperamos verte en el próximo evento!</strong>`
+  // Countdown
+  (function () {
+    var target = new Date('2026-09-06T19:00:00');
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function tick() {
+      var now  = new Date();
+      var diff = target - now;
+      if (diff <= 0) {
+        document.getElementById('countdown').innerHTML =
+          '<span style="font-family:\'Courier New\',monospace;color:var(--text-secondary);font-size:1.2rem;letter-spacing:.1em">A acontecer agora</span>';
+        return;
+      }
+      var d = Math.floor(diff / 86400000);
+      var h = Math.floor((diff % 86400000) / 3600000);
+      var m = Math.floor((diff % 3600000) / 60000);
+      var s = Math.floor((diff % 60000) / 1000);
+      document.getElementById('cd-days').textContent  = pad(d);
+      document.getElementById('cd-hours').textContent = pad(h);
+      document.getElementById('cd-mins').textContent  = pad(m);
+      document.getElementById('cd-secs').textContent  = pad(s);
     }
-  };
+    tick();
+    setInterval(tick, 1000);
+  })();
 
-  const heading = document.getElementById('about-heading');
-  const textEl = document.getElementById('about-text');
-  const tabs = document.querySelectorAll('.lang-tab');
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      const lang = tab.dataset.lang;
-      heading.innerHTML = translations[lang].heading;
-      textEl.innerHTML = translations[lang].text;
+  // Language tabs
+  document.querySelectorAll('.lang-tab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var lang = this.dataset.lang;
+      document.querySelectorAll('.lang-tab').forEach(function (t) {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      document.querySelectorAll('.about-text').forEach(function (el) {
+        el.classList.remove('active');
+      });
+      this.classList.add('active');
+      this.setAttribute('aria-selected', 'true');
+      document.getElementById('about-' + lang).classList.add('active');
     });
   });
 
-  // ── Lightbox ──────────────────────────────────────────────
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
-  const lightboxClose = document.getElementById('lightbox-close');
+  // Lightbox
+  var overlay   = document.getElementById('lightbox');
+  var lbImg     = document.getElementById('lightbox-img');
+  var lbCaption = document.getElementById('lightbox-caption');
+  var lbClose   = document.getElementById('lightbox-close');
 
-  document.querySelectorAll('.photo-item').forEach(item => {
-    item.addEventListener('click', () => {
-      const img = item.querySelector('img');
-      if (!img) return;
-      const fullSrc = img.src.replace('/120px/', '/full/').replace('/320px/', '/full/');
-      lightboxImg.src = fullSrc;
-      lightboxImg.alt = img.alt;
-      lightbox.classList.add('open');
+  document.querySelectorAll('.history-photo').forEach(function (el) {
+    el.addEventListener('click', function () {
+      lbImg.src             = this.dataset.src;
+      lbImg.alt             = this.dataset.caption || '';
+      lbCaption.textContent = this.dataset.caption || '';
+      overlay.classList.add('open');
       document.body.style.overflow = 'hidden';
     });
   });
 
   function closeLightbox() {
-    lightbox.classList.remove('open');
-    lightboxImg.src = '';
+    overlay.classList.remove('open');
     document.body.style.overflow = '';
+    lbImg.src = '';
   }
 
-  lightboxClose.addEventListener('click', closeLightbox);
-  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  lbClose.addEventListener('click', closeLightbox);
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeLightbox();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
 </script>
 </body>
 </html>
