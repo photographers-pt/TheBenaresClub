@@ -253,11 +253,15 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeNavToggle();
   }
 
-  // Highlight current page
+  // Highlight current page — never highlight anything on home "/"
   const currentPath = window.location.pathname;
-  const currentLink = document.querySelector(`nav a[href="${currentPath}"]`);
-  if (currentLink) {
-    currentLink.classList.add('active');
+  if (currentPath !== '/') {
+    document.querySelectorAll('nav a').forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && href !== '/' && currentPath.startsWith(href)) {
+        link.classList.add('active');
+      }
+    });
   }
 
   // Insert footer
