@@ -7,25 +7,6 @@ console.log("Complete shared.js loaded");
 function createHeader() {
   return `
     <style>
-      @keyframes pulseRed {
-        0%, 100% {
-          text-shadow: 0 0 10px rgba(255, 255, 255, 0.1),
-                       0 0 20px rgba(255, 255, 255, 0.1),
-                       0 0 30px rgba(255, 255, 255, 0.1);
-        }
-        50% {
-          text-shadow: 0 0 10px rgba(255, 255, 255, 1),
-                       0 0 20px rgba(255, 255, 255, 1),
-                       0 0 30px rgba(255, 255, 255, 1);
-        }
-      }
-      
-      nav a[href="/eventos/"] {
-        color: white !important;
-        animation: pulseRed 2s ease-in-out infinite;
-        font-weight: 600;
-      }
-      
       nav a.active {
         background-color: rgba(255, 255, 255, 0.15);
         padding: 8px 16px;
