@@ -9,201 +9,63 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* Hero */
-    .hero {
-      position: relative;
-      min-height: 100svh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 6rem 2rem 4rem;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background-image: url('/images/B01 Club Benares.webp');
-      background-size: cover;
-      background-position: center;
-      filter: brightness(0.38);
-      z-index: 0;
-    }
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 760px;
-    }
-    .hero-eyebrow {
-      font-family: var(--font-family);
-      font-size: 0.72rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-    }
-    .hero h1 {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-weight: 300;
-      font-size: clamp(3rem, 8vw, 6.5rem);
-      line-height: 1.05;
-      color: var(--text-primary);
-      margin-bottom: 2rem;
-    }
-    .hero-sub {
-      font-family: var(--font-family);
-      font-size: 1rem;
-      color: var(--text-secondary);
-      max-width: 480px;
-      margin: 0 auto 3rem;
-      line-height: 1.7;
+    main { /* no max-width — banner full width */ }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
     }
 
-    /* Countdown */
-    .countdown-wrap { margin-bottom: 3rem; }
-    .countdown-label {
-      font-family: var(--font-family);
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-    }
-    .countdown {
-      display: flex;
-      gap: 1.5rem;
-      justify-content: center;
-      align-items: flex-start;
-    }
-    .cd-unit {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .cd-num {
-      font-family: 'Courier New', monospace;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 400;
-      color: var(--text-primary);
-      line-height: 1;
-      min-width: 2.4ch;
-      text-align: center;
-    }
-    .cd-lbl {
-      font-family: var(--font-family);
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-    .cd-sep {
-      font-family: 'Courier New', monospace;
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      color: var(--text-muted);
-      line-height: 1;
-      padding-top: 0.1em;
+    /* ── Section base ── */
+    .section {
+      padding: 7rem 0;
     }
 
-    /* Buttons */
-    .hero-ctas {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
-    }
-    .btn {
-      display: inline-block;
-      font-family: var(--font-family);
-      font-size: 0.8rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-decoration: none;
-      padding: 0.75rem 2rem;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-strong);
-      background: transparent;
-      color: var(--text-primary);
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .btn:hover {
-      border-color: var(--text-secondary);
-      background: rgba(240, 232, 216, 0.06);
-    }
-    .btn-primary { border-color: rgba(240, 232, 216, 0.5); }
-    .btn-primary:hover {
-      border-color: var(--text-primary);
-      background: rgba(240, 232, 216, 0.1);
+    .section + .section {
+      border-top: 1px solid var(--border);
     }
 
-    /* Sections */
-    .section { padding: 7rem 2rem; }
-    .section-inner { max-width: 1100px; margin: 0 auto; }
-    .s-head { margin-bottom: 4rem; }
     .s-eyebrow {
-      font-family: var(--font-family);
-      font-size: 0.68rem;
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 600;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--text-muted);
       margin-bottom: 0.75rem;
     }
+
     .s-title {
       font-family: var(--font-serif);
       font-style: italic;
       font-weight: 300;
       font-size: clamp(2rem, 4vw, 3.2rem);
       color: var(--text-primary);
-      line-height: 1.15;
-    }
-    .divider { width: 100%; height: 1px; background: var(--border); }
-
-    /* Manifesto */
-    .manifesto { background: rgba(255, 248, 238, 0.02); }
-    .manifesto-inner { max-width: 760px; margin: 0 auto; text-align: center; }
-    .manifesto blockquote {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-weight: 300;
-      font-size: clamp(1.3rem, 2.5vw, 1.9rem);
-      color: var(--text-primary);
-      line-height: 1.6;
-      margin-bottom: 2rem;
-    }
-    .manifesto cite {
-      font-family: var(--font-family);
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      font-style: normal;
+      line-height: 1.1;
+      margin-bottom: 3rem;
     }
 
-    /* About */
+    /* ── About ── */
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+      gap: 5rem;
       align-items: start;
     }
-    @media (max-width: 720px) {
-      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    }
+
     .lang-tabs {
       display: flex;
       border: 1px solid var(--border-strong);
       border-radius: var(--radius-sm);
       overflow: hidden;
-      margin-bottom: 2rem;
       width: fit-content;
+      margin-bottom: 2rem;
     }
+
     .lang-tab {
-      padding: 0.5rem 1.2rem;
-      font-family: var(--font-family);
-      font-size: 0.72rem;
+      padding: 0.45rem 1.1rem;
+      font-size: 0.7rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-muted);
@@ -212,156 +74,289 @@
       cursor: pointer;
       transition: background 0.2s, color 0.2s;
     }
+
     .lang-tab + .lang-tab { border-left: 1px solid var(--border-strong); }
-    .lang-tab.active, .lang-tab:hover {
+
+    .lang-tab.active,
+    .lang-tab:hover {
       background: rgba(240, 232, 216, 0.07);
       color: var(--text-primary);
     }
+
     .about-text { display: none; }
     .about-text.active { display: block; }
+
     .about-text p {
-      font-family: var(--font-family);
       font-size: 0.95rem;
-      line-height: 1.8;
+      line-height: 1.85;
       color: var(--text-secondary);
       margin-bottom: 1.2rem;
     }
+
+    .about-text p:last-child { margin-bottom: 0; }
+
     .stats-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: 1.25rem;
       margin-top: 3rem;
     }
-    @media (max-width: 480px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+
     .stat-item {
-      padding: 1.5rem;
-      background: rgba(255, 248, 238, 0.04);
-      backdrop-filter: blur(20px) saturate(160%);
+      padding: 1.5rem 1rem;
+      background: rgba(255, 248, 238, 0.03);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       text-align: center;
     }
+
     .stat-num {
       font-family: var(--font-serif);
       font-style: italic;
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 300;
       color: var(--text-primary);
       line-height: 1;
       margin-bottom: 0.4rem;
     }
+
     .stat-label {
-      font-family: var(--font-family);
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--text-muted);
     }
-    .about-img-col img {
-      width: 100%;
+
+    .about-img-col {
+      position: relative;
+    }
+
+    .about-img-wrap {
+      aspect-ratio: 3 / 4;
       border-radius: var(--radius-md);
-      object-fit: cover;
-      aspect-ratio: 3/4;
-      display: block;
+      overflow: hidden;
+      background: rgba(255, 248, 238, 0.03);
       border: 1px solid var(--border);
     }
 
-    /* Films */
-    .films-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1.5rem;
+    .about-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
-    .film-card {
-      background: rgba(255, 248, 238, 0.04);
-      backdrop-filter: blur(20px) saturate(160%);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      transition: border-color 0.2s;
+
+    .about-img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(240, 232, 216, 0.08);
     }
-    .film-card:hover { border-color: var(--border-strong); }
-    .film-card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; }
-    .film-card-body { padding: 1rem 1.2rem 1.2rem; }
-    .film-title {
+
+    /* ── Manifesto / Quote ── */
+    .manifesto {
+      background: rgba(255, 248, 238, 0.015);
+      text-align: center;
+    }
+
+    .manifesto-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .manifesto blockquote {
       font-family: var(--font-serif);
       font-style: italic;
       font-weight: 300;
-      font-size: 1rem;
+      font-size: clamp(1.4rem, 2.8vw, 2rem);
       color: var(--text-primary);
-      margin-bottom: 0.3rem;
-    }
-    .film-meta {
-      font-family: var(--font-family);
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 2rem;
     }
 
-    /* History */
-    .history-list { display: flex; flex-direction: column; gap: 3rem; }
-    .history-entry {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 2.5rem;
-      align-items: start;
-    }
-    @media (max-width: 700px) {
-      .history-entry { grid-template-columns: 1fr; gap: 1.5rem; }
-    }
-    .history-photo {
-      position: relative;
-      cursor: pointer;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      border: 1px solid var(--border);
-    }
-    .history-photo img {
-      width: 100%;
-      aspect-ratio: 4/3;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.3s;
-    }
-    .history-photo:hover img { transform: scale(1.03); }
-    .history-photo-hint {
-      position: absolute;
-      bottom: 0.75rem;
-      right: 0.75rem;
-      font-family: var(--font-family);
-      font-size: 0.62rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      background: rgba(8, 7, 6, 0.6);
-      padding: 0.3rem 0.6rem;
-      border-radius: var(--radius-sm);
-    }
-    .history-info { padding-top: 0.25rem; }
-    .history-year {
-      font-family: 'Courier New', monospace;
+    .manifesto cite {
       font-size: 0.72rem;
       letter-spacing: 0.18em;
+      text-transform: uppercase;
       color: var(--text-muted);
-      margin-bottom: 0.5rem;
+      font-style: normal;
     }
-    .history-name {
+
+    /* ── What we do / Pillars ── */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .pillar-card {
+      background: rgba(255, 248, 238, 0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 2rem 1.75rem;
+      transition: border-color 0.25s;
+    }
+
+    .pillar-card:hover {
+      border-color: var(--border-strong);
+    }
+
+    .pillar-num {
+      display: block;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .pillar-title {
       font-family: var(--font-serif);
       font-style: italic;
       font-weight: 300;
-      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-size: 1.4rem;
       color: var(--text-primary);
-      margin-bottom: 1rem;
       line-height: 1.2;
+      margin-bottom: 1rem;
     }
-    .history-desc {
-      font-family: var(--font-family);
-      font-size: 0.9rem;
+
+    .pillar-desc {
+      font-size: 0.88rem;
       line-height: 1.75;
       color: var(--text-secondary);
     }
 
-    /* Lightbox */
+    /* ── Vision ── */
+    .vision-inner {
+      max-width: 780px;
+    }
+
+    .vision-body {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .vision-body strong {
+      color: var(--text-primary);
+      font-weight: 300;
+    }
+
+    /* ── Discover cards ── */
+    .discover-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .discover-card {
+      display: block;
+      text-decoration: none;
+      position: relative;
+      aspect-ratio: 3 / 4;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: rgba(255, 248, 238, 0.03);
+      border: 1px solid var(--border);
+      transition: border-color 0.25s;
+    }
+
+    .discover-card:hover {
+      border-color: var(--border-strong);
+    }
+
+    /* foto: add background-image via style attribute */
+    .discover-card-img {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.45;
+      transition: opacity 0.4s ease, transform 0.5s ease;
+    }
+
+    .discover-card:hover .discover-card-img {
+      opacity: 0.6;
+      transform: scale(1.04);
+    }
+
+    .discover-card-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(240, 232, 216, 0.07);
+    }
+
+    .discover-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8,7,6,0.88) 0%, rgba(8,7,6,0.2) 60%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .discover-card-body {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem 1.5rem 1.75rem;
+      z-index: 1;
+    }
+
+    .discover-card-num {
+      display: block;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(240, 232, 216, 0.4);
+      margin-bottom: 0.5rem;
+    }
+
+    .discover-card-title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.35rem;
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .discover-card-desc {
+      font-size: 0.78rem;
+      line-height: 1.55;
+      color: rgba(240, 232, 216, 0.5);
+    }
+
+    .discover-card-arrow {
+      display: inline-block;
+      margin-top: 1rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(240, 232, 216, 0.4);
+      transition: color 0.2s;
+    }
+
+    .discover-card:hover .discover-card-arrow {
+      color: var(--text-primary);
+    }
+
+    /* ── Lightbox ── */
     .lightbox-overlay {
       position: fixed;
       inset: 0;
@@ -392,17 +387,31 @@
       cursor: pointer;
       padding: 0.25rem 0.5rem;
       line-height: 1;
-      font-family: var(--font-family);
       transition: color 0.2s;
     }
     .lightbox-close:hover { color: var(--text-primary); }
     .lightbox-caption {
       text-align: center;
       margin-top: 1rem;
-      font-family: var(--font-family);
       font-size: 0.78rem;
       color: var(--text-muted);
       letter-spacing: 0.08em;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-img-col { order: -1; }
+      .about-img-wrap { aspect-ratio: 16 / 9; }
+      .pillars-grid { grid-template-columns: 1fr 1fr; }
+      .discover-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .section { padding: 5rem 0; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .discover-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+      .stats-row { grid-template-columns: repeat(3, 1fr); }
     }
   </style>
 </head>
@@ -422,37 +431,14 @@
     </div>
   </div>
 
-  <div class="divider"></div>
-
-  <!-- Manifesto -->
-  <section class="section manifesto" id="manifesto">
-    <div class="section-inner manifesto-inner">
-      <div class="s-head" style="text-align:center;">
-        <p class="s-eyebrow">Manifesto</p>
-        <h2 class="s-title">O que nos move</h2>
-      </div>
-      <blockquote>
-        &ldquo;A fotografia é a arte de congelar o tempo sem o matar. Cinema é deixá-lo respirar de novo.&rdquo;
-      </blockquote>
-      <cite>&mdash; The Benares Club</cite>
-      <p style="margin-top:2.5rem; font-family:var(--font-family); font-size:0.95rem; line-height:1.8; color:var(--text-secondary); max-width:600px; margin-left:auto; margin-right:auto;">
-        Reunimo-nos porque acreditamos que ver bem é um acto colectivo. Trazemos câmaras, filmes, e perguntas sem resposta. O resto acontece.
-      </p>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- About -->
+  <!-- 01 · Quem Somos -->
   <section class="section" id="about">
-    <div class="section-inner">
-      <div class="s-head">
-        <p class="s-eyebrow">Sobre</p>
-        <h2 class="s-title">O clube</h2>
-      </div>
+    <div class="wrap">
+      <span class="s-eyebrow">01 · Quem Somos</span>
+      <h2 class="s-title">A nossa história</h2>
 
       <div class="about-grid">
-        <div class="about-text-col">
+        <div>
           <div class="lang-tabs" role="tablist" aria-label="Idioma">
             <button class="lang-tab active" role="tab" aria-selected="true" data-lang="pt">PT</button>
             <button class="lang-tab" role="tab" aria-selected="false" data-lang="en">EN</button>
@@ -461,17 +447,19 @@
 
           <div class="about-text active" id="about-pt">
             <p>The Benares Club nasceu da vontade de criar um espaço informal onde fotógrafos, cineastas e curiosos se possam encontrar, partilhar trabalho e aprender em conjunto.</p>
-            <p>Organizamos sessões regulares em Lisboa: projeções, workshops, conversas sobre imagem e saídas fotográficas pela cidade. Não há hierarquias nem currículos &mdash; só olhares.</p>
+            <p>Organizamos sessões regulares em Lisboa: projeções, workshops, conversas sobre imagem e saídas fotográficas pela cidade. Não há hierarquias nem currículos — só olhares.</p>
             <p>O nome evoca Varanasi, a cidade dos rituais e da luz rasante. Um lembrete de que a imagem mais forte é sempre a que nos obriga a parar.</p>
           </div>
+
           <div class="about-text" id="about-en">
             <p>The Benares Club was born from the desire to create an informal space where photographers, filmmakers and curious minds can meet, share work and learn together.</p>
-            <p>We organise regular sessions in Lisbon: screenings, workshops, conversations about the image and photo walks through the city. No hierarchies, no CVs &mdash; just ways of seeing.</p>
+            <p>We organise regular sessions in Lisbon: screenings, workshops, conversations about the image and photo walks through the city. No hierarchies, no CVs — just ways of seeing.</p>
             <p>The name evokes Varanasi, the city of rituals and raking light. A reminder that the strongest image is always the one that forces us to stop.</p>
           </div>
+
           <div class="about-text" id="about-es">
             <p>The Benares Club nació del deseo de crear un espacio informal donde fotógrafos, cineastas y curiosos puedan reunirse, compartir trabajo y aprender juntos.</p>
-            <p>Organizamos sesiones regulares en Lisboa: proyecciones, talleres, conversaciones sobre la imagen y salidas fotográficas por la ciudad. Sin jerarquías, sin currículums &mdash; solo miradas.</p>
+            <p>Organizamos sesiones regulares en Lisboa: proyecciones, talleres, conversaciones sobre la imagen y salidas fotográficas por la ciudad. Sin jerarquías, sin currículums — solo miradas.</p>
             <p>El nombre evoca Varanasi, la ciudad de los rituales y la luz rasante. Un recordatorio de que la imagen más poderosa siempre es la que nos obliga a detenernos.</p>
           </div>
 
@@ -492,127 +480,143 @@
         </div>
 
         <div class="about-img-col">
-          <img src="/images/about-club.webp" alt="Membros do Benares Club numa sessão" loading="lazy" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- Films / Cinemateca -->
-  <section class="section" id="films">
-    <div class="section-inner">
-      <div class="s-head">
-        <p class="s-eyebrow">Cinemateca</p>
-        <h2 class="s-title">Filmes que nos formaram</h2>
-      </div>
-      <div class="films-grid" id="films-grid">
-        <div class="film-card">
-          <img src="/images/films/pather-panchali.webp" alt="Pather Panchali" loading="lazy" />
-          <div class="film-card-body">
-            <p class="film-title">Pather Panchali</p>
-            <p class="film-meta">Satyajit Ray &middot; 1955</p>
-          </div>
-        </div>
-        <div class="film-card">
-          <img src="/images/films/stalker.webp" alt="Stalker" loading="lazy" />
-          <div class="film-card-body">
-            <p class="film-title">Stalker</p>
-            <p class="film-meta">Andrei Tarkovsky &middot; 1979</p>
-          </div>
-        </div>
-        <div class="film-card">
-          <img src="/images/films/jeanne-dielman.webp" alt="Jeanne Dielman" loading="lazy" />
-          <div class="film-card-body">
-            <p class="film-title">Jeanne Dielman</p>
-            <p class="film-meta">Chantal Akerman &middot; 1975</p>
-          </div>
-        </div>
-        <div class="film-card">
-          <img src="/images/films/in-the-mood.webp" alt="In the Mood for Love" loading="lazy" />
-          <div class="film-card-body">
-            <p class="film-title">In the Mood for Love</p>
-            <p class="film-meta">Wong Kar-wai &middot; 2000</p>
-          </div>
-        </div>
-        <div class="film-card">
-          <img src="/images/films/touki-bouki.webp" alt="Touki Bouki" loading="lazy" />
-          <div class="film-card-body">
-            <p class="film-title">Touki Bouki</p>
-            <p class="film-meta">Djibril Diop Mambéty &middot; 1973</p>
-          </div>
-        </div>
-        <div class="film-card">
-          <img src="/images/films/holy-motors.webp" alt="Holy Motors" loading="lazy" />
-          <div class="film-card-body">
-            <p class="film-title">Holy Motors</p>
-            <p class="film-meta">Leos Carax &middot; 2012</p>
+          <div class="about-img-wrap">
+            <!-- foto: <img src="/images/about-club.webp" alt="Membros do Benares Club" loading="lazy"> -->
+            <div class="about-img-placeholder">foto</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="divider"></div>
-
-  <!-- History -->
-  <section class="section" id="history">
-    <div class="section-inner">
-      <div class="s-head">
-        <p class="s-eyebrow">Arquivo</p>
-        <h2 class="s-title">Encontros passados</h2>
+  <!-- Manifesto -->
+  <section class="section manifesto">
+    <div class="wrap">
+      <div class="manifesto-inner">
+        <span class="s-eyebrow" style="text-align:center; display:block; margin-bottom:2rem;">Manifesto</span>
+        <blockquote>
+          &ldquo;A fotografia é a arte de congelar o tempo sem o matar. Cinema é deixá-lo respirar de novo.&rdquo;
+        </blockquote>
+        <cite>&mdash; The Benares Club</cite>
       </div>
+    </div>
+  </section>
 
-      <div class="history-list">
+  <!-- 02 · O que fazemos -->
+  <section class="section" id="fazemos">
+    <div class="wrap">
+      <span class="s-eyebrow">02 · O que fazemos</span>
+      <h2 class="s-title">Imagem, cinema e comunidade</h2>
 
-        <div class="history-entry">
-          <div class="history-photo" data-src="/images/events/encontro-luz-rasante.webp" data-caption="Luz Rasante — Lisboa, 2024">
-            <img src="/images/events/encontro-luz-rasante.webp" alt="Luz Rasante" loading="lazy" />
-            <span class="history-photo-hint">ver foto</span>
-          </div>
-          <div class="history-info">
-            <p class="history-year">2024</p>
-            <h3 class="history-name">Luz Rasante</h3>
-            <p class="history-desc">Uma tarde dedicada à luz de final de dia em Lisboa. Percorremos o Mouraria e o Castelo com câmaras analógicas, depois partilhámos os rolos revelados na sessão seguinte.</p>
-          </div>
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <span class="pillar-num">Saídas</span>
+          <h3 class="pillar-title">Fotografia na rua</h3>
+          <p class="pillar-desc">Percorremos Lisboa com câmaras e atenção. Cada saída é um pretexto para ver de forma diferente — a luz, a escala, o momento.</p>
         </div>
-
-        <div class="history-entry">
-          <div class="history-photo" data-src="/images/events/encontro-silencio.webp" data-caption="O Silêncio das Imagens — Lisboa, 2023">
-            <img src="/images/events/encontro-silencio.webp" alt="O Silêncio das Imagens" loading="lazy" />
-            <span class="history-photo-hint">ver foto</span>
-          </div>
-          <div class="history-info">
-            <p class="history-year">2023</p>
-            <h3 class="history-name">O Silêncio das Imagens</h3>
-            <p class="history-desc">Sessão de projeção e debate em torno do silêncio como linguagem visual. Vimos excertos de Tarkovsky, Agnès Varda e Pedro Costa, e conversámos até tarde.</p>
-          </div>
+        <div class="pillar-card">
+          <span class="pillar-num">Cinemateca</span>
+          <h3 class="pillar-title">Cinema que forma</h3>
+          <p class="pillar-desc">Projeções, debates e uma selecção curada de filmes que moldam o olhar. Da nouvelle vague ao cinema contemporâneo.</p>
         </div>
-
-        <div class="history-entry">
-          <div class="history-photo" data-src="/images/events/encontro-retrato.webp" data-caption="Retrato e Tempo — Lisboa, 2023">
-            <img src="/images/events/encontro-retrato.webp" alt="Retrato e Tempo" loading="lazy" />
-            <span class="history-photo-hint">ver foto</span>
-          </div>
-          <div class="history-info">
-            <p class="history-year">2023</p>
-            <h3 class="history-name">Retrato e Tempo</h3>
-            <p class="history-desc">Workshop sobre retrato fotográfico com enfoque no factor tempo — a espera, o momento de relaxamento, e o que acontece depois do clique.</p>
-          </div>
+        <div class="pillar-card">
+          <span class="pillar-num">Comunidade</span>
+          <h3 class="pillar-title">Um espaço de partilha</h3>
+          <p class="pillar-desc">Workshops, conversas informais e trabalho em conjunto. O conhecimento circula entre todos — horizontal e generoso.</p>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="history-entry">
-          <div class="history-photo" data-src="/images/events/encontro-fundacao.webp" data-caption="Primeiro Encontro — Lisboa, 2019">
-            <img src="/images/events/encontro-fundacao.webp" alt="Primeiro Encontro" loading="lazy" />
-            <span class="history-photo-hint">ver foto</span>
+  <!-- 03 · Para onde vamos -->
+  <section class="section" id="visao">
+    <div class="wrap">
+      <span class="s-eyebrow">03 · Para onde vamos</span>
+      <h2 class="s-title">A nossa visão</h2>
+
+      <div class="vision-inner">
+        <p class="vision-body">
+          Queremos que o Club Benares seja um <strong>ponto de encontro permanente</strong> para quem leva a imagem a sério — sem pretensão, mas com exigência. Um espaço onde o trabalho amadurece devagar, onde as conversas continuam depois das sessões, e onde cada membro encontra <strong>tanto inspiração como desafio</strong>.
+          <br><br>
+          A longo prazo, sonhamos com residências fotográficas, publicações próprias e colaborações com artistas além-fronteiras. O clube já tem raízes em Lisboa — agora quer <strong>crescer para fora</strong>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · Descobre -->
+  <section class="section" id="descobre">
+    <div class="wrap">
+      <span class="s-eyebrow">04 · Explora</span>
+      <h2 class="s-title">Descobre o clube</h2>
+
+      <div class="discover-grid">
+
+        <a class="discover-card" href="/eventos/">
+          <!-- foto: <div class="discover-card-img" style="background-image:url('/media/cards/eventos.jpg')"></div> -->
+          <div class="discover-card-placeholder">foto</div>
+          <div class="discover-card-body">
+            <span class="discover-card-num">01</span>
+            <h3 class="discover-card-title">Eventos</h3>
+            <p class="discover-card-desc">Saídas fotográficas, workshops e encontros abertos a todos.</p>
+            <span class="discover-card-arrow">Ver eventos →</span>
           </div>
-          <div class="history-info">
-            <p class="history-year">2019</p>
-            <h3 class="history-name">Primeiro Encontro</h3>
-            <p class="history-desc">O início. Seis pessoas, uma mesa, muitas câmaras e a ideia de que fazia sentido criar um espaço assim em Lisboa. O clube começou aqui.</p>
+        </a>
+
+        <a class="discover-card" href="/cinemateca/">
+          <!-- foto: <div class="discover-card-img" style="background-image:url('/media/cards/cinemateca.jpg')"></div> -->
+          <div class="discover-card-placeholder">foto</div>
+          <div class="discover-card-body">
+            <span class="discover-card-num">02</span>
+            <h3 class="discover-card-title">Cinemateca</h3>
+            <p class="discover-card-desc">Uma selecção de filmes essenciais para o olhar fotográfico.</p>
+            <span class="discover-card-arrow">Entrar →</span>
           </div>
-        </div>
+        </a>
+
+        <a class="discover-card" href="/fototeca/">
+          <!-- foto: <div class="discover-card-img" style="background-image:url('/media/cards/fototeca.jpg')"></div> -->
+          <div class="discover-card-placeholder">foto</div>
+          <div class="discover-card-body">
+            <span class="discover-card-num">03</span>
+            <h3 class="discover-card-title">Fototeca</h3>
+            <p class="discover-card-desc">Galeria de arquivo e publicações do clube.</p>
+            <span class="discover-card-arrow">Ver galeria →</span>
+          </div>
+        </a>
+
+        <a class="discover-card" href="/mercado/">
+          <!-- foto: <div class="discover-card-img" style="background-image:url('/media/cards/mercado.jpg')"></div> -->
+          <div class="discover-card-placeholder">foto</div>
+          <div class="discover-card-body">
+            <span class="discover-card-num">04</span>
+            <h3 class="discover-card-title">Mercado</h3>
+            <p class="discover-card-desc">Impressões numeradas e objectos do trabalho do clube.</p>
+            <span class="discover-card-arrow">Ver loja →</span>
+          </div>
+        </a>
+
+        <a class="discover-card" href="/comunidad/">
+          <!-- foto: <div class="discover-card-img" style="background-image:url('/media/cards/comunidade.jpg')"></div> -->
+          <div class="discover-card-placeholder">foto</div>
+          <div class="discover-card-body">
+            <span class="discover-card-num">05</span>
+            <h3 class="discover-card-title">Comunidade</h3>
+            <p class="discover-card-desc">Como participar, onde nos encontrar e como fazer parte.</p>
+            <span class="discover-card-arrow">Saber mais →</span>
+          </div>
+        </a>
+
+        <a class="discover-card" href="/contactos/">
+          <!-- foto: <div class="discover-card-img" style="background-image:url('/media/cards/contactos.jpg')"></div> -->
+          <div class="discover-card-placeholder">foto</div>
+          <div class="discover-card-body">
+            <span class="discover-card-num">06</span>
+            <h3 class="discover-card-title">Contactos</h3>
+            <p class="discover-card-desc">Fala connosco — para questões, parcerias ou só para dizer olá.</p>
+            <span class="discover-card-arrow">Contactar →</span>
+          </div>
+        </a>
 
       </div>
     </div>
@@ -620,44 +624,10 @@
 
 </main>
 
-<!-- Lightbox -->
-<div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Visualizar foto">
-  <div class="lightbox-inner">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Fechar">&times;</button>
-    <img src="" alt="" id="lightbox-img" />
-    <p class="lightbox-caption" id="lightbox-caption"></p>
-  </div>
-</div>
-
 <div id="footer-container"></div>
 
 <script src="/shared.js"></script>
 <script>
-  // Countdown
-  (function () {
-    var target = new Date('2026-09-06T19:00:00');
-    function pad(n) { return String(n).padStart(2, '0'); }
-    function tick() {
-      var now  = new Date();
-      var diff = target - now;
-      if (diff <= 0) {
-        document.getElementById('countdown').innerHTML =
-          '<span style="font-family:\'Courier New\',monospace;color:var(--text-secondary);font-size:1.2rem;letter-spacing:.1em">A acontecer agora</span>';
-        return;
-      }
-      var d = Math.floor(diff / 86400000);
-      var h = Math.floor((diff % 86400000) / 3600000);
-      var m = Math.floor((diff % 3600000) / 60000);
-      var s = Math.floor((diff % 60000) / 1000);
-      document.getElementById('cd-days').textContent  = pad(d);
-      document.getElementById('cd-hours').textContent = pad(h);
-      document.getElementById('cd-mins').textContent  = pad(m);
-      document.getElementById('cd-secs').textContent  = pad(s);
-    }
-    tick();
-    setInterval(tick, 1000);
-  })();
-
   // Language tabs
   document.querySelectorAll('.lang-tab').forEach(function (tab) {
     tab.addEventListener('click', function () {
@@ -673,36 +643,6 @@
       this.setAttribute('aria-selected', 'true');
       document.getElementById('about-' + lang).classList.add('active');
     });
-  });
-
-  // Lightbox
-  var overlay   = document.getElementById('lightbox');
-  var lbImg     = document.getElementById('lightbox-img');
-  var lbCaption = document.getElementById('lightbox-caption');
-  var lbClose   = document.getElementById('lightbox-close');
-
-  document.querySelectorAll('.history-photo').forEach(function (el) {
-    el.addEventListener('click', function () {
-      lbImg.src             = this.dataset.src;
-      lbImg.alt             = this.dataset.caption || '';
-      lbCaption.textContent = this.dataset.caption || '';
-      overlay.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    });
-  });
-
-  function closeLightbox() {
-    overlay.classList.remove('open');
-    document.body.style.overflow = '';
-    lbImg.src = '';
-  }
-
-  lbClose.addEventListener('click', closeLightbox);
-  overlay.addEventListener('click', function (e) {
-    if (e.target === overlay) closeLightbox();
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeLightbox();
   });
 </script>
 </body>
