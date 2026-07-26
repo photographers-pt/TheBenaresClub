@@ -112,32 +112,11 @@ function createFooter() {
 function initializeNavToggle() {
   const toggleBtn = document.getElementById('nav-toggle');
   const nav = document.getElementById('main-nav');
-  const isMercado = window.location.pathname.startsWith('/mercado');
 
   if (!toggleBtn || !nav) return;
 
-  if (!isMercado) {
-    // All other pages: always-open nav, no button needed
-    nav.classList.add('active');
-    return;
-  }
-
-  // Mercado: burger/X toggle, starts closed
-  toggleBtn.style.display = 'flex';
-  nav.classList.remove('active');
-
-  function updateIcon() {
-    const icon = toggleBtn.querySelector('.nav-icon');
-    icon.className = nav.classList.contains('active') ? 'fas fa-xmark nav-icon' : 'fas fa-bars nav-icon';
-  }
-
-  updateIcon();
-
-  toggleBtn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    nav.classList.toggle('active');
-    updateIcon();
-  });
+  // All pages: always-open nav, no toggle needed
+  nav.classList.add('active');
 }
 
 // =================================

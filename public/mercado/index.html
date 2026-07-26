@@ -39,13 +39,18 @@
       line-height: 1.6;
     }
 
-    /* ── Filter pills ── */
+    /* ── Filter bar (pills + cart) ── */
     .filter-bar {
       padding: 0 48px 48px;
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
+      align-items: center;
       justify-content: center;
+    }
+    .filter-bar-spacer {
+      flex: 1;
+      min-width: 24px;
     }
     .filter-pill {
       font-family: var(--font-family);
@@ -71,28 +76,25 @@
       color: var(--text-primary);
     }
 
-    /* ── Cart trigger ── */
-    .cart-trigger-bar {
-      position: fixed;
-      top: 24px;
-      right: 32px;
-      z-index: 200;
-    }
+    /* ── Cart trigger (inline with filter bar) ── */
     .cart-trigger {
       display: flex;
       align-items: center;
       gap: 8px;
       font-family: var(--font-family);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
       color: var(--text-primary);
       background: rgba(255, 248, 238, 0.06);
       backdrop-filter: var(--glass-blur);
       border: 1px solid var(--border-strong);
-      border-radius: var(--radius-sm);
-      padding: 8px 16px;
+      border-radius: 100px;
+      padding: 8px 18px;
       cursor: pointer;
       transition: background 0.2s ease, border-color 0.2s ease;
+      white-space: nowrap;
     }
     .cart-trigger:hover {
       background: rgba(255, 248, 238, 0.10);
@@ -805,22 +807,20 @@
   <div id="grain"></div>
   <div id="header-container"></div>
 
-  <div class="cart-trigger-bar">
-    <button class="cart-trigger" id="cartTrigger" aria-label="Open cart">
-      <span>Cart</span>
-      <span class="cart-count" id="cartCountBadge" data-count="0">0</span>
-    </button>
-  </div>
-
   <main>
     <section class="mercado-hero">
       <span class="section-label">The Benares Club</span>
       <h1>Mercado</h1>
-      <p>Archival prints, hand-finished editions, and objects from the Club's ongoing body of work.</p>
+      <p>Impressões de arquivo, edições numeradas e objectos do trabalho do Club.</p>
     </section>
 
-    <nav class="filter-bar" id="filterBar" aria-label="Product categories">
-      <button class="filter-pill active" data-filter="all">All</button>
+    <nav class="filter-bar" id="filterBar" aria-label="Categorias de produto">
+      <button class="filter-pill active" data-filter="all">Tudo</button>
+      <div class="filter-bar-spacer"></div>
+      <button class="cart-trigger" id="cartTrigger" aria-label="Abrir carrinho">
+        <span>Carrinho</span>
+        <span class="cart-count" id="cartCountBadge" data-count="0">0</span>
+      </button>
     </nav>
 
     <div class="product-grid" id="productGrid"></div>
@@ -828,21 +828,21 @@
 
   <!-- Cart Drawer -->
   <div class="cart-overlay" id="cartOverlay"></div>
-  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping cart">
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Carrinho">
     <div class="cart-drawer-header">
-      <span class="cart-drawer-title">Your Cart</span>
-      <button class="cart-close" id="cartClose" aria-label="Close cart">&#x2715;</button>
+      <span class="cart-drawer-title">Carrinho</span>
+      <button class="cart-close" id="cartClose" aria-label="Fechar carrinho">&#x2715;</button>
     </div>
     <div class="cart-items" id="cartItemsContainer">
-      <div class="cart-empty">Your cart is empty.</div>
+      <div class="cart-empty">O carrinho está vazio.</div>
     </div>
     <div class="cart-footer">
       <div class="cart-subtotal">
         <span class="cart-subtotal-label">Subtotal</span>
         <span class="cart-subtotal-amount" id="cartSubtotal">€0</span>
       </div>
-      <button class="btn-checkout" id="checkoutBtn" disabled>Checkout</button>
-      <p class="cart-note">Shipping calculated at checkout. All sales are final.</p>
+      <button class="btn-checkout" id="checkoutBtn" disabled>Finalizar compra</button>
+      <p class="cart-note">Portes calculados no checkout. Todas as vendas são finais.</p>
     </div>
   </aside>
 
@@ -853,26 +853,26 @@
         <div class="modal-image-placeholder" id="modalImagePlaceholder">&#x2014;</div>
       </div>
       <div class="modal-info-col">
-        <button class="modal-close" id="modalClose" aria-label="Close">&#x2715;</button>
+        <button class="modal-close" id="modalClose" aria-label="Fechar">&#x2715;</button>
         <div class="modal-category" id="modalCategory"></div>
         <h2 class="modal-name" id="modalProductName"></h2>
         <p class="modal-subtitle" id="modalSubtitle"></p>
         <div class="modal-price" id="modalPrice"></div>
 
         <div id="modalSwatchSection" style="display:none">
-          <div class="modal-section-label">Colour</div>
+          <div class="modal-section-label">Cor</div>
           <div class="modal-swatches" id="modalSwatches"></div>
         </div>
 
         <div id="modalSizeSection" style="display:none">
-          <div class="modal-section-label">Size</div>
+          <div class="modal-section-label">Tamanho</div>
           <div class="modal-sizes" id="modalSizes"></div>
         </div>
 
-        <button class="modal-add-btn" id="modalAddBtn">Add to Cart</button>
+        <button class="modal-add-btn" id="modalAddBtn">Adicionar ao carrinho</button>
 
         <div class="modal-specs" id="modalSpecsContainer" style="display:none">
-          <div class="modal-specs-title">Specifications</div>
+          <div class="modal-specs-title">Especificações</div>
           <dl class="specs-list" id="modalSpecsList"></dl>
         </div>
       </div>
@@ -1092,15 +1092,19 @@
     return '\u20ac' + amount.toLocaleString('en-IE');
   }
 
+  const CAT_LABELS = { prints: 'Impressões', books: 'Livros', objects: 'Objectos', membership: 'Membros' };
+
   /* ── Filters ── */
   function buildFilters() {
     const categories = [...new Set(PRODUCTS.map(p => p.category))];
+    // Insert pills before the spacer/cart button
+    const spacer = filterBar.querySelector('.filter-bar-spacer');
     categories.forEach(cat => {
       const btn = document.createElement('button');
       btn.className = 'filter-pill';
       btn.dataset.filter = cat;
-      btn.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
-      filterBar.appendChild(btn);
+      btn.textContent = CAT_LABELS[cat] || cat.charAt(0).toUpperCase() + cat.slice(1);
+      filterBar.insertBefore(btn, spacer);
     });
     filterBar.addEventListener('click', e => {
       const pill = e.target.closest('.filter-pill');
@@ -1120,7 +1124,7 @@
       : PRODUCTS.filter(p => p.category === activeFilter);
 
     if (filtered.length === 0) {
-      productGrid.innerHTML = '<div class="empty-state">Nothing here yet.</div>';
+      productGrid.innerHTML = '<div class="empty-state">Nada aqui ainda.</div>';
       return;
     }
 
@@ -1147,13 +1151,13 @@
       card.innerHTML = `
         ${imgHtml}
         <div class="product-card-body">
-          <div class="product-card-category">${product.category}</div>
+          <div class="product-card-category">${CAT_LABELS[product.category] || product.category}</div>
           <h3 class="product-card-name">${product.name}</h3>
           <p class="product-card-subtitle">${product.subtitle}</p>
           <div class="product-card-footer">
             <div class="product-price">${priceHtml}</div>
             ${swatchHtml}
-            <button class="btn-add" data-id="${product.id}">Details</button>
+            <button class="btn-add" data-id="${product.id}">Ver</button>
           </div>
         </div>
       `;
@@ -1198,7 +1202,7 @@
     cartCountBadge.dataset.count = totalQty;
 
     if (cart.length === 0) {
-      cartItems.innerHTML = '<div class="cart-empty">Your cart is empty.</div>';
+      cartItems.innerHTML = '<div class="cart-empty">O carrinho está vazio.</div>';
       checkoutBtn.disabled = true;
       cartSubtotal.textContent = '\u20ac0';
       return;
@@ -1225,7 +1229,7 @@
             <button class="qty-btn" data-key="${item.key}" data-delta="-1">\u2212</button>
             <span class="qty-display">${item.qty}</span>
             <button class="qty-btn" data-key="${item.key}" data-delta="1">+</button>
-            <button class="cart-item-remove" data-key="${item.key}">Remove</button>
+            <button class="cart-item-remove" data-key="${item.key}">Remover</button>
           </div>
         </div>
         <div class="cart-item-price">${formatPrice(item.product.price * item.qty)}</div>
