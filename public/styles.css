@@ -1531,3 +1531,30 @@ body.bg-contactos { background-image: url("media/B04\ Noticias.png"); }
 @media (max-width: 600px) {
   .page-banner { aspect-ratio: 4 / 3; }
 }
+
+/* Banner title — overlaid at bottom-left */
+.page-banner-title {
+  position: absolute;
+  bottom: clamp(1.5rem, 4vh, 3rem);
+  left: clamp(1.5rem, 5vw, 4rem);
+  z-index: 2;
+  max-width: 640px;
+}
+.page-banner-eyebrow {
+  display: block;
+  font-family: var(--font-family);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(240, 232, 216, 0.5);
+  margin-bottom: 0.6rem;
+}
+.page-banner-heading {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  color: var(--text-primary);
+  line-height: 1.1;
+  margin: 0;
+}
