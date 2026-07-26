@@ -10,182 +10,48 @@
       /* no max-width — banner must reach full viewport width */
     }
 
-    .content-wrap {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 4rem 2rem 8rem;
-    }
-
-    /* ── Section header ── */
-    .section-head {
-      margin-bottom: 2rem;
-    }
-
-    .section-eyebrow {
-      display: block;
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.5rem;
-    }
-
-    .section-title {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-weight: 300;
-      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-      color: var(--text-primary);
-      line-height: 1.1;
-      margin: 0;
-    }
-
-    .section-description {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      max-width: 540px;
-      line-height: 1.7;
-      margin: 0.75rem 0 0;
-    }
-
-    /* ── Divider ── */
-    .section-divider {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 5rem 0;
-    }
-
-    /* ── Filter bar ── */
-    .gallery-filters {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      margin-bottom: 2.5rem;
-    }
-
-    .filter-pill {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      background: transparent;
-      border: 1px solid var(--border-strong);
-      border-radius: 100px;
-      padding: 0.4rem 1rem;
-      cursor: pointer;
-      transition: color 0.2s, background 0.2s, border-color 0.2s;
-    }
-
-    .filter-pill:hover {
-      color: var(--text-primary);
-      border-color: rgba(240, 232, 216, 0.3);
-    }
-
-    .filter-pill.active {
-      background: rgba(240, 232, 216, 0.1);
-      border-color: rgba(240, 232, 216, 0.3);
-      color: var(--text-primary);
-    }
-
-    /* ── Masonry gallery grid ── */
+    /* ── Gallery grid ── */
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: 220px;
-      gap: 0.75rem;
+      grid-auto-rows: 260px;
+      gap: 2px;
     }
 
     .photo-item {
       position: relative;
       overflow: hidden;
-      border-radius: var(--radius-md);
       background: rgba(255, 248, 238, 0.03);
-      border: 1px solid var(--border);
       cursor: pointer;
-      transition: border-color 0.25s ease;
     }
 
-    .photo-item:hover {
-      border-color: var(--border-strong);
-    }
+    .photo-item.tall  { grid-row: span 2; }
+    .photo-item.wide  { grid-column: span 2; }
+    .photo-item.large { grid-column: span 2; grid-row: span 2; }
 
-    /* Size variants */
-    .photo-item.tall   { grid-row: span 2; }
-    .photo-item.wide   { grid-column: span 2; }
-    .photo-item.large  { grid-column: span 2; grid-row: span 2; }
-
-    /* Photo image */
     .photo-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.5s ease, opacity 0.3s ease;
+      transition: transform 0.6s ease, opacity 0.3s ease;
     }
 
     .photo-item:hover img {
-      transform: scale(1.03);
+      transform: scale(1.04);
     }
 
-    /* Placeholder (no photo yet) */
+    /* Placeholder */
     .photo-placeholder {
       width: 100%;
       height: 100%;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-    }
-
-    .photo-placeholder-icon {
-      font-size: 0.65rem;
-      letter-spacing: 0.28em;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: rgba(240, 232, 216, 0.12);
-    }
-
-    /* Hover overlay */
-    .photo-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(8, 7, 6, 0.82) 0%, rgba(8, 7, 6, 0.2) 50%, transparent 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 1.25rem;
-      pointer-events: none;
-    }
-
-    .photo-item:hover .photo-overlay {
-      opacity: 1;
-    }
-
-    .photo-caption {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: 0.95rem;
-      font-weight: 300;
-      color: var(--text-primary);
-      line-height: 1.3;
-      margin: 0 0 0.25rem;
-    }
-
-    .photo-meta {
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(240, 232, 216, 0.55);
-      margin: 0;
-    }
-
-    /* Hidden items (filtered out) */
-    .photo-item.hidden {
-      display: none;
+      color: rgba(240, 232, 216, 0.08);
     }
 
     /* ── Lightbox ── */
@@ -193,15 +59,13 @@
       position: fixed;
       inset: 0;
       z-index: 900;
-      background: rgba(8, 7, 6, 0.92);
-      backdrop-filter: blur(12px);
+      background: rgba(8, 7, 6, 0.96);
       display: flex;
       align-items: center;
       justify-content: center;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s ease;
-      padding: 2rem;
     }
 
     .lightbox.open {
@@ -209,222 +73,90 @@
       pointer-events: all;
     }
 
-    .lightbox-inner {
-      position: relative;
-      max-width: 900px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.25rem;
-      transform: translateY(10px);
-      transition: transform 0.3s ease;
-    }
-
-    .lightbox.open .lightbox-inner {
-      transform: translateY(0);
-    }
-
     .lightbox-img-wrap {
-      position: relative;
-      width: 100%;
-      max-height: 72vh;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      border: 1px solid var(--border-strong);
-      background: rgba(255, 248, 238, 0.03);
+      max-width: 92vw;
+      max-height: 92vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      transform: scale(0.97);
+      transition: transform 0.3s ease;
+    }
+
+    .lightbox.open .lightbox-img-wrap {
+      transform: scale(1);
     }
 
     .lightbox-img-wrap img {
-      max-width: 100%;
-      max-height: 72vh;
+      max-width: 92vw;
+      max-height: 92vh;
       object-fit: contain;
       display: block;
     }
 
     .lightbox-placeholder {
-      width: 100%;
-      min-height: 340px;
+      width: 60vw;
+      height: 60vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.65rem;
-      letter-spacing: 0.28em;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: rgba(240, 232, 216, 0.12);
-    }
-
-    .lightbox-info {
-      text-align: center;
-    }
-
-    .lightbox-caption {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: 1.1rem;
-      font-weight: 300;
-      color: var(--text-primary);
-      margin: 0 0 0.3rem;
-    }
-
-    .lightbox-meta {
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-muted);
+      color: rgba(240, 232, 216, 0.1);
     }
 
     .lightbox-close {
-      position: absolute;
-      top: 1.25rem;
-      right: 1.25rem;
+      position: fixed;
+      top: 1.5rem;
+      right: 1.75rem;
       background: transparent;
-      border: 1px solid var(--border-strong);
-      border-radius: 50%;
-      width: 2.25rem;
-      height: 2.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-secondary);
-      font-size: 1rem;
+      border: none;
+      color: rgba(240, 232, 216, 0.35);
+      font-size: 1.5rem;
       cursor: pointer;
-      transition: color 0.2s, border-color 0.2s;
+      line-height: 1;
+      transition: color 0.2s;
       z-index: 1;
     }
 
-    .lightbox-close:hover {
-      color: var(--text-primary);
-      border-color: var(--text-primary);
-    }
+    .lightbox-close:hover { color: var(--text-primary); }
 
     .lightbox-nav {
-      position: absolute;
+      position: fixed;
       top: 50%;
       transform: translateY(-50%);
       background: transparent;
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-sm);
-      width: 2.5rem;
-      height: 2.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-secondary);
-      font-size: 1rem;
+      border: none;
+      color: rgba(240, 232, 216, 0.25);
+      font-size: 2rem;
       cursor: pointer;
-      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      padding: 1rem;
+      line-height: 1;
+      transition: color 0.2s;
     }
 
-    .lightbox-nav:hover {
-      color: var(--text-primary);
-      border-color: var(--text-primary);
-      background: rgba(255, 248, 238, 0.05);
-    }
-
-    .lightbox-prev { left: -3.5rem; }
-    .lightbox-next { right: -3.5rem; }
-
-    /* ── Books section ── */
-    .books-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.75rem;
-    }
-
-    .book-card {
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-    }
-
-    .book-cover-link {
-      display: block;
-      text-decoration: none;
-    }
-
-    .book-cover-wrap {
-      position: relative;
-      aspect-ratio: 2 / 3;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      background: rgba(255, 248, 238, 0.04);
-      border: 1px solid var(--border);
-      transition: border-color 0.25s ease, transform 0.25s ease;
-    }
-
-    .book-cover-link:hover .book-cover-wrap {
-      border-color: var(--border-strong);
-      transform: translateY(-3px);
-    }
-
-    .book-cover-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .book-cover-wrap.soon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .soon-label {
-      font-size: 0.62rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .book-meta { display: flex; flex-direction: column; gap: 0.15rem; }
-
-    .book-title {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: 0.95rem;
-      font-weight: 400;
-      color: var(--text-primary);
-      margin: 0;
-    }
-
-    .book-author {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      margin: 0;
-    }
-
-    .book-meta.muted .book-title,
-    .book-meta.muted .book-author { color: var(--text-muted); }
+    .lightbox-nav:hover { color: var(--text-primary); }
+    .lightbox-prev { left: 0.5rem; }
+    .lightbox-next { right: 0.5rem; }
 
     /* ── Responsive ── */
     @media (max-width: 900px) {
       .photo-grid {
         grid-template-columns: repeat(2, 1fr);
-        grid-auto-rows: 200px;
+        grid-auto-rows: 220px;
       }
       .photo-item.wide,
       .photo-item.large { grid-column: span 1; }
       .photo-item.large { grid-row: span 2; }
-      .lightbox-prev { left: -2.75rem; }
-      .lightbox-next { right: -2.75rem; }
-      .books-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 540px) {
       .photo-grid {
         grid-template-columns: repeat(2, 1fr);
         grid-auto-rows: 160px;
       }
-      .photo-item.tall { grid-row: span 2; }
-      .lightbox { padding: 1rem; }
-      .lightbox-prev, .lightbox-nav { display: none; }
-      .books-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+      .lightbox-nav { display: none; }
     }
   </style>
 </head>
@@ -434,287 +166,117 @@
   <div id="header-container"></div>
 
   <main>
-  <div class="page-banner">
-    <!-- foto: <img src="/media/banners/fototeca.jpg" alt="" class="page-banner-img"> -->
-    <div class="page-banner-title">
-      <span class="page-banner-eyebrow">01 · Fototeca</span>
-      <h1 class="page-banner-heading">Fototeca</h1>
-    </div>
-  </div>
-
-  <div class="content-wrap">
-
-    <!-- Gallery section -->
-    <div class="section-head">
-      <span class="section-eyebrow">02 · Galeria</span>
-      <h2 class="section-title">Arquivo Fotográfico</h2>
-      <p class="section-description">Imagens das saídas, retratos e trabalho dos sócios. Clica para ampliar.</p>
-    </div>
-
-    <div class="gallery-filters" id="galleryFilters">
-      <button class="filter-pill active" data-filter="all">Tudo</button>
-      <button class="filter-pill" data-filter="saidas">Saídas</button>
-      <button class="filter-pill" data-filter="retratos">Retratos</button>
-      <button class="filter-pill" data-filter="paisagem">Paisagem</button>
-      <button class="filter-pill" data-filter="urbano">Urbano</button>
+    <div class="page-banner">
+      <!-- foto: <img src="/media/banners/fototeca.jpg" alt="" class="page-banner-img"> -->
+      <div class="page-banner-title">
+        <span class="page-banner-eyebrow">01 · Fototeca</span>
+        <h1 class="page-banner-heading">Fototeca</h1>
+      </div>
     </div>
 
     <div class="photo-grid" id="photoGrid">
 
-      <!-- foto: trocar src por caminho real -->
-
-      <div class="photo-item large" data-category="saidas" data-caption="Saída · Mouraria" data-meta="Lisboa · Jan 2026">
-        <!-- foto: <img src="/media/galeria/mouraria-01.jpg" alt="Saída Mouraria"> -->
-        <div class="photo-placeholder"><span class="photo-placeholder-icon">foto</span></div>
-        <div class="photo-overlay">
-          <p class="photo-caption">Saída · Mouraria</p>
-          <p class="photo-meta">Lisboa · Jan 2026</p>
-        </div>
+      <div class="photo-item large" data-caption="Saída · Mouraria" data-meta="Lisboa · Jan 2026">
+        <!-- foto: <img src="/media/galeria/mouraria-01.jpg" alt=""> -->
+        <div class="photo-placeholder">foto</div>
       </div>
 
-      <div class="photo-item" data-category="retratos" data-caption="Retrato · Ana M." data-meta="Estúdio · Dez 2025">
-        <!-- foto: <img src="/media/galeria/retrato-ana.jpg" alt="Retrato Ana M."> -->
-        <div class="photo-placeholder"><span class="photo-placeholder-icon">foto</span></div>
-        <div class="photo-overlay">
-          <p class="photo-caption">Retrato · Ana M.</p>
-          <p class="photo-meta">Estúdio · Dez 2025</p>
-        </div>
+      <div class="photo-item" data-caption="Retrato · Ana M." data-meta="Estúdio · Dez 2025">
+        <!-- foto: <img src="/media/galeria/retrato-ana.jpg" alt=""> -->
+        <div class="photo-placeholder">foto</div>
       </div>
 
-      <div class="photo-item tall" data-category="urbano" data-caption="Praça do Comércio" data-meta="Lisboa · Nov 2025">
-        <!-- foto: <img src="/media/galeria/praca-comercio.jpg" alt="Praça do Comércio"> -->
-        <div class="photo-placeholder"><span class="photo-placeholder-icon">foto</span></div>
-        <div class="photo-overlay">
-          <p class="photo-caption">Praça do Comércio</p>
-          <p class="photo-meta">Lisboa · Nov 2025</p>
-        </div>
+      <div class="photo-item tall" data-caption="Praça do Comércio" data-meta="Lisboa · Nov 2025">
+        <!-- foto: <img src="/media/galeria/praca-comercio.jpg" alt=""> -->
+        <div class="photo-placeholder">foto</div>
       </div>
 
-      <div class="photo-item wide" data-category="paisagem" data-caption="Serra da Estrela" data-meta="Covilhã · Out 2025">
-        <!-- foto: <img src="/media/galeria/serra-estrela.jpg" alt="Serra da Estrela"> -->
-        <div class="photo-placeholder"><span class="photo-placeholder-icon">foto</span></div>
-        <div class="photo-overlay">
-          <p class="photo-caption">Serra da Estrela</p>
-          <p class="photo-meta">Covilhã · Out 2025</p>
-        </div>
+      <div class="photo-item wide" data-caption="Serra da Estrela" data-meta="Covilhã · Out 2025">
+        <!-- foto: <img src="/media/galeria/serra-estrela.jpg" alt=""> -->
+        <div class="photo-placeholder">foto</div>
       </div>
 
-      <div class="photo-item" data-category="saidas" data-caption="Saída · Intendente" data-meta="Lisboa · Set 2025">
-        <!-- foto: <img src="/media/galeria/intendente-01.jpg" alt="Saída Intendente"> -->
-        <div class="photo-placeholder"><span class="photo-placeholder-icon">foto</span></div>
-        <div class="photo-overlay">
-          <p class="photo-caption">Saída · Intendente</p>
-          <p class="photo-meta">Lisboa · Set 2025</p>
-        </div>
+      <div class="photo-item" data-caption="Saída · Intendente" data-meta="Lisboa · Set 2025">
+        <!-- foto: <img src="/media/galeria/intendente-01.jpg" alt=""> -->
+        <div class="photo-placeholder">foto</div>
       </div>
 
-      <div class="photo-item tall" data-category="retratos" data-caption="Retrato · R. Fonseca" data-meta="Lisboa · Set 2025">
-        <!-- foto: <img src="/media/galeria/retrato-rf.jpg" alt="Retrato R. Fonseca"> -->
-        <div class="photo-placeholder"><span class="photo-placeholder-icon">foto</span></div>
-        <div class="photo-overlay">
-          <p class="photo-caption">Retrato · R. Fonseca</p>
-          <p class="photo-meta">Lisboa · Set 2025</p>
-        </div>
+      <div class="photo-item tall" data-caption="Retrato · R. Fonseca" data-meta="Lisboa · Set 2025">
+        <!-- foto: <img src="/media/galeria/retrato-rf.jpg" alt=""> -->
+        <div class="photo-placeholder">foto</div>
       </div>
 
-      <div class="photo-item wide" data-category="urbano" data-caption="Cais do Sodré" data-meta="Lisboa · Ago 2025">
-        <!-- foto: <img src="/media/galeria/cais-sodre.jpg" alt="Cais do Sodré"> -->
-        <div class="photo-placeholder"><span class="photo-placeholder-icon">foto</span></div>
-        <div class="photo-overlay">
-          <p class="photo-caption">Cais do Sodré</p>
-          <p class="photo-meta">Lisboa · Ago 2025</p>
-        </div>
+      <div class="photo-item wide" data-caption="Cais do Sodré" data-meta="Lisboa · Ago 2025">
+        <!-- foto: <img src="/media/galeria/cais-sodre.jpg" alt=""> -->
+        <div class="photo-placeholder">foto</div>
       </div>
 
-      <div class="photo-item" data-category="paisagem" data-caption="Alentejo · Planície" data-meta="Évora · Jul 2025">
-        <!-- foto: <img src="/media/galeria/alentejo.jpg" alt="Alentejo Planície"> -->
-        <div class="photo-placeholder"><span class="photo-placeholder-icon">foto</span></div>
-        <div class="photo-overlay">
-          <p class="photo-caption">Alentejo · Planície</p>
-          <p class="photo-meta">Évora · Jul 2025</p>
-        </div>
+      <div class="photo-item" data-caption="Alentejo · Planície" data-meta="Évora · Jul 2025">
+        <!-- foto: <img src="/media/galeria/alentejo.jpg" alt=""> -->
+        <div class="photo-placeholder">foto</div>
       </div>
 
-      <div class="photo-item" data-category="saidas" data-caption="Saída · Alfama" data-meta="Lisboa · Jun 2025">
-        <!-- foto: <img src="/media/galeria/alfama-01.jpg" alt="Saída Alfama"> -->
-        <div class="photo-placeholder"><span class="photo-placeholder-icon">foto</span></div>
-        <div class="photo-overlay">
-          <p class="photo-caption">Saída · Alfama</p>
-          <p class="photo-meta">Lisboa · Jun 2025</p>
-        </div>
+      <div class="photo-item" data-caption="Saída · Alfama" data-meta="Lisboa · Jun 2025">
+        <!-- foto: <img src="/media/galeria/alfama-01.jpg" alt=""> -->
+        <div class="photo-placeholder">foto</div>
       </div>
 
-    </div><!-- /.photo-grid -->
-
-    <hr class="section-divider" />
-
-    <!-- Books section -->
-    <div class="section-head">
-      <span class="section-eyebrow">03 · Publicações</span>
-      <h2 class="section-title">Edições do Clube</h2>
-      <p class="section-description">Livros publicados pelo The Benares Club — entre ficção, fotografia e formas que resistem à classificação.</p>
     </div>
-
-    <div class="books-grid">
-
-      <div class="book-card">
-        <a class="book-cover-link" href="/fototeca/inexistente/">
-          <div class="book-cover-wrap">
-            <img src="/fototeca/inexistente/cover.jpg" alt="Capa de Inexistente" />
-          </div>
-        </a>
-        <div class="book-meta">
-          <p class="book-title">Inexistente</p>
-          <p class="book-author">The Benares Club</p>
-        </div>
-      </div>
-
-      <div class="book-card">
-        <a class="book-cover-link" href="/fototeca/artista/">
-          <div class="book-cover-wrap">
-            <img src="/fototeca/artista/cover.jpg" alt="Capa de Artista" />
-          </div>
-        </a>
-        <div class="book-meta">
-          <p class="book-title">Artista</p>
-          <p class="book-author">The Benares Club</p>
-        </div>
-      </div>
-
-      <div class="book-card">
-        <div class="book-cover-wrap soon">
-          <span class="soon-label">Em breve</span>
-        </div>
-        <div class="book-meta muted">
-          <p class="book-title">Em breve</p>
-          <p class="book-author">&nbsp;</p>
-        </div>
-      </div>
-
-      <div class="book-card">
-        <div class="book-cover-wrap soon">
-          <span class="soon-label">Em breve</span>
-        </div>
-        <div class="book-meta muted">
-          <p class="book-title">Em breve</p>
-          <p class="book-author">&nbsp;</p>
-        </div>
-      </div>
-
-    </div><!-- /.books-grid -->
-
-  </div><!-- /.content-wrap -->
   </main>
 
   <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
-    <button class="lightbox-close" id="lightboxClose" aria-label="Fechar">&#x2715;</button>
-    <div class="lightbox-inner">
-      <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Anterior">&#8592;</button>
-      <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Seguinte">&#8594;</button>
-      <div class="lightbox-img-wrap" id="lightboxImgWrap">
-        <div class="lightbox-placeholder" id="lightboxPlaceholder">foto</div>
-      </div>
-      <div class="lightbox-info">
-        <p class="lightbox-caption" id="lightboxCaption"></p>
-        <p class="lightbox-meta" id="lightboxMeta"></p>
-      </div>
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lbClose" aria-label="Fechar">&#x2715;</button>
+    <button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Anterior">&#8592;</button>
+    <div class="lightbox-img-wrap" id="lbImgWrap">
+      <div class="lightbox-placeholder" id="lbPlaceholder">foto</div>
     </div>
+    <button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Seguinte">&#8594;</button>
   </div>
 
   <div id="footer-container"></div>
 
   <script>
-    // ── Filter ──
-    const pills = document.querySelectorAll('.filter-pill');
     const items = Array.from(document.querySelectorAll('.photo-item'));
+    const lb      = document.getElementById('lightbox');
+    const lbWrap  = document.getElementById('lbImgWrap');
+    const lbPH    = document.getElementById('lbPlaceholder');
+    const lbClose = document.getElementById('lbClose');
+    const lbPrev  = document.getElementById('lbPrev');
+    const lbNext  = document.getElementById('lbNext');
+    let cur = 0;
 
-    pills.forEach(pill => {
-      pill.addEventListener('click', () => {
-        pills.forEach(p => p.classList.remove('active'));
-        pill.classList.add('active');
-        const f = pill.dataset.filter;
-        items.forEach(item => {
-          item.classList.toggle('hidden', f !== 'all' && item.dataset.category !== f);
-        });
-      });
-    });
+    function show(i) {
+      cur = i;
+      const item = items[i];
+      const prev = lbWrap.querySelector('img');
+      if (prev) prev.remove();
+      lbPH.style.display = 'flex';
 
-    // ── Lightbox ──
-    const lightbox   = document.getElementById('lightbox');
-    const lbImgWrap  = document.getElementById('lightboxImgWrap');
-    const lbPlaceholder = document.getElementById('lightboxPlaceholder');
-    const lbCaption  = document.getElementById('lightboxCaption');
-    const lbMeta     = document.getElementById('lightboxMeta');
-    const lbClose    = document.getElementById('lightboxClose');
-    const lbPrev     = document.getElementById('lightboxPrev');
-    const lbNext     = document.getElementById('lightboxNext');
-
-    let current = 0;
-    let visible = [];
-
-    function openLightbox(index) {
-      visible = items.filter(i => !i.classList.contains('hidden'));
-      current = index;
-      showSlide(current);
-      lightbox.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-      lightbox.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    function showSlide(idx) {
-      const item = visible[idx];
-      if (!item) return;
-
-      // Clear previous image
-      const existing = lbImgWrap.querySelector('img');
-      if (existing) existing.remove();
-      lbPlaceholder.style.display = 'flex';
-
-      const img = item.querySelector('img');
-      if (img) {
-        const clone = new Image();
-        clone.src = img.src;
-        clone.alt = img.alt;
-        clone.style.cssText = 'max-width:100%;max-height:72vh;object-fit:contain;display:block;';
-        clone.onload = () => { lbPlaceholder.style.display = 'none'; lbImgWrap.appendChild(clone); };
+      const src = item.querySelector('img');
+      if (src) {
+        const img = new Image();
+        img.src = src.src;
+        img.onload = () => { lbPH.style.display = 'none'; lbWrap.appendChild(img); };
       }
 
-      lbCaption.textContent = item.dataset.caption || '';
-      lbMeta.textContent    = item.dataset.meta || '';
-      lbPrev.style.opacity  = idx === 0 ? '0.3' : '1';
-      lbNext.style.opacity  = idx === visible.length - 1 ? '0.3' : '1';
+      lbPrev.style.opacity = i === 0 ? '0.15' : '0.25';
+      lbNext.style.opacity = i === items.length - 1 ? '0.15' : '0.25';
     }
 
-    items.forEach((item, i) => {
-      item.addEventListener('click', () => {
-        visible = items.filter(it => !it.classList.contains('hidden'));
-        openLightbox(visible.indexOf(item));
-      });
-    });
+    function open(i)  { show(i); lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function close()  { lb.classList.remove('open'); document.body.style.overflow = ''; }
 
-    lbClose.addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-
-    lbPrev.addEventListener('click', e => {
-      e.stopPropagation();
-      if (current > 0) showSlide(--current);
-    });
-
-    lbNext.addEventListener('click', e => {
-      e.stopPropagation();
-      if (current < visible.length - 1) showSlide(++current);
-    });
-
+    items.forEach((item, i) => item.addEventListener('click', () => open(i)));
+    lbClose.addEventListener('click', close);
+    lb.addEventListener('click', e => { if (e.target === lb) close(); });
+    lbPrev.addEventListener('click', e => { e.stopPropagation(); if (cur > 0) show(cur - 1); });
+    lbNext.addEventListener('click', e => { e.stopPropagation(); if (cur < items.length - 1) show(cur + 1); });
     document.addEventListener('keydown', e => {
-      if (!lightbox.classList.contains('open')) return;
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft'  && current > 0) showSlide(--current);
-      if (e.key === 'ArrowRight' && current < visible.length - 1) showSlide(++current);
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft'  && cur > 0) show(cur - 1);
+      if (e.key === 'ArrowRight' && cur < items.length - 1) show(cur + 1);
     });
   </script>
 
