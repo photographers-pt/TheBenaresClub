@@ -6,39 +6,6 @@
   <title>Mercado — The Benares Club</title>
   <link rel="stylesheet" href="/styles.css" />
   <style>
-    /* ── Page layout ── */
-    .mercado-hero {
-      padding: 120px 48px 64px;
-      text-align: center;
-    }
-    .mercado-hero .section-label {
-      display: inline-block;
-      font-family: var(--font-family);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }
-    .mercado-hero h1 {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: clamp(40px, 6vw, 72px);
-      font-weight: 300;
-      color: var(--text-primary);
-      line-height: 1.1;
-      margin: 0 0 20px;
-    }
-    .mercado-hero p {
-      font-family: var(--font-family);
-      font-size: 16px;
-      color: var(--text-secondary);
-      max-width: 480px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-
     /* ── Filter bar (pills + cart) ── */
     .filter-bar {
       padding: 0 48px 48px;
@@ -765,9 +732,6 @@
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
-      .mercado-hero {
-        padding: 100px 24px 48px;
-      }
       .filter-bar {
         padding: 0 24px 36px;
       }
@@ -810,13 +774,11 @@
   <main>
   <div class="page-banner">
     <!-- foto: <img src="/media/banners/mercado.jpg" alt="" class="page-banner-img"> -->
-    <div class="page-banner-placeholder">foto</div>
+    <div class="page-banner-title">
+      <span class="page-banner-eyebrow">The Benares Club</span>
+      <h1 class="page-banner-heading">Mercado</h1>
+    </div>
   </div>
-    <section class="mercado-hero">
-      <span class="section-label">The Benares Club</span>
-      <h1>Mercado</h1>
-      <p>Impressões de arquivo, edições numeradas e objectos do trabalho do Club.</p>
-    </section>
 
     <nav class="filter-bar" id="filterBar" aria-label="Categorias de produto">
       <button class="filter-pill active" data-filter="all">Tudo</button>

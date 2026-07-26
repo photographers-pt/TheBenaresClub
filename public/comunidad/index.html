@@ -8,9 +8,12 @@
   <style>
     /* ── Page layout ── */
     main {
+      /* no max-width — banner must reach full viewport width */
+    }
+    .content-wrap {
       max-width: 900px;
       margin: 0 auto;
-      padding: 6rem 2rem 8rem;
+      padding: 4rem 2rem 8rem;
     }
 
     /* ── Section header ── */
@@ -232,15 +235,13 @@
   <main>
   <div class="page-banner">
     <!-- foto: <img src="/media/banners/comunidad.jpg" alt="" class="page-banner-img"> -->
-    <div class="page-banner-placeholder">foto</div>
+    <div class="page-banner-title">
+      <span class="page-banner-eyebrow">01 · Comunidade</span>
+      <h1 class="page-banner-heading">Quem Somos</h1>
+    </div>
   </div>
 
-    <!-- Hero header -->
-    <div class="s-head">
-      <span class="label">01 · Comunidade</span>
-      <h1>Quem Somos</h1>
-    </div>
-
+  <div class="content-wrap">
     <p class="intro-text">
       The Benares Club reune fotógrafos, viajantes e curiosos unidos pela imagem e pela vontade de ver o mundo com atenção. Partilhamos saídas fotográficas, conversas sobre técnica e uma paixão comum por descobrir o extraordinário no quotidiano.
     </p>
@@ -314,6 +315,7 @@
       <a class="btn-primary" href="/contactos/">Entrar em contacto</a>
     </div>
 
+  </div><!-- /.content-wrap -->
   </main>
 
   <div id="footer-container"></div>
