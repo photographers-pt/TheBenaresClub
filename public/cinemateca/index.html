@@ -19,85 +19,6 @@
       padding: 0 0 6rem;
     }
 
-    /* Hero */
-    .cinemateca-hero {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      min-height: 60vh;
-      padding: 8rem 2rem 5rem;
-      overflow: hidden;
-      background-size: cover;
-      background-position: center;
-    }
-
-    /* foto: style="background-image:url('/media/banners/cinemateca.jpg')" */
-    .cinemateca-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(8, 7, 6, 0.55);
-      pointer-events: none;
-    }
-
-    .cinemateca-hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, transparent 40%, var(--bg-base) 100%);
-      pointer-events: none;
-    }
-
-    .hero-eyebrow {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin: 0 0 1.25rem;
-    }
-
-    .hero-title {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: clamp(3.5rem, 8vw, 6rem);
-      font-weight: 300;
-      line-height: 1.05;
-      color: var(--text-primary);
-      margin: 0 0 1.25rem;
-    }
-
-    .hero-subtitle {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      margin: 0 0 2.5rem;
-      max-width: 36ch;
-    }
-
-    .hero-cta {
-      display: inline-block;
-      padding: 0.75rem 2.25rem;
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--text-primary);
-      text-decoration: none;
-      background: rgba(255, 248, 238, 0.04);
-      backdrop-filter: var(--glass-blur);
-      transition: border-color 0.2s ease, background 0.2s ease;
-    }
-
-    .hero-cta:hover {
-      background: rgba(255, 248, 238, 0.08);
-      border-color: rgba(240, 232, 216, 0.35);
-    }
-
     /* Section headers */
     .section-header {
       margin-bottom: 2.5rem;
@@ -323,13 +244,13 @@
   <div id="header-container"></div>
   <main>
 
-    <!-- Hero -->
-    <section class="cinemateca-hero">
-      <p class="hero-eyebrow">The Benares Club</p>
-      <h1 class="hero-title">Cinemateca</h1>
-      <p class="hero-subtitle">Cinema para ver em casa — uma selecção para sócios.</p>
-      <a href="/cinemateca/" class="hero-cta">Entrar na Cinemateca</a>
-    </section>
+  <div class="page-banner">
+    <!-- foto: <img src="/media/banners/cinemateca.jpg" alt="" class="page-banner-img"> -->
+    <div class="page-banner-title">
+      <span class="page-banner-eyebrow">The Benares Club</span>
+      <h1 class="page-banner-heading">Cinemateca</h1>
+    </div>
+  </div>
 
     <!-- Film Shelf -->
     <section id="films-section">
