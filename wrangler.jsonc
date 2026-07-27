@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "club-benares",
+  "name": "thebenaresclub",
   "compatibility_date": "2026-04-29",
   "assets": {
     "directory": "./public"
