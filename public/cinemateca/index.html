@@ -666,30 +666,81 @@
     }
     .modal-close:hover { background: rgba(255,248,238,0.14); color: var(--text-primary); }
 
-    /* Trailer button */
-    .modal-trailer-btn {
+    /* Action buttons row */
+    .modal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .modal-action-btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.55rem;
-      width: 100%;
+      gap: 0.45rem;
       font-family: var(--font-family);
-      font-size: 0.82rem;
+      font-size: 0.75rem;
       font-weight: 500;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-primary);
       background: transparent;
-      border: 1px solid rgba(240,232,216,0.18);
+      border: 1px solid rgba(240,232,216,0.16);
       border-radius: var(--radius-sm);
-      padding: 0.75rem;
+      padding: 0.65rem 0.5rem;
       cursor: pointer;
       transition: background 0.2s, border-color 0.2s;
-      margin-bottom: 0.75rem;
       box-sizing: border-box;
+      white-space: nowrap;
     }
-    .modal-trailer-btn:hover { background: rgba(255,248,238,0.06); border-color: rgba(240,232,216,0.32); }
-    .modal-trailer-btn.hidden { display: none; }
+    .modal-action-btn:hover { background: rgba(255,248,238,0.06); border-color: rgba(240,232,216,0.3); }
+    .modal-action-btn.active { border-color: rgba(240,232,216,0.4); background: rgba(255,248,238,0.07); }
+    .modal-action-btn.hidden { display: none; }
+
+    /* When trailer btn hidden, ficha takes full width */
+    .modal-action-btn.hidden + .modal-action-btn {
+      grid-column: 1 / -1;
+    }
+
+    /* Ficha técnica panel */
+    .ficha-panel {
+      display: none;
+      background: rgba(255,248,238,0.025);
+      border: 1px solid rgba(240,232,216,0.08);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.1rem;
+      margin-bottom: 0.85rem;
+    }
+    .ficha-panel.visible { display: block; }
+
+    .ficha-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(240,232,216,0.05);
+    }
+    .ficha-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .ficha-row:first-child { padding-top: 0; }
+
+    .ficha-key {
+      font-family: var(--font-family);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .ficha-val {
+      font-family: var(--font-family);
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      text-align: right;
+    }
 
     /* Trailer player (replaces poster area) */
     .modal-player {
@@ -842,10 +893,21 @@
         <h2 class="modal-title" id="modal-title">—</h2>
         <p class="modal-meta" id="modal-meta">—</p>
         <p class="modal-description" id="modal-desc">—</p>
-        <button class="modal-trailer-btn hidden" id="modal-trailer-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          Ver Trailer
-        </button>
+        <!-- Action buttons -->
+        <div class="modal-actions">
+          <button class="modal-action-btn hidden" id="modal-trailer-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Ver Trailer
+          </button>
+          <button class="modal-action-btn" id="modal-ficha-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            Ficha Técnica
+          </button>
+        </div>
+
+        <!-- Ficha técnica panel -->
+        <div class="ficha-panel" id="modal-ficha-panel"></div>
+
         <div class="purchase-options">
           <div class="purchase-option">
             <span class="purchase-option-label">Alugar</span>
@@ -892,6 +954,14 @@
         icon: "🎬",
         trailerVideo: null,
         trailerUrl: null,
+        tecnica: {
+          "País": "Índia",
+          "Idioma": "Bengali",
+          "Argumento": "Bibhutibhushan Bandyopadhyay",
+          "Fotografia": "Subrata Mitra",
+          "Música": "Ravi Shankar",
+          "Prémios": "Cannes — Melhor Documento Humano"
+        },
         rentPrice: "€3,50",
         rentStripeUrl: "#",
         buyPrice: "€9,90",
@@ -909,6 +979,14 @@
         icon: "🌹",
         trailerVideo: null,
         trailerUrl: null,
+        tecnica: {
+          "País": "Hong Kong / França",
+          "Idioma": "Cantonês · Shanghainês",
+          "Argumento": "Wong Kar-wai",
+          "Fotografia": "Christopher Doyle · Mark Lee",
+          "Música": "Michael Galasso · Shigeru Umebayashi",
+          "Prémios": "Cannes — Melhor Actor (Tony Leung)"
+        },
         rentPrice: "€3,50",
         rentStripeUrl: "#",
         buyPrice: "€9,90",
@@ -926,6 +1004,14 @@
         icon: "🌿",
         trailerVideo: null,
         trailerUrl: null,
+        tecnica: {
+          "País": "União Soviética",
+          "Idioma": "Russo",
+          "Argumento": "Arkady & Boris Strugatsky",
+          "Fotografia": "Alexander Knyazhinsky",
+          "Música": "Eduard Artemyev",
+          "Produção": "Mosfilm"
+        },
         rentPrice: "€3,50",
         rentStripeUrl: "#",
         buyPrice: "€9,90",
@@ -943,6 +1029,14 @@
         icon: "🕯️",
         trailerVideo: null,
         trailerUrl: null,
+        tecnica: {
+          "País": "Bélgica / França",
+          "Idioma": "Francês",
+          "Argumento": "Chantal Akerman",
+          "Fotografia": "Babette Mangolte",
+          "Elenco": "Delphine Seyrig",
+          "Nota": "#1 — Sight & Sound Greatest Films 2022"
+        },
         rentPrice: "€3,50",
         rentStripeUrl: "#",
         buyPrice: "€9,90",
@@ -960,6 +1054,14 @@
         icon: "🏙️",
         trailerVideo: null,
         trailerUrl: null,
+        tecnica: {
+          "País": "Taiwan / Japão",
+          "Idioma": "Mandarim",
+          "Argumento": "Edward Yang",
+          "Fotografia": "Yang Wei-han",
+          "Produção": "1+2 Workshop / Atom Films",
+          "Prémios": "Cannes — Melhor Realizador"
+        },
         rentPrice: "€3,50",
         rentStripeUrl: "#",
         buyPrice: "€9,90",
@@ -977,6 +1079,14 @@
         icon: "✨",
         trailerVideo: null,
         trailerUrl: null,
+        tecnica: {
+          "País": "Itália / França",
+          "Idioma": "Italiano",
+          "Argumento": "Federico Fellini · Tullio Pinelli",
+          "Fotografia": "Otello Martelli",
+          "Música": "Nino Rota",
+          "Prémios": "Palme d'Or — Cannes 1960"
+        },
         rentPrice: "€3,50",
         rentStripeUrl: "#",
         buyPrice: "€9,90",
@@ -1188,6 +1298,8 @@
     const modalClose = document.getElementById('modal-close');
 
     const trailerBtn = document.getElementById('modal-trailer-btn');
+    const fichaBtn = document.getElementById('modal-ficha-btn');
+    const fichaPanel = document.getElementById('modal-ficha-panel');
     const trailerPlayer = document.getElementById('modal-player');
     const trailerPlayerContent = document.getElementById('modal-player-content');
     const trailerPlayerBack = document.getElementById('modal-player-back');
@@ -1224,11 +1336,29 @@
       trailerPlayer.classList.remove('visible');
       trailerPlayerContent.innerHTML = '';
       posterWrap.style.display = '';
+      trailerBtn.classList.remove('active');
+    }
+
+    function toggleFicha(film) {
+      const isOpen = fichaPanel.classList.contains('visible');
+      if (isOpen) {
+        fichaPanel.classList.remove('visible');
+        fichaBtn.classList.remove('active');
+      } else {
+        const rows = Object.entries(film.tecnica || {}).map(([k, v]) =>
+          `<div class="ficha-row"><span class="ficha-key">${k}</span><span class="ficha-val">${v}</span></div>`
+        ).join('');
+        fichaPanel.innerHTML = rows;
+        fichaPanel.classList.add('visible');
+        fichaBtn.classList.add('active');
+      }
     }
 
     function openModal(film) {
-      // Reset trailer state
+      // Reset state
       hideTrailer();
+      fichaPanel.classList.remove('visible');
+      fichaBtn.classList.remove('active');
 
       document.getElementById('modal-title').textContent = film.title;
       document.getElementById('modal-meta').textContent =
@@ -1249,14 +1379,20 @@
         posterWrap.innerHTML = `<div class="modal-poster-placeholder">${film.icon}</div>`;
       }
 
-      // Show/hide trailer button
+      // Trailer button: visible only when trailerUrl is set
       if (film.trailerUrl) {
         trailerBtn.classList.remove('hidden');
-        trailerBtn.onclick = () => showTrailer(film);
+        trailerBtn.onclick = () => {
+          const isOpen = trailerPlayer.classList.contains('visible');
+          if (isOpen) { hideTrailer(); } else { showTrailer(film); trailerBtn.classList.add('active'); }
+        };
       } else {
         trailerBtn.classList.add('hidden');
         trailerBtn.onclick = null;
       }
+
+      // Ficha técnica button
+      fichaBtn.onclick = () => toggleFicha(film);
 
       backdrop.classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -1269,6 +1405,8 @@
       backdrop.classList.remove('open');
       document.body.style.overflow = '';
       hideTrailer();
+      fichaPanel.classList.remove('visible');
+      fichaBtn.classList.remove('active');
     }
 
     modalClose.addEventListener('click', closeModal);
