@@ -6,73 +6,88 @@
   <title>Cinemateca — The Benares Club</title>
   <link rel="stylesheet" href="/styles.css">
   <style>
+    body { background: #080706; }
     main { padding: 0 0 8rem; }
 
-    /* ── Featured hero ── */
-    .hero {
+    /* ════════════════════════════════
+       VIDEO HERO
+    ════════════════════════════════ */
+    .video-hero {
       position: relative;
       width: 100%;
-      aspect-ratio: 21/8;
+      height: 88vh;
+      min-height: 520px;
+      max-height: 860px;
       overflow: hidden;
-      background: #0a0908;
+      background: #080706;
     }
-    @media (max-width: 900px) { .hero { aspect-ratio: 16/9; } }
-    @media (max-width: 580px) { .hero { aspect-ratio: 4/3; } }
 
-    .hero-img {
+    /* Video slides */
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1s ease;
+      pointer-events: none;
+    }
+    .hero-slide.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .hero-video {
       width: 100%; height: 100%;
-      object-fit: cover; object-position: center;
+      object-fit: cover;
+      object-position: center;
       display: block;
-      opacity: 0.55;
     }
 
-    .hero-img-placeholder {
+    .hero-poster-bg {
       width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 5rem;
-      background: linear-gradient(135deg, #0f0e0c 0%, #1a1815 100%);
+      font-size: 8rem;
+      background: linear-gradient(135deg, #0f0e0c 0%, #161410 50%, #0a0908 100%);
     }
 
-    .hero::after {
+    /* Gradient overlays */
+    .video-hero::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        to right,
-        rgba(8,7,6,0.92) 0%,
-        rgba(8,7,6,0.55) 50%,
-        rgba(8,7,6,0.1) 100%
-      );
+      background:
+        linear-gradient(to right, rgba(8,7,6,0.88) 0%, rgba(8,7,6,0.45) 55%, rgba(8,7,6,0.05) 100%),
+        linear-gradient(to top, rgba(8,7,6,0.95) 0%, transparent 40%);
+      z-index: 2;
+      pointer-events: none;
     }
 
+    /* Hero content */
     .hero-content {
       position: absolute;
-      inset: 0;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: clamp(1.5rem, 5vw, 4rem);
-      max-width: 640px;
+      bottom: clamp(3rem, 8vh, 6rem);
+      left: clamp(1.5rem, 5vw, 5rem);
+      z-index: 3;
+      max-width: 580px;
     }
 
     .hero-eyebrow {
       font-family: var(--font-family);
       font-size: 0.65rem;
       font-weight: 600;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: rgba(240,232,216,0.5);
-      margin-bottom: 0.75rem;
+      color: rgba(240,232,216,0.45);
+      margin-bottom: 0.7rem;
+      display: block;
     }
 
     .hero-title {
       font-family: var(--font-serif);
-      font-size: clamp(2.4rem, 5vw, 4.5rem);
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
       font-weight: 400;
       color: var(--text-primary);
-      line-height: 1.05;
-      margin: 0 0 0.6rem;
+      line-height: 1.0;
+      margin: 0 0 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
@@ -82,16 +97,16 @@
       font-size: 0.8rem;
       color: rgba(240,232,216,0.5);
       margin-bottom: 1rem;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
     }
 
     .hero-description {
       font-family: var(--font-family);
       font-size: 0.95rem;
-      line-height: 1.7;
-      color: rgba(240,232,216,0.75);
-      margin-bottom: 1.75rem;
-      max-width: 480px;
+      line-height: 1.72;
+      color: rgba(240,232,216,0.7);
+      margin-bottom: 2rem;
+      max-width: 440px;
     }
 
     .hero-actions {
@@ -103,126 +118,237 @@
     .btn-rent {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
       font-family: var(--font-family);
       font-size: 0.82rem;
       font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: #0a0908;
-      background: rgba(240,232,216,0.95);
+      background: rgba(240,232,216,0.96);
       border: none;
       border-radius: var(--radius-sm);
-      padding: 0.75rem 1.75rem;
+      padding: 0.8rem 1.75rem;
       text-decoration: none;
       cursor: pointer;
-      transition: background 0.2s ease, transform 0.15s ease;
+      transition: background 0.2s, transform 0.15s;
     }
     .btn-rent:hover { background: #fff; transform: translateY(-1px); }
 
     .btn-info {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
       font-family: var(--font-family);
       font-size: 0.82rem;
       font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--text-primary);
-      background: rgba(255,248,238,0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(240,232,216,0.2);
+      background: rgba(240,232,216,0.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(240,232,216,0.18);
       border-radius: var(--radius-sm);
-      padding: 0.75rem 1.5rem;
+      padding: 0.8rem 1.5rem;
       cursor: pointer;
-      transition: background 0.2s ease;
+      transition: background 0.2s;
     }
-    .btn-info:hover { background: rgba(255,248,238,0.16); }
+    .btn-info:hover { background: rgba(240,232,216,0.17); }
 
-    /* ── Container ── */
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 2rem;
+    /* Hero nav: dots + arrows */
+    .hero-nav {
+      position: absolute;
+      bottom: clamp(1.5rem, 4vh, 3rem);
+      right: clamp(1.5rem, 4vw, 4rem);
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
     }
-    @media (max-width: 580px) { .container { padding: 0 1.25rem; } }
 
-    /* ── Section ── */
-    .catalog-section { padding: 4rem 0 0; }
+    .hero-dots {
+      display: flex;
+      gap: 0.45rem;
+    }
 
-    .section-header {
+    .hero-dot {
+      width: 28px; height: 2px;
+      background: rgba(240,232,216,0.25);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.3s, width 0.3s;
+      border-radius: 2px;
+    }
+    .hero-dot.active {
+      background: rgba(240,232,216,0.85);
+      width: 44px;
+    }
+
+    .hero-arrow {
+      background: rgba(240,232,216,0.08);
+      border: 1px solid rgba(240,232,216,0.15);
+      border-radius: 50%;
+      width: 2.25rem; height: 2.25rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: rgba(240,232,216,0.7);
+      transition: background 0.2s, color 0.2s;
+      flex-shrink: 0;
+    }
+    .hero-arrow:hover { background: rgba(240,232,216,0.15); color: var(--text-primary); }
+
+    /* Progress bar */
+    .hero-progress {
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 2px;
+      background: rgba(240,232,216,0.18);
+      width: 100%;
+      z-index: 3;
+    }
+    .hero-progress-bar {
+      height: 100%;
+      background: rgba(240,232,216,0.55);
+      width: 0%;
+      transition: width linear;
+    }
+
+    /* ════════════════════════════════
+       CATALOG ROW (Netflix-style)
+    ════════════════════════════════ */
+    .catalog-row {
+      padding: 3rem 0 0;
+    }
+
+    .row-header {
       display: flex;
       align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 2rem;
       gap: 1rem;
+      padding: 0 clamp(1.25rem, 4vw, 3.5rem);
+      margin-bottom: 1.25rem;
     }
 
-    .section-eyebrow {
+    .row-eyebrow {
       font-family: var(--font-family);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 600;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin: 0 0 0.5rem;
     }
 
-    .section-title {
+    .row-title {
       font-family: var(--font-family);
-      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-size: clamp(1.25rem, 2.5vw, 1.6rem);
       font-weight: 300;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--text-primary);
       margin: 0;
     }
 
-    .section-count {
+    .row-count {
       font-family: var(--font-family);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--text-muted);
-      white-space: nowrap;
-      flex-shrink: 0;
+      margin-left: auto;
     }
 
-    /* ── Film grid ── */
-    .film-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1.5rem;
+    /* Scroll container */
+    .row-scroll-wrap {
+      position: relative;
     }
-    @media (max-width: 580px) {
-      .film-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+
+    .row-scroll {
+      display: flex;
+      gap: 0.85rem;
+      overflow-x: auto;
+      padding: 0.5rem clamp(1.25rem, 4vw, 3.5rem) 1.5rem;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
+    .row-scroll::-webkit-scrollbar { display: none; }
+
+    /* Scroll fade edges */
+    .row-scroll-wrap::before,
+    .row-scroll-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 1.5rem;
+      width: clamp(1.25rem, 4vw, 3.5rem);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .row-scroll-wrap::before {
+      left: 0;
+      background: linear-gradient(to right, #080706, transparent);
+    }
+    .row-scroll-wrap::after {
+      right: 0;
+      background: linear-gradient(to left, #080706, transparent);
+    }
+
+    /* Scroll arrows */
+    .scroll-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(calc(-50% - 0.75rem));
+      z-index: 3;
+      background: rgba(8,7,6,0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(240,232,216,0.12);
+      border-radius: 50%;
+      width: 2.5rem; height: 2.5rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: rgba(240,232,216,0.7);
+      transition: background 0.2s, color 0.2s, opacity 0.2s;
+      opacity: 0;
+    }
+    .row-scroll-wrap:hover .scroll-btn { opacity: 1; }
+    .scroll-btn:hover { background: rgba(30,28,24,0.95); color: var(--text-primary); }
+    .scroll-btn.left { left: 0.5rem; }
+    .scroll-btn.right { right: 0.5rem; }
+    .scroll-btn:disabled { opacity: 0 !important; pointer-events: none; }
 
     /* ── Film card ── */
     .film-card {
-      position: relative;
+      flex-shrink: 0;
+      width: clamp(140px, 18vw, 220px);
+      scroll-snap-align: start;
       cursor: pointer;
       border-radius: var(--radius-md);
-      overflow: hidden;
-      background: rgba(255,248,238,0.03);
-      border: 1px solid rgba(240,232,216,0.07);
-      transition: border-color 0.2s ease, transform 0.2s ease;
+      overflow: visible;
+      position: relative;
     }
-    .film-card:hover {
-      border-color: rgba(240,232,216,0.2);
-      transform: translateY(-2px);
+
+    .film-card-inner {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: #0f0e0c;
+      border: 1px solid rgba(240,232,216,0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      transform-origin: center bottom;
+    }
+
+    .film-card:hover .film-card-inner {
+      transform: scale(1.08) translateY(-4px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.65);
+      border-color: rgba(240,232,216,0.18);
+      z-index: 10;
     }
 
     .film-poster-wrap {
       position: relative;
       aspect-ratio: 2/3;
       overflow: hidden;
-      background: #0f0e0c;
     }
 
     .film-poster-img {
       width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
+      object-fit: cover; display: block;
       transition: transform 0.4s ease;
     }
     .film-card:hover .film-poster-img { transform: scale(1.04); }
@@ -231,90 +357,104 @@
       width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
       font-size: 3.5rem;
-      background: linear-gradient(160deg, #141210 0%, #0a0908 100%);
+      background: linear-gradient(160deg, #181614 0%, #0c0b0a 100%);
       transition: transform 0.4s ease;
     }
     .film-card:hover .film-poster-placeholder { transform: scale(1.04); }
 
-    .film-overlay {
+    /* Price badge */
+    .price-badge {
       position: absolute;
-      inset: 0;
-      background: rgba(8,7,6,0.75);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      top: 0.6rem; right: 0.6rem;
+      background: rgba(8,7,6,0.85);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(240,232,216,0.12);
+      border-radius: 99px;
+      padding: 0.18rem 0.55rem;
+      font-family: var(--font-family);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: rgba(240,232,216,0.8);
+    }
+
+    /* Hover info panel */
+    .film-hover-panel {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(8,7,6,0.96) 0%, rgba(8,7,6,0.7) 60%, transparent 100%);
+      padding: 2rem 1rem 1rem;
       opacity: 0;
       transition: opacity 0.25s ease;
     }
-    .film-card:hover .film-overlay { opacity: 1; }
+    .film-card:hover .film-hover-panel { opacity: 1; }
 
-    .overlay-btn {
+    .hover-rent-btn {
+      display: block;
+      width: 100%;
       font-family: var(--font-family);
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 600;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: #0a0908;
       background: rgba(240,232,216,0.95);
       border: none;
       border-radius: var(--radius-sm);
-      padding: 0.6rem 1.25rem;
+      padding: 0.55rem;
       cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.2s;
+      box-sizing: border-box;
     }
+    .hover-rent-btn:hover { background: #fff; }
 
-    .price-badge {
-      position: absolute;
-      top: 0.75rem; right: 0.75rem;
-      background: rgba(8,7,6,0.82);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(240,232,216,0.12);
-      border-radius: 99px;
-      padding: 0.22rem 0.65rem;
-      font-family: var(--font-family);
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: rgba(240,232,216,0.85);
-    }
-
+    /* Card info below poster */
     .film-card-info {
-      padding: 1rem 1rem 1.1rem;
+      padding: 0.85rem 0.85rem 1rem;
     }
 
     .film-card-title {
       font-family: var(--font-family);
-      font-size: 0.92rem;
+      font-size: 0.85rem;
       font-weight: 500;
       color: var(--text-primary);
-      margin: 0 0 0.3rem;
-      line-height: 1.3;
+      margin: 0 0 0.25rem;
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .film-card-meta {
       font-family: var(--font-family);
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       color: var(--text-muted);
       margin: 0;
     }
 
-    /* ── Divider ── */
+    /* ════════════════════════════════
+       HOW IT WORKS
+    ════════════════════════════════ */
+    .how-section {
+      padding: 4rem clamp(1.25rem, 4vw, 3.5rem) 0;
+    }
+
     .section-divider {
       border: none;
       border-top: 1px solid var(--border);
       margin: 4rem 0 0;
     }
 
-    /* ── How it works ── */
-    .how-it-works { padding: 4rem 0 0; }
-
     .steps-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
+      gap: 1.5rem;
       margin-top: 2rem;
     }
     @media (max-width: 640px) {
-      .steps-row { grid-template-columns: 1fr; gap: 1.25rem; }
+      .steps-row { grid-template-columns: 1fr; gap: 1rem; }
     }
 
     .step-card {
@@ -324,11 +464,11 @@
       padding: 1.75rem;
     }
 
-    .step-number {
+    .step-num {
       font-family: var(--font-family);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 600;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--text-muted);
       margin-bottom: 0.75rem;
@@ -351,12 +491,14 @@
       margin: 0;
     }
 
-    /* ── Modal ── */
+    /* ════════════════════════════════
+       MODAL
+    ════════════════════════════════ */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(8,7,6,0.88);
-      backdrop-filter: blur(12px);
+      background: rgba(8,7,6,0.9);
+      backdrop-filter: blur(14px);
       z-index: 200;
       display: flex;
       align-items: center;
@@ -366,10 +508,7 @@
       pointer-events: none;
       transition: opacity 0.25s ease;
     }
-    .modal-backdrop.open {
-      opacity: 1;
-      pointer-events: all;
-    }
+    .modal-backdrop.open { opacity: 1; pointer-events: all; }
 
     .modal {
       background: #111009;
@@ -382,14 +521,12 @@
       display: grid;
       grid-template-columns: 260px 1fr;
       position: relative;
-      transform: translateY(12px);
-      transition: transform 0.25s ease;
+      transform: translateY(14px) scale(0.98);
+      transition: transform 0.28s ease;
     }
-    .modal-backdrop.open .modal { transform: translateY(0); }
+    .modal-backdrop.open .modal { transform: translateY(0) scale(1); }
 
-    @media (max-width: 640px) {
-      .modal { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 640px) { .modal { grid-template-columns: 1fr; } }
 
     .modal-poster {
       aspect-ratio: 2/3;
@@ -398,10 +535,6 @@
       display: block;
       border-radius: var(--radius-lg) 0 0 var(--radius-lg);
     }
-    @media (max-width: 640px) {
-      .modal-poster { border-radius: var(--radius-lg) var(--radius-lg) 0 0; aspect-ratio: 16/9; object-position: center top; }
-    }
-
     .modal-poster-placeholder {
       display: flex; align-items: center; justify-content: center;
       font-size: 5rem;
@@ -410,59 +543,45 @@
       aspect-ratio: 2/3;
     }
     @media (max-width: 640px) {
-      .modal-poster-placeholder { border-radius: var(--radius-lg) var(--radius-lg) 0 0; aspect-ratio: 16/9; }
+      .modal-poster, .modal-poster-placeholder {
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        aspect-ratio: 16/9;
+        object-position: center top;
+      }
     }
 
-    .modal-body {
-      padding: 2.25rem 2rem;
-      display: flex;
-      flex-direction: column;
-    }
+    .modal-body { padding: 2.25rem 2rem; display: flex; flex-direction: column; }
 
     .modal-eyebrow {
       font-family: var(--font-family);
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.6rem;
+      font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 0.6rem;
     }
 
     .modal-title {
       font-family: var(--font-serif);
       font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-      font-weight: 400;
-      color: var(--text-primary);
-      margin: 0 0 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      line-height: 1.1;
+      font-weight: 400; color: var(--text-primary);
+      margin: 0 0 0.5rem; text-transform: uppercase;
+      letter-spacing: 0.04em; line-height: 1.1;
     }
 
     .modal-meta {
       font-family: var(--font-family);
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-bottom: 1.25rem;
-      letter-spacing: 0.04em;
+      font-size: 0.78rem; color: var(--text-muted);
+      margin-bottom: 1.25rem; letter-spacing: 0.04em;
     }
 
     .modal-description {
       font-family: var(--font-family);
-      font-size: 0.92rem;
-      line-height: 1.75;
-      color: var(--text-secondary);
-      margin-bottom: 1.75rem;
-      flex: 1;
+      font-size: 0.92rem; line-height: 1.75;
+      color: var(--text-secondary); margin-bottom: 1.75rem; flex: 1;
     }
 
     .modal-price-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
-      padding: 1rem 1.25rem;
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1.25rem; padding: 1rem 1.25rem;
       background: rgba(255,248,238,0.03);
       border: 1px solid rgba(240,232,216,0.07);
       border-radius: var(--radius-sm);
@@ -470,67 +589,54 @@
 
     .modal-price-label {
       font-family: var(--font-family);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      flex: 1;
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-muted); flex: 1;
     }
 
     .modal-price-value {
       font-family: var(--font-family);
-      font-size: 1.4rem;
-      font-weight: 300;
+      font-size: 1.4rem; font-weight: 300;
       color: var(--text-primary);
     }
 
     .modal-rent-btn {
-      display: block;
-      width: 100%;
+      display: block; width: 100%;
       font-family: var(--font-family);
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #0a0908;
-      background: rgba(240,232,216,0.95);
-      border: none;
-      border-radius: var(--radius-sm);
-      padding: 0.9rem;
-      text-decoration: none;
-      cursor: pointer;
-      text-align: center;
-      transition: background 0.2s ease;
-      margin-bottom: 0.75rem;
+      font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: #0a0908; background: rgba(240,232,216,0.95);
+      border: none; border-radius: var(--radius-sm);
+      padding: 0.9rem; text-decoration: none;
+      cursor: pointer; text-align: center;
+      transition: background 0.2s; margin-bottom: 0.75rem;
       box-sizing: border-box;
     }
     .modal-rent-btn:hover { background: #fff; }
 
     .modal-note {
       font-family: var(--font-family);
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      text-align: center;
-      line-height: 1.5;
+      font-size: 0.72rem; color: var(--text-muted);
+      text-align: center; line-height: 1.5;
     }
 
     .modal-close {
-      position: absolute;
-      top: 1rem; right: 1rem;
+      position: absolute; top: 1rem; right: 1rem;
       background: rgba(255,248,238,0.08);
       border: 1px solid rgba(240,232,216,0.12);
-      border-radius: 50%;
-      width: 2rem; height: 2rem;
+      border-radius: 50%; width: 2rem; height: 2rem;
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      color: var(--text-muted);
-      font-size: 1rem;
-      line-height: 1;
-      transition: background 0.2s ease, color 0.2s ease;
-      z-index: 1;
+      cursor: pointer; color: var(--text-muted);
+      font-size: 1rem; line-height: 1;
+      transition: background 0.2s, color 0.2s; z-index: 1;
     }
     .modal-close:hover { background: rgba(255,248,238,0.14); color: var(--text-primary); }
+
+    /* ── Responsive ── */
+    @media (max-width: 580px) {
+      .hero-description { display: none; }
+      .video-hero { height: 70vh; min-height: 400px; }
+    }
   </style>
 </head>
 <body>
@@ -540,69 +646,90 @@
 
   <main>
 
-    <!-- Hero: featured film -->
-    <div class="hero" id="hero-section">
-      <div class="hero-img-placeholder" id="hero-poster">🎬</div>
-      <div class="hero-content">
-        <p class="hero-eyebrow" id="hero-eyebrow">Em destaque · Cinemateca</p>
+    <!-- ═══ VIDEO HERO ═══ -->
+    <div class="video-hero" id="video-hero">
+      <!-- Slides injected by JS -->
+      <div class="hero-content" id="hero-content">
+        <span class="hero-eyebrow" id="hero-eyebrow">Em destaque · Cinemateca</span>
         <h1 class="hero-title" id="hero-title">—</h1>
         <p class="hero-meta" id="hero-meta">—</p>
         <p class="hero-description" id="hero-description">—</p>
         <div class="hero-actions">
-          <a id="hero-rent-btn" href="#" class="btn-rent">▶ Alugar</a>
-          <button class="btn-info" id="hero-info-btn">Ver detalhes</button>
+          <a id="hero-rent-btn" href="#" class="btn-rent">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Alugar
+          </a>
+          <button class="btn-info" id="hero-info-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Ver detalhes
+          </button>
+        </div>
+      </div>
+
+      <!-- Nav: arrows + dots -->
+      <div class="hero-nav">
+        <button class="hero-arrow" id="hero-prev" aria-label="Filme anterior">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="hero-dots" id="hero-dots"></div>
+        <button class="hero-arrow" id="hero-next" aria-label="Próximo filme">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      <div class="hero-progress">
+        <div class="hero-progress-bar" id="hero-progress-bar"></div>
+      </div>
+    </div>
+
+    <!-- ═══ CATALOG ROW ═══ -->
+    <div class="catalog-row">
+      <div class="row-header">
+        <div>
+          <p class="row-eyebrow">Catálogo</p>
+          <h2 class="row-title">Todos os filmes</h2>
+        </div>
+        <span class="row-count" id="row-count"></span>
+      </div>
+      <div class="row-scroll-wrap" id="row-wrap">
+        <button class="scroll-btn left" id="scroll-left" aria-label="Scroll esquerda">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="row-scroll" id="film-row"></div>
+        <button class="scroll-btn right" id="scroll-right" aria-label="Scroll direita">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <hr class="section-divider" style="margin: 4rem clamp(1.25rem,4vw,3.5rem) 0;">
+
+    <!-- ═══ HOW IT WORKS ═══ -->
+    <div class="how-section">
+      <p class="row-eyebrow" style="margin-bottom:0.5rem;">Processo</p>
+      <h2 class="row-title" style="margin:0 0 2rem;">Como funciona</h2>
+      <div class="steps-row">
+        <div class="step-card">
+          <span class="step-num">01 · Escolhe</span>
+          <h3 class="step-title">Seleciona o teu filme</h3>
+          <p class="step-desc">Navega pelo catálogo e escolhe o filme que queres ver. Cada título tem sinopse, duração e preço de aluguer.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num">02 · Paga</span>
+          <h3 class="step-title">Pagamento seguro via Stripe</h3>
+          <p class="step-desc">O pagamento é processado de forma segura. Aceitamos cartão de crédito, débito e outros métodos disponíveis.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num">03 · Vê</span>
+          <h3 class="step-title">Recebe o link e desfruta</h3>
+          <p class="step-desc">Após o pagamento, recebes por email o link privado para ver o filme. Disponível por 48 horas após o primeiro acesso.</p>
         </div>
       </div>
     </div>
 
-    <!-- Catalog -->
-    <section class="catalog-section">
-      <div class="container">
-        <div class="section-header">
-          <div>
-            <p class="section-eyebrow">Catálogo</p>
-            <h2 class="section-title">Todos os filmes</h2>
-          </div>
-          <span class="section-count" id="catalog-count"></span>
-        </div>
-        <div class="film-grid" id="film-grid"></div>
-      </div>
-    </section>
-
-    <hr class="section-divider">
-
-    <!-- How it works -->
-    <section class="how-it-works">
-      <div class="container">
-        <div class="section-header">
-          <div>
-            <p class="section-eyebrow">Processo</p>
-            <h2 class="section-title">Como funciona</h2>
-          </div>
-        </div>
-        <div class="steps-row">
-          <div class="step-card">
-            <span class="step-number">01 · Escolhe</span>
-            <h3 class="step-title">Seleciona o teu filme</h3>
-            <p class="step-desc">Navega pelo catálogo e escolhe o filme que queres ver. Cada filme tem uma sinopse e o respetivo preço de aluguer.</p>
-          </div>
-          <div class="step-card">
-            <span class="step-number">02 · Paga</span>
-            <h3 class="step-title">Pagamento seguro via Stripe</h3>
-            <p class="step-desc">O pagamento é processado de forma segura. Aceitamos cartão de crédito, débito e outros métodos disponíveis no Stripe.</p>
-          </div>
-          <div class="step-card">
-            <span class="step-number">03 · Vê</span>
-            <h3 class="step-title">Recebe o link e desfruta</h3>
-            <p class="step-desc">Após a confirmação do pagamento, recebes por email o link privado para ver o filme. Disponível por 48 horas após o primeiro acesso.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
   </main>
 
-  <!-- Film detail modal -->
+  <!-- ═══ MODAL ═══ -->
   <div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-label="Detalhes do filme">
     <div class="modal" id="modal">
       <button class="modal-close" id="modal-close" aria-label="Fechar">✕</button>
@@ -611,7 +738,7 @@
         <p class="modal-eyebrow">Cinemateca · The Benares Club</p>
         <h2 class="modal-title" id="modal-title">—</h2>
         <p class="modal-meta" id="modal-meta">—</p>
-        <p class="modal-description" id="modal-description">—</p>
+        <p class="modal-description" id="modal-desc">—</p>
         <div class="modal-price-row">
           <span class="modal-price-label">Aluguer · 48h</span>
           <span class="modal-price-value" id="modal-price">—</span>
@@ -630,10 +757,10 @@
     /*
      * CATÁLOGO DE FILMES
      *
-     * Para cada filme:
-     *   poster     → caminho da imagem (ex: "/media/cinemateca/pather-panchali.jpg") ou null
-     *   stripeUrl  → URL do link de pagamento Stripe para esse filme
-     *   featured   → true para destacar no hero
+     * trailerVideo → caminho do vídeo local (ex: "/media/cinemateca/trailers/pather-panchali.mp4")
+     *                Deixa null até teres o ficheiro — mostra placeholder animado.
+     * poster       → caminho do poster (ex: "/media/cinemateca/posters/pather-panchali.jpg") ou null
+     * stripeUrl    → link de pagamento Stripe para esse filme
      */
     const films = [
       {
@@ -646,9 +773,9 @@
         description: "A infância de Apu numa aldeia rural da Índia. Um retrato de beleza imperturbável sobre a pobreza, a família e a descoberta do mundo — o início de uma das maiores trilogias do cinema.",
         poster: null,
         icon: "🎬",
+        trailerVideo: null,
         price: "€3,50",
-        stripeUrl: "#",
-        featured: true
+        stripeUrl: "#"
       },
       {
         id: 2,
@@ -660,9 +787,9 @@
         description: "Dois vizinhos descobrem que os seus cônjuges têm um caso. Numa Hong Kong de 1962, nasce entre eles uma cumplicidade silenciosa. Melancolia e desejo contidos em cada frame.",
         poster: null,
         icon: "🌹",
+        trailerVideo: null,
         price: "€3,50",
-        stripeUrl: "#",
-        featured: false
+        stripeUrl: "#"
       },
       {
         id: 3,
@@ -674,9 +801,9 @@
         description: "Uma jornada pela Zona — lugar de perigo e de esperança — em busca do quarto dos desejos. Tarkovsky no seu auge: tempo, fé e a natureza da esperança humana.",
         poster: null,
         icon: "🌿",
+        trailerVideo: null,
         price: "€3,50",
-        stripeUrl: "#",
-        featured: false
+        stripeUrl: "#"
       },
       {
         id: 4,
@@ -688,9 +815,9 @@
         description: "Três dias na vida de uma dona de casa de Bruxelas. A rotina como linguagem cinematográfica radical. O filme que mudou para sempre o que o cinema pode mostrar — e como o mostra.",
         poster: null,
         icon: "🕯️",
+        trailerVideo: null,
         price: "€3,50",
-        stripeUrl: "#",
-        featured: false
+        stripeUrl: "#"
       },
       {
         id: 5,
@@ -702,9 +829,9 @@
         description: "Uma família de Taipei atravessa um verão de mudanças. Três gerações, um ciclo de vida completo. Edward Yang oferece-nos um dos retratos mais ternos e honestos da condição humana.",
         poster: null,
         icon: "🏙️",
+        trailerVideo: null,
         price: "€3,50",
-        stripeUrl: "#",
-        featured: false
+        stripeUrl: "#"
       },
       {
         id: 6,
@@ -716,44 +843,156 @@
         description: "Um jornalista vaga pela Roma noturna em busca de sentido. Prazer e vazio em igual medida. Fellini inventa um novo modo de olhar para a modernidade — e para si mesmo.",
         poster: null,
         icon: "✨",
+        trailerVideo: null,
         price: "€3,50",
-        stripeUrl: "#",
-        featured: false
+        stripeUrl: "#"
       }
     ];
 
-    /* ── Hero ── */
-    const featured = films.find(f => f.featured) || films[0];
-
-    document.getElementById('hero-title').textContent = featured.title;
-    document.getElementById('hero-meta').textContent =
-      `${featured.year} · ${featured.director} · ${featured.duration}`;
-    document.getElementById('hero-description').textContent = featured.description;
-
+    /* ════════════════════════════════
+       VIDEO HERO
+    ════════════════════════════════ */
+    const heroEl = document.getElementById('video-hero');
+    const heroTitle = document.getElementById('hero-title');
+    const heroMeta = document.getElementById('hero-meta');
+    const heroDesc = document.getElementById('hero-description');
     const heroRentBtn = document.getElementById('hero-rent-btn');
-    heroRentBtn.textContent = `▶  Alugar — ${featured.price}`;
-    heroRentBtn.href = featured.stripeUrl;
-    if (featured.stripeUrl !== '#') {
-      heroRentBtn.target = '_blank';
-      heroRentBtn.rel = 'noopener noreferrer';
+    const heroInfoBtn = document.getElementById('hero-info-btn');
+    const dotsWrap = document.getElementById('hero-dots');
+    const progressBar = document.getElementById('hero-progress-bar');
+
+    let currentSlide = 0;
+    let autoTimer = null;
+    let progressTimer = null;
+    const SLIDE_DURATION = 8000;
+
+    // Build slides
+    const slides = films.map((film, i) => {
+      const slide = document.createElement('div');
+      slide.className = 'hero-slide' + (i === 0 ? ' active' : '');
+      slide.dataset.index = i;
+
+      if (film.trailerVideo) {
+        const video = document.createElement('video');
+        video.className = 'hero-video';
+        video.src = film.trailerVideo;
+        video.muted = true;
+        video.loop = false;
+        video.playsInline = true;
+        video.preload = 'metadata';
+        video.setAttribute('aria-hidden', 'true');
+        video.addEventListener('ended', () => goTo((currentSlide + 1) % films.length));
+        slide.appendChild(video);
+      } else {
+        const ph = document.createElement('div');
+        ph.className = 'hero-poster-bg';
+        if (film.poster) {
+          const img = document.createElement('img');
+          img.className = 'hero-video';
+          img.src = film.poster;
+          img.alt = '';
+          img.style.opacity = '0.55';
+          ph.appendChild(img);
+        } else {
+          ph.textContent = film.icon;
+        }
+        slide.appendChild(ph);
+      }
+
+      // Insert before hero-content
+      heroEl.insertBefore(slide, document.getElementById('hero-content'));
+      return slide;
+    });
+
+    // Build dots
+    films.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `Ir para filme ${i + 1}`);
+      dot.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(dot);
+    });
+
+    function updateHeroContent(film) {
+      heroTitle.textContent = film.title;
+      heroMeta.textContent = `${film.year} · ${film.director} · ${film.duration}`;
+      heroDesc.textContent = film.description;
+      heroRentBtn.textContent = '';
+      const playIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      playIcon.setAttribute('width', '13'); playIcon.setAttribute('height', '13');
+      playIcon.setAttribute('viewBox', '0 0 24 24'); playIcon.setAttribute('fill', 'currentColor');
+      playIcon.setAttribute('aria-hidden', 'true');
+      const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+      poly.setAttribute('points', '5 3 19 12 5 21 5 3');
+      playIcon.appendChild(poly);
+      heroRentBtn.appendChild(playIcon);
+      heroRentBtn.appendChild(document.createTextNode(` Alugar — ${film.price}`));
+      heroRentBtn.href = film.stripeUrl;
     }
 
-    const heroPosterEl = document.getElementById('hero-poster');
-    if (featured.poster) {
-      const img = document.createElement('img');
-      img.className = 'hero-img';
-      img.src = featured.poster;
-      img.alt = featured.title;
-      heroPosterEl.replaceWith(img);
+    function startProgress() {
+      progressBar.style.transition = 'none';
+      progressBar.style.width = '0%';
+      void progressBar.offsetWidth;
+      progressBar.style.transition = `width ${SLIDE_DURATION}ms linear`;
+      progressBar.style.width = '100%';
+    }
+
+    function goTo(idx) {
+      if (idx === currentSlide) return;
+      clearTimeout(autoTimer);
+
+      // Pause current video
+      const curVideo = slides[currentSlide].querySelector('video');
+      if (curVideo) { curVideo.pause(); curVideo.currentTime = 0; }
+
+      slides[currentSlide].classList.remove('active');
+      dotsWrap.children[currentSlide].classList.remove('active');
+
+      currentSlide = idx;
+
+      slides[currentSlide].classList.add('active');
+      dotsWrap.children[currentSlide].classList.add('active');
+      updateHeroContent(films[currentSlide]);
+      heroInfoBtn.onclick = () => openModal(films[currentSlide]);
+
+      // Play new video if available
+      const newVideo = slides[currentSlide].querySelector('video');
+      if (newVideo) {
+        newVideo.play().catch(() => {});
+        newVideo.onended = () => goTo((currentSlide + 1) % films.length);
+      } else {
+        autoTimer = setTimeout(() => goTo((currentSlide + 1) % films.length), SLIDE_DURATION);
+      }
+
+      startProgress();
+    }
+
+    // Init
+    updateHeroContent(films[0]);
+    heroInfoBtn.onclick = () => openModal(films[0]);
+
+    const firstVideo = slides[0].querySelector('video');
+    if (firstVideo) {
+      firstVideo.play().catch(() => {});
+      firstVideo.onended = () => goTo(1 % films.length);
     } else {
-      heroPosterEl.textContent = featured.icon;
+      autoTimer = setTimeout(() => goTo(1 % films.length), SLIDE_DURATION);
     }
+    startProgress();
 
-    document.getElementById('hero-info-btn').addEventListener('click', () => openModal(featured));
+    document.getElementById('hero-prev').addEventListener('click', () => {
+      goTo((currentSlide - 1 + films.length) % films.length);
+    });
+    document.getElementById('hero-next').addEventListener('click', () => {
+      goTo((currentSlide + 1) % films.length);
+    });
 
-    /* ── Film grid ── */
-    const grid = document.getElementById('film-grid');
-    document.getElementById('catalog-count').textContent = `${films.length} filmes`;
+    /* ════════════════════════════════
+       FILM ROW (carousel)
+    ════════════════════════════════ */
+    const filmRow = document.getElementById('film-row');
+    document.getElementById('row-count').textContent = `${films.length} filmes`;
 
     films.forEach(film => {
       const card = document.createElement('div');
@@ -766,17 +1005,23 @@
         ? `<img class="film-poster-img" src="${film.poster}" alt="${film.title}" loading="lazy">`
         : `<div class="film-poster-placeholder">${film.icon}</div>`;
 
+      const rentTarget = film.stripeUrl !== '#' ? 'target="_blank" rel="noopener noreferrer"' : '';
+
       card.innerHTML = `
-        <div class="film-poster-wrap">
-          ${posterHTML}
-          <span class="price-badge">${film.price}</span>
-          <div class="film-overlay">
-            <button class="overlay-btn">Ver detalhes</button>
+        <div class="film-card-inner">
+          <div class="film-poster-wrap">
+            ${posterHTML}
+            <span class="price-badge">${film.price}</span>
+            <div class="film-hover-panel">
+              <a class="hover-rent-btn" href="${film.stripeUrl}" ${rentTarget}>
+                ▶ Alugar — ${film.price}
+              </a>
+            </div>
           </div>
-        </div>
-        <div class="film-card-info">
-          <h3 class="film-card-title">${film.title}</h3>
-          <p class="film-card-meta">${film.year} · ${film.director}</p>
+          <div class="film-card-info">
+            <h3 class="film-card-title">${film.title}</h3>
+            <p class="film-card-meta">${film.year} · ${film.director}</p>
+          </div>
         </div>
       `;
 
@@ -784,10 +1029,31 @@
       card.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') openModal(film);
       });
-      grid.appendChild(card);
+      filmRow.appendChild(card);
     });
 
-    /* ── Modal ── */
+    // Scroll buttons
+    const scrollLeft = document.getElementById('scroll-left');
+    const scrollRight = document.getElementById('scroll-right');
+    const SCROLL_AMOUNT = 480;
+
+    scrollLeft.addEventListener('click', () => {
+      filmRow.scrollBy({ left: -SCROLL_AMOUNT, behavior: 'smooth' });
+    });
+    scrollRight.addEventListener('click', () => {
+      filmRow.scrollBy({ left: SCROLL_AMOUNT, behavior: 'smooth' });
+    });
+
+    function updateScrollBtns() {
+      scrollLeft.disabled = filmRow.scrollLeft <= 10;
+      scrollRight.disabled = filmRow.scrollLeft >= filmRow.scrollWidth - filmRow.clientWidth - 10;
+    }
+    filmRow.addEventListener('scroll', updateScrollBtns);
+    updateScrollBtns();
+
+    /* ════════════════════════════════
+       MODAL
+    ════════════════════════════════ */
     const backdrop = document.getElementById('modal-backdrop');
     const modalClose = document.getElementById('modal-close');
 
@@ -795,7 +1061,7 @@
       document.getElementById('modal-title').textContent = film.title;
       document.getElementById('modal-meta').textContent =
         `${film.year} · ${film.director} · ${film.duration} · ${film.genre}`;
-      document.getElementById('modal-description').textContent = film.description;
+      document.getElementById('modal-desc').textContent = film.description;
       document.getElementById('modal-price').textContent = film.price;
 
       const rentBtn = document.getElementById('modal-rent-btn');
