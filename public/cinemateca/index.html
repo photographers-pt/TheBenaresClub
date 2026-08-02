@@ -668,8 +668,8 @@
 
     /* Action buttons row */
     .modal-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      flex-direction: column;
       gap: 0.6rem;
       margin-bottom: 0.85rem;
     }
@@ -696,11 +696,13 @@
     }
     .modal-action-btn:hover { background: rgba(255,248,238,0.06); border-color: rgba(240,232,216,0.3); }
     .modal-action-btn.active { border-color: rgba(240,232,216,0.4); background: rgba(255,248,238,0.07); }
-    .modal-action-btn.hidden { display: none; }
-
-    /* When trailer btn hidden, ficha takes full width */
-    .modal-action-btn.hidden + .modal-action-btn {
-      grid-column: 1 / -1;
+    .modal-action-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .modal-action-btn:disabled:hover {
+      background: transparent;
+      border-color: rgba(240,232,216,0.16);
     }
 
     /* Ficha técnica panel */
@@ -895,7 +897,7 @@
         <p class="modal-description" id="modal-desc">—</p>
         <!-- Action buttons -->
         <div class="modal-actions">
-          <button class="modal-action-btn hidden" id="modal-trailer-btn">
+          <button class="modal-action-btn" id="modal-trailer-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             Ver Trailer
           </button>
@@ -1379,15 +1381,15 @@
         posterWrap.innerHTML = `<div class="modal-poster-placeholder">${film.icon}</div>`;
       }
 
-      // Trailer button: visible only when trailerUrl is set
+      // Trailer button: always visible; disabled when no trailerUrl
       if (film.trailerUrl) {
-        trailerBtn.classList.remove('hidden');
+        trailerBtn.disabled = false;
         trailerBtn.onclick = () => {
           const isOpen = trailerPlayer.classList.contains('visible');
           if (isOpen) { hideTrailer(); } else { showTrailer(film); trailerBtn.classList.add('active'); }
         };
       } else {
-        trailerBtn.classList.add('hidden');
+        trailerBtn.disabled = true;
         trailerBtn.onclick = null;
       }
 
