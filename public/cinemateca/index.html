@@ -632,6 +632,65 @@
     }
     .modal-close:hover { background: rgba(255,248,238,0.14); color: var(--text-primary); }
 
+    /* Trailer button */
+    .modal-trailer-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      width: 100%;
+      font-family: var(--font-family);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      background: transparent;
+      border: 1px solid rgba(240,232,216,0.18);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      margin-bottom: 0.75rem;
+      box-sizing: border-box;
+    }
+    .modal-trailer-btn:hover { background: rgba(255,248,238,0.06); border-color: rgba(240,232,216,0.32); }
+    .modal-trailer-btn.hidden { display: none; }
+
+    /* Trailer player (replaces poster area) */
+    .modal-player {
+      position: relative;
+      background: #000;
+      display: none;
+    }
+    .modal-player.visible { display: block; }
+    .modal-player iframe,
+    .modal-player video {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border: none;
+      display: block;
+    }
+    .modal-player-back {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-family);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: rgba(255,248,238,0.05);
+      border: none;
+      border-top: 1px solid rgba(240,232,216,0.07);
+      padding: 0.7rem 1rem;
+      cursor: pointer;
+      width: 100%;
+      transition: color 0.2s, background 0.2s;
+    }
+    .modal-player-back:hover { color: var(--text-primary); background: rgba(255,248,238,0.09); }
+
     /* ── Responsive ── */
     @media (max-width: 580px) {
       .hero-description { display: none; }
@@ -733,7 +792,17 @@
   <div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-label="Detalhes do filme">
     <div class="modal" id="modal">
       <button class="modal-close" id="modal-close" aria-label="Fechar">✕</button>
-      <div id="modal-poster-wrap"></div>
+      <!-- Left: poster OR trailer player -->
+      <div id="modal-left">
+        <div id="modal-poster-wrap"></div>
+        <div class="modal-player" id="modal-player">
+          <div id="modal-player-content"></div>
+          <button class="modal-player-back" id="modal-player-back">
+            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            Voltar ao poster
+          </button>
+        </div>
+      </div>
       <div class="modal-body">
         <p class="modal-eyebrow">Cinemateca · The Benares Club</p>
         <h2 class="modal-title" id="modal-title">—</h2>
@@ -743,6 +812,10 @@
           <span class="modal-price-label">Aluguer · 48h</span>
           <span class="modal-price-value" id="modal-price">—</span>
         </div>
+        <button class="modal-trailer-btn hidden" id="modal-trailer-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Ver Trailer
+        </button>
         <a id="modal-rent-btn" href="#" target="_blank" rel="noopener noreferrer" class="modal-rent-btn">
           Alugar agora — Pagamento seguro
         </a>
@@ -757,9 +830,12 @@
     /*
      * CATÁLOGO DE FILMES
      *
-     * trailerVideo → caminho do vídeo local (ex: "/media/cinemateca/trailers/pather-panchali.mp4")
-     *                Deixa null até teres o ficheiro — mostra placeholder animado.
-     * poster       → caminho do poster (ex: "/media/cinemateca/posters/pather-panchali.jpg") ou null
+     * trailerVideo → vídeo local para o hero em loop (ex: "/media/cinemateca/trailers/pather.mp4")
+     * trailerUrl   → URL do trailer para o modal: YouTube, Vimeo ou ficheiro .mp4
+     *                Ex YouTube: "https://www.youtube.com/watch?v=XXXXX"
+     *                Ex Vimeo:   "https://vimeo.com/XXXXXXX"
+     *                Ex local:   "/media/cinemateca/trailers/pather-trailer.mp4"
+     * poster       → caminho do poster (ex: "/media/cinemateca/posters/pather.jpg") ou null
      * stripeUrl    → link de pagamento Stripe para esse filme
      */
     const films = [
@@ -774,6 +850,7 @@
         poster: null,
         icon: "🎬",
         trailerVideo: null,
+        trailerUrl: null,
         price: "€3,50",
         stripeUrl: "#"
       },
@@ -788,6 +865,7 @@
         poster: null,
         icon: "🌹",
         trailerVideo: null,
+        trailerUrl: null,
         price: "€3,50",
         stripeUrl: "#"
       },
@@ -802,6 +880,7 @@
         poster: null,
         icon: "🌿",
         trailerVideo: null,
+        trailerUrl: null,
         price: "€3,50",
         stripeUrl: "#"
       },
@@ -816,6 +895,7 @@
         poster: null,
         icon: "🕯️",
         trailerVideo: null,
+        trailerUrl: null,
         price: "€3,50",
         stripeUrl: "#"
       },
@@ -830,6 +910,7 @@
         poster: null,
         icon: "🏙️",
         trailerVideo: null,
+        trailerUrl: null,
         price: "€3,50",
         stripeUrl: "#"
       },
@@ -844,6 +925,7 @@
         poster: null,
         icon: "✨",
         trailerVideo: null,
+        trailerUrl: null,
         price: "€3,50",
         stripeUrl: "#"
       }
@@ -1057,7 +1139,49 @@
     const backdrop = document.getElementById('modal-backdrop');
     const modalClose = document.getElementById('modal-close');
 
+    const trailerBtn = document.getElementById('modal-trailer-btn');
+    const trailerPlayer = document.getElementById('modal-player');
+    const trailerPlayerContent = document.getElementById('modal-player-content');
+    const trailerPlayerBack = document.getElementById('modal-player-back');
+    const posterWrap = document.getElementById('modal-poster-wrap');
+
+    function buildEmbedUrl(url) {
+      if (!url) return null;
+      // YouTube
+      const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+      if (ytMatch) return `https://www.youtube-nocookie.com/embed/${ytMatch[1]}?autoplay=1&rel=0`;
+      // Vimeo
+      const viMatch = url.match(/vimeo\.com\/(\d+)/);
+      if (viMatch) return `https://player.vimeo.com/video/${viMatch[1]}?autoplay=1`;
+      // Local/direct video file
+      if (url.match(/\.(mp4|webm|ogg)$/i)) return null; // handled separately
+      return null;
+    }
+
+    function showTrailer(film) {
+      posterWrap.style.display = 'none';
+      trailerPlayer.classList.add('visible');
+
+      const embedUrl = buildEmbedUrl(film.trailerUrl);
+      if (embedUrl) {
+        trailerPlayerContent.innerHTML =
+          `<iframe src="${embedUrl}" allow="autoplay; fullscreen" allowfullscreen title="Trailer — ${film.title}"></iframe>`;
+      } else if (film.trailerUrl) {
+        trailerPlayerContent.innerHTML =
+          `<video src="${film.trailerUrl}" controls autoplay playsinline></video>`;
+      }
+    }
+
+    function hideTrailer() {
+      trailerPlayer.classList.remove('visible');
+      trailerPlayerContent.innerHTML = '';
+      posterWrap.style.display = '';
+    }
+
     function openModal(film) {
+      // Reset trailer state
+      hideTrailer();
+
       document.getElementById('modal-title').textContent = film.title;
       document.getElementById('modal-meta').textContent =
         `${film.year} · ${film.director} · ${film.duration} · ${film.genre}`;
@@ -1068,11 +1192,19 @@
       rentBtn.href = film.stripeUrl;
       rentBtn.textContent = `Alugar agora — ${film.price} · Pagamento seguro`;
 
-      const posterWrap = document.getElementById('modal-poster-wrap');
       if (film.poster) {
         posterWrap.innerHTML = `<img class="modal-poster" src="${film.poster}" alt="${film.title}">`;
       } else {
         posterWrap.innerHTML = `<div class="modal-poster-placeholder">${film.icon}</div>`;
+      }
+
+      // Show/hide trailer button
+      if (film.trailerUrl) {
+        trailerBtn.classList.remove('hidden');
+        trailerBtn.onclick = () => showTrailer(film);
+      } else {
+        trailerBtn.classList.add('hidden');
+        trailerBtn.onclick = null;
       }
 
       backdrop.classList.add('open');
@@ -1080,9 +1212,12 @@
       modalClose.focus();
     }
 
+    trailerPlayerBack.addEventListener('click', hideTrailer);
+
     function closeModal() {
       backdrop.classList.remove('open');
       document.body.style.overflow = '';
+      hideTrailer();
     }
 
     modalClose.addEventListener('click', closeModal);
