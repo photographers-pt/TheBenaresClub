@@ -579,40 +579,74 @@
       color: var(--text-secondary); margin-bottom: 1.75rem; flex: 1;
     }
 
-    .modal-price-row {
-      display: flex; align-items: center; gap: 1rem;
-      margin-bottom: 1.25rem; padding: 1rem 1.25rem;
+    /* Purchase options */
+    .purchase-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .purchase-option {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
       background: rgba(255,248,238,0.03);
-      border: 1px solid rgba(240,232,216,0.07);
+      border: 1px solid rgba(240,232,216,0.09);
       border-radius: var(--radius-sm);
+      padding: 1rem 1rem 0.85rem;
+      transition: border-color 0.2s;
+    }
+    .purchase-option:hover { border-color: rgba(240,232,216,0.2); }
+
+    .purchase-option-label {
+      font-family: var(--font-family);
+      font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-muted);
     }
 
-    .modal-price-label {
+    .purchase-option-detail {
       font-family: var(--font-family);
-      font-size: 0.72rem; font-weight: 600;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--text-muted); flex: 1;
+      font-size: 0.72rem;
+      color: rgba(240,232,216,0.35);
+      margin-bottom: 0.2rem;
     }
 
-    .modal-price-value {
+    .purchase-option-price {
       font-family: var(--font-family);
-      font-size: 1.4rem; font-weight: 300;
+      font-size: 1.35rem; font-weight: 300;
       color: var(--text-primary);
+      margin-bottom: 0.6rem;
     }
 
-    .modal-rent-btn {
+    .purchase-option-btn {
       display: block; width: 100%;
       font-family: var(--font-family);
-      font-size: 0.82rem; font-weight: 600;
+      font-size: 0.72rem; font-weight: 600;
       letter-spacing: 0.12em; text-transform: uppercase;
-      color: #0a0908; background: rgba(240,232,216,0.95);
       border: none; border-radius: var(--radius-sm);
-      padding: 0.9rem; text-decoration: none;
+      padding: 0.65rem; text-decoration: none;
       cursor: pointer; text-align: center;
-      transition: background 0.2s; margin-bottom: 0.75rem;
+      transition: background 0.2s, border-color 0.2s;
       box-sizing: border-box;
     }
-    .modal-rent-btn:hover { background: #fff; }
+
+    .purchase-option-btn.primary {
+      color: #0a0908;
+      background: rgba(240,232,216,0.95);
+    }
+    .purchase-option-btn.primary:hover { background: #fff; }
+
+    .purchase-option-btn.secondary {
+      color: var(--text-primary);
+      background: transparent;
+      border: 1px solid rgba(240,232,216,0.2);
+    }
+    .purchase-option-btn.secondary:hover {
+      background: rgba(255,248,238,0.06);
+      border-color: rgba(240,232,216,0.35);
+    }
 
     .modal-note {
       font-family: var(--font-family);
@@ -808,18 +842,25 @@
         <h2 class="modal-title" id="modal-title">—</h2>
         <p class="modal-meta" id="modal-meta">—</p>
         <p class="modal-description" id="modal-desc">—</p>
-        <div class="modal-price-row">
-          <span class="modal-price-label">Aluguer · 48h</span>
-          <span class="modal-price-value" id="modal-price">—</span>
-        </div>
         <button class="modal-trailer-btn hidden" id="modal-trailer-btn">
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           Ver Trailer
         </button>
-        <a id="modal-rent-btn" href="#" target="_blank" rel="noopener noreferrer" class="modal-rent-btn">
-          Alugar agora — Pagamento seguro
-        </a>
-        <p class="modal-note">Após o pagamento recebes o link do filme por email.<br>Acesso válido 48 horas a partir do primeiro visionamento.</p>
+        <div class="purchase-options">
+          <div class="purchase-option">
+            <span class="purchase-option-label">Alugar</span>
+            <span class="purchase-option-detail">Acesso 48 horas</span>
+            <span class="purchase-option-price" id="modal-rent-price">—</span>
+            <a id="modal-rent-btn" href="#" target="_blank" rel="noopener noreferrer" class="purchase-option-btn primary">Alugar agora</a>
+          </div>
+          <div class="purchase-option">
+            <span class="purchase-option-label">Comprar</span>
+            <span class="purchase-option-detail">Acesso permanente</span>
+            <span class="purchase-option-price" id="modal-buy-price">—</span>
+            <a id="modal-buy-btn" href="#" target="_blank" rel="noopener noreferrer" class="purchase-option-btn secondary">Comprar</a>
+          </div>
+        </div>
+        <p class="modal-note">Pagamento seguro via Stripe. Após a compra recebes o link do filme por email.</p>
       </div>
     </div>
   </div>
@@ -830,13 +871,13 @@
     /*
      * CATÁLOGO DE FILMES
      *
-     * trailerVideo → vídeo local para o hero em loop (ex: "/media/cinemateca/trailers/pather.mp4")
-     * trailerUrl   → URL do trailer para o modal: YouTube, Vimeo ou ficheiro .mp4
-     *                Ex YouTube: "https://www.youtube.com/watch?v=XXXXX"
-     *                Ex Vimeo:   "https://vimeo.com/XXXXXXX"
-     *                Ex local:   "/media/cinemateca/trailers/pather-trailer.mp4"
-     * poster       → caminho do poster (ex: "/media/cinemateca/posters/pather.jpg") ou null
-     * stripeUrl    → link de pagamento Stripe para esse filme
+     * trailerVideo   → vídeo local para o hero em loop (ex: "/media/cinemateca/trailers/pather.mp4")
+     * trailerUrl     → URL do trailer para o modal: YouTube, Vimeo ou ficheiro .mp4
+     * poster         → caminho do poster (ex: "/media/cinemateca/posters/pather.jpg") ou null
+     * rentPrice      → preço de aluguer (ex: "€3,50")
+     * rentStripeUrl  → Stripe Payment Link para aluguer
+     * buyPrice       → preço de compra (ex: "€9,90")
+     * buyStripeUrl   → Stripe Payment Link para compra
      */
     const films = [
       {
@@ -851,8 +892,10 @@
         icon: "🎬",
         trailerVideo: null,
         trailerUrl: null,
-        price: "€3,50",
-        stripeUrl: "#"
+        rentPrice: "€3,50",
+        rentStripeUrl: "#",
+        buyPrice: "€9,90",
+        buyStripeUrl: "#"
       },
       {
         id: 2,
@@ -866,8 +909,10 @@
         icon: "🌹",
         trailerVideo: null,
         trailerUrl: null,
-        price: "€3,50",
-        stripeUrl: "#"
+        rentPrice: "€3,50",
+        rentStripeUrl: "#",
+        buyPrice: "€9,90",
+        buyStripeUrl: "#"
       },
       {
         id: 3,
@@ -881,8 +926,10 @@
         icon: "🌿",
         trailerVideo: null,
         trailerUrl: null,
-        price: "€3,50",
-        stripeUrl: "#"
+        rentPrice: "€3,50",
+        rentStripeUrl: "#",
+        buyPrice: "€9,90",
+        buyStripeUrl: "#"
       },
       {
         id: 4,
@@ -896,8 +943,10 @@
         icon: "🕯️",
         trailerVideo: null,
         trailerUrl: null,
-        price: "€3,50",
-        stripeUrl: "#"
+        rentPrice: "€3,50",
+        rentStripeUrl: "#",
+        buyPrice: "€9,90",
+        buyStripeUrl: "#"
       },
       {
         id: 5,
@@ -911,8 +960,10 @@
         icon: "🏙️",
         trailerVideo: null,
         trailerUrl: null,
-        price: "€3,50",
-        stripeUrl: "#"
+        rentPrice: "€3,50",
+        rentStripeUrl: "#",
+        buyPrice: "€9,90",
+        buyStripeUrl: "#"
       },
       {
         id: 6,
@@ -926,8 +977,10 @@
         icon: "✨",
         trailerVideo: null,
         trailerUrl: null,
-        price: "€3,50",
-        stripeUrl: "#"
+        rentPrice: "€3,50",
+        rentStripeUrl: "#",
+        buyPrice: "€9,90",
+        buyStripeUrl: "#"
       }
     ];
 
@@ -945,7 +998,6 @@
 
     let currentSlide = 0;
     let autoTimer = null;
-    let progressTimer = null;
     const SLIDE_DURATION = 8000;
 
     // Build slides
@@ -1008,8 +1060,8 @@
       poly.setAttribute('points', '5 3 19 12 5 21 5 3');
       playIcon.appendChild(poly);
       heroRentBtn.appendChild(playIcon);
-      heroRentBtn.appendChild(document.createTextNode(` Alugar — ${film.price}`));
-      heroRentBtn.href = film.stripeUrl;
+      heroRentBtn.appendChild(document.createTextNode(` Alugar — ${film.rentPrice}`));
+      heroRentBtn.href = film.rentStripeUrl;
     }
 
     function startProgress() {
@@ -1087,17 +1139,13 @@
         ? `<img class="film-poster-img" src="${film.poster}" alt="${film.title}" loading="lazy">`
         : `<div class="film-poster-placeholder">${film.icon}</div>`;
 
-      const rentTarget = film.stripeUrl !== '#' ? 'target="_blank" rel="noopener noreferrer"' : '';
-
       card.innerHTML = `
         <div class="film-card-inner">
           <div class="film-poster-wrap">
             ${posterHTML}
-            <span class="price-badge">${film.price}</span>
+            <span class="price-badge">A partir de ${film.rentPrice}</span>
             <div class="film-hover-panel">
-              <a class="hover-rent-btn" href="${film.stripeUrl}" ${rentTarget}>
-                ▶ Alugar — ${film.price}
-              </a>
+              <button class="hover-rent-btn">Ver opções</button>
             </div>
           </div>
           <div class="film-card-info">
@@ -1186,11 +1234,14 @@
       document.getElementById('modal-meta').textContent =
         `${film.year} · ${film.director} · ${film.duration} · ${film.genre}`;
       document.getElementById('modal-desc').textContent = film.description;
-      document.getElementById('modal-price').textContent = film.price;
+      document.getElementById('modal-rent-price').textContent = film.rentPrice;
+      document.getElementById('modal-buy-price').textContent = film.buyPrice;
 
       const rentBtn = document.getElementById('modal-rent-btn');
-      rentBtn.href = film.stripeUrl;
-      rentBtn.textContent = `Alugar agora — ${film.price} · Pagamento seguro`;
+      rentBtn.href = film.rentStripeUrl;
+
+      const buyBtn = document.getElementById('modal-buy-btn');
+      buyBtn.href = film.buyStripeUrl;
 
       if (film.poster) {
         posterWrap.innerHTML = `<img class="modal-poster" src="${film.poster}" alt="${film.title}">`;
