@@ -6,391 +6,822 @@
   <title>Cinemateca — The Benares Club</title>
   <link rel="stylesheet" href="/styles.css">
   <style>
-    body {
-      background: var(--bg-base);
-      color: var(--text-primary);
+    main { padding: 0 0 8rem; }
+
+    /* ── Featured hero ── */
+    .hero {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 21/8;
+      overflow: hidden;
+      background: #0a0908;
+    }
+    @media (max-width: 900px) { .hero { aspect-ratio: 16/9; } }
+    @media (max-width: 580px) { .hero { aspect-ratio: 4/3; } }
+
+    .hero-img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block;
+      opacity: 0.55;
+    }
+
+    .hero-img-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+      background: linear-gradient(135deg, #0f0e0c 0%, #1a1815 100%);
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(8,7,6,0.92) 0%,
+        rgba(8,7,6,0.55) 50%,
+        rgba(8,7,6,0.1) 100%
+      );
+    }
+
+    .hero-content {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: clamp(1.5rem, 5vw, 4rem);
+      max-width: 640px;
+    }
+
+    .hero-eyebrow {
       font-family: var(--font-family);
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(240,232,216,0.5);
+      margin-bottom: 0.75rem;
     }
 
-    main {
-      padding: 0 0 6rem;
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 4.5rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.05;
+      margin: 0 0 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
-    /* Section headers */
+    .hero-meta {
+      font-family: var(--font-family);
+      font-size: 0.8rem;
+      color: rgba(240,232,216,0.5);
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-description {
+      font-family: var(--font-family);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: rgba(240,232,216,0.75);
+      margin-bottom: 1.75rem;
+      max-width: 480px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-rent {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-family);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #0a0908;
+      background: rgba(240,232,216,0.95);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1.75rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+    .btn-rent:hover { background: #fff; transform: translateY(-1px); }
+
+    .btn-info {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-family);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      background: rgba(255,248,238,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(240,232,216,0.2);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .btn-info:hover { background: rgba(255,248,238,0.16); }
+
+    /* ── Container ── */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    @media (max-width: 580px) { .container { padding: 0 1.25rem; } }
+
+    /* ── Section ── */
+    .catalog-section { padding: 4rem 0 0; }
+
     .section-header {
-      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      gap: 1rem;
     }
 
     .section-eyebrow {
+      font-family: var(--font-family);
       font-size: 0.65rem;
       font-weight: 600;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin: 0 0 0.6rem;
+      margin: 0 0 0.5rem;
     }
 
     .section-title {
       font-family: var(--font-family);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-style: normal;
-      font-size: clamp(2.25rem, 4.2vw, 3.25rem);
+      font-size: clamp(1.5rem, 3vw, 2rem);
       font-weight: 300;
-      line-height: 1.1;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
       color: var(--text-primary);
       margin: 0;
     }
 
-    /* Container */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
+    .section-count {
+      font-family: var(--font-family);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    section {
-      padding: 5rem 0;
-    }
-
-    section + section {
-      border-top: 1px solid var(--border);
-    }
-
-    /* Film shelf */
-    .film-shelf {
+    /* ── Film grid ── */
+    .film-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1.75rem;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+    @media (max-width: 580px) {
+      .film-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
     }
 
+    /* ── Film card ── */
     .film-card {
-      background: rgba(255, 248, 238, 0.04);
-      backdrop-filter: blur(20px) saturate(160%);
-      border: 1px solid rgba(240, 232, 216, 0.08);
+      position: relative;
+      cursor: pointer;
       border-radius: var(--radius-md);
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: border-color 0.2s ease;
+      background: rgba(255,248,238,0.03);
+      border: 1px solid rgba(240,232,216,0.07);
+      transition: border-color 0.2s ease, transform 0.2s ease;
     }
-
     .film-card:hover {
-      border-color: rgba(240, 232, 216, 0.18);
+      border-color: rgba(240,232,216,0.2);
+      transform: translateY(-2px);
     }
 
-    .film-poster {
-      aspect-ratio: 2 / 3;
-      width: 100%;
+    .film-poster-wrap {
+      position: relative;
+      aspect-ratio: 2/3;
+      overflow: hidden;
+      background: #0f0e0c;
+    }
+
+    .film-poster-img {
+      width: 100%; height: 100%;
       object-fit: cover;
       display: block;
-      background: rgba(255, 248, 238, 0.03);
+      transition: transform 0.4s ease;
     }
+    .film-card:hover .film-poster-img { transform: scale(1.04); }
 
     .film-poster-placeholder {
-      aspect-ratio: 2 / 3;
-      width: 100%;
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+      background: linear-gradient(160deg, #141210 0%, #0a0908 100%);
+      transition: transform 0.4s ease;
+    }
+    .film-card:hover .film-poster-placeholder { transform: scale(1.04); }
+
+    .film-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(8,7,6,0.75);
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255, 248, 238, 0.03);
-      color: var(--text-muted);
-      font-size: 2.5rem;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .film-card:hover .film-overlay { opacity: 1; }
+
+    .overlay-btn {
+      font-family: var(--font-family);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #0a0908;
+      background: rgba(240,232,216,0.95);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 1.25rem;
+      cursor: pointer;
     }
 
-    .film-info {
-      padding: 1.25rem;
+    .price-badge {
+      position: absolute;
+      top: 0.75rem; right: 0.75rem;
+      background: rgba(8,7,6,0.82);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(240,232,216,0.12);
+      border-radius: 99px;
+      padding: 0.22rem 0.65rem;
+      font-family: var(--font-family);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: rgba(240,232,216,0.85);
+    }
+
+    .film-card-info {
+      padding: 1rem 1rem 1.1rem;
+    }
+
+    .film-card-title {
+      font-family: var(--font-family);
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin: 0 0 0.3rem;
+      line-height: 1.3;
+    }
+
+    .film-card-meta {
+      font-family: var(--font-family);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* ── Divider ── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 4rem 0 0;
+    }
+
+    /* ── How it works ── */
+    .how-it-works { padding: 4rem 0 0; }
+
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    @media (max-width: 640px) {
+      .steps-row { grid-template-columns: 1fr; gap: 1.25rem; }
+    }
+
+    .step-card {
+      background: rgba(255,248,238,0.03);
+      border: 1px solid rgba(240,232,216,0.07);
+      border-radius: var(--radius-md);
+      padding: 1.75rem;
+    }
+
+    .step-number {
+      font-family: var(--font-family);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .step-title {
+      font-family: var(--font-family);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin: 0 0 0.5rem;
+    }
+
+    .step-desc {
+      font-family: var(--font-family);
+      font-size: 0.85rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    /* ── Modal ── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(8,7,6,0.88);
+      backdrop-filter: blur(12px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: #111009;
+      border: 1px solid rgba(240,232,216,0.1);
+      border-radius: var(--radius-lg);
+      max-width: 820px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      position: relative;
+      transform: translateY(12px);
+      transition: transform 0.25s ease;
+    }
+    .modal-backdrop.open .modal { transform: translateY(0); }
+
+    @media (max-width: 640px) {
+      .modal { grid-template-columns: 1fr; }
+    }
+
+    .modal-poster {
+      aspect-ratio: 2/3;
+      width: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+    }
+    @media (max-width: 640px) {
+      .modal-poster { border-radius: var(--radius-lg) var(--radius-lg) 0 0; aspect-ratio: 16/9; object-position: center top; }
+    }
+
+    .modal-poster-placeholder {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+      background: linear-gradient(160deg, #141210 0%, #0a0908 100%);
+      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+      aspect-ratio: 2/3;
+    }
+    @media (max-width: 640px) {
+      .modal-poster-placeholder { border-radius: var(--radius-lg) var(--radius-lg) 0 0; aspect-ratio: 16/9; }
+    }
+
+    .modal-body {
+      padding: 2.25rem 2rem;
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+    }
+
+    .modal-eyebrow {
+      font-family: var(--font-family);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .modal-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin: 0 0 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+    }
+
+    .modal-meta {
+      font-family: var(--font-family);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.04em;
+    }
+
+    .modal-description {
+      font-family: var(--font-family);
+      font-size: 0.92rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      margin-bottom: 1.75rem;
       flex: 1;
     }
 
-    .film-title {
-      font-family: var(--font-family);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-style: normal;
-      font-size: 1.1rem;
-      font-weight: 400;
-      color: var(--text-primary);
-      margin: 0;
-      line-height: 1.25;
-    }
-
-    .film-meta {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin: 0;
-    }
-
-    .film-description {
-      font-size: 0.82rem;
-      color: var(--text-secondary);
-      line-height: 1.55;
-      margin: 0.25rem 0 0.75rem;
-    }
-
-    .film-action {
-      display: inline-block;
-      margin-top: auto;
-      padding: 0.6rem 1.25rem;
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-sm);
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--text-primary);
-      text-decoration: none;
-      background: transparent;
-      text-align: center;
-      transition: background 0.2s ease, border-color 0.2s ease;
-    }
-
-    .film-action:hover {
-      background: rgba(255, 248, 238, 0.06);
-      border-color: rgba(240, 232, 216, 0.35);
-    }
-
-    /* Coming Soon */
-    .coming-soon-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1.25rem;
-    }
-
-    .coming-soon-card {
-      background: rgba(255, 248, 238, 0.03);
-      border: 1px solid rgba(240, 232, 216, 0.08);
-      border-radius: var(--radius-md);
-      padding: 1.5rem 1.25rem;
+    .modal-price-row {
       display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      padding: 1rem 1.25rem;
+      background: rgba(255,248,238,0.03);
+      border: 1px solid rgba(240,232,216,0.07);
+      border-radius: var(--radius-sm);
     }
 
-    .coming-soon-title {
+    .modal-price-label {
       font-family: var(--font-family);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-style: normal;
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--text-primary);
-      margin: 0;
-    }
-
-    .coming-soon-meta {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
       color: var(--text-muted);
-      margin: 0;
+      flex: 1;
     }
 
-    .badge {
-      display: inline-block;
-      padding: 0.2rem 0.55rem;
-      border: 1px solid var(--border);
-      border-radius: 99px;
-      font-size: 0.65rem;
+    .modal-price-value {
+      font-family: var(--font-family);
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: var(--text-primary);
+    }
+
+    .modal-rent-btn {
+      display: block;
+      width: 100%;
+      font-family: var(--font-family);
+      font-size: 0.82rem;
       font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--text-muted);
-      width: fit-content;
-    }
-
-    /* Community Em Breve */
-    .em-breve {
+      color: #0a0908;
+      background: rgba(240,232,216,0.95);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      text-decoration: none;
+      cursor: pointer;
       text-align: center;
-      padding: 4rem 2rem;
-      background: rgba(255, 248, 238, 0.02);
-      border: 1px solid rgba(240, 232, 216, 0.08);
-      border-radius: var(--radius-lg);
+      transition: background 0.2s ease;
+      margin-bottom: 0.75rem;
+      box-sizing: border-box;
     }
+    .modal-rent-btn:hover { background: #fff; }
 
-    .em-breve p {
+    .modal-note {
       font-family: var(--font-family);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-style: normal;
-      font-size: 1.4rem;
-      font-weight: 300;
-      color: var(--text-secondary);
-      margin: 0 0 0.75rem;
-    }
-
-    .em-breve span {
-      font-size: 0.8rem;
+      font-size: 0.72rem;
       color: var(--text-muted);
-      letter-spacing: 0.05em;
+      text-align: center;
+      line-height: 1.5;
     }
 
-    /* Responsive */
-    @media (max-width: 640px) {
-      .film-shelf {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-      }
-
-      .coming-soon-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      section {
-        padding: 3.5rem 0;
-      }
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: rgba(255,248,238,0.08);
+      border: 1px solid rgba(240,232,216,0.12);
+      border-radius: 50%;
+      width: 2rem; height: 2rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1;
+      transition: background 0.2s ease, color 0.2s ease;
+      z-index: 1;
     }
+    .modal-close:hover { background: rgba(255,248,238,0.14); color: var(--text-primary); }
   </style>
 </head>
 <body>
 
   <div id="grain"></div>
   <div id="header-container"></div>
+
   <main>
 
-  <div class="page-banner">
-    <img src="/media/banners/cinemateca.png" alt="" class="page-banner-img">
-    <div class="page-banner-title">
-      <span class="page-banner-eyebrow">The Benares Club</span>
-      <h1 class="page-banner-heading">Cinemateca</h1>
+    <!-- Hero: featured film -->
+    <div class="hero" id="hero-section">
+      <div class="hero-img-placeholder" id="hero-poster">🎬</div>
+      <div class="hero-content">
+        <p class="hero-eyebrow" id="hero-eyebrow">Em destaque · Cinemateca</p>
+        <h1 class="hero-title" id="hero-title">—</h1>
+        <p class="hero-meta" id="hero-meta">—</p>
+        <p class="hero-description" id="hero-description">—</p>
+        <div class="hero-actions">
+          <a id="hero-rent-btn" href="#" class="btn-rent">▶ Alugar</a>
+          <button class="btn-info" id="hero-info-btn">Ver detalhes</button>
+        </div>
+      </div>
     </div>
-  </div>
 
-    <!-- Film Shelf -->
-    <section id="films-section">
+    <!-- Catalog -->
+    <section class="catalog-section">
       <div class="container">
         <div class="section-header">
-          <p class="section-eyebrow">Em exibição</p>
-          <h2 class="section-title">Filmes disponíveis</h2>
+          <div>
+            <p class="section-eyebrow">Catálogo</p>
+            <h2 class="section-title">Todos os filmes</h2>
+          </div>
+          <span class="section-count" id="catalog-count"></span>
         </div>
-        <div class="film-shelf" id="film-shelf"></div>
+        <div class="film-grid" id="film-grid"></div>
       </div>
     </section>
 
-    <!-- Coming Soon -->
-    <section id="coming-soon-section">
-      <div class="container">
-        <div class="section-header">
-          <p class="section-eyebrow">A chegar</p>
-          <h2 class="section-title">Em breve na Cinemateca</h2>
-        </div>
-        <div class="coming-soon-grid" id="coming-soon-grid"></div>
-      </div>
-    </section>
+    <hr class="section-divider">
 
-    <!-- Community Films -->
-    <section id="community-section">
+    <!-- How it works -->
+    <section class="how-it-works">
       <div class="container">
         <div class="section-header">
-          <p class="section-eyebrow">Comunidade</p>
-          <h2 class="section-title">Filmes dos sócios</h2>
+          <div>
+            <p class="section-eyebrow">Processo</p>
+            <h2 class="section-title">Como funciona</h2>
+          </div>
         </div>
-        <div class="em-breve">
-          <p>Em breve</p>
-          <span>Os sócios poderão partilhar os seus filmes aqui.</span>
+        <div class="steps-row">
+          <div class="step-card">
+            <span class="step-number">01 · Escolhe</span>
+            <h3 class="step-title">Seleciona o teu filme</h3>
+            <p class="step-desc">Navega pelo catálogo e escolhe o filme que queres ver. Cada filme tem uma sinopse e o respetivo preço de aluguer.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-number">02 · Paga</span>
+            <h3 class="step-title">Pagamento seguro via Stripe</h3>
+            <p class="step-desc">O pagamento é processado de forma segura. Aceitamos cartão de crédito, débito e outros métodos disponíveis no Stripe.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-number">03 · Vê</span>
+            <h3 class="step-title">Recebe o link e desfruta</h3>
+            <p class="step-desc">Após a confirmação do pagamento, recebes por email o link privado para ver o filme. Disponível por 48 horas após o primeiro acesso.</p>
+          </div>
         </div>
       </div>
     </section>
 
   </main>
 
+  <!-- Film detail modal -->
+  <div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-label="Detalhes do filme">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modal-close" aria-label="Fechar">✕</button>
+      <div id="modal-poster-wrap"></div>
+      <div class="modal-body">
+        <p class="modal-eyebrow">Cinemateca · The Benares Club</p>
+        <h2 class="modal-title" id="modal-title">—</h2>
+        <p class="modal-meta" id="modal-meta">—</p>
+        <p class="modal-description" id="modal-description">—</p>
+        <div class="modal-price-row">
+          <span class="modal-price-label">Aluguer · 48h</span>
+          <span class="modal-price-value" id="modal-price">—</span>
+        </div>
+        <a id="modal-rent-btn" href="#" target="_blank" rel="noopener noreferrer" class="modal-rent-btn">
+          Alugar agora — Pagamento seguro
+        </a>
+        <p class="modal-note">Após o pagamento recebes o link do filme por email.<br>Acesso válido 48 horas a partir do primeiro visionamento.</p>
+      </div>
+    </div>
+  </div>
+
   <div id="footer-container"></div>
 
   <script>
+    /*
+     * CATÁLOGO DE FILMES
+     *
+     * Para cada filme:
+     *   poster     → caminho da imagem (ex: "/media/cinemateca/pather-panchali.jpg") ou null
+     *   stripeUrl  → URL do link de pagamento Stripe para esse filme
+     *   featured   → true para destacar no hero
+     */
     const films = [
       {
+        id: 1,
         title: "Pather Panchali",
         year: "1955",
         director: "Satyajit Ray",
-        description: "A infância de Apu numa aldeia rural da Índia. Um retrato de beleza imperturbável.",
+        duration: "125 min",
+        genre: "Drama",
+        description: "A infância de Apu numa aldeia rural da Índia. Um retrato de beleza imperturbável sobre a pobreza, a família e a descoberta do mundo — o início de uma das maiores trilogias do cinema.",
         poster: null,
-        icon: "🎬"
+        icon: "🎬",
+        price: "€3,50",
+        stripeUrl: "#",
+        featured: true
       },
       {
+        id: 2,
         title: "In the Mood for Love",
         year: "2000",
         director: "Wong Kar-wai",
-        description: "Dois vizinhos descobrem que os seus cônjuges têm um caso. Melancolia e desejo contidos.",
+        duration: "98 min",
+        genre: "Romance · Drama",
+        description: "Dois vizinhos descobrem que os seus cônjuges têm um caso. Numa Hong Kong de 1962, nasce entre eles uma cumplicidade silenciosa. Melancolia e desejo contidos em cada frame.",
         poster: null,
-        icon: "🌹"
+        icon: "🌹",
+        price: "€3,50",
+        stripeUrl: "#",
+        featured: false
       },
       {
+        id: 3,
         title: "Stalker",
         year: "1979",
         director: "Andrei Tarkovsky",
-        description: "Uma jornada pela Zona — lugar de perigo e de esperança — em busca do quarto dos desejos.",
+        duration: "163 min",
+        genre: "Ficção Científica · Drama",
+        description: "Uma jornada pela Zona — lugar de perigo e de esperança — em busca do quarto dos desejos. Tarkovsky no seu auge: tempo, fé e a natureza da esperança humana.",
         poster: null,
-        icon: "🌿"
+        icon: "🌿",
+        price: "€3,50",
+        stripeUrl: "#",
+        featured: false
       },
       {
+        id: 4,
         title: "Jeanne Dielman",
         year: "1975",
         director: "Chantal Akerman",
-        description: "Três dias na vida de uma dona de casa. A rotina como linguagem cinematográfica radical.",
+        duration: "201 min",
+        genre: "Drama",
+        description: "Três dias na vida de uma dona de casa de Bruxelas. A rotina como linguagem cinematográfica radical. O filme que mudou para sempre o que o cinema pode mostrar — e como o mostra.",
         poster: null,
-        icon: "🕯️"
+        icon: "🕯️",
+        price: "€3,50",
+        stripeUrl: "#",
+        featured: false
       },
       {
+        id: 5,
         title: "Yi Yi",
         year: "2000",
         director: "Edward Yang",
-        description: "Uma família de Taipei atravessa um verão de mudanças. Três gerações, uma só ternura.",
+        duration: "173 min",
+        genre: "Drama",
+        description: "Uma família de Taipei atravessa um verão de mudanças. Três gerações, um ciclo de vida completo. Edward Yang oferece-nos um dos retratos mais ternos e honestos da condição humana.",
         poster: null,
-        icon: "🏙️"
+        icon: "🏙️",
+        price: "€3,50",
+        stripeUrl: "#",
+        featured: false
       },
       {
+        id: 6,
         title: "La Dolce Vita",
         year: "1960",
         director: "Federico Fellini",
-        description: "Um jornalista vaga pela Roma noturna em busca de sentido. Prazer e vazio em igual medida.",
+        duration: "174 min",
+        genre: "Drama",
+        description: "Um jornalista vaga pela Roma noturna em busca de sentido. Prazer e vazio em igual medida. Fellini inventa um novo modo de olhar para a modernidade — e para si mesmo.",
         poster: null,
-        icon: "✨"
+        icon: "✨",
+        price: "€3,50",
+        stripeUrl: "#",
+        featured: false
       }
     ];
 
-    const comingSoon = [
-      { title: "Cleo de 5 à 7", year: "1962", director: "Agnès Varda" },
-      { title: "A Margem do Paraíso", year: "2004", director: "Fatih Akin" },
-      { title: "Amarcord", year: "1973", director: "Federico Fellini" },
-      { title: "Tokyo Story", year: "1953", director: "Yasujirō Ozu" }
-    ];
+    /* ── Hero ── */
+    const featured = films.find(f => f.featured) || films[0];
 
-    // Render film shelf
-    const shelf = document.getElementById('film-shelf');
+    document.getElementById('hero-title').textContent = featured.title;
+    document.getElementById('hero-meta').textContent =
+      `${featured.year} · ${featured.director} · ${featured.duration}`;
+    document.getElementById('hero-description').textContent = featured.description;
+
+    const heroRentBtn = document.getElementById('hero-rent-btn');
+    heroRentBtn.textContent = `▶  Alugar — ${featured.price}`;
+    heroRentBtn.href = featured.stripeUrl;
+    if (featured.stripeUrl !== '#') {
+      heroRentBtn.target = '_blank';
+      heroRentBtn.rel = 'noopener noreferrer';
+    }
+
+    const heroPosterEl = document.getElementById('hero-poster');
+    if (featured.poster) {
+      const img = document.createElement('img');
+      img.className = 'hero-img';
+      img.src = featured.poster;
+      img.alt = featured.title;
+      heroPosterEl.replaceWith(img);
+    } else {
+      heroPosterEl.textContent = featured.icon;
+    }
+
+    document.getElementById('hero-info-btn').addEventListener('click', () => openModal(featured));
+
+    /* ── Film grid ── */
+    const grid = document.getElementById('film-grid');
+    document.getElementById('catalog-count').textContent = `${films.length} filmes`;
+
     films.forEach(film => {
       const card = document.createElement('div');
       card.className = 'film-card';
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', `Ver detalhes de ${film.title}`);
+
       const posterHTML = film.poster
-        ? `<img class="film-poster" src="${film.poster}" alt="${film.title}" loading="lazy">`
+        ? `<img class="film-poster-img" src="${film.poster}" alt="${film.title}" loading="lazy">`
         : `<div class="film-poster-placeholder">${film.icon}</div>`;
+
       card.innerHTML = `
-        ${posterHTML}
-        <div class="film-info">
-          <h3 class="film-title">${film.title}</h3>
-          <p class="film-meta">${film.year} · ${film.director}</p>
-          <p class="film-description">${film.description}</p>
-          <a href="/cinemateca/" class="film-action">Ver na Cinemateca</a>
+        <div class="film-poster-wrap">
+          ${posterHTML}
+          <span class="price-badge">${film.price}</span>
+          <div class="film-overlay">
+            <button class="overlay-btn">Ver detalhes</button>
+          </div>
+        </div>
+        <div class="film-card-info">
+          <h3 class="film-card-title">${film.title}</h3>
+          <p class="film-card-meta">${film.year} · ${film.director}</p>
         </div>
       `;
-      shelf.appendChild(card);
+
+      card.addEventListener('click', () => openModal(film));
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') openModal(film);
+      });
+      grid.appendChild(card);
     });
 
-    // Render coming soon
-    const comingGrid = document.getElementById('coming-soon-grid');
-    comingSoon.forEach(film => {
-      const card = document.createElement('div');
-      card.className = 'coming-soon-card';
-      card.innerHTML = `
-        <span class="badge">Em breve</span>
-        <h4 class="coming-soon-title">${film.title}</h4>
-        <p class="coming-soon-meta">${film.year} · ${film.director}</p>
-      `;
-      comingGrid.appendChild(card);
-    });
+    /* ── Modal ── */
+    const backdrop = document.getElementById('modal-backdrop');
+    const modalClose = document.getElementById('modal-close');
+
+    function openModal(film) {
+      document.getElementById('modal-title').textContent = film.title;
+      document.getElementById('modal-meta').textContent =
+        `${film.year} · ${film.director} · ${film.duration} · ${film.genre}`;
+      document.getElementById('modal-description').textContent = film.description;
+      document.getElementById('modal-price').textContent = film.price;
+
+      const rentBtn = document.getElementById('modal-rent-btn');
+      rentBtn.href = film.stripeUrl;
+      rentBtn.textContent = `Alugar agora — ${film.price} · Pagamento seguro`;
+
+      const posterWrap = document.getElementById('modal-poster-wrap');
+      if (film.poster) {
+        posterWrap.innerHTML = `<img class="modal-poster" src="${film.poster}" alt="${film.title}">`;
+      } else {
+        posterWrap.innerHTML = `<div class="modal-poster-placeholder">${film.icon}</div>`;
+      }
+
+      backdrop.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      modalClose.focus();
+    }
+
+    function closeModal() {
+      backdrop.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
   </script>
 
   <script src="/shared.js"></script>
