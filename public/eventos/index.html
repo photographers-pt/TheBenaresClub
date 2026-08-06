@@ -154,12 +154,60 @@
 
     /* ── Empty state ── */
     .empty-state {
-      padding: 4rem 0;
+      padding: 4rem 0 5rem;
       text-align: center;
-      color: var(--text-muted);
       font-family: var(--font-family);
-      font-size: 0.9rem;
-      line-height: 1.7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .empty-icon {
+      font-size: 2.5rem;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .empty-title {
+      font-family: var(--font-family);
+      font-size: 1.3rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .empty-sub {
+      font-family: var(--font-family);
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin: 0;
+    }
+
+    .empty-instagram {
+      margin-top: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-family);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border: 1px solid var(--border-strong);
+      border-radius: 4px;
+      padding: 0.6rem 1.25rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .empty-instagram:hover {
+      color: var(--text-primary);
+      border-color: var(--text-primary);
     }
 
     /* ── Responsive ── */
@@ -221,22 +269,21 @@
      *   locationUrl → link Google Maps do local
      *   eventbriteUrl → link Eventbrite para compra de bilhetes
      */
-    const events = [
-      {
-        day: "18",
-        month: "Out 2026",
-        time: "19:00",
-        name: "Próximo Evento",
-        location: "Lisboa",
-        locationUrl: "#",
-        eventbriteUrl: "#"
-      }
-    ];
+    const events = [];
 
     const list = document.getElementById('event-list');
 
     if (events.length === 0) {
-      list.innerHTML = `<p class="empty-state">Não há eventos programados de momento.<br>Segue-nos no Instagram para não perderes nenhum anúncio.</p>`;
+      list.innerHTML = `
+        <div class="empty-state">
+          <span class="empty-icon">🍳</span>
+          <p class="empty-title">Cooking in progress</p>
+          <p class="empty-sub">Estamos a preparar os próximos eventos.<br>Segue-nos no Instagram para não perderes nenhum anúncio.</p>
+          <a class="empty-instagram" href="https://www.instagram.com/thebenaresclub" target="_blank" rel="noopener">
+            <i class="fab fa-instagram"></i> @thebenaresclub
+          </a>
+        </div>
+      `;
     } else {
       events.forEach(ev => {
         const row = document.createElement('div');
