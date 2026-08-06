@@ -6,15 +6,62 @@
   <title>Fototeca — The Benares Club</title>
   <link rel="stylesheet" href="/styles.css" />
   <style>
-    main {
-      /* no max-width — banner must reach full viewport width */
+    main { /* no max-width — banner full width */ }
+
+    /* ── Event section ── */
+    .event-section {
+      padding: 4rem 0 2rem;
+      border-top: 1px solid var(--border);
     }
 
-    /* ── Gallery grid ── */
+    .event-section:first-of-type {
+      border-top: none;
+      padding-top: 3rem;
+    }
+
+    .event-header {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem 2rem;
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+    }
+
+    .event-eyebrow {
+      font-family: var(--font-family);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .event-title {
+      font-family: var(--font-family);
+      font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .event-date {
+      font-family: var(--font-family);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    /* ── Photo grid ── */
     .photo-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: 260px;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 240px;
       gap: 2px;
     }
 
@@ -27,7 +74,6 @@
 
     .photo-item.tall  { grid-row: span 2; }
     .photo-item.wide  { grid-column: span 2; }
-    .photo-item.large { grid-column: span 2; grid-row: span 2; }
 
     .photo-item img {
       width: 100%;
@@ -35,23 +81,12 @@
       object-fit: cover;
       display: block;
       transition: transform 0.6s ease, opacity 0.3s ease;
+      opacity: 0.88;
     }
 
     .photo-item:hover img {
       transform: scale(1.04);
-    }
-
-    /* Placeholder */
-    .photo-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.6rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(240, 232, 216, 0.08);
+      opacity: 1;
     }
 
     /* ── Lightbox ── */
@@ -59,7 +94,7 @@
       position: fixed;
       inset: 0;
       z-index: 900;
-      background: rgba(8, 7, 6, 0.96);
+      background: rgba(8, 7, 6, 0.97);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -74,8 +109,8 @@
     }
 
     .lightbox-img-wrap {
-      max-width: 92vw;
-      max-height: 92vh;
+      max-width: 90vw;
+      max-height: 90vh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -88,22 +123,10 @@
     }
 
     .lightbox-img-wrap img {
-      max-width: 92vw;
-      max-height: 92vh;
+      max-width: 90vw;
+      max-height: 90vh;
       object-fit: contain;
       display: block;
-    }
-
-    .lightbox-placeholder {
-      width: 60vw;
-      height: 60vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.6rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(240, 232, 216, 0.1);
     }
 
     .lightbox-close {
@@ -140,22 +163,36 @@
     .lightbox-prev { left: 0.5rem; }
     .lightbox-next { right: 0.5rem; }
 
+    .lightbox-caption {
+      position: fixed;
+      bottom: 1.75rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-family);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
     /* ── Responsive ── */
     @media (max-width: 900px) {
       .photo-grid {
-        grid-template-columns: repeat(2, 1fr);
-        grid-auto-rows: 220px;
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: 200px;
       }
-      .photo-item.wide,
-      .photo-item.large { grid-column: span 1; }
-      .photo-item.large { grid-row: span 2; }
     }
 
-    @media (max-width: 540px) {
+    @media (max-width: 600px) {
       .photo-grid {
         grid-template-columns: repeat(2, 1fr);
         grid-auto-rows: 160px;
       }
+      .photo-item.wide { grid-column: span 1; }
+      .event-header { flex-wrap: wrap; gap: 0.5rem; }
+      .event-date { margin-left: 0; }
       .lightbox-nav { display: none; }
     }
   </style>
@@ -169,69 +206,108 @@
     <div class="page-banner">
       <img src="/media/banners/fototeca.png" alt="" class="page-banner-img">
       <div class="page-banner-title">
-        <span class="page-banner-eyebrow">01 · Fototeca</span>
+        <span class="page-banner-eyebrow">The Benares Club</span>
         <h1 class="page-banner-heading">Fototeca</h1>
       </div>
     </div>
 
-    <div class="photo-grid" id="photoGrid">
-
-      <div class="photo-item large" data-caption="Saída · Mouraria" data-meta="Lisboa · Jan 2026">
-        <!-- foto: <img src="/media/galeria/mouraria-01.jpg" alt=""> -->
-        <div class="photo-placeholder">foto</div>
+    <!-- Night Lounge #1 -->
+    <div class="event-section">
+      <div class="event-header">
+        <span class="event-eyebrow">01</span>
+        <h2 class="event-title">Night Lounge #1</h2>
+        <span class="event-date">11 Dez 2024</span>
       </div>
-
-      <div class="photo-item" data-caption="Retrato · Ana M." data-meta="Estúdio · Dez 2025">
-        <!-- foto: <img src="/media/galeria/retrato-ana.jpg" alt=""> -->
-        <div class="photo-placeholder">foto</div>
+      <div class="photo-grid">
+        <div class="photo-item wide" data-src="/media/fototeca/nl1-01.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
+          <img src="/media/fototeca/nl1-01.jpg" alt="Night Lounge #1" loading="lazy">
+        </div>
+        <div class="photo-item tall" data-src="/media/fototeca/nl1-02.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
+          <img src="/media/fototeca/nl1-02.jpg" alt="Night Lounge #1" loading="lazy">
+        </div>
+        <div class="photo-item" data-src="/media/fototeca/nl1-03.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
+          <img src="/media/fototeca/nl1-03.jpg" alt="Night Lounge #1" loading="lazy">
+        </div>
+        <div class="photo-item" data-src="/media/fototeca/nl1-04.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
+          <img src="/media/fototeca/nl1-04.jpg" alt="Night Lounge #1" loading="lazy">
+        </div>
+        <div class="photo-item" data-src="/media/fototeca/nl1-05.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
+          <img src="/media/fototeca/nl1-05.jpg" alt="Night Lounge #1" loading="lazy">
+        </div>
+        <div class="photo-item tall" data-src="/media/fototeca/nl1-06.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
+          <img src="/media/fototeca/nl1-06.jpg" alt="Night Lounge #1" loading="lazy">
+        </div>
+        <div class="photo-item wide" data-src="/media/fototeca/nl1-07.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
+          <img src="/media/fototeca/nl1-07.jpg" alt="Night Lounge #1" loading="lazy">
+        </div>
+        <div class="photo-item" data-src="/media/fototeca/nl1-08.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
+          <img src="/media/fototeca/nl1-08.jpg" alt="Night Lounge #1" loading="lazy">
+        </div>
+        <div class="photo-item" data-src="/media/fototeca/nl1-09.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
+          <img src="/media/fototeca/nl1-09.jpg" alt="Night Lounge #1" loading="lazy">
+        </div>
+        <div class="photo-item" data-src="/media/fototeca/nl1-10.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
+          <img src="/media/fototeca/nl1-10.jpg" alt="Night Lounge #1" loading="lazy">
+        </div>
+        <div class="photo-item wide" data-src="/media/fototeca/nl1-11.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
+          <img src="/media/fototeca/nl1-11.jpg" alt="Night Lounge #1" loading="lazy">
+        </div>
+        <div class="photo-item" data-src="/media/fototeca/nl1-12.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
+          <img src="/media/fototeca/nl1-12.jpg" alt="Night Lounge #1" loading="lazy">
+        </div>
+        <div class="photo-item" data-src="/media/fototeca/nl1-13.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
+          <img src="/media/fototeca/nl1-13.jpg" alt="Night Lounge #1" loading="lazy">
+        </div>
       </div>
-
-      <div class="photo-item tall" data-caption="Praça do Comércio" data-meta="Lisboa · Nov 2025">
-        <!-- foto: <img src="/media/galeria/praca-comercio.jpg" alt=""> -->
-        <div class="photo-placeholder">foto</div>
-      </div>
-
-      <div class="photo-item wide" data-caption="Serra da Estrela" data-meta="Covilhã · Out 2025">
-        <!-- foto: <img src="/media/galeria/serra-estrela.jpg" alt=""> -->
-        <div class="photo-placeholder">foto</div>
-      </div>
-
-      <div class="photo-item" data-caption="Saída · Intendente" data-meta="Lisboa · Set 2025">
-        <!-- foto: <img src="/media/galeria/intendente-01.jpg" alt=""> -->
-        <div class="photo-placeholder">foto</div>
-      </div>
-
-      <div class="photo-item tall" data-caption="Retrato · R. Fonseca" data-meta="Lisboa · Set 2025">
-        <!-- foto: <img src="/media/galeria/retrato-rf.jpg" alt=""> -->
-        <div class="photo-placeholder">foto</div>
-      </div>
-
-      <div class="photo-item wide" data-caption="Cais do Sodré" data-meta="Lisboa · Ago 2025">
-        <!-- foto: <img src="/media/galeria/cais-sodre.jpg" alt=""> -->
-        <div class="photo-placeholder">foto</div>
-      </div>
-
-      <div class="photo-item" data-caption="Alentejo · Planície" data-meta="Évora · Jul 2025">
-        <!-- foto: <img src="/media/galeria/alentejo.jpg" alt=""> -->
-        <div class="photo-placeholder">foto</div>
-      </div>
-
-      <div class="photo-item" data-caption="Saída · Alfama" data-meta="Lisboa · Jun 2025">
-        <!-- foto: <img src="/media/galeria/alfama-01.jpg" alt=""> -->
-        <div class="photo-placeholder">foto</div>
-      </div>
-
     </div>
+
+    <!-- Night Lounge #2 -->
+    <div class="event-section">
+      <div class="event-header">
+        <span class="event-eyebrow">02</span>
+        <h2 class="event-title">Night Lounge #2</h2>
+        <span class="event-date">20 Jan 2025</span>
+      </div>
+      <div class="photo-grid">
+        <div class="photo-item wide" data-src="/media/fototeca/nl2-01.jpg" data-caption="Night Lounge #2 · 20 Jan 2025">
+          <img src="/media/fototeca/nl2-01.jpg" alt="Night Lounge #2" loading="lazy">
+        </div>
+        <div class="photo-item tall" data-src="/media/fototeca/nl2-02.jpg" data-caption="Night Lounge #2 · 20 Jan 2025">
+          <img src="/media/fototeca/nl2-02.jpg" alt="Night Lounge #2" loading="lazy">
+        </div>
+        <div class="photo-item" data-src="/media/fototeca/nl2-03.jpg" data-caption="Night Lounge #2 · 20 Jan 2025">
+          <img src="/media/fototeca/nl2-03.jpg" alt="Night Lounge #2" loading="lazy">
+        </div>
+        <div class="photo-item" data-src="/media/fototeca/nl2-04.jpg" data-caption="Night Lounge #2 · 20 Jan 2025">
+          <img src="/media/fototeca/nl2-04.jpg" alt="Night Lounge #2" loading="lazy">
+        </div>
+        <div class="photo-item" data-src="/media/fototeca/nl2-05.jpg" data-caption="Night Lounge #2 · 20 Jan 2025">
+          <img src="/media/fototeca/nl2-05.jpg" alt="Night Lounge #2" loading="lazy">
+        </div>
+        <div class="photo-item tall" data-src="/media/fototeca/nl2-06.jpg" data-caption="Night Lounge #2 · 20 Jan 2025">
+          <img src="/media/fototeca/nl2-06.jpg" alt="Night Lounge #2" loading="lazy">
+        </div>
+        <div class="photo-item" data-src="/media/fototeca/nl2-07.jpg" data-caption="Night Lounge #2 · 20 Jan 2025">
+          <img src="/media/fototeca/nl2-07.jpg" alt="Night Lounge #2" loading="lazy">
+        </div>
+        <div class="photo-item wide" data-src="/media/fototeca/nl2-08.jpg" data-caption="Night Lounge #2 · 20 Jan 2025">
+          <img src="/media/fototeca/nl2-08.jpg" alt="Night Lounge #2" loading="lazy">
+        </div>
+        <div class="photo-item" data-src="/media/fototeca/nl2-09.jpg" data-caption="Night Lounge #2 · 20 Jan 2025">
+          <img src="/media/fototeca/nl2-09.jpg" alt="Night Lounge #2" loading="lazy">
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lbClose" aria-label="Fechar">&#x2715;</button>
     <button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Anterior">&#8592;</button>
-    <div class="lightbox-img-wrap" id="lbImgWrap">
-      <div class="lightbox-placeholder" id="lbPlaceholder">foto</div>
-    </div>
+    <div class="lightbox-img-wrap" id="lbImgWrap"></div>
     <button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Seguinte">&#8594;</button>
+    <div class="lightbox-caption" id="lbCaption"></div>
   </div>
 
   <div id="footer-container"></div>
@@ -240,7 +316,7 @@
     const items = Array.from(document.querySelectorAll('.photo-item'));
     const lb      = document.getElementById('lightbox');
     const lbWrap  = document.getElementById('lbImgWrap');
-    const lbPH    = document.getElementById('lbPlaceholder');
+    const lbCap   = document.getElementById('lbCaption');
     const lbClose = document.getElementById('lbClose');
     const lbPrev  = document.getElementById('lbPrev');
     const lbNext  = document.getElementById('lbNext');
@@ -249,30 +325,25 @@
     function show(i) {
       cur = i;
       const item = items[i];
-      const prev = lbWrap.querySelector('img');
-      if (prev) prev.remove();
-      lbPH.style.display = 'flex';
-
-      const src = item.querySelector('img');
-      if (src) {
-        const img = new Image();
-        img.src = src.src;
-        img.onload = () => { lbPH.style.display = 'none'; lbWrap.appendChild(img); };
-      }
-
-      lbPrev.style.opacity = i === 0 ? '0.15' : '0.25';
-      lbNext.style.opacity = i === items.length - 1 ? '0.15' : '0.25';
+      const src = item.dataset.src;
+      lbWrap.innerHTML = '';
+      const img = new Image();
+      img.src = src;
+      lbWrap.appendChild(img);
+      lbCap.textContent = item.dataset.caption || '';
+      lbPrev.style.opacity = i === 0 ? '0.12' : '0.25';
+      lbNext.style.opacity = i === items.length - 1 ? '0.12' : '0.25';
     }
 
     function open(i)  { show(i); lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
     function close()  { lb.classList.remove('open'); document.body.style.overflow = ''; }
 
-    items.forEach((item, i) => item.addEventListener('click', () => open(i)));
+    items.forEach(function(item, i) { item.addEventListener('click', function() { open(i); }); });
     lbClose.addEventListener('click', close);
-    lb.addEventListener('click', e => { if (e.target === lb) close(); });
-    lbPrev.addEventListener('click', e => { e.stopPropagation(); if (cur > 0) show(cur - 1); });
-    lbNext.addEventListener('click', e => { e.stopPropagation(); if (cur < items.length - 1) show(cur + 1); });
-    document.addEventListener('keydown', e => {
+    lb.addEventListener('click', function(e) { if (e.target === lb) close(); });
+    lbPrev.addEventListener('click', function(e) { e.stopPropagation(); if (cur > 0) show(cur - 1); });
+    lbNext.addEventListener('click', function(e) { e.stopPropagation(); if (cur < items.length - 1) show(cur + 1); });
+    document.addEventListener('keydown', function(e) {
       if (!lb.classList.contains('open')) return;
       if (e.key === 'Escape') close();
       if (e.key === 'ArrowLeft'  && cur > 0) show(cur - 1);
