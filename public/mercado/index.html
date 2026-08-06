@@ -6,14 +6,66 @@
   <title>Mercado — The Benares Club</title>
   <link rel="stylesheet" href="/styles.css" />
   <style>
-    .mercado-page {
-      min-height: 75vh;
+    main { position: relative; }
+
+    /* ── Ghost product grid (behind everything) ── */
+    .ghost-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      padding: 3rem 3rem 6rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      filter: blur(6px);
+      opacity: 0.35;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .ghost-card {
+      background: rgba(255, 248, 238, 0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .ghost-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: rgba(255, 248, 238, 0.04);
+    }
+
+    .ghost-body {
+      padding: 18px 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ghost-line {
+      border-radius: 3px;
+      background: rgba(255, 248, 238, 0.07);
+    }
+
+    .ghost-line.short  { height: 9px;  width: 40%; }
+    .ghost-line.medium { height: 14px; width: 70%; }
+    .ghost-line.long   { height: 9px;  width: 90%; }
+    .ghost-line.price  { height: 16px; width: 30%; margin-top: 4px; }
+
+    /* ── Coming soon overlay ── */
+    .mercado-overlay {
+      position: absolute;
+      inset: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 4rem 2rem 8rem;
+      padding: 2rem;
+      background: radial-gradient(ellipse 60% 50% at 50% 50%,
+        rgba(10, 9, 8, 0.82) 30%,
+        rgba(10, 9, 8, 0.45) 70%,
+        transparent 100%);
     }
 
     .coming-label {
@@ -30,7 +82,7 @@
     }
 
     .mercado-hint {
-      margin-top: 2rem;
+      margin-top: 1.5rem;
       font-family: var(--font-family);
       font-size: 0.85rem;
       color: var(--text-muted);
@@ -48,6 +100,14 @@
       color: var(--text-primary);
       border-color: var(--text-primary);
     }
+
+    @media (max-width: 600px) {
+      .ghost-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 2rem 1.25rem 4rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -63,7 +123,21 @@
       </div>
     </div>
 
-    <div class="mercado-page">
+    <!-- Ghost cards -->
+    <div class="ghost-grid" aria-hidden="true">
+      <!-- 8 placeholder cards -->
+      <div class="ghost-card"><div class="ghost-image"></div><div class="ghost-body"><div class="ghost-line short"></div><div class="ghost-line medium"></div><div class="ghost-line long"></div><div class="ghost-line price"></div></div></div>
+      <div class="ghost-card"><div class="ghost-image"></div><div class="ghost-body"><div class="ghost-line short"></div><div class="ghost-line medium"></div><div class="ghost-line long"></div><div class="ghost-line price"></div></div></div>
+      <div class="ghost-card"><div class="ghost-image"></div><div class="ghost-body"><div class="ghost-line short"></div><div class="ghost-line medium"></div><div class="ghost-line long"></div><div class="ghost-line price"></div></div></div>
+      <div class="ghost-card"><div class="ghost-image"></div><div class="ghost-body"><div class="ghost-line short"></div><div class="ghost-line medium"></div><div class="ghost-line long"></div><div class="ghost-line price"></div></div></div>
+      <div class="ghost-card"><div class="ghost-image"></div><div class="ghost-body"><div class="ghost-line short"></div><div class="ghost-line medium"></div><div class="ghost-line long"></div><div class="ghost-line price"></div></div></div>
+      <div class="ghost-card"><div class="ghost-image"></div><div class="ghost-body"><div class="ghost-line short"></div><div class="ghost-line medium"></div><div class="ghost-line long"></div><div class="ghost-line price"></div></div></div>
+      <div class="ghost-card"><div class="ghost-image"></div><div class="ghost-body"><div class="ghost-line short"></div><div class="ghost-line medium"></div><div class="ghost-line long"></div><div class="ghost-line price"></div></div></div>
+      <div class="ghost-card"><div class="ghost-image"></div><div class="ghost-body"><div class="ghost-line short"></div><div class="ghost-line medium"></div><div class="ghost-line long"></div><div class="ghost-line price"></div></div></div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="mercado-overlay">
       <span class="coming-label">Coming Soon</span>
       <p class="mercado-hint">
         Em breve teremos produtos disponíveis.<br>
