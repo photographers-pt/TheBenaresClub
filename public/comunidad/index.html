@@ -3,234 +3,417 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Comunidade — The Benares Club</title>
+  <title>.KO Lisboa — International Short-film Championship</title>
   <link rel="stylesheet" href="/styles.css" />
   <style>
-    /* ── Page layout ── */
-    main {
-      /* no max-width — banner must reach full viewport width */
-    }
-    .content-wrap {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 4rem 2rem 8rem;
+    /* ── RED THEME OVERRIDE ── */
+    :root {
+      --bg-base:        #0B0101;
+      --bg-surface:     #150303;
+      --bg-elevated:    #1E0404;
+      --text-primary:   #FFE8E8;
+      --text-secondary: #D4A0A0;
+      --text-muted:     #8A5050;
+      --border:         rgba(200, 16, 31, 0.18);
+      --border-strong:  rgba(200, 16, 31, 0.45);
+      --glass-blur:     blur(12px);
+      --red:            #C8101F;
+      --red-bright:     #FF1830;
+      --red-dim:        rgba(200, 16, 31, 0.12);
     }
 
-    /* ── Section header ── */
-    .s-head {
-      margin-bottom: 3rem;
+    /* ── Global overrides for this page ── */
+    body {
+      background-color: var(--bg-base);
     }
 
-    .s-head .label {
-      display: block;
+    header, nav {
+      background: rgba(11, 1, 1, 0.85) !important;
+      border-color: var(--border) !important;
+    }
+
+    footer {
+      border-top-color: var(--border) !important;
+    }
+
+    /* ── HERO ── */
+    .ko-hero {
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ko-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 30%, rgba(200, 16, 31, 0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(200, 16, 31, 0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .ko-eyebrow {
       font-family: var(--font-family);
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.75rem;
+      color: var(--red-bright);
+      margin-bottom: 1.5rem;
+      position: relative;
     }
 
-    .s-head h1,
-    .s-head h2 {
+    .ko-title {
+      font-family: var(--font-serif);
+      font-size: clamp(5rem, 20vw, 14rem);
+      font-weight: 400;
+      color: var(--red-bright);
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      margin: 0 0 0.5rem;
+      position: relative;
+      text-shadow: 0 0 80px rgba(255, 24, 48, 0.3);
+    }
+
+    .ko-subtitle {
       font-family: var(--font-family);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-style: normal;
-      font-weight: 300;
-      line-height: 1.1;
-      color: var(--text-primary);
-      margin: 0;
-    }
-
-    .s-head h1 {
-      font-size: clamp(2.4rem, 5vw, 3.6rem);
-    }
-
-    .s-head h2 {
-      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-    }
-
-    /* ── Intro paragraph ── */
-    .intro-text {
-      font-family: var(--font-family);
-      font-size: 1.05rem;
-      line-height: 1.8;
+      font-size: clamp(0.7rem, 1.5vw, 0.95rem);
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
       color: var(--text-secondary);
-      max-width: 620px;
-      margin-bottom: 4rem;
+      margin: 1.25rem 0 3rem;
+      position: relative;
     }
 
-    /* ── Glass card ── */
-    .glass-card {
-      background: rgba(255, 248, 238, 0.04);
-      backdrop-filter: var(--glass-blur);
-      -webkit-backdrop-filter: var(--glass-blur);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 2rem 2.25rem;
-      transition: border-color 0.25s ease;
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
     }
 
-    .glass-card:hover {
-      border-color: var(--border-strong);
-    }
-
-    /* ── Connect grid ── */
-    .connect-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 6rem;
-    }
-
-    .connect-card .card-icon {
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-
-    .connect-card .card-label {
-      display: block;
+    .btn-ko-primary {
       font-family: var(--font-family);
-      font-size: 0.68rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #0B0101;
+      background: var(--red-bright);
+      border: none;
+      border-radius: 4px;
+      padding: 0.85rem 2.25rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-ko-primary:hover { background: #ff3347; transform: translateY(-2px); }
+
+    .btn-ko-outline {
+      font-family: var(--font-family);
+      font-size: 0.78rem;
       font-weight: 500;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.4rem;
+      color: var(--text-primary);
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      border-radius: 4px;
+      padding: 0.85rem 2.25rem;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .btn-ko-outline:hover { border-color: var(--red-bright); color: var(--red-bright); transform: translateY(-2px); }
+
+    /* ── Shared section layout ── */
+    .ko-section {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+      border-top: 1px solid var(--border);
     }
 
-    .connect-card .card-title {
+    .ko-section:first-of-type {
+      border-top: none;
+    }
+
+    .section-eyebrow {
       display: block;
       font-family: var(--font-family);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-style: normal;
-      font-size: 1.2rem;
-      font-weight: 300;
-      color: var(--text-primary);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--red-bright);
       margin-bottom: 0.75rem;
     }
 
-    .connect-card .card-desc {
+    .section-title {
       font-family: var(--font-family);
-      font-size: 0.88rem;
-      line-height: 1.65;
-      color: var(--text-secondary);
-      margin-bottom: 1.25rem;
-    }
-
-    .connect-card a.card-link {
-      display: inline-block;
-      font-family: var(--font-family);
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 300;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--text-primary);
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-sm);
-      padding: 0.45rem 1rem;
-      text-decoration: none;
-      transition: border-color 0.2s ease;
+      margin: 0 0 2rem;
     }
 
-    .connect-card a.card-link:hover {
-      border-color: var(--text-primary);
+    .section-lead {
+      font-family: var(--font-family);
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--text-secondary);
+      max-width: 640px;
     }
 
-    /* ── Steps section ── */
-    .steps-section {
-      margin-bottom: 6rem;
+    /* ── Dates timeline ── */
+    .dates-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 2rem;
     }
 
+    .date-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 2rem;
+      align-items: baseline;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .date-row:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .date-label {
+      font-family: var(--font-family);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red-bright);
+    }
+
+    .date-desc {
+      font-family: var(--font-family);
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    /* ── Categories grid ── */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      margin-top: 2.5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .category-card {
+      background: var(--red-dim);
+      padding: 2rem 1.75rem;
+      transition: background 0.2s;
+    }
+
+    .category-card:hover {
+      background: rgba(200, 16, 31, 0.22);
+    }
+
+    .cat-number {
+      display: block;
+      font-family: var(--font-serif);
+      font-size: 2.5rem;
+      color: var(--red-bright);
+      opacity: 0.4;
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .cat-name {
+      display: block;
+      font-family: var(--font-family);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .cat-desc {
+      font-family: var(--font-family);
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* ── Steps ── */
     .steps-list {
       display: flex;
       flex-direction: column;
-      gap: 1.25rem;
-      margin-top: 2.5rem;
+      gap: 0;
+      margin-top: 2rem;
     }
 
-    .step-item {
-      display: flex;
+    .step-row {
+      display: grid;
+      grid-template-columns: 3rem 1fr;
+      gap: 1.5rem;
       align-items: flex-start;
-      gap: 1.75rem;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--border);
     }
 
-    .step-number {
-      flex-shrink: 0;
-      width: 2.5rem;
-      height: 2.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid var(--border-strong);
-      border-radius: 50%;
-      font-family: var(--font-family);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-style: normal;
-      font-size: 1rem;
-      color: var(--text-muted);
-      margin-top: 0.1rem;
+    .step-row:first-child { border-top: 1px solid var(--border); }
+
+    .step-n {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      color: var(--red-bright);
+      opacity: 0.5;
+      line-height: 1;
+      padding-top: 0.1rem;
     }
 
-    .step-body .step-title {
-      font-family: var(--font-family);
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin: 0 0 0.35rem;
-    }
-
-    .step-body .step-desc {
+    .step-title {
       font-family: var(--font-family);
       font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--text-primary);
+      margin: 0 0 0.4rem;
+      text-transform: uppercase;
+    }
+
+    .step-desc {
+      font-family: var(--font-family);
+      font-size: 0.88rem;
       line-height: 1.7;
       color: var(--text-secondary);
       margin: 0;
     }
 
-    /* ── CTA section ── */
-    .cta-section {
-      text-align: center;
-      padding: 4rem 2rem;
-      border-top: 1px solid var(--border);
+    /* ── Prizes grid ── */
+    .prizes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 2.5rem;
     }
 
-    .cta-section p {
+    .prize-card {
+      background: rgba(255, 232, 232, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.75rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .prize-card:hover {
+      border-color: var(--border-strong);
+      background: rgba(200, 16, 31, 0.08);
+    }
+
+    .prize-category {
+      display: block;
+      font-family: var(--font-family);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red-bright);
+      margin-bottom: 0.5rem;
+    }
+
+    .prize-name {
+      display: block;
       font-family: var(--font-family);
       font-size: 1rem;
-      color: var(--text-secondary);
-      margin-bottom: 2rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 0.4rem;
     }
 
-    .btn-primary {
-      display: inline-block;
+    .prize-desc {
       font-family: var(--font-family);
       font-size: 0.82rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-primary);
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-sm);
-      padding: 0.75rem 2rem;
-      text-decoration: none;
-      transition: border-color 0.2s ease;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin: 0;
     }
 
-    .btn-primary:hover {
-      border-color: var(--text-primary);
+    /* ── Rules list ── */
+    .rules-list {
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
 
-    /* ── Divider ── */
-    .section-divider {
-      border: none;
+    .rules-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-family);
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+
+    .rules-list li:first-child { border-top: 1px solid var(--border); }
+
+    .rules-list li::before {
+      content: '—';
+      color: var(--red-bright);
+      flex-shrink: 0;
+      font-size: 0.8rem;
+    }
+
+    /* ── Final CTA ── */
+    .ko-cta {
+      text-align: center;
+      padding: 6rem 2rem 8rem;
       border-top: 1px solid var(--border);
-      margin: 0 0 5rem;
+    }
+
+    .ko-cta-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      color: var(--red-bright);
+      margin: 0 0 1rem;
+      text-shadow: 0 0 60px rgba(255, 24, 48, 0.2);
+    }
+
+    .ko-cta-sub {
+      font-family: var(--font-family);
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .ko-hero { padding: 5rem 1.5rem 4rem; }
+      .date-row { grid-template-columns: 1fr; gap: 0.25rem; }
+      .ko-section { padding: 3.5rem 1.25rem; }
     }
   </style>
 </head>
@@ -239,89 +422,183 @@
   <div id="header-container"></div>
 
   <main>
-  <div class="page-banner">
-    <img src="/media/banners/comunidad.png" alt="" class="page-banner-img">
-    <div class="page-banner-title">
-      <span class="page-banner-eyebrow">01 · Comunidade</span>
-      <h1 class="page-banner-heading">Comunidade</h1>
-    </div>
-  </div>
 
-  <div class="content-wrap">
-    <p class="intro-text">
-      The Benares Club reune fotógrafos, viajantes e curiosos unidos pela imagem e pela vontade de ver o mundo com atenção. Partilhamos saídas fotográficas, conversas sobre técnica e uma paixão comum por descobrir o extraordinário no quotidiano.
-    </p>
-
-    <!-- Connect cards -->
-    <div class="connect-grid">
-      <div class="glass-card connect-card">
-        <span class="card-icon">📷</span>
-        <span class="card-label">Redes sociais</span>
-        <span class="card-title">Onde nos encontramos</span>
-        <p class="card-desc">Segue o nosso trabalho e as saídas do clube no Instagram.</p>
-        <a class="card-link" href="https://www.instagram.com/thebenaresclub" target="_blank" rel="noopener">Instagram</a>
+    <!-- HERO -->
+    <section class="ko-hero">
+      <span class="ko-eyebrow">The Benares Club presents</span>
+      <h1 class="ko-title">.KO</h1>
+      <p class="ko-subtitle">Lisboa International Short-film Championship</p>
+      <div class="hero-ctas">
+        <a class="btn-ko-primary" href="#submeter">Submeter filme</a>
+        <a class="btn-ko-outline" href="#sobre">Saber mais</a>
       </div>
+    </section>
 
-      <div class="glass-card connect-card">
-        <span class="card-icon">✉️</span>
-        <span class="card-label">Contacto directo</span>
-        <span class="card-title">Fala connosco</span>
-        <p class="card-desc">Para questões, parcerias ou apenas para dizer olá.</p>
-        <a class="card-link" href="mailto:geral@thebenaresclub.com">Enviar email</a>
-      </div>
-
-      <div class="glass-card connect-card">
-        <span class="card-icon">🗓</span>
-        <span class="card-label">Agenda</span>
-        <span class="card-title">Próximos eventos</span>
-        <p class="card-desc">Saídas fotográficas, workshops e encontros abertos a todos.</p>
-        <a class="card-link" href="/eventos/">Ver eventos</a>
-      </div>
+    <!-- ABOUT -->
+    <div class="ko-section" id="sobre">
+      <span class="section-eyebrow">01 · Festival</span>
+      <h2 class="section-title">O que é o .KO?</h2>
+      <p class="section-lead">
+        O <strong style="color:var(--text-primary);">.KO Lisboa International Short-film Championship</strong> é um festival de curtas-metragens organizado pelo The Benares Club. Uma plataforma dedicada a cineastas emergentes de todo o mundo, com Lisboa como palco e o cinema independente como linguagem comum.<br><br>
+        Acreditamos que os melhores filmes ainda estão por ser feitos. O .KO existe para dar espaço, visibilidade e reconhecimento a quem ousa contar histórias de forma original.
+      </p>
     </div>
 
-    <hr class="section-divider" />
-
-    <!-- Como participar -->
-    <div class="steps-section">
-      <div class="s-head">
-        <span class="label">02 · Participação</span>
-        <h2>Como Participar</h2>
+    <!-- KEY DATES -->
+    <div class="ko-section" id="datas">
+      <span class="section-eyebrow">02 · Calendário</span>
+      <h2 class="section-title">Datas importantes</h2>
+      <div class="dates-grid">
+        <div class="date-row">
+          <span class="date-label">Jan 2027</span>
+          <p class="date-desc">Abertura das submissões</p>
+        </div>
+        <div class="date-row">
+          <span class="date-label">Mar 2027</span>
+          <p class="date-desc">Prazo final de submissão</p>
+        </div>
+        <div class="date-row">
+          <span class="date-label">Abr 2027</span>
+          <p class="date-desc">Anúncio dos filmes seleccionados</p>
+        </div>
+        <div class="date-row">
+          <span class="date-label">Mai 2027</span>
+          <p class="date-desc">Sessões de exibição — Lisboa</p>
+        </div>
+        <div class="date-row">
+          <span class="date-label">Mai 2027</span>
+          <p class="date-desc">Cerimónia de encerramento e entrega de prémios</p>
+        </div>
       </div>
+    </div>
 
+    <!-- CATEGORIES -->
+    <div class="ko-section" id="categorias">
+      <span class="section-eyebrow">03 · Categorias</span>
+      <h2 class="section-title">Secções a concurso</h2>
+      <div class="categories-grid">
+        <div class="category-card">
+          <span class="cat-number">01</span>
+          <span class="cat-name">Ficção</span>
+          <p class="cat-desc">Narrativas ficcionadas de qualquer género — drama, comédia, thriller, ficção científica.</p>
+        </div>
+        <div class="category-card">
+          <span class="cat-number">02</span>
+          <span class="cat-name">Documentário</span>
+          <p class="cat-desc">Obras que documentam a realidade de forma criativa e com ponto de vista autoral.</p>
+        </div>
+        <div class="category-card">
+          <span class="cat-number">03</span>
+          <span class="cat-name">Animação</span>
+          <p class="cat-desc">Qualquer técnica de animação — 2D, 3D, stop-motion, motion graphics.</p>
+        </div>
+        <div class="category-card">
+          <span class="cat-number">04</span>
+          <span class="cat-name">Experimental</span>
+          <p class="cat-desc">Cinema que desafia convenções formais e explora novas possibilidades da linguagem cinematográfica.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOW TO SUBMIT -->
+    <div class="ko-section" id="submeter">
+      <span class="section-eyebrow">04 · Submissão</span>
+      <h2 class="section-title">Como submeter</h2>
       <div class="steps-list">
-        <div class="step-item">
-          <div class="step-number">1</div>
-          <div class="step-body">
-            <p class="step-title">Segue-nos e apresenta-te</p>
-            <p class="step-desc">Encontra-nos no Instagram e envia uma mensagem. Conta-nos o que te move na fotografia e como descobriste o clube.</p>
+        <div class="step-row">
+          <span class="step-n">1</span>
+          <div>
+            <p class="step-title">Verifica os requisitos</p>
+            <p class="step-desc">O filme deve ter entre 1 e 30 minutos. Produções de qualquer país são aceites. O ano de produção deve ser 2024 ou posterior.</p>
           </div>
         </div>
-
-        <div class="step-item">
-          <div class="step-number">2</div>
-          <div class="step-body">
-            <p class="step-title">Vem a uma saída</p>
-            <p class="step-desc">A melhor forma de conhecer a comunidade é aparecer numa saída fotográfica. Não precisas de equipamento profissional — só de vontade de estar presente.</p>
+        <div class="step-row">
+          <span class="step-n">2</span>
+          <div>
+            <p class="step-title">Prepara os materiais</p>
+            <p class="step-desc">Ficheiro de vídeo em alta resolução (mínimo 1080p), sinopse em português ou inglês (máx. 200 palavras), ficha técnica e poster do filme.</p>
           </div>
         </div>
-
-        <div class="step-item">
-          <div class="step-number">3</div>
-          <div class="step-body">
-            <p class="step-title">Partilha o teu olhar</p>
-            <p class="step-desc">Depois de participares, podes submeter o teu trabalho para publicação no site e nas nossas redes. A curadoria é feita em conjunto.</p>
+        <div class="step-row">
+          <span class="step-n">3</span>
+          <div>
+            <p class="step-title">Preenche o formulário</p>
+            <p class="step-desc">Envia todos os materiais através do formulário oficial de submissão. As inscrições serão abertas em Janeiro de 2027.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <span class="step-n">4</span>
+          <div>
+            <p class="step-title">Aguarda selecção</p>
+            <p class="step-desc">O júri avaliará todos os filmes submetidos. Os seleccionados serão notificados por email até Abril de 2027.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- CTA -->
-    <div class="cta-section">
-      <p>Pronto para fazer parte da comunidade?</p>
-      <a class="btn-primary" href="/contactos/">Entrar em contacto</a>
+    <!-- RULES -->
+    <div class="ko-section" id="regulamento">
+      <span class="section-eyebrow">05 · Regulamento</span>
+      <h2 class="section-title">Regras de participação</h2>
+      <ul class="rules-list">
+        <li>A duração máxima de cada filme é de 30 minutos, incluindo créditos.</li>
+        <li>O festival é aberto a realizadores de qualquer nacionalidade e país de origem.</li>
+        <li>Filmes previamente exibidos em outros festivais são aceites.</li>
+        <li>Cada realizador pode submeter um máximo de três obras a concurso.</li>
+        <li>Os filmes podem ser em qualquer língua — legendas em português ou inglês são obrigatórias.</li>
+        <li>A inscrição implica a cedência de direitos de exibição durante o festival.</li>
+        <li>A decisão do júri é final e não está sujeita a recurso.</li>
+      </ul>
     </div>
 
-  </div><!-- /.content-wrap -->
+    <!-- PRIZES -->
+    <div class="ko-section" id="premios">
+      <span class="section-eyebrow">06 · Prémios</span>
+      <h2 class="section-title">Prémios</h2>
+      <div class="prizes-grid">
+        <div class="prize-card">
+          <span class="prize-category">Grande Prémio</span>
+          <span class="prize-name">Melhor Filme .KO</span>
+          <p class="prize-desc">Prémio máximo do festival, atribuído ao melhor filme a concurso independentemente da categoria.</p>
+        </div>
+        <div class="prize-card">
+          <span class="prize-category">Ficção</span>
+          <span class="prize-name">Melhor Curta de Ficção</span>
+          <p class="prize-desc">Melhor obra ficcional seleccionada a concurso.</p>
+        </div>
+        <div class="prize-card">
+          <span class="prize-category">Documentário</span>
+          <span class="prize-name">Melhor Documentário</span>
+          <p class="prize-desc">Melhor documentário seleccionado a concurso.</p>
+        </div>
+        <div class="prize-card">
+          <span class="prize-category">Animação</span>
+          <span class="prize-name">Melhor Animação</span>
+          <p class="prize-desc">Melhor obra de animação seleccionada a concurso.</p>
+        </div>
+        <div class="prize-card">
+          <span class="prize-category">Experimental</span>
+          <span class="prize-name">Melhor Filme Experimental</span>
+          <p class="prize-desc">Melhor obra experimental seleccionada a concurso.</p>
+        </div>
+        <div class="prize-card">
+          <span class="prize-category">Júri Jovem</span>
+          <span class="prize-name">Prémio do Público</span>
+          <p class="prize-desc">Escolhido por votação do público presente nas sessões de exibição.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FINAL CTA -->
+    <div class="ko-cta">
+      <h2 class="ko-cta-title">.KO</h2>
+      <p class="ko-cta-sub">As submissões abrem em Janeiro de 2027. Segue-nos para não perder nenhuma novidade.</p>
+      <div class="hero-ctas">
+        <a class="btn-ko-primary" href="https://www.instagram.com/thebenaresclub" target="_blank" rel="noopener">Seguir no Instagram</a>
+        <a class="btn-ko-outline" href="mailto:charlie@thebenaresclub.com">Contactar organização</a>
+      </div>
+    </div>
+
   </main>
 
   <div id="footer-container"></div>
