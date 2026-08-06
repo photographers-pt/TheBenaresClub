@@ -6,8 +6,6 @@
   <title>Mercado — The Benares Club</title>
   <link rel="stylesheet" href="/styles.css" />
   <style>
-    main { position: relative; }
-
     /* ── Ghost product grid (behind everything) ── */
     .ghost-grid {
       display: grid;
@@ -53,6 +51,10 @@
     .ghost-line.price  { height: 16px; width: 30%; margin-top: 4px; }
 
     /* ── Coming soon overlay ── */
+    .mercado-wrap {
+      position: relative;
+    }
+
     .mercado-overlay {
       position: absolute;
       inset: 0;
@@ -62,22 +64,22 @@
       justify-content: center;
       text-align: center;
       padding: 2rem;
-      background: radial-gradient(ellipse 60% 50% at 50% 50%,
-        rgba(10, 9, 8, 0.82) 30%,
-        rgba(10, 9, 8, 0.45) 70%,
+      background: radial-gradient(ellipse 70% 60% at 50% 50%,
+        rgba(10, 9, 8, 0.88) 25%,
+        rgba(10, 9, 8, 0.55) 65%,
         transparent 100%);
     }
 
     .coming-label {
       font-family: var(--font-family);
-      font-size: 0.62rem;
-      font-weight: 600;
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 300;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: var(--text-primary);
       border: 1px solid var(--border-strong);
       border-radius: 4px;
-      padding: 0.7rem 1.75rem;
+      padding: 1rem 2.5rem;
       display: inline-block;
     }
 
@@ -123,6 +125,7 @@
       </div>
     </div>
 
+    <div class="mercado-wrap">
     <!-- Ghost cards -->
     <div class="ghost-grid" aria-hidden="true">
       <!-- 8 placeholder cards -->
@@ -144,6 +147,7 @@
         Segue-nos no <a href="https://www.instagram.com/thebenaresclub" target="_blank" rel="noopener">Instagram</a> para saber quando abrimos.
       </p>
     </div>
+    </div><!-- /.mercado-wrap -->
   </main>
 
   <div id="footer-container"></div>
