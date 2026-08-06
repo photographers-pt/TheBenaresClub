@@ -6,380 +6,179 @@
   <title>Eventos — The Benares Club</title>
   <link rel="stylesheet" href="/styles.css" />
   <style>
-    /* ── Page layout ── */
-    .eventos-page {
-      max-width: 1100px;
+    main { padding: 0 0 8rem; }
+
+    .container {
+      max-width: 860px;
       margin: 0 auto;
-      padding: 0 2rem 6rem;
+      padding: 0 2rem;
     }
 
     /* ── Section header ── */
-    .s-head {
-      padding: 6rem 0 3rem;
+    .section-header {
+      padding: 4rem 0 2.5rem;
     }
 
-    .s-head__label {
+    .section-eyebrow {
       display: block;
-      font-family: var(--font-family);
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.9rem;
-    }
-
-    .s-head__title {
-      font-family: var(--font-family);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-style: normal;
-      font-size: clamp(3.25rem, 7.2vw, 5.25rem);
-      font-weight: 300;
-      color: var(--text-primary);
-      line-height: 1.1;
-      margin: 0;
-    }
-
-    .s-head__sub {
-      margin-top: 1rem;
-      font-family: var(--font-family);
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      max-width: 520px;
-      line-height: 1.6;
-    }
-
-    /* ── Glass surface ── */
-    .glass {
-      background: rgba(255, 248, 238, 0.04);
-      backdrop-filter: blur(20px) saturate(160%);
-      -webkit-backdrop-filter: blur(20px) saturate(160%);
-      border: 1px solid rgba(240, 232, 216, 0.08);
-      border-radius: var(--radius-lg);
-    }
-
-    /* ── Next event card ── */
-    .next-event {
-      padding: 2.5rem 2.8rem;
-      margin-bottom: 5rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .next-event__meta {
-      flex: 1 1 260px;
-    }
-
-    .next-event__tag {
-      display: inline-block;
       font-family: var(--font-family);
       font-size: 0.65rem;
       font-weight: 600;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--text-muted);
-      border: 1px solid rgba(240, 232, 216, 0.18);
-      border-radius: var(--radius-sm);
-      padding: 0.25rem 0.65rem;
-      margin-bottom: 1.2rem;
+      margin-bottom: 0.6rem;
     }
 
-    .next-event__name {
+    .section-title {
       font-family: var(--font-family);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-style: normal;
-      font-size: clamp(2.0rem, 4.2vw, 2.75rem);
-      font-weight: 400;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
       color: var(--text-primary);
-      line-height: 1.15;
-      margin: 0 0 0.5rem;
+      margin: 0;
     }
 
-    .next-event__where {
-      font-family: var(--font-family);
-      font-size: 0.88rem;
-      color: var(--text-secondary);
+    /* ── Event list ── */
+    .event-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      border-top: 1px solid var(--border);
     }
 
-    .next-event__date-block {
-      flex: 0 0 auto;
+    /* ── Event row ── */
+    .event-row {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .event-row:hover { background: rgba(255,248,238,0.02); }
+
+    /* Date block */
+    .event-date {
       text-align: center;
-      padding: 1.2rem 1.8rem;
-      border: 1px solid rgba(240, 232, 216, 0.12);
-      border-radius: var(--radius-md);
+      flex-shrink: 0;
     }
 
-    .next-event__day {
+    .event-date-day {
       display: block;
       font-family: var(--font-family);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-      font-size: 2.8rem;
+      font-size: 2.2rem;
       font-weight: 300;
       color: var(--text-primary);
       line-height: 1;
     }
 
-    .next-event__month {
+    .event-date-month {
       display: block;
       font-family: var(--font-family);
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--text-muted);
       margin-top: 0.3rem;
     }
 
-    .next-event__actions {
-      flex: 0 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
+    /* Info block */
+    .event-info { min-width: 0; }
 
-    .btn-reserve {
-      display: inline-block;
+    .event-name {
       font-family: var(--font-family);
-      font-size: 0.82rem;
+      font-size: 1.05rem;
       font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
       color: var(--text-primary);
-      border: 1px solid rgba(240, 232, 216, 0.5);
-      border-radius: var(--radius-sm);
-      padding: 0.75rem 1.6rem;
-      text-decoration: none;
-      transition: background 0.2s ease, border-color 0.2s ease;
+      margin: 0 0 0.4rem;
+      letter-spacing: 0.02em;
     }
 
-    .btn-reserve:hover {
-      background: rgba(240, 232, 216, 0.08);
-      border-color: rgba(240, 232, 216, 0.7);
+    .event-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 1.25rem;
+      align-items: center;
     }
 
-    .btn-secondary {
-      display: inline-block;
+    .event-time {
       font-family: var(--font-family);
-      font-size: 0.82rem;
-      font-weight: 400;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .event-location {
+      font-family: var(--font-family);
+      font-size: 0.8rem;
       color: var(--text-muted);
       text-decoration: none;
-      text-align: center;
-      transition: color 0.2s ease;
-    }
-
-    .btn-secondary:hover {
-      color: var(--text-secondary);
-    }
-
-    /* ── Section divider ── */
-    .s-divider {
-      border: none;
-      border-top: 1px solid rgba(240, 232, 216, 0.08);
-      margin: 0 0 4rem;
-    }
-
-    /* ── Event type section ── */
-    .event-types-head {
-      margin-bottom: 2.5rem;
-    }
-
-    .event-types-head__label {
-      display: block;
-      font-family: var(--font-family);
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.7rem;
-    }
-
-    .event-types-head__title {
-      font-family: var(--font-family);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-style: normal;
-      font-size: clamp(1.88rem, 3.6vw, 2.5rem);
-      font-weight: 300;
-      color: var(--text-primary);
-      margin: 0;
-    }
-
-    /* ── Cards grid ── */
-    .event-type-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .event-type-card {
-      padding: 2rem 2.2rem 2.2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-      transition: border-color 0.2s ease;
-    }
-
-    .event-type-card:hover {
-      border-color: rgba(240, 232, 216, 0.18);
-    }
-
-    .event-type-card__icon {
-      font-size: 1.4rem;
-      line-height: 1;
-      margin-bottom: 0.3rem;
-    }
-
-    .event-type-card__title {
-      font-family: var(--font-family);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-style: normal;
-      font-size: 1.35rem;
-      font-weight: 400;
-      color: var(--text-primary);
-      margin: 0;
-    }
-
-    .event-type-card__desc {
-      font-family: var(--font-family);
-      font-size: 0.88rem;
-      line-height: 1.65;
-      color: var(--text-secondary);
-      margin: 0;
-      flex: 1;
-    }
-
-    .event-type-card__link {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      font-family: var(--font-family);
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      text-decoration: none;
-      margin-top: 0.4rem;
-      transition: color 0.2s ease;
+      gap: 0.35rem;
+      transition: color 0.2s;
+      border-bottom: 1px solid transparent;
     }
-
-    .event-type-card__link:hover {
+    .event-location:hover {
       color: var(--text-secondary);
+      border-bottom-color: rgba(240,232,216,0.3);
     }
 
-    .event-type-card__link::after {
-      content: "\2192";
-      font-style: normal;
-    }
-
-    /* ── Archive section ── */
-    .archive-section {
-      margin-top: 5rem;
-    }
-
-    .archive-head {
-      margin-bottom: 2rem;
-    }
-
-    .archive-head__label {
-      display: block;
+    /* Ticket button */
+    .btn-ticket {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
       font-family: var(--font-family);
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.7rem;
-    }
-
-    .archive-head__title {
-      font-family: var(--font-family);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-style: normal;
-      font-size: clamp(1.75rem, 3.6vw, 2.38rem);
-      font-weight: 300;
-      color: var(--text-primary);
-      margin: 0;
-    }
-
-    .archive-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .archive-item {
-      display: flex;
-      align-items: baseline;
-      gap: 1.5rem;
-      padding: 1.2rem 1.6rem;
-    }
-
-    .archive-item__date {
-      font-family: var(--font-family);
-      font-size: 0.78rem;
-      color: var(--text-muted);
+      color: #0a0908;
+      background: rgba(240,232,216,0.92);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 1.25rem;
+      text-decoration: none;
       white-space: nowrap;
-      min-width: 90px;
+      transition: background 0.2s, transform 0.15s;
     }
+    .btn-ticket:hover { background: #fff; transform: translateY(-1px); }
 
-    .archive-item__name {
-      font-family: var(--font-family);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-style: normal;
-      font-size: 1.05rem;
-      color: var(--text-primary);
-      flex: 1;
-    }
-
-    .archive-item__type {
-      font-family: var(--font-family);
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+    /* ── Empty state ── */
+    .empty-state {
+      padding: 4rem 0;
+      text-align: center;
       color: var(--text-muted);
-      white-space: nowrap;
+      font-family: var(--font-family);
+      font-size: 0.9rem;
+      line-height: 1.7;
     }
 
     /* ── Responsive ── */
-    @media (max-width: 640px) {
-      .eventos-page {
-        padding: 0 1.25rem 4rem;
+    @media (max-width: 600px) {
+      .event-row {
+        grid-template-columns: 60px 1fr;
+        grid-template-rows: auto auto;
+        gap: 1rem;
+        padding: 1.5rem 0;
       }
+      .btn-ticket {
+        grid-column: 2;
+        width: fit-content;
+      }
+      .event-date-day { font-size: 1.75rem; }
+    }
 
-      .next-event {
-        padding: 1.8rem;
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .next-event__date-block {
-        align-self: flex-start;
-      }
-
-      .event-type-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .archive-item {
-        flex-wrap: wrap;
-        gap: 0.4rem;
-      }
-
-      .archive-item__type {
-        width: 100%;
-      }
+    @media (max-width: 420px) {
+      .container { padding: 0 1.25rem; }
     }
   </style>
 </head>
@@ -388,120 +187,101 @@
   <div id="header-container"></div>
 
   <main>
-  <div class="page-banner">
-    <img src="/media/banners/eventos.png" alt="" class="page-banner-img">
-    <div class="page-banner-title">
-      <span class="page-banner-eyebrow">01 · Próximos</span>
-      <h1 class="page-banner-heading">Eventos</h1>
+    <div class="page-banner">
+      <img src="/media/banners/eventos.png" alt="" class="page-banner-img">
+      <div class="page-banner-title">
+        <span class="page-banner-eyebrow">The Benares Club</span>
+        <h1 class="page-banner-heading">Eventos</h1>
+      </div>
     </div>
-  </div>
-    <div class="eventos-page">
 
-      <p class="s-head__sub">Torneios, noites temáticas e o circuito nacional — tudo o que acontece no clube.</p>
-
-      <!-- Next event card -->
-      <div class="next-event glass">
-        <div class="next-event__meta">
-          <span class="next-event__tag">Próximo evento</span>
-          <h2 class="next-event__name">Battle Royale — Edição Outono</h2>
-          <p class="next-event__where">The Benares Club · Lisboa</p>
-        </div>
-
-        <div class="next-event__date-block">
-          <span class="next-event__day">18</span>
-          <span class="next-event__month">Out 2026</span>
-        </div>
-
-        <div class="next-event__actions">
-          <a href="mailto:reservas@thebenaresclub.com" class="btn-reserve">Reservar lugar</a>
-          <a href="#tipos" class="btn-secondary">Ver todos os eventos</a>
-        </div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Agenda</span>
+        <h2 class="section-title">Próximos eventos</h2>
       </div>
 
-      <!-- Event types -->
-      <hr class="s-divider" />
-
-      <div id="tipos">
-        <div class="event-types-head">
-          <span class="event-types-head__label">02 · Formatos</span>
-          <h2 class="event-types-head__title">Tipos de evento</h2>
-        </div>
-
-        <div class="event-type-grid">
-
-          <div class="event-type-card glass">
-            <div class="event-type-card__icon">♟</div>
-            <h3 class="event-type-card__title">Battle Royale</h3>
-            <p class="event-type-card__desc">
-              Torneio aberto a todos os sócios. Formato eliminatório com mesas de quatro jogadores.
-              O último jogador em cada mesa avança à ronda seguinte.
-            </p>
-            <a href="/eventos/" class="event-type-card__link">Saber mais</a>
-          </div>
-
-          <div class="event-type-card glass">
-            <div class="event-type-card__icon">🌙</div>
-            <h3 class="event-type-card__title">Night Lounge</h3>
-            <p class="event-type-card__desc">
-              Sessão de jogo informal em ambiente de clube. Mesas abertas, cocktails e música
-              ambiente. Ideal para receber convidados e jogar sem pressão competitiva.
-            </p>
-            <a href="/eventos/" class="event-type-card__link">Saber mais</a>
-          </div>
-
-          <div class="event-type-card glass">
-            <div class="event-type-card__icon">🏆</div>
-            <h3 class="event-type-card__title">Circuito Nacional</h3>
-            <p class="event-type-card__desc">
-              Etapas ao longo do ano em vários clubes parceiros. Os pontos acumulam para a
-              classificação nacional, com final em dezembro em Lisboa.
-            </p>
-            <a href="/eventos/" class="event-type-card__link">Saber mais</a>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Archive -->
-      <div class="archive-section">
-        <div class="archive-head">
-          <span class="archive-head__label">03 · Histórico</span>
-          <h2 class="archive-head__title">Eventos anteriores</h2>
-        </div>
-
-        <div class="archive-list">
-
-          <div class="archive-item glass">
-            <span class="archive-item__date">12 Jul 2026</span>
-            <span class="archive-item__name">Battle Royale — Edição Verão</span>
-            <span class="archive-item__type">Battle Royale</span>
-          </div>
-
-          <div class="archive-item glass">
-            <span class="archive-item__date">24 Mai 2026</span>
-            <span class="archive-item__name">Night Lounge · Primavera</span>
-            <span class="archive-item__type">Night Lounge</span>
-          </div>
-
-          <div class="archive-item glass">
-            <span class="archive-item__date">08 Mar 2026</span>
-            <span class="archive-item__name">Circuito Nacional — Etapa Lisboa</span>
-            <span class="archive-item__type">Circuito Nacional</span>
-          </div>
-
-          <div class="archive-item glass">
-            <span class="archive-item__date">14 Dez 2025</span>
-            <span class="archive-item__name">Final Nacional 2025</span>
-            <span class="archive-item__type">Circuito Nacional</span>
-          </div>
-
-        </div>
-      </div>
-
+      <div class="event-list" id="event-list"></div>
     </div>
   </main>
 
   <div id="footer-container"></div>
+
+  <script>
+    /*
+     * EVENTOS
+     *
+     * Para adicionar um evento:
+     *   date        → "15 Mar 2026"
+     *   day         → "15"
+     *   month       → "Mar 2026"
+     *   time        → "19:00"
+     *   name        → nome do evento
+     *   location    → nome do local
+     *   locationUrl → link Google Maps do local
+     *   eventbriteUrl → link Eventbrite para compra de bilhetes
+     */
+    const events = [
+      {
+        day: "18",
+        month: "Out 2026",
+        time: "19:00",
+        name: "Próximo Evento",
+        location: "Lisboa",
+        locationUrl: "#",
+        eventbriteUrl: "#"
+      }
+    ];
+
+    const list = document.getElementById('event-list');
+
+    if (events.length === 0) {
+      list.innerHTML = `<p class="empty-state">Não há eventos programados de momento.<br>Segue-nos no Instagram para não perderes nenhum anúncio.</p>`;
+    } else {
+      events.forEach(ev => {
+        const row = document.createElement('div');
+        row.className = 'event-row';
+
+        const locationLink = ev.locationUrl && ev.locationUrl !== '#'
+          ? `<a class="event-location" href="${ev.locationUrl}" target="_blank" rel="noopener noreferrer">
+               <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+               ${ev.location}
+             </a>`
+          : `<span class="event-time">
+               <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+               ${ev.location}
+             </span>`;
+
+        const ticketBtn = ev.eventbriteUrl && ev.eventbriteUrl !== '#'
+          ? `<a class="btn-ticket" href="${ev.eventbriteUrl}" target="_blank" rel="noopener noreferrer">
+               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+               Reservar bilhetes
+             </a>`
+          : `<span class="btn-ticket" style="opacity:0.35;cursor:default;">Em breve</span>`;
+
+        row.innerHTML = `
+          <div class="event-date">
+            <span class="event-date-day">${ev.day}</span>
+            <span class="event-date-month">${ev.month}</span>
+          </div>
+          <div class="event-info">
+            <h3 class="event-name">${ev.name}</h3>
+            <div class="event-details">
+              <span class="event-time">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                ${ev.time}
+              </span>
+              ${locationLink}
+            </div>
+          </div>
+          ${ticketBtn}
+        `;
+
+        list.appendChild(row);
+      });
+    }
+  </script>
+
   <script src="/shared.js"></script>
 </body>
 </html>
