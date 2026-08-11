@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fototeca — The Benares Club</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    main {
+      /* no max-width — banner must reach full viewport width */
+    }
+
+    /* ── Gallery grid ── */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 260px;
+      gap: 2px;
+    }
+
+    .photo-item {
+      position: relative;
+      overflow: hidden;
+      background: rgba(255, 248, 238, 0.03);
+      cursor: pointer;
+    }
+
+    .photo-item.tall  { grid-row: span 2; }
+    .photo-item.wide  { grid-column: span 2; }
+    .photo-item.large { grid-column: span 2; grid-row: span 2; }
+
+    .photo-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease, opacity 0.3s ease;
+    }
+
+    .photo-item:hover img {
+      transform: scale(1.04);
+    }
+
+    /* Placeholder */
+    .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(240, 232, 216, 0.08);
+    }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      background: rgba(8, 7, 6, 0.96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .lightbox.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .lightbox-img-wrap {
+      max-width: 92vw;
+      max-height: 92vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: scale(0.97);
+      transition: transform 0.3s ease;
+    }
+
+    .lightbox.open .lightbox-img-wrap {
+      transform: scale(1);
+    }
+
+    .lightbox-img-wrap img {
+      max-width: 92vw;
+      max-height: 92vh;
+      object-fit: contain;
+      display: block;
+    }
+
+    .lightbox-placeholder {
+      width: 60vw;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(240, 232, 216, 0.1);
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.75rem;
+      background: transparent;
+      border: none;
+      color: rgba(240, 232, 216, 0.35);
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+      z-index: 1;
+    }
+
+    .lightbox-close:hover { color: var(--text-primary); }
+
+    .lightbox-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: rgba(240, 232, 216, 0.25);
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 1rem;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+
+    .lightbox-nav:hover { color: var(--text-primary); }
+    .lightbox-prev { left: 0.5rem; }
+    .lightbox-next { right: 0.5rem; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 220px;
+      }
+      .photo-item.wide,
+      .photo-item.large { grid-column: span 1; }
+      .photo-item.large { grid-row: span 2; }
+    }
+
+    @media (max-width: 540px) {
+      .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 160px;
+      }
+      .lightbox-nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="grain"></div>
+  <div id="header-container"></div>
+
+  <main>
+    <div class="page-banner">
+      <img src="/media/banners/fototeca.png" alt="" class="page-banner-img">
+      <div class="page-banner-title">
+        <span class="page-banner-eyebrow">01 · Fototeca</span>
+        <h1 class="page-banner-heading">Fototeca</h1>
+      </div>
+    </div>
+
+    <div class="photo-grid" id="photoGrid">
+
+      <div class="photo-item large" data-caption="Saída · Mouraria" data-meta="Lisboa · Jan 2026">
+        <!-- foto: <img src="/media/galeria/mouraria-01.jpg" alt=""> -->
+        <div class="photo-placeholder">foto</div>
+      </div>
+
+      <div class="photo-item" data-caption="Retrato · Ana M." data-meta="Estúdio · Dez 2025">
+        <!-- foto: <img src="/media/galeria/retrato-ana.jpg" alt=""> -->
+        <div class="photo-placeholder">foto</div>
+      </div>
+
+      <div class="photo-item tall" data-caption="Praça do Comércio" data-meta="Lisboa · Nov 2025">
+        <!-- foto: <img src="/media/galeria/praca-comercio.jpg" alt=""> -->
+        <div class="photo-placeholder">foto</div>
+      </div>
+
+      <div class="photo-item wide" data-caption="Serra da Estrela" data-meta="Covilhã · Out 2025">
+        <!-- foto: <img src="/media/galeria/serra-estrela.jpg" alt=""> -->
+        <div class="photo-placeholder">foto</div>
+      </div>
+
+      <div class="photo-item" data-caption="Saída · Intendente" data-meta="Lisboa · Set 2025">
+        <!-- foto: <img src="/media/galeria/intendente-01.jpg" alt=""> -->
+        <div class="photo-placeholder">foto</div>
+      </div>
+
+      <div class="photo-item tall" data-caption="Retrato · R. Fonseca" data-meta="Lisboa · Set 2025">
+        <!-- foto: <img src="/media/galeria/retrato-rf.jpg" alt=""> -->
+        <div class="photo-placeholder">foto</div>
+      </div>
+
+      <div class="photo-item wide" data-caption="Cais do Sodré" data-meta="Lisboa · Ago 2025">
+        <!-- foto: <img src="/media/galeria/cais-sodre.jpg" alt=""> -->
+        <div class="photo-placeholder">foto</div>
+      </div>
+
+      <div class="photo-item" data-caption="Alentejo · Planície" data-meta="Évora · Jul 2025">
+        <!-- foto: <img src="/media/galeria/alentejo.jpg" alt=""> -->
+        <div class="photo-placeholder">foto</div>
+      </div>
+
+      <div class="photo-item" data-caption="Saída · Alfama" data-meta="Lisboa · Jun 2025">
+        <!-- foto: <img src="/media/galeria/alfama-01.jpg" alt=""> -->
+        <div class="photo-placeholder">foto</div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lbClose" aria-label="Fechar">&#x2715;</button>
+    <button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Anterior">&#8592;</button>
+    <div class="lightbox-img-wrap" id="lbImgWrap">
+      <div class="lightbox-placeholder" id="lbPlaceholder">foto</div>
+    </div>
+    <button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Seguinte">&#8594;</button>
+  </div>
+
+  <div id="footer-container"></div>
+
+  <script>
+    const items = Array.from(document.querySelectorAll('.photo-item'));
+    const lb      = document.getElementById('lightbox');
+    const lbWrap  = document.getElementById('lbImgWrap');
+    const lbPH    = document.getElementById('lbPlaceholder');
+    const lbClose = document.getElementById('lbClose');
+    const lbPrev  = document.getElementById('lbPrev');
+    const lbNext  = document.getElementById('lbNext');
+    let cur = 0;
+
+    function show(i) {
+      cur = i;
+      const item = items[i];
+      const prev = lbWrap.querySelector('img');
+      if (prev) prev.remove();
+      lbPH.style.display = 'flex';
+
+      const src = item.querySelector('img');
+      if (src) {
+        const img = new Image();
+        img.src = src.src;
+        img.onload = () => { lbPH.style.display = 'none'; lbWrap.appendChild(img); };
+      }
+
+      lbPrev.style.opacity = i === 0 ? '0.15' : '0.25';
+      lbNext.style.opacity = i === items.length - 1 ? '0.15' : '0.25';
+    }
+
+    function open(i)  { show(i); lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function close()  { lb.classList.remove('open'); document.body.style.overflow = ''; }
+
+    items.forEach((item, i) => item.addEventListener('click', () => open(i)));
+    lbClose.addEventListener('click', close);
+    lb.addEventListener('click', e => { if (e.target === lb) close(); });
+    lbPrev.addEventListener('click', e => { e.stopPropagation(); if (cur > 0) show(cur - 1); });
+    lbNext.addEventListener('click', e => { e.stopPropagation(); if (cur < items.length - 1) show(cur + 1); });
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft'  && cur > 0) show(cur - 1);
+      if (e.key === 'ArrowRight' && cur < items.length - 1) show(cur + 1);
+    });
+  </script>
+
+  <script src="/shared.js"></script>
+</body>
+</html>

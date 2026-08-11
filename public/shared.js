@@ -7,25 +7,6 @@ console.log("Complete shared.js loaded");
 function createHeader() {
   return `
     <style>
-      @keyframes pulseRed {
-        0%, 100% {
-          text-shadow: 0 0 10px rgba(255, 255, 255, 0.1),
-                       0 0 20px rgba(255, 255, 255, 0.1),
-                       0 0 30px rgba(255, 255, 255, 0.1);
-        }
-        50% {
-          text-shadow: 0 0 10px rgba(255, 255, 255, 1),
-                       0 0 20px rgba(255, 255, 255, 1),
-                       0 0 30px rgba(255, 255, 255, 1);
-        }
-      }
-      
-      nav a[href="/eventos/"] {
-        color: white !important;
-        animation: pulseRed 2s ease-in-out infinite;
-        font-weight: 600;
-      }
-      
       nav a.active {
         background-color: rgba(255, 255, 255, 0.15);
         padding: 8px 16px;
@@ -50,18 +31,12 @@ function createHeader() {
 
     <nav aria-label="Menu principal" id="main-nav" class="active">
       <ul>
-        <!--<li><a href="/"><img src="/media/logo_small.png" alt="Logo" style="height:25px;"></a></li>-->
         <li><a href="/eventos/">Eventos</a></li>
-        <li><a href="/biblioteca/">Biblioteca</a></li>
-        <li data-debug="true"><a href="/cinemateca-tv.html">TV</a></li>
-        <li data-debug="true"><a href="/pc.html">PC</a></li>
-        <li data-debug="true"><a href="/computer-films/">Cine-PC</a></li>
         <li><a href="/cinemateca/">Cinemateca</a></li>
+        <li><a href="/comunidad/">Comunidade</a></li>
         <li><a href="/mercado/">Mercado</a></li>
-        <li><a href="/comunidad/">Comunidad</a></li>
+        <li><a href="/fototeca/">Fototeca</a></li>
         <li><a href="/contactos/">Contactos</a></li>
-        <li data-debug="true"><a href="/movielog/">Movie Log</a></li>
-        <li data-debug="true"><a href="/sample.html">Sample</a></li>
       </ul>
     </nav>
   `;
@@ -118,32 +93,11 @@ function createFooter() {
 function initializeNavToggle() {
   const toggleBtn = document.getElementById('nav-toggle');
   const nav = document.getElementById('main-nav');
-  const isMercado = window.location.pathname.startsWith('/mercado');
 
   if (!toggleBtn || !nav) return;
 
-  if (!isMercado) {
-    // All other pages: always-open nav, no button needed
-    nav.classList.add('active');
-    return;
-  }
-
-  // Mercado: burger/X toggle, starts closed
-  toggleBtn.style.display = 'flex';
-  nav.classList.remove('active');
-
-  function updateIcon() {
-    const icon = toggleBtn.querySelector('.nav-icon');
-    icon.className = nav.classList.contains('active') ? 'fas fa-xmark nav-icon' : 'fas fa-bars nav-icon';
-  }
-
-  updateIcon();
-
-  toggleBtn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    nav.classList.toggle('active');
-    updateIcon();
-  });
+  // All pages: always-open nav, no toggle needed
+  nav.classList.add('active');
 }
 
 // =================================
@@ -280,30 +234,35 @@ function applyRandomBoxShadows() {
 // =================================
 
 document.addEventListener('DOMContentLoaded', function() {
-  console.log("DOM loaded, initializing header and footer");
-  
+
+  // Inject atmosphere orbs + vignette (fixed, behind everything)
+  if (!document.querySelector('.atmosphere')) {
+    const atm = document.createElement('div');
+    atm.className = 'atmosphere';
+    atm.innerHTML = '<div class="orb a"></div><div class="orb b"></div><div class="orb c"></div><div class="orb d"></div>';
+    document.body.appendChild(atm);
+    const vig = document.createElement('div');
+    vig.className = 'vignette';
+    document.body.appendChild(vig);
+  }
+
   // Insert header
   const headerContainer = document.getElementById('header-container');
   if (headerContainer) {
-    console.log("Header container found, inserting header");
     headerContainer.innerHTML = createHeader();
-    
-    // Initialize nav toggle after header is created
     initializeNavToggle();
-    
-    // Hide debug items initially
-    const debugItems = document.querySelectorAll('[data-debug="true"]');
-    debugItems.forEach(item => {
-      item.style.display = 'none';
+  }
+
+  // Highlight current page — never highlight anything on home "/"
+  const currentPath = window.location.pathname;
+  if (currentPath !== '/') {
+    document.querySelectorAll('nav a').forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && href !== '/' && currentPath.startsWith(href)) {
+        link.classList.add('active');
+      }
     });
-    }
-    
-    // Highlight current page
-    const currentPath = window.location.pathname;
-    const currentLink = document.querySelector(`nav a[href="${currentPath}"]`);
-    if (currentLink) {
-      currentLink.classList.add('active');
-    }
+  }
 
   // Insert footer
   const footerContainer = document.getElementById('footer-container');

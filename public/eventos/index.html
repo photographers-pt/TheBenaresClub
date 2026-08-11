@@ -2,323 +2,506 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Eventos | Club Benares</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eventos — The Benares Club</title>
   <link rel="stylesheet" href="/styles.css" />
-  <link rel="icon" href="/media/A00 Logo - Light.png" type="image/png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  
   <style>
-    main {
-      overflow-y: auto !important;
-      overflow-x: hidden !important;
+    /* ── Page layout ── */
+    .eventos-page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
     }
 
-    /* Popup styles for Ver Detalhes */
-    .popup-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(8px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
+    /* ── Section header ── */
+    .s-head {
+      padding: 6rem 0 3rem;
     }
 
-    .popup-window {
-      position: relative;
-      background: rgba(20, 20, 20, 0.95);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      max-width: 600px;
-      width: 90%;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    .s-head__label {
+      display: block;
+      font-family: var(--font-family);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.9rem;
     }
 
-    .popup-header {
+    .s-head__title {
+      font-family: var(--font-family);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-style: normal;
+      font-size: clamp(3.25rem, 7.2vw, 5.25rem);
+      font-weight: 300;
+      color: var(--text-primary);
+      line-height: 1.1;
+      margin: 0;
+    }
+
+    .s-head__sub {
+      margin-top: 1rem;
+      font-family: var(--font-family);
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      max-width: 520px;
+      line-height: 1.6;
+    }
+
+    /* ── Glass surface ── */
+    .glass {
+      background: rgba(255, 248, 238, 0.04);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(240, 232, 216, 0.08);
+      border-radius: var(--radius-lg);
+    }
+
+    /* ── Next event card ── */
+    .next-event {
+      padding: 2.5rem 2.8rem;
+      margin-bottom: 5rem;
       display: flex;
-      justify-content: space-between;
+      flex-wrap: wrap;
       align-items: center;
-      padding: 1.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      gap: 2rem;
     }
 
-    .popup-title {
-      font-size: 1.2rem;
+    .next-event__meta {
+      flex: 1 1 260px;
+    }
+
+    .next-event__tag {
+      display: inline-block;
+      font-family: var(--font-family);
+      font-size: 0.65rem;
       font-weight: 600;
-      color: white;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border: 1px solid rgba(240, 232, 216, 0.18);
+      border-radius: var(--radius-sm);
+      padding: 0.25rem 0.65rem;
+      margin-bottom: 1.2rem;
     }
 
-    .popup-close {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: white;
-      font-size: 1.5rem;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
+    .next-event__name {
+      font-family: var(--font-family);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-style: normal;
+      font-size: clamp(2.0rem, 4.2vw, 2.75rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.15;
+      margin: 0 0 0.5rem;
+    }
+
+    .next-event__where {
+      font-family: var(--font-family);
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    .next-event__date-block {
+      flex: 0 0 auto;
+      text-align: center;
+      padding: 1.2rem 1.8rem;
+      border: 1px solid rgba(240, 232, 216, 0.12);
+      border-radius: var(--radius-md);
+    }
+
+    .next-event__day {
+      display: block;
+      font-family: var(--font-family);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--text-primary);
       line-height: 1;
-      padding: 0;
     }
 
-    .popup-close::before {
-      content: '×';
+    .next-event__month {
+      display: block;
+      font-family: var(--font-family);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
     }
 
-    .popup-close:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: scale(1.1);
+    .next-event__actions {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
     }
 
-    .popup-content {
-      padding: 1.5rem;
-      color: white;
+    .btn-reserve {
+      display: inline-block;
+      font-family: var(--font-family);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      border: 1px solid rgba(240, 232, 216, 0.5);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1.6rem;
+      text-decoration: none;
+      transition: background 0.2s ease, border-color 0.2s ease;
     }
 
-    @keyframes pulse {
-      0%, 40% { opacity: 1; transform: rotate(-3deg) translateY(50%) scale(1); }
-      60% { opacity: 0; transform: rotate(-3deg) translateY(50%) scale(1.05); }
-      100% { opacity: 1; transform: rotate(-3deg) translateY(50%) scale(1); }
+    .btn-reserve:hover {
+      background: rgba(240, 232, 216, 0.08);
+      border-color: rgba(240, 232, 216, 0.7);
     }
 
-    .evento-listado { position: relative; }
-    .evento-botao { position: relative; }
-    #countdown-1 { animation: pulse 2.2s infinite; animation-delay: 0s; z-index: 100; }
-    #countdown-2 { animation: pulse 2.5s infinite; animation-delay: 0.7s; z-index: 100; }
-
-    /* Glassy shimmer buttons */
-    .evento-botao button {
-      background: rgba(255, 255, 255, 0.1) !important;
-      border: 1px solid rgba(255, 255, 255, 0.3) !important;
-      color: #ff4444 !important;
-      font-weight: 600 !important;
-      padding: 0.5rem 1rem !important;
-      border-radius: 10px !important;
-      position: relative !important;
-      overflow: hidden !important;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+    .btn-secondary {
+      display: inline-block;
+      font-family: var(--font-family);
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      text-decoration: none;
+      text-align: center;
+      transition: color 0.2s ease;
     }
 
-    .evento-botao button::before {
-      content: '' !important;
-      position: absolute !important;
-      top: -50% !important;
-      left: -50% !important;
-      width: 200% !important;
-      height: 200% !important;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.3),
-        transparent
-      ) !important;
-      animation: shimmer 3s infinite !important;
+    .btn-secondary:hover {
+      color: var(--text-secondary);
     }
 
-    @keyframes shimmer {
-      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    /* ── Section divider ── */
+    .s-divider {
+      border: none;
+      border-top: 1px solid rgba(240, 232, 216, 0.08);
+      margin: 0 0 4rem;
     }
 
-    .evento-botao button:hover {
-      background: rgba(255, 255, 255, 0.15) !important;
-      border-color: rgba(255, 255, 255, 0.5) !important;
-      transform: scale(1.02) !important;
+    /* ── Event type section ── */
+    .event-types-head {
+      margin-bottom: 2.5rem;
     }
 
-.popup-content a,
-.evento-info a {
-  color: cyan;
-  text-decoration: none;
-}
+    .event-types-head__label {
+      display: block;
+      font-family: var(--font-family);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.7rem;
+    }
 
-.popup-content a:visited,
-.evento-info a:visited {
-  color: cyan;
-}
+    .event-types-head__title {
+      font-family: var(--font-family);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-style: normal;
+      font-size: clamp(1.88rem, 3.6vw, 2.5rem);
+      font-weight: 300;
+      color: var(--text-primary);
+      margin: 0;
+    }
 
-.popup-content a:hover,
-.evento-info a:hover {
-  color: red;
-}
+    /* ── Cards grid ── */
+    .event-type-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
 
+    .event-type-card {
+      padding: 2rem 2.2rem 2.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .event-type-card:hover {
+      border-color: rgba(240, 232, 216, 0.18);
+    }
+
+    .event-type-card__icon {
+      font-size: 1.4rem;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .event-type-card__title {
+      font-family: var(--font-family);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-style: normal;
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .event-type-card__desc {
+      font-family: var(--font-family);
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      margin: 0;
+      flex: 1;
+    }
+
+    .event-type-card__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-family);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-top: 0.4rem;
+      transition: color 0.2s ease;
+    }
+
+    .event-type-card__link:hover {
+      color: var(--text-secondary);
+    }
+
+    .event-type-card__link::after {
+      content: "\2192";
+      font-style: normal;
+    }
+
+    /* ── Archive section ── */
+    .archive-section {
+      margin-top: 5rem;
+    }
+
+    .archive-head {
+      margin-bottom: 2rem;
+    }
+
+    .archive-head__label {
+      display: block;
+      font-family: var(--font-family);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.7rem;
+    }
+
+    .archive-head__title {
+      font-family: var(--font-family);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-style: normal;
+      font-size: clamp(1.75rem, 3.6vw, 2.38rem);
+      font-weight: 300;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .archive-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .archive-item {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      padding: 1.2rem 1.6rem;
+    }
+
+    .archive-item__date {
+      font-family: var(--font-family);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      min-width: 90px;
+    }
+
+    .archive-item__name {
+      font-family: var(--font-family);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-style: normal;
+      font-size: 1.05rem;
+      color: var(--text-primary);
+      flex: 1;
+    }
+
+    .archive-item__type {
+      font-family: var(--font-family);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .eventos-page {
+        padding: 0 1.25rem 4rem;
+      }
+
+      .next-event {
+        padding: 1.8rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .next-event__date-block {
+        align-self: flex-start;
+      }
+
+      .event-type-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .archive-item {
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+
+      .archive-item__type {
+        width: 100%;
+      }
+    }
   </style>
 </head>
-<body class="bg-eventos">
-
-  <!-- Header container -->
+<body>
+  <div id="grain"></div>
   <div id="header-container"></div>
 
   <main>
-
-    <!-- Próximos Eventos -->
-    <section class="proximos-eventos">
-      <h2>Próximos eventos — Next events
-        <div class="evento-botao">
-          <button class="evento-botao" onclick="window.open('https://linktr.ee/thebenaresclub', '_blank')" style="cursor: pointer; color: #fff !important; margin-right: 10px;">Submete o teu curta! — Submit your short film!</button>
-        </div>
-      </h2>
-
-      <div class="evento-listado">
-        <div class="evento-info">
-          
-          <h3>MashUp #5 | Indie Mix</h3>
-          <p>Wednesday - 7 MAY 2026</p>
-          <p>20:00</p>
-          <p>📍 Cossoul, Lisboa <a href="https://maps.app.goo.gl/DFHBtixVSPdhJpGz6" target="_blank">[Google Maps]</a></p>
-
-        </div>
-        <div class="evento-botao" style="margin-top: 5px;">
-          <div id="countdown-2" style="position: absolute; top: -72px; right: 0; background: rgba(255,50,50,0.3); padding: 8px 12px; border-radius: 10px; transform: rotate(-3deg) translateY(50%); pointer-events: none; font-size: 0.8rem; font-weight: 600; color: #fff; text-align: center; line-height: 1.3;"></div>
-          <!--<button onclick="window.open('https://www.eventbrite.com/o/114185001841', '_blank')" style="cursor: pointer; color: #F05537 !important; margin-right: 10px;">Reserve on Eventbrite®</button>-->
-          <!--<button onclick="window.open('https://www.meetup.com/club-benares-cinema-portugal/events/', '_blank')" style="cursor: pointer; color: #FF4A79 !important;">Attend on Meetup®</button>-->
-          <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSeeOwWcPxJW7iS5vDqPfsa9lGE-RkikZ0Kjq6fYtu-EGaAqag/viewform', '_blank')" style="cursor: pointer; color: #FF4400 !important;">Secure your place!</button>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- Eventos Signature -->
-    <section class="eventos-signature">
-      <div class="evento-card">
-        <div class="card-bg" style="background-image: url('./battle-royale.jpg');"></div>
-        <div class="card-content">
-          <h2 style="font-family: 'BR', sans-serif; font-size: 2rem; letter-spacing: 4px; text-align: center;  margin-bottom: 1rem;">BATTLE ROYALE</h2>
-          <p>Mostra competitiva internacional de curtas e médias-metragens.</p>
-          <button class="ver-detalhes">Ver Detalhes</button>
-        </div>
-      </div>
-  
-      <div class="evento-card">
-        <div class="card-bg" style="background-image: url('./night-lounge.jpg');"></div>
-        <div class="card-content">
-          <h2 style="font-family: 'NL', sans-serif; font-size: 1.8rem; letter-spacing: 4px; text-align: center;  margin-bottom: 1rem;">Night Lounge</h2>
-          <p>Noites descontraídas de projeções e conversas com snacks e música.</p>
-          <button class="ver-detalhes">Ver Detalhes</button>
-        </div>
-      </div>
-  
-      <div class="evento-card">
-        <div class="card-bg" style="background-image: url('./circuito-nacional.jpg');"></div>
-        <div class="card-content">
-          <h2 style="font-family: 'CN', sans-serif; font-size: 1.8rem; text-align: center;  margin-bottom: 1rem;">Circuito Nacional</h2>
-          <p>Tour nacional com filmes da comunidade e convidados especiais.</p>
-          <button class="ver-detalhes">Ver Detalhes</button>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Popup ventana flotante -->
-  <div class="popup-overlay" id="popupOverlay">
-    <div class="popup-window" role="dialog" aria-modal="true" aria-labelledby="popupTitle">
-      <div class="popup-header">
-        <span class="popup-title" id="popupTitle">Detalhes do Evento</span>
-        <button class="popup-close" id="popupClose" aria-label="Fechar janela"></button>
-      </div>
-      <div class="popup-content" id="popupContent">
-        <!-- Conteúdo dinâmico -->
-      </div>
+  <div class="page-banner">
+    <img src="/media/banners/eventos.png" alt="" class="page-banner-img">
+    <div class="page-banner-title">
+      <span class="page-banner-eyebrow">01 · Próximos</span>
+      <h1 class="page-banner-heading">Eventos</h1>
     </div>
   </div>
+    <div class="eventos-page">
+
+      <p class="s-head__sub">Torneios, noites temáticas e o circuito nacional — tudo o que acontece no clube.</p>
+
+      <!-- Next event card -->
+      <div class="next-event glass">
+        <div class="next-event__meta">
+          <span class="next-event__tag">Próximo evento</span>
+          <h2 class="next-event__name">Battle Royale — Edição Outono</h2>
+          <p class="next-event__where">The Benares Club · Lisboa</p>
+        </div>
+
+        <div class="next-event__date-block">
+          <span class="next-event__day">18</span>
+          <span class="next-event__month">Out 2026</span>
+        </div>
+
+        <div class="next-event__actions">
+          <a href="mailto:reservas@thebenaresclub.com" class="btn-reserve">Reservar lugar</a>
+          <a href="#tipos" class="btn-secondary">Ver todos os eventos</a>
+        </div>
+      </div>
+
+      <!-- Event types -->
+      <hr class="s-divider" />
+
+      <div id="tipos">
+        <div class="event-types-head">
+          <span class="event-types-head__label">02 · Formatos</span>
+          <h2 class="event-types-head__title">Tipos de evento</h2>
+        </div>
+
+        <div class="event-type-grid">
+
+          <div class="event-type-card glass">
+            <div class="event-type-card__icon">♟</div>
+            <h3 class="event-type-card__title">Battle Royale</h3>
+            <p class="event-type-card__desc">
+              Torneio aberto a todos os sócios. Formato eliminatório com mesas de quatro jogadores.
+              O último jogador em cada mesa avança à ronda seguinte.
+            </p>
+            <a href="/eventos/" class="event-type-card__link">Saber mais</a>
+          </div>
+
+          <div class="event-type-card glass">
+            <div class="event-type-card__icon">🌙</div>
+            <h3 class="event-type-card__title">Night Lounge</h3>
+            <p class="event-type-card__desc">
+              Sessão de jogo informal em ambiente de clube. Mesas abertas, cocktails e música
+              ambiente. Ideal para receber convidados e jogar sem pressão competitiva.
+            </p>
+            <a href="/eventos/" class="event-type-card__link">Saber mais</a>
+          </div>
+
+          <div class="event-type-card glass">
+            <div class="event-type-card__icon">🏆</div>
+            <h3 class="event-type-card__title">Circuito Nacional</h3>
+            <p class="event-type-card__desc">
+              Etapas ao longo do ano em vários clubes parceiros. Os pontos acumulam para a
+              classificação nacional, com final em dezembro em Lisboa.
+            </p>
+            <a href="/eventos/" class="event-type-card__link">Saber mais</a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Archive -->
+      <div class="archive-section">
+        <div class="archive-head">
+          <span class="archive-head__label">03 · Histórico</span>
+          <h2 class="archive-head__title">Eventos anteriores</h2>
+        </div>
+
+        <div class="archive-list">
+
+          <div class="archive-item glass">
+            <span class="archive-item__date">12 Jul 2026</span>
+            <span class="archive-item__name">Battle Royale — Edição Verão</span>
+            <span class="archive-item__type">Battle Royale</span>
+          </div>
+
+          <div class="archive-item glass">
+            <span class="archive-item__date">24 Mai 2026</span>
+            <span class="archive-item__name">Night Lounge · Primavera</span>
+            <span class="archive-item__type">Night Lounge</span>
+          </div>
+
+          <div class="archive-item glass">
+            <span class="archive-item__date">08 Mar 2026</span>
+            <span class="archive-item__name">Circuito Nacional — Etapa Lisboa</span>
+            <span class="archive-item__type">Circuito Nacional</span>
+          </div>
+
+          <div class="archive-item glass">
+            <span class="archive-item__date">14 Dez 2025</span>
+            <span class="archive-item__name">Final Nacional 2025</span>
+            <span class="archive-item__type">Circuito Nacional</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
 
   <div id="footer-container"></div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const detalhesBtns = document.querySelectorAll('.ver-detalhes');
-      const popupOverlay = document.getElementById('popupOverlay');
-      const popupContent = document.getElementById('popupContent');
-      const popupClose = document.getElementById('popupClose');
-    
-      const detalhesEventos = {
-        "BATTLE ROYALE": {
-          description: "Mostra competitiva internacional de curtas e médias-metragens.",
-          image: "./battle.jpg",
-          link: "#"
-        },
-        "Night Lounge": {
-          description: "Noites descontraídas de projeções e conversas com snacks e música.",
-          image: "./night.jpg",
-          link: "#"
-        },
-        "Circuito Nacional": {
-          description: "Tour nacional com filmes da comunidade e convidados especiais.",
-          image: "./circuito.jpg",
-          link: "#"
-        }
-      };
-    
-      detalhesBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const card = btn.closest('.evento-card');
-          const title = card.querySelector('h2')?.textContent.trim() || 'Evento';
-          const evento = detalhesEventos[title] || { 
-            description: 'Detalhes indisponíveis.', 
-            image: './fotos/BATTLE-ROYALE.jpg',
-            link: '#'
-          };
-    
-popupContent.innerHTML = `
-  <h3 style="margin-bottom: 1rem;">${title}</h3>
-  <img src="${evento.image}" alt="${title}" style="width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
-  <p style="margin-bottom: 1rem;">${evento.description}</p>
-  <button disabled style="cursor: not-allowed; display: inline-block; background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #999; padding: 0.6rem 1.2rem; font-weight: 600; font-size: 0.9rem; border-radius: 8px; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 0 6px rgba(255, 255, 255, 0.1); opacity: 0.5;">Saber Mais</button>
-`;
-          popupOverlay.style.display = 'flex';
-          document.body.style.overflow = 'hidden';
-        });
-      });
-    
-      popupClose.addEventListener('click', () => {
-        popupOverlay.style.display = 'none';
-        document.body.style.overflow = '';
-      });
-    
-      popupOverlay.addEventListener('click', (e) => {
-        if (e.target === popupOverlay) {
-          popupOverlay.style.display = 'none';
-          document.body.style.overflow = '';
-        }
-      });
-    });
-  </script>
-
-  <script>
-    const events = [
-      { id: 'countdown-1', date: new Date('2025-11-15T00:00:00') },
-      { id: 'countdown-2', date: new Date('2026-05-07T00:00:00') }
-    ];
-    
-    events.forEach(e => {
-      const days = Math.ceil((e.date - new Date()) / 86400000);
-      const el = document.getElementById(e.id);
-      if (el && days > 0) {
-        if (days > 7) {
-          el.innerHTML = `Only ${days} days left!`;
-        } else {
-          el.innerHTML = `Hurry!<br>Only ${days} day${days>1?'s':''} left!`;
-        }
-      } else if (el) {
-        el.style.display = 'none';
-      }
-    });
-  </script>
-
   <script src="/shared.js"></script>
 </body>
 </html>
