@@ -201,10 +201,22 @@
     }
 
     .about-img-wrap img {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    .about-img-wrap img.active {
+      opacity: 1;
+    }
+
+    .about-img-wrap {
+      position: relative;
     }
 
     .about-img-placeholder {
@@ -552,8 +564,14 @@
         </div>
 
         <div class="about-img-col">
-          <div class="about-img-wrap">
-            <img src="/media/fototeca/thumb/nl1-06.jpg" alt="Club Benares — Night Lounge" loading="lazy">
+          <div class="about-img-wrap" id="about-slideshow">
+            <img src="/media/fototeca/thumb/nl1-06.jpg"  alt="Club Benares" class="active">
+            <img src="/media/fototeca/thumb/eac-08.jpg"  alt="Club Benares" loading="lazy">
+            <img src="/media/fototeca/thumb/mu2-07.jpg"  alt="Club Benares" loading="lazy">
+            <img src="/media/fototeca/thumb/jg-04.jpg"   alt="Club Benares" loading="lazy">
+            <img src="/media/fototeca/thumb/nl3-03.jpg"  alt="Club Benares" loading="lazy">
+            <img src="/media/fototeca/thumb/inx-05.jpg"  alt="Club Benares" loading="lazy">
+            <img src="/media/fototeca/thumb/mu4-09.jpg"  alt="Club Benares" loading="lazy">
           </div>
         </div>
       </div>
@@ -756,6 +774,18 @@
 </script>
 
 <script src="/shared.js"></script>
+<script>
+  (function() {
+    var slides = document.querySelectorAll('#about-slideshow img');
+    if (slides.length < 2) return;
+    var cur = 0;
+    setInterval(function() {
+      slides[cur].classList.remove('active');
+      cur = (cur + 1) % slides.length;
+      slides[cur].classList.add('active');
+    }, 4000);
+  })();
+</script>
 <script>
   document.querySelectorAll('.lang-tab').forEach(function(tab) {
     tab.addEventListener('click', function() {
