@@ -1024,6 +1024,7 @@
           "País": "Portugal",
           "Ano": "2023"
         },
+        heroImage: "/media/cinemateca/stills/inx-still1.png",
         free: true,
         embedUrl: "https://vimeo.com/930451906",
         featured: true
@@ -1048,6 +1049,7 @@
           "Elenco": "Charlie Chaves · Bruno de Franclieu",
           "País": "Portugal"
         },
+        heroImage: "/media/cinemateca/stills/eac-still1.png",
         free: true,
         embedUrl: "https://vimeo.com/930022904",
         featured: false
@@ -1159,7 +1161,13 @@
       } else {
         const ph = document.createElement('div');
         ph.className = 'hero-poster-bg';
-        if (film.poster) {
+        if (film.heroImage) {
+          const img = document.createElement('img');
+          img.className = 'hero-video';
+          img.src = film.heroImage;
+          img.alt = '';
+          ph.appendChild(img);
+        } else if (film.poster) {
           const img = document.createElement('img');
           img.className = 'hero-video';
           img.src = film.poster;
