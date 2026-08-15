@@ -1510,7 +1510,7 @@ body.bg-contactos { background-image: url("media/B04\ Noticias.png"); }
    ═══════════════════════════════════════════════════════════ */
 .page-banner {
   width: 100%;
-  aspect-ratio: 21 / 6;
+  aspect-ratio: 21 / 4;
   overflow: hidden;
   position: relative;
   flex-shrink: 0;
@@ -1554,10 +1554,10 @@ body.bg-contactos { background-image: url("media/B04\ Noticias.png"); }
 
 /* Responsive height */
 @media (max-width: 900px) {
-  .page-banner { aspect-ratio: 16 / 7; }
+  .page-banner { aspect-ratio: 16 / 5; }
 }
 @media (max-width: 600px) {
-  .page-banner { aspect-ratio: 4 / 3; }
+  .page-banner { aspect-ratio: 16 / 7; }
 }
 
 /* Banner title — overlaid at bottom-left */
