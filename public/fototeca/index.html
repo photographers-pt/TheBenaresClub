@@ -10,27 +10,28 @@
 
     /* ── Event section ── */
     .event-section {
-      padding: 4rem 0 2rem;
+      padding: 4rem 0 0;
       border-top: 1px solid var(--border);
     }
 
     .event-section:first-of-type {
       border-top: none;
-      padding-top: 3rem;
+      padding-top: 2.5rem;
     }
 
     .event-header {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 0 2rem 2rem;
+      padding: 0 2rem 1.75rem;
       display: flex;
       align-items: baseline;
-      gap: 1.5rem;
+      flex-wrap: wrap;
+      gap: 0.6rem 1.5rem;
     }
 
     .event-eyebrow {
       font-family: var(--font-family);
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       font-weight: 600;
       letter-spacing: 0.22em;
       text-transform: uppercase;
@@ -39,7 +40,7 @@
 
     .event-title {
       font-family: var(--font-family);
-      font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+      font-size: clamp(1.2rem, 2.2vw, 1.7rem);
       font-weight: 300;
       letter-spacing: 0.06em;
       text-transform: uppercase;
@@ -49,12 +50,34 @@
 
     .event-date {
       font-family: var(--font-family);
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--text-muted);
+    }
+
+    .event-cinemateca {
       margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-family);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border: 1px solid var(--border-strong);
+      border-radius: 4px;
+      padding: 0.4rem 0.9rem;
+      transition: color 0.2s, border-color 0.2s;
       white-space: nowrap;
+    }
+
+    .event-cinemateca:hover {
+      color: var(--text-primary);
+      border-color: var(--text-primary);
     }
 
     /* ── Photo grid ── */
@@ -63,6 +86,7 @@
       grid-template-columns: repeat(4, 1fr);
       grid-auto-rows: 240px;
       gap: 2px;
+      margin-bottom: 2px;
     }
 
     .photo-item {
@@ -142,7 +166,6 @@
       transition: color 0.2s;
       z-index: 1;
     }
-
     .lightbox-close:hover { color: var(--text-primary); }
 
     .lightbox-nav {
@@ -158,7 +181,6 @@
       line-height: 1;
       transition: color 0.2s;
     }
-
     .lightbox-nav:hover { color: var(--text-primary); }
     .lightbox-prev { left: 0.5rem; }
     .lightbox-next { right: 0.5rem; }
@@ -169,7 +191,7 @@
       left: 50%;
       transform: translateX(-50%);
       font-family: var(--font-family);
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--text-muted);
@@ -191,8 +213,7 @@
         grid-auto-rows: 160px;
       }
       .photo-item.wide { grid-column: span 1; }
-      .event-header { flex-wrap: wrap; gap: 0.5rem; }
-      .event-date { margin-left: 0; }
+      .event-cinemateca { margin-left: 0; }
       .lightbox-nav { display: none; }
     }
   </style>
@@ -211,94 +232,7 @@
       </div>
     </div>
 
-    <!-- Night Lounge #1 -->
-    <div class="event-section">
-      <div class="event-header">
-        <span class="event-eyebrow">01</span>
-        <h2 class="event-title">Night Lounge #1</h2>
-        <span class="event-date">11 Dez 2024</span>
-      </div>
-      <div class="photo-grid">
-        <div class="photo-item wide" data-src="/media/fototeca/nl1-01.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
-          <img src="/media/fototeca/nl1-01.jpg" alt="Night Lounge #1" loading="lazy">
-        </div>
-        <div class="photo-item tall" data-src="/media/fototeca/nl1-02.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
-          <img src="/media/fototeca/nl1-02.jpg" alt="Night Lounge #1" loading="lazy">
-        </div>
-        <div class="photo-item" data-src="/media/fototeca/nl1-03.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
-          <img src="/media/fototeca/nl1-03.jpg" alt="Night Lounge #1" loading="lazy">
-        </div>
-        <div class="photo-item" data-src="/media/fototeca/nl1-04.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
-          <img src="/media/fototeca/nl1-04.jpg" alt="Night Lounge #1" loading="lazy">
-        </div>
-        <div class="photo-item" data-src="/media/fototeca/nl1-05.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
-          <img src="/media/fototeca/nl1-05.jpg" alt="Night Lounge #1" loading="lazy">
-        </div>
-        <div class="photo-item tall" data-src="/media/fototeca/nl1-06.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
-          <img src="/media/fototeca/nl1-06.jpg" alt="Night Lounge #1" loading="lazy">
-        </div>
-        <div class="photo-item wide" data-src="/media/fototeca/nl1-07.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
-          <img src="/media/fototeca/nl1-07.jpg" alt="Night Lounge #1" loading="lazy">
-        </div>
-        <div class="photo-item" data-src="/media/fototeca/nl1-08.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
-          <img src="/media/fototeca/nl1-08.jpg" alt="Night Lounge #1" loading="lazy">
-        </div>
-        <div class="photo-item" data-src="/media/fototeca/nl1-09.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
-          <img src="/media/fototeca/nl1-09.jpg" alt="Night Lounge #1" loading="lazy">
-        </div>
-        <div class="photo-item" data-src="/media/fototeca/nl1-10.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
-          <img src="/media/fototeca/nl1-10.jpg" alt="Night Lounge #1" loading="lazy">
-        </div>
-        <div class="photo-item wide" data-src="/media/fototeca/nl1-11.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
-          <img src="/media/fototeca/nl1-11.jpg" alt="Night Lounge #1" loading="lazy">
-        </div>
-        <div class="photo-item" data-src="/media/fototeca/nl1-12.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
-          <img src="/media/fototeca/nl1-12.jpg" alt="Night Lounge #1" loading="lazy">
-        </div>
-        <div class="photo-item" data-src="/media/fototeca/nl1-13.jpg" data-caption="Night Lounge #1 · 11 Dez 2024">
-          <img src="/media/fototeca/nl1-13.jpg" alt="Night Lounge #1" loading="lazy">
-        </div>
-      </div>
-    </div>
-
-    <!-- Night Lounge #2 -->
-    <div class="event-section">
-      <div class="event-header">
-        <span class="event-eyebrow">02</span>
-        <h2 class="event-title">Night Lounge #2</h2>
-        <span class="event-date">20 Jan 2025</span>
-      </div>
-      <div class="photo-grid">
-        <div class="photo-item wide" data-src="/media/fototeca/nl2-01.jpg" data-caption="Night Lounge #2 · 20 Jan 2025">
-          <img src="/media/fototeca/nl2-01.jpg" alt="Night Lounge #2" loading="lazy">
-        </div>
-        <div class="photo-item tall" data-src="/media/fototeca/nl2-02.jpg" data-caption="Night Lounge #2 · 20 Jan 2025">
-          <img src="/media/fototeca/nl2-02.jpg" alt="Night Lounge #2" loading="lazy">
-        </div>
-        <div class="photo-item" data-src="/media/fototeca/nl2-03.jpg" data-caption="Night Lounge #2 · 20 Jan 2025">
-          <img src="/media/fototeca/nl2-03.jpg" alt="Night Lounge #2" loading="lazy">
-        </div>
-        <div class="photo-item" data-src="/media/fototeca/nl2-04.jpg" data-caption="Night Lounge #2 · 20 Jan 2025">
-          <img src="/media/fototeca/nl2-04.jpg" alt="Night Lounge #2" loading="lazy">
-        </div>
-        <div class="photo-item" data-src="/media/fototeca/nl2-05.jpg" data-caption="Night Lounge #2 · 20 Jan 2025">
-          <img src="/media/fototeca/nl2-05.jpg" alt="Night Lounge #2" loading="lazy">
-        </div>
-        <div class="photo-item tall" data-src="/media/fototeca/nl2-06.jpg" data-caption="Night Lounge #2 · 20 Jan 2025">
-          <img src="/media/fototeca/nl2-06.jpg" alt="Night Lounge #2" loading="lazy">
-        </div>
-        <div class="photo-item" data-src="/media/fototeca/nl2-07.jpg" data-caption="Night Lounge #2 · 20 Jan 2025">
-          <img src="/media/fototeca/nl2-07.jpg" alt="Night Lounge #2" loading="lazy">
-        </div>
-        <div class="photo-item wide" data-src="/media/fototeca/nl2-08.jpg" data-caption="Night Lounge #2 · 20 Jan 2025">
-          <img src="/media/fototeca/nl2-08.jpg" alt="Night Lounge #2" loading="lazy">
-        </div>
-        <div class="photo-item" data-src="/media/fototeca/nl2-09.jpg" data-caption="Night Lounge #2 · 20 Jan 2025">
-          <img src="/media/fototeca/nl2-09.jpg" alt="Night Lounge #2" loading="lazy">
-        </div>
-      </div>
-    </div>
-
+    <div id="gallery-root"></div>
   </main>
 
   <!-- Lightbox -->
@@ -313,41 +247,229 @@
   <div id="footer-container"></div>
 
   <script>
-    const items = Array.from(document.querySelectorAll('.photo-item'));
-    const lb      = document.getElementById('lightbox');
-    const lbWrap  = document.getElementById('lbImgWrap');
-    const lbCap   = document.getElementById('lbCaption');
-    const lbClose = document.getElementById('lbClose');
-    const lbPrev  = document.getElementById('lbPrev');
-    const lbNext  = document.getElementById('lbNext');
-    let cur = 0;
+    /*
+     * FOTOTECA — catálogo de eventos
+     *
+     * Para adicionar um evento:
+     *   prefix   → prefixo dos ficheiros em /media/fototeca/ (ex: "nl1")
+     *   ext      → extensão dos ficheiros ("jpg" ou "png")
+     *   count    → número total de fotos
+     *   title    → nome do evento
+     *   date     → data do evento (texto livre)
+     *   filme    → true se for registo de um filme (mostra link para cinemateca)
+     *
+     * Ordem: cronológica (mais antigo primeiro)
+     */
+    const events = [
+      {
+        prefix: 'inx',
+        ext: 'jpg',
+        count: 22,
+        title: 'Inexistente',
+        date: 'Abr 2023',
+        filme: true
+      },
+      {
+        prefix: 'eac',
+        ext: 'jpg',
+        count: 30,
+        title: 'El Artista Comprendido',
+        date: 'Abr 2024',
+        filme: true
+      },
+      {
+        prefix: 'nl1',
+        ext: 'jpg',
+        count: 13,
+        title: 'Night Lounge #1',
+        date: '11 Dez 2024',
+        filme: false
+      },
+      {
+        prefix: 'nl2',
+        ext: 'jpg',
+        count: 9,
+        title: 'Night Lounge #2',
+        date: '20 Jan 2025',
+        filme: false
+      },
+      {
+        prefix: 'nl3',
+        ext: 'jpg',
+        count: 15,
+        title: 'Night Lounge #3',
+        date: '19 Abr 2025',
+        filme: false
+      },
+      {
+        prefix: 'jg',
+        ext: 'jpg',
+        count: 21,
+        title: 'Jay Gupta',
+        date: 'Jun 2025',
+        filme: true
+      },
+      {
+        prefix: 'mu1',
+        ext: 'jpg',
+        count: 14,
+        title: 'MashUp #1',
+        date: '16 Out 2025',
+        filme: false,
+        mixedExts: { 11: 'png' }
+      },
+      {
+        prefix: 'mu3',
+        ext: 'png',
+        count: 8,
+        title: 'MashUp #3',
+        date: '05 Dez 2025',
+        filme: false
+      },
+      {
+        prefix: 'mu4',
+        ext: 'png',
+        count: 13,
+        title: 'MashUp #4',
+        date: '16 Mar 2026',
+        filme: false
+      },
+      {
+        prefix: 'mu5',
+        ext: 'png',
+        count: 9,
+        title: 'MashUp #5',
+        date: '07 Mai 2026',
+        filme: false
+      }
+    ];
 
-    function show(i) {
-      cur = i;
-      const item = items[i];
-      const src = item.dataset.src;
-      lbWrap.innerHTML = '';
-      const img = new Image();
-      img.src = src;
-      lbWrap.appendChild(img);
-      lbCap.textContent = item.dataset.caption || '';
-      lbPrev.style.opacity = i === 0 ? '0.12' : '0.25';
-      lbNext.style.opacity = i === items.length - 1 ? '0.12' : '0.25';
+    /* Span pattern for 4-col mosaic — cycles every 10 */
+    var SPAN_PATTERN = ['wide', '', 'tall', '', '', '', '', 'wide', 'tall', ''];
+
+    function getSpan(i) {
+      return SPAN_PATTERN[i % SPAN_PATTERN.length];
     }
 
-    function open(i)  { show(i); lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
-    function close()  { lb.classList.remove('open'); document.body.style.overflow = ''; }
+    /* Build all photos into a flat list for lightbox navigation */
+    var allPhotos = [];
 
-    items.forEach(function(item, i) { item.addEventListener('click', function() { open(i); }); });
-    lbClose.addEventListener('click', close);
-    lb.addEventListener('click', function(e) { if (e.target === lb) close(); });
-    lbPrev.addEventListener('click', function(e) { e.stopPropagation(); if (cur > 0) show(cur - 1); });
-    lbNext.addEventListener('click', function(e) { e.stopPropagation(); if (cur < items.length - 1) show(cur + 1); });
+    var root = document.getElementById('gallery-root');
+
+    events.forEach(function(ev, evIdx) {
+      var section = document.createElement('div');
+      section.className = 'event-section';
+
+      /* Header */
+      var header = document.createElement('div');
+      header.className = 'event-header';
+
+      var eyebrow = document.createElement('span');
+      eyebrow.className = 'event-eyebrow';
+      eyebrow.textContent = String(evIdx + 1).padStart(2, '0');
+
+      var title = document.createElement('h2');
+      title.className = 'event-title';
+      title.textContent = ev.title;
+
+      var date = document.createElement('span');
+      date.className = 'event-date';
+      date.textContent = ev.date;
+
+      header.appendChild(eyebrow);
+      header.appendChild(title);
+      header.appendChild(date);
+
+      if (ev.filme) {
+        var cineLink = document.createElement('a');
+        cineLink.className = 'event-cinemateca';
+        cineLink.href = '/cinemateca/';
+        cineLink.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg> Ver na Cinemateca';
+        header.appendChild(cineLink);
+      }
+
+      section.appendChild(header);
+
+      /* Grid */
+      var grid = document.createElement('div');
+      grid.className = 'photo-grid';
+
+      for (var i = 1; i <= ev.count; i++) {
+        var ext = (ev.mixedExts && ev.mixedExts[i]) ? ev.mixedExts[i] : ev.ext;
+        var src = '/media/fototeca/' + ev.prefix + '-' + String(i).padStart(2, '0') + '.' + ext;
+        var caption = ev.title + ' · ' + ev.date;
+        var photoIndex = allPhotos.length;
+
+        allPhotos.push({ src: src, caption: caption });
+
+        var item = document.createElement('div');
+        item.className = 'photo-item' + (getSpan(i - 1) ? ' ' + getSpan(i - 1) : '');
+        item.dataset.idx = photoIndex;
+
+        var img = document.createElement('img');
+        img.src = src;
+        img.alt = caption;
+        img.loading = 'lazy';
+
+        item.appendChild(img);
+        item.addEventListener('click', (function(idx) {
+          return function() { openLightbox(idx); };
+        })(photoIndex));
+
+        grid.appendChild(item);
+      }
+
+      section.appendChild(grid);
+      root.appendChild(section);
+    });
+
+    /* Lightbox */
+    var lb      = document.getElementById('lightbox');
+    var lbWrap  = document.getElementById('lbImgWrap');
+    var lbCap   = document.getElementById('lbCaption');
+    var lbClose = document.getElementById('lbClose');
+    var lbPrev  = document.getElementById('lbPrev');
+    var lbNext  = document.getElementById('lbNext');
+    var curIdx  = 0;
+
+    function showPhoto(i) {
+      curIdx = i;
+      var p = allPhotos[i];
+      lbWrap.innerHTML = '';
+      var img = new Image();
+      img.src = p.src;
+      lbWrap.appendChild(img);
+      lbCap.textContent = p.caption;
+      lbPrev.style.opacity = i === 0 ? '0.12' : '0.28';
+      lbNext.style.opacity = i === allPhotos.length - 1 ? '0.12' : '0.28';
+    }
+
+    function openLightbox(i) {
+      showPhoto(i);
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    lbClose.addEventListener('click', closeLightbox);
+    lb.addEventListener('click', function(e) { if (e.target === lb) closeLightbox(); });
+    lbPrev.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (curIdx > 0) showPhoto(curIdx - 1);
+    });
+    lbNext.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (curIdx < allPhotos.length - 1) showPhoto(curIdx + 1);
+    });
     document.addEventListener('keydown', function(e) {
       if (!lb.classList.contains('open')) return;
-      if (e.key === 'Escape') close();
-      if (e.key === 'ArrowLeft'  && cur > 0) show(cur - 1);
-      if (e.key === 'ArrowRight' && cur < items.length - 1) show(cur + 1);
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft'  && curIdx > 0) showPhoto(curIdx - 1);
+      if (e.key === 'ArrowRight' && curIdx < allPhotos.length - 1) showPhoto(curIdx + 1);
     });
   </script>
 
