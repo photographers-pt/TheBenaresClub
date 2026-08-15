@@ -1499,6 +1499,67 @@ body.bg-contactos { background-image: url("media/B04\ Noticias.png"); }
   .nc-countdown { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* ══════════════════════════════════════════════════════════════
+   MOBILE GLOBAL OVERRIDES  ≤ 768px
+══════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── Hamburger button ── */
+  .nav-toggle { display: flex !important; }
+
+  /* ── Nav: full-width vertical dropdown ── */
+  nav.active { max-height: 480px; }
+
+  nav ul {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.5rem 0.75rem 1rem;
+    gap: 0.15rem;
+  }
+
+  nav a {
+    display: block;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── Footer: stack vertically ── */
+  footer {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.25rem 1.5rem;
+    gap: 0.75rem;
+    min-height: auto;
+  }
+
+  .footer-controls { justify-content: center; }
+
+  /* ── iOS: background-attachment: fixed causes glitches ── */
+  body { background-attachment: scroll; }
+
+  /* ── Eventos list ── */
+  .proximos-eventos { padding: 1.25rem 1rem; }
+
+  .evento-lista-item {
+    flex-wrap: wrap;
+    padding: 0.85rem 1rem;
+  }
+
+  .evento-info { min-width: 0; }
+
+  /* ── Cinemateca popup ── */
+  .popup1-window {
+    width: 95vw;
+    min-height: auto;
+    max-height: 88vh;
+    padding: 1.25rem 1rem;
+  }
+
+  .popup1-product { flex-basis: 100%; }
+}
+
 /* ═══════════════════════════════════════════════════════════
    PAGE BANNER
    Full-width image below the header.

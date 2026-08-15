@@ -24,7 +24,7 @@ function createHeader() {
       <a href="/">
         <img src="/media/A00_Logo_&_title_-_light.png" alt="Club Benares" style="height: 30px;">
       </a>
-      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" style="display:none;">
+      <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
         <i class="fas fa-bars nav-icon"></i>
       </button>
     </header>
@@ -96,8 +96,42 @@ function initializeNavToggle() {
 
   if (!toggleBtn || !nav) return;
 
-  // All pages: always-open nav, no toggle needed
-  nav.classList.add('active');
+  function isMobile() { return window.innerWidth <= 768; }
+
+  function openNav() {
+    nav.classList.add('active');
+    toggleBtn.setAttribute('aria-expanded', 'true');
+    toggleBtn.querySelector('i').className = 'fas fa-times nav-icon';
+  }
+
+  function closeNav() {
+    nav.classList.remove('active');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    toggleBtn.querySelector('i').className = 'fas fa-bars nav-icon';
+  }
+
+  // Initial state
+  if (isMobile()) {
+    closeNav();
+  } else {
+    openNav();
+  }
+
+  toggleBtn.addEventListener('click', function() {
+    nav.classList.contains('active') ? closeNav() : openNav();
+  });
+
+  // Close when a link is tapped on mobile
+  nav.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      if (isMobile()) closeNav();
+    });
+  });
+
+  // Re-open on resize to desktop
+  window.addEventListener('resize', function() {
+    if (!isMobile()) openNav();
+  });
 }
 
 // =================================
