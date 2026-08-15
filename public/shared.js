@@ -25,7 +25,15 @@ function createHeader() {
         <img src="/media/A00_Logo_&_title_-_light.png" alt="Club Benares" style="height: 30px;">
       </a>
       <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
-        <i class="fas fa-bars nav-icon"></i>
+        <svg class="nav-icon-open" width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="20" height="2" rx="1" fill="currentColor"/>
+          <rect y="6" width="20" height="2" rx="1" fill="currentColor"/>
+          <rect y="12" width="20" height="2" rx="1" fill="currentColor"/>
+        </svg>
+        <svg class="nav-icon-close" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:none;">
+          <line x1="1" y1="1" x2="13" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="13" y1="1" x2="1" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
       </button>
     </header>
 
@@ -101,13 +109,15 @@ function initializeNavToggle() {
   function openNav() {
     nav.classList.add('active');
     toggleBtn.setAttribute('aria-expanded', 'true');
-    toggleBtn.querySelector('i').className = 'fas fa-times nav-icon';
+    toggleBtn.querySelector('.nav-icon-open').style.display = 'none';
+    toggleBtn.querySelector('.nav-icon-close').style.display = 'block';
   }
 
   function closeNav() {
     nav.classList.remove('active');
     toggleBtn.setAttribute('aria-expanded', 'false');
-    toggleBtn.querySelector('i').className = 'fas fa-bars nav-icon';
+    toggleBtn.querySelector('.nav-icon-open').style.display = 'block';
+    toggleBtn.querySelector('.nav-icon-close').style.display = 'none';
   }
 
   // Initial state
