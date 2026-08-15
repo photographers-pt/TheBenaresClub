@@ -788,6 +788,31 @@
       border: none;
       display: block;
     }
+
+    /* Fullscreen video mode — player takes the whole modal */
+    .modal.player-fullscreen {
+      grid-template-columns: 1fr;
+      max-width: 1100px;
+    }
+    .modal.player-fullscreen .modal-body {
+      display: none;
+    }
+    .modal.player-fullscreen #modal-left {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .modal.player-fullscreen .modal-player {
+      flex: 1;
+    }
+    .modal.player-fullscreen .modal-player iframe,
+    .modal.player-fullscreen .modal-player video {
+      aspect-ratio: unset;
+      width: 100%;
+      height: 100%;
+      min-height: 300px;
+    }
     .modal-player-back {
       display: flex;
       align-items: center;
@@ -1330,6 +1355,7 @@
        MODAL
     ════════════════════════════════ */
     const backdrop = document.getElementById('modal-backdrop');
+    const modal    = document.getElementById('modal');
     const modalClose = document.getElementById('modal-close');
 
     const trailerBtn = document.getElementById('modal-trailer-btn');
@@ -1356,11 +1382,12 @@
     function showTrailer(film) {
       posterWrap.style.display = 'none';
       trailerPlayer.classList.add('visible');
+      modal.classList.add('player-fullscreen');
 
       const embedUrl = buildEmbedUrl(film.trailerUrl);
       if (embedUrl) {
         trailerPlayerContent.innerHTML =
-          `<iframe src="${embedUrl}" allow="autoplay; fullscreen" allowfullscreen title="Trailer — ${film.title}"></iframe>`;
+          `<iframe src="${embedUrl}" allow="autoplay; fullscreen" allowfullscreen title="${film.title}"></iframe>`;
       } else if (film.trailerUrl) {
         trailerPlayerContent.innerHTML =
           `<video src="${film.trailerUrl}" controls autoplay playsinline></video>`;
@@ -1369,6 +1396,7 @@
 
     function hideTrailer() {
       trailerPlayer.classList.remove('visible');
+      modal.classList.remove('player-fullscreen');
       trailerPlayerContent.innerHTML = '';
       posterWrap.style.display = '';
       trailerBtn.classList.remove('active');
