@@ -377,6 +377,36 @@
       letter-spacing: 0.08em;
       color: rgba(240,232,216,0.8);
     }
+    .price-badge.free    { color: rgba(80,200,130,0.95); border-color: rgba(80,200,130,0.3); }
+    .price-badge.soon    { color: rgba(240,232,216,0.35); border-color: rgba(240,232,216,0.08); }
+
+    /* Watch button (free films in modal) */
+    .watch-now-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.55rem;
+      width: 100%;
+      font-family: var(--font-family);
+      font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: #0a0908;
+      background: rgba(240,232,216,0.95);
+      border: none; border-radius: var(--radius-sm);
+      padding: 1rem; text-align: center;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-bottom: 0.75rem;
+    }
+    .watch-now-btn:hover { background: #fff; }
+    .watch-now-btn.soon {
+      opacity: 0.38; cursor: default;
+      background: rgba(240,232,216,0.08);
+      color: var(--text-secondary);
+      border: 1px solid rgba(240,232,216,0.12);
+    }
+    .watch-now-btn.soon:hover { background: rgba(240,232,216,0.08); }
+
+    /* Coming-soon card dim */
+    .film-card.coming-soon .film-card-inner { opacity: 0.65; }
+    .film-card.coming-soon:hover .film-card-inner { opacity: 0.85; }
 
     /* Hover info panel */
     .film-hover-panel {
@@ -943,6 +973,11 @@
      * buyPrice       → preço de compra (ex: "€9,90")
      * buyStripeUrl   → Stripe Payment Link para compra
      */
+    /*
+     * free      → true = ver grátis (embed). Adiciona embedUrl quando tiveres o link.
+     * comingSoon→ true = disponível em breve (mostra preço mas botões desactivados)
+     * embedUrl  → URL do YouTube/Vimeo para ver o filme completo (substituir null)
+     */
     const films = [
       {
         id: 1,
@@ -964,10 +999,8 @@
           "País": "Portugal",
           "Ano": "2023"
         },
-        rentPrice: "€3,50",
-        rentStripeUrl: "#",
-        buyPrice: "€9,90",
-        buyStripeUrl: "#",
+        free: true,
+        embedUrl: null,
         featured: true
       },
       {
@@ -990,10 +1023,8 @@
           "Elenco": "Charlie Chaves · Bruno de Franclieu",
           "País": "Portugal"
         },
-        rentPrice: "€3,50",
-        rentStripeUrl: "#",
-        buyPrice: "€9,90",
-        buyStripeUrl: "#",
+        free: true,
+        embedUrl: null,
         featured: false
       },
       {
@@ -1013,10 +1044,10 @@
           "País": "Portugal",
           "Ano": "2024"
         },
+        free: false,
+        comingSoon: true,
         rentPrice: "€3,50",
-        rentStripeUrl: "#",
         buyPrice: "€9,90",
-        buyStripeUrl: "#",
         featured: false
       },
       {
@@ -1024,9 +1055,9 @@
         title: "Jay Gupta",
         year: "2025",
         director: "Charlie Chaves · Nityam",
-        duration: "Em breve",
+        duration: "Curta-metragem",
         genre: "Drama",
-        description: "Coming soon...",
+        description: "Em breve mais informações.",
         poster: "/media/cinemateca/posters/jay-gupta.png",
         icon: "🌟",
         trailerVideo: null,
@@ -1039,18 +1070,18 @@
           "Elenco": "Akshay Tharabole · Nilesh Suryawanshi · Varsha Mehra · Yacine Meziti · Francisco Lopes",
           "País": "Portugal"
         },
+        free: false,
+        comingSoon: true,
         rentPrice: "€3,50",
-        rentStripeUrl: "#",
         buyPrice: "€9,90",
-        buyStripeUrl: "#",
         featured: false
       },
       {
         id: 5,
         title: "Firefly",
-        year: "—",
+        year: "2026",
         director: "Charlie Chaves",
-        duration: "Em breve",
+        duration: "Curta-metragem",
         genre: "Drama",
         description: "Em breve mais informações.",
         poster: "/media/cinemateca/posters/firefly.png",
@@ -1061,10 +1092,8 @@
           "Realização": "Charlie Chaves",
           "País": "Portugal"
         },
-        rentPrice: "€3,50",
-        rentStripeUrl: "#",
-        buyPrice: "€9,90",
-        buyStripeUrl: "#",
+        free: true,
+        embedUrl: null,
         featured: false
       }
     ];
@@ -1136,7 +1165,8 @@
       heroTitle.textContent = film.title;
       heroMeta.textContent = `${film.year} · ${film.director} · ${film.duration}`;
       heroDesc.textContent = film.description;
-      heroRentBtn.textContent = '';
+      heroRentBtn.innerHTML = '';
+
       const playIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       playIcon.setAttribute('width', '13'); playIcon.setAttribute('height', '13');
       playIcon.setAttribute('viewBox', '0 0 24 24'); playIcon.setAttribute('fill', 'currentColor');
@@ -1145,8 +1175,26 @@
       poly.setAttribute('points', '5 3 19 12 5 21 5 3');
       playIcon.appendChild(poly);
       heroRentBtn.appendChild(playIcon);
-      heroRentBtn.appendChild(document.createTextNode(` Alugar — ${film.rentPrice}`));
-      heroRentBtn.href = film.rentStripeUrl;
+
+      if (film.free) {
+        heroRentBtn.appendChild(document.createTextNode(' Ver Grátis'));
+        heroRentBtn.href = '#';
+        heroRentBtn.onclick = function(e) { e.preventDefault(); openModal(film); };
+        heroRentBtn.style.opacity = '';
+        heroRentBtn.style.pointerEvents = '';
+      } else if (film.comingSoon) {
+        heroRentBtn.appendChild(document.createTextNode(' Em breve'));
+        heroRentBtn.href = '#';
+        heroRentBtn.onclick = function(e) { e.preventDefault(); };
+        heroRentBtn.style.opacity = '0.4';
+        heroRentBtn.style.pointerEvents = 'none';
+      } else {
+        heroRentBtn.appendChild(document.createTextNode(` Alugar — ${film.rentPrice}`));
+        heroRentBtn.href = film.rentStripeUrl;
+        heroRentBtn.onclick = null;
+        heroRentBtn.style.opacity = '';
+        heroRentBtn.style.pointerEvents = '';
+      }
     }
 
     function startProgress() {
@@ -1215,7 +1263,7 @@
 
     films.forEach(film => {
       const card = document.createElement('div');
-      card.className = 'film-card';
+      card.className = 'film-card' + (film.comingSoon ? ' coming-soon' : '');
       card.setAttribute('role', 'button');
       card.setAttribute('tabindex', '0');
       card.setAttribute('aria-label', `Ver detalhes de ${film.title}`);
@@ -1224,12 +1272,25 @@
         ? `<img class="film-poster-img" src="${film.poster}" alt="${film.title}" loading="lazy">`
         : `<div class="film-poster-placeholder">${film.icon}</div>`;
 
+      const badgeHTML = film.free
+        ? `<span class="price-badge free">Grátis</span>`
+        : film.comingSoon
+          ? `<span class="price-badge soon">Em breve</span>`
+          : `<span class="price-badge">${film.rentPrice}</span>`;
+
+      const hoverLabel = film.free
+        ? 'Ver agora'
+        : film.comingSoon
+          ? 'Em breve'
+          : 'Ver opções';
+
       card.innerHTML = `
         <div class="film-card-inner">
           <div class="film-poster-wrap">
             ${posterHTML}
+            ${badgeHTML}
             <div class="film-hover-panel">
-              <button class="hover-rent-btn">Ver opções</button>
+              <button class="hover-rent-btn">${hoverLabel}</button>
             </div>
           </div>
           <div class="film-card-info">
@@ -1338,14 +1399,6 @@
       document.getElementById('modal-meta').textContent =
         `${film.year} · ${film.director} · ${film.duration} · ${film.genre}`;
       document.getElementById('modal-desc').textContent = film.description;
-      document.getElementById('modal-rent-price').textContent = film.rentPrice;
-      document.getElementById('modal-buy-price').textContent = film.buyPrice;
-
-      const rentBtn = document.getElementById('modal-rent-btn');
-      rentBtn.href = film.rentStripeUrl;
-
-      const buyBtn = document.getElementById('modal-buy-btn');
-      buyBtn.href = film.buyStripeUrl;
 
       if (film.poster) {
         posterWrap.innerHTML = `<img class="modal-poster" src="${film.poster}" alt="${film.title}">`;
@@ -1353,7 +1406,7 @@
         posterWrap.innerHTML = `<div class="modal-poster-placeholder">${film.icon}</div>`;
       }
 
-      // Trailer button: always visible; disabled when no trailerUrl
+      // Trailer button
       if (film.trailerUrl) {
         trailerBtn.disabled = false;
         trailerBtn.onclick = () => {
@@ -1365,8 +1418,84 @@
         trailerBtn.onclick = null;
       }
 
-      // Ficha técnica button
       fichaBtn.onclick = () => toggleFicha(film);
+
+      // Purchase / watch section
+      const purchaseSection = document.querySelector('.purchase-options');
+      const modalNote = document.querySelector('.modal-note');
+      let watchSection = document.getElementById('modal-watch-section');
+
+      if (!watchSection) {
+        watchSection = document.createElement('div');
+        watchSection.id = 'modal-watch-section';
+        purchaseSection.parentNode.insertBefore(watchSection, purchaseSection);
+      }
+
+      if (film.free) {
+        // Free film: show watch button, hide purchase options
+        purchaseSection.style.display = 'none';
+        modalNote.style.display = 'none';
+        watchSection.style.display = 'block';
+
+        const hasEmbed = !!film.embedUrl;
+        watchSection.innerHTML = `
+          <button class="watch-now-btn${hasEmbed ? '' : ' soon'}" id="modal-watch-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            ${hasEmbed ? 'Ver Agora — Grátis' : 'Em breve'}
+          </button>
+          ${hasEmbed ? '<p style="font-family:var(--font-family);font-size:0.72rem;color:var(--text-muted);text-align:center;">Visualização gratuita · Sem necessidade de registo</p>' : ''}
+        `;
+
+        if (hasEmbed) {
+          document.getElementById('modal-watch-btn').addEventListener('click', () => {
+            showTrailer({ trailerUrl: film.embedUrl, title: film.title });
+            trailerBtn.classList.add('active');
+          });
+        }
+      } else if (film.comingSoon) {
+        // Coming soon paid: show purchase options but disabled
+        watchSection.style.display = 'none';
+        purchaseSection.style.display = '';
+        modalNote.style.display = '';
+
+        document.getElementById('modal-rent-price').textContent = film.rentPrice;
+        document.getElementById('modal-buy-price').textContent = film.buyPrice;
+
+        const rentBtn = document.getElementById('modal-rent-btn');
+        rentBtn.textContent = 'Em breve';
+        rentBtn.removeAttribute('href');
+        rentBtn.style.opacity = '0.4';
+        rentBtn.style.pointerEvents = 'none';
+
+        const buyBtn = document.getElementById('modal-buy-btn');
+        buyBtn.textContent = 'Em breve';
+        buyBtn.removeAttribute('href');
+        buyBtn.style.opacity = '0.4';
+        buyBtn.style.pointerEvents = 'none';
+
+        modalNote.textContent = 'Brevemente disponível para alugar e comprar.';
+      } else {
+        // Normal paid film
+        watchSection.style.display = 'none';
+        purchaseSection.style.display = '';
+        modalNote.style.display = '';
+        modalNote.textContent = 'Pagamento seguro via Stripe. Após a compra recebes o link do filme por email.';
+
+        document.getElementById('modal-rent-price').textContent = film.rentPrice;
+        document.getElementById('modal-buy-price').textContent = film.buyPrice;
+
+        const rentBtn = document.getElementById('modal-rent-btn');
+        rentBtn.textContent = 'Alugar agora';
+        rentBtn.href = film.rentStripeUrl;
+        rentBtn.style.opacity = '';
+        rentBtn.style.pointerEvents = '';
+
+        const buyBtn = document.getElementById('modal-buy-btn');
+        buyBtn.textContent = 'Comprar';
+        buyBtn.href = film.buyStripeUrl;
+        buyBtn.style.opacity = '';
+        buyBtn.style.pointerEvents = '';
+      }
 
       backdrop.classList.add('open');
       document.body.style.overflow = 'hidden';
