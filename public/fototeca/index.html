@@ -403,19 +403,20 @@
       grid.className = 'photo-grid';
 
       for (var i = 1; i <= ev.count; i++) {
-        var ext = (ev.mixedExts && ev.mixedExts[i]) ? ev.mixedExts[i] : ev.ext;
-        var src = '/media/fototeca/' + ev.prefix + '-' + String(i).padStart(2, '0') + '.' + ext;
+        var n = String(i).padStart(2, '0');
+        var thumbSrc = '/media/fototeca/thumb/' + ev.prefix + '-' + n + '.jpg';
+        var fullSrc  = '/media/fototeca/full/'  + ev.prefix + '-' + n + '.jpg';
         var caption = ev.title + ' · ' + ev.date;
         var photoIndex = allPhotos.length;
 
-        allPhotos.push({ src: src, caption: caption });
+        allPhotos.push({ src: fullSrc, caption: caption });
 
         var item = document.createElement('div');
         item.className = 'photo-item' + (getSpan(i - 1) ? ' ' + getSpan(i - 1) : '');
         item.dataset.idx = photoIndex;
 
         var img = document.createElement('img');
-        img.src = src;
+        img.src = thumbSrc;
         img.alt = caption;
         img.loading = 'lazy';
 
