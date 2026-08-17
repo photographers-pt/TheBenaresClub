@@ -116,35 +116,6 @@
       align-items: start;
     }
 
-    .lang-tabs {
-      display: flex;
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      width: fit-content;
-      margin-bottom: 2rem;
-    }
-
-    .lang-tab {
-      padding: 0.45rem 1.1rem;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-    }
-
-    .lang-tab + .lang-tab { border-left: 1px solid var(--border-strong); }
-
-    .lang-tab.active,
-    .lang-tab:hover {
-      background: rgba(240, 232, 216, 0.07);
-      color: var(--text-primary);
-    }
-
     .about-text { display: none; }
     .about-text.active { display: block; }
 
@@ -617,25 +588,19 @@
 
       <div class="about-grid">
         <div>
-          <div class="lang-tabs" role="tablist" aria-label="Idioma">
-            <button class="lang-tab active" role="tab" aria-selected="true" data-lang="pt">PT</button>
-            <button class="lang-tab" role="tab" aria-selected="false" data-lang="en">EN</button>
-            <button class="lang-tab" role="tab" aria-selected="false" data-lang="es">ES</button>
-          </div>
-
-          <div class="about-text active" id="about-pt">
+          <div class="about-text active" id="about-pt" data-lang="pt">
             <p>Club Benares foi fundado por Charlie Chaves em 2023, com a ideia de formar uma equipa com o objetivo de criar filmes em conjunto todos os meses.</p>
             <p>Com o tempo, o projeto cresceu e deixou de ser um núcleo privado de criação para se tornar uma comunidade aberta ao público, reunindo realizadores, estudantes, profissionais, artistas e amantes do cinema.</p>
             <p>O objetivo é simples: criar um espaço onde as pessoas possam conhecer-se, partilhar ideias, fazer filmes e fortalecer a comunidade cinematográfica independente em Lisboa.</p>
           </div>
 
-          <div class="about-text" id="about-en">
+          <div class="about-text" id="about-en" data-lang="en">
             <p>Club Benares was founded by Charlie Chaves in 2023, with the idea of forming a team with the goal of making films together every month.</p>
             <p>Over time, the project grew from a private creative circle into a community open to the public, bringing together directors, students, professionals, artists, and cinema lovers.</p>
             <p>The goal is simple: to create a space where people can meet, share ideas, make films and strengthen the independent cinema community in Lisbon.</p>
           </div>
 
-          <div class="about-text" id="about-es">
+          <div class="about-text" id="about-es" data-lang="es">
             <p>Club Benares fue fundado por Charlie Chaves en 2023, con la idea de formar un equipo con el objetivo de crear películas juntos cada mes.</p>
             <p>Con el tiempo, el proyecto creció y dejó de ser un núcleo privado de creación para convertirse en una comunidad abierta al público, reuniendo realizadores, estudiantes, profesionales, artistas y amantes del cine.</p>
             <p>El objetivo es simple: crear un espacio donde la gente pueda conocerse, compartir ideas, hacer películas y fortalecer la comunidad cinematográfica independiente en Lisboa.</p>
@@ -944,23 +909,6 @@
       slides[cur].classList.add('active');
     }, 4000);
   })();
-</script>
-<script>
-  document.querySelectorAll('.lang-tab').forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      var lang = this.dataset.lang;
-      document.querySelectorAll('.lang-tab').forEach(function(t) {
-        t.classList.remove('active');
-        t.setAttribute('aria-selected', 'false');
-      });
-      document.querySelectorAll('.about-text').forEach(function(el) {
-        el.classList.remove('active');
-      });
-      this.classList.add('active');
-      this.setAttribute('aria-selected', 'true');
-      document.getElementById('about-' + lang).classList.add('active');
-    });
-  });
 </script>
 </body>
 </html>
