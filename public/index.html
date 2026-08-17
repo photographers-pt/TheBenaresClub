@@ -442,10 +442,122 @@
       color: var(--text-primary);
     }
 
+    /* ══════════════════════════════════════
+       02 · NOVEDADES — Blog
+    ══════════════════════════════════════ */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .blog-card {
+      display: flex;
+      flex-direction: column;
+      background: rgba(255, 248, 238, 0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: border-color 0.25s;
+    }
+
+    .blog-card:hover {
+      border-color: var(--border-strong);
+    }
+
+    .blog-card-img-wrap {
+      position: relative;
+      display: block;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+    }
+
+    .blog-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.5s ease;
+      filter: brightness(0.85);
+    }
+
+    .blog-card:hover .blog-card-img {
+      transform: scale(1.04);
+    }
+
+    .blog-tag {
+      position: absolute;
+      top: 0.85rem;
+      left: 0.85rem;
+      font-family: var(--font-family);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(240, 232, 216, 0.9);
+      background: rgba(10, 9, 8, 0.65);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(240, 232, 216, 0.15);
+      border-radius: 3px;
+      padding: 0.3rem 0.65rem;
+    }
+
+    .blog-card-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 1.5rem;
+      gap: 0.5rem;
+    }
+
+    .blog-date {
+      font-family: var(--font-family);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .blog-title {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.35;
+      margin-top: 0.15rem;
+    }
+
+    .blog-excerpt {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: rgba(240, 232, 216, 0.55);
+      flex: 1;
+      margin-top: 0.25rem;
+    }
+
+    .blog-link {
+      display: inline-block;
+      margin-top: 1rem;
+      font-family: var(--font-family);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .blog-link:hover {
+      color: var(--text-primary);
+    }
+
     /* ── Responsive ── */
     @media (max-width: 1000px) {
       .pillars-grid { grid-template-columns: repeat(2, 1fr); }
       .projects-grid { grid-template-columns: repeat(2, 1fr); }
+      .blog-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 900px) {
@@ -459,6 +571,7 @@
       .section { padding: 4rem 0; }
       .pillars-grid { grid-template-columns: 1fr 1fr; }
       .projects-grid { grid-template-columns: 1fr; }
+      .blog-grid { grid-template-columns: 1fr; }
       .discover-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
       .stats-row { grid-template-columns: repeat(3, 1fr); }
     }
@@ -582,10 +695,61 @@
     </div>
   </section>
 
-  <!-- 02 · Descobre -->
+  <!-- 02 · Novedades -->
+  <section class="section" id="novedades">
+    <div class="wrap">
+      <span class="s-eyebrow">02 · Novedades</span>
+      <h2 class="s-title">O que há de novo</h2>
+
+      <div class="blog-grid">
+
+        <article class="blog-card">
+          <a href="#" class="blog-card-img-wrap">
+            <img src="/media/fototeca/thumb/mu4-01.jpg" alt="" class="blog-card-img">
+            <span class="blog-tag">Evento</span>
+          </a>
+          <div class="blog-card-body">
+            <time class="blog-date">16 Mar 2026</time>
+            <h3 class="blog-title">MashUp #4 — Uma noite de cinema e música</h3>
+            <p class="blog-excerpt">A quarta edição do MashUp reuniu realizadores, músicos e o público numa noite de projeções e improvisação ao vivo no coração de Lisboa.</p>
+            <a href="#" class="blog-link">Ler mais →</a>
+          </div>
+        </article>
+
+        <article class="blog-card">
+          <a href="#" class="blog-card-img-wrap">
+            <img src="/media/cinemateca/stills/inx-still3.png" alt="" class="blog-card-img">
+            <span class="blog-tag">Filme</span>
+          </a>
+          <div class="blog-card-body">
+            <time class="blog-date">2023</time>
+            <h3 class="blog-title">Inexistente — O nosso primeiro filme</h3>
+            <p class="blog-excerpt">Helder visita a antiga casa do seu melhor amigo, Pedro, quem desapareceu sem deixar rasto. Uma curta sobre memória e ausência, já disponível na Cinemateca.</p>
+            <a href="/cinemateca/" class="blog-link">Ver na Cinemateca →</a>
+          </div>
+        </article>
+
+        <article class="blog-card">
+          <a href="#" class="blog-card-img-wrap">
+            <img src="/media/fototeca/thumb/jg-01.jpg" alt="" class="blog-card-img">
+            <span class="blog-tag">Em produção</span>
+          </a>
+          <div class="blog-card-body">
+            <time class="blog-date">2026</time>
+            <h3 class="blog-title">Firefly — A nossa próxima curta</h3>
+            <p class="blog-excerpt">A terceira curta-metragem do clube está em pré-produção. Fica atento às novidades e acompanha o processo nas nossas redes.</p>
+            <a href="/cinemateca/" class="blog-link">Saber mais →</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · Descobre -->
   <section class="section" id="descobre">
     <div class="wrap">
-      <span class="s-eyebrow">02 · Explora</span>
+      <span class="s-eyebrow">03 · Explora</span>
       <h2 class="s-title">Descobre o clube</h2>
 
       <div class="discover-grid">
