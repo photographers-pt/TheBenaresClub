@@ -239,6 +239,10 @@ nav a.active {
      FOOTER
 =========================== */
 
+/* LANGUAGE SWITCHER */
+[data-lang] { display: none; }
+[data-lang].active { display: revert; }
+
 footer {
   background-color: rgba(8, 7, 6, 0.85);
   color: var(--accent-color);
