@@ -45,8 +45,9 @@ function createHeader() {
       <a href="/">
         <img src="/media/A00_Logo_&_title_-_light.png" alt="Club Benares" style="height: 30px;">
       </a>
-      <button id="lang-btn" class="lang-btn" aria-label="Mudar idioma">PT</button>
-      <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+      <div style="display:flex;align-items:center;gap:0.6rem;">
+        <button id="lang-btn" class="lang-btn" aria-label="Mudar idioma">PT</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
         <svg class="nav-icon-open" width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect width="20" height="2" rx="1" fill="currentColor"/>
           <rect y="6" width="20" height="2" rx="1" fill="currentColor"/>
@@ -57,6 +58,7 @@ function createHeader() {
           <line x1="13" y1="1" x2="1" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>
       </button>
+      </div>
     </header>
 
     <nav aria-label="Menu principal" id="main-nav" class="active">
