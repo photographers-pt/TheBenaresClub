@@ -719,7 +719,7 @@
 
       <div class="blog-grid">
 
-        <article class="blog-card">
+        <article class="blog-card" data-post="concurso">
           <a href="#" class="blog-card-img-wrap">
             <img src="/media/fototeca/thumb/eac-01.jpg" alt="" class="blog-card-img">
             <span class="blog-tag">
@@ -746,7 +746,7 @@
           </div>
         </article>
 
-        <article class="blog-card">
+        <article class="blog-card" data-post="mashup4">
           <a href="#" class="blog-card-img-wrap">
             <img src="/media/fototeca/thumb/mu4-01.jpg" alt="" class="blog-card-img">
             <span class="blog-tag">
@@ -773,7 +773,7 @@
           </div>
         </article>
 
-        <article class="blog-card">
+        <article class="blog-card" data-post="inexistente">
           <a href="#" class="blog-card-img-wrap">
             <img src="/media/cinemateca/stills/inx-still3.png" alt="" class="blog-card-img">
             <span class="blog-tag">
@@ -1061,6 +1061,273 @@
       cur = (cur + 1) % slides.length;
       slides[cur].classList.add('active');
     }, 4000);
+  })();
+</script>
+
+<!-- ── Blog Post Modal ── -->
+<div id="post-modal" class="post-modal" aria-modal="true" role="dialog" aria-label="Post" hidden>
+  <div class="post-modal-backdrop"></div>
+  <div class="post-modal-panel">
+    <button class="post-modal-close" aria-label="Fechar">&times;</button>
+    <div class="post-modal-img-wrap">
+      <img id="post-modal-img" src="" alt="" class="post-modal-img">
+    </div>
+    <div class="post-modal-content">
+      <div class="post-modal-meta">
+        <span id="post-modal-tag" class="blog-tag"></span>
+        <time id="post-modal-date" class="blog-date"></time>
+      </div>
+      <h2 id="post-modal-title" class="post-modal-title"></h2>
+      <div id="post-modal-body" class="post-modal-body"></div>
+      <a id="post-modal-link" href="#" class="post-modal-cta"></a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .post-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .post-modal[hidden] { display: none; }
+
+  .post-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+  }
+
+  .post-modal-panel {
+    position: relative;
+    background: var(--surface, #1a1714);
+    border: 1px solid var(--border, rgba(240,232,216,0.12));
+    border-radius: 10px;
+    width: 100%;
+    max-width: 760px;
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-modal-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.85rem;
+    background: transparent;
+    border: none;
+    color: var(--text-muted, rgba(240,232,216,0.55));
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 1;
+    padding: 0.2rem 0.4rem;
+    transition: color 0.2s;
+  }
+  .post-modal-close:hover { color: var(--text-primary, #f0e8d8); }
+
+  .post-modal-img-wrap {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 10px 10px 0 0;
+  }
+  .post-modal-img-wrap:empty { display: none; }
+
+  .post-modal-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .post-modal-content {
+    padding: 2rem 2rem 2.5rem;
+  }
+
+  .post-modal-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .post-modal-title {
+    font-family: 'Montserrat', var(--font-family, sans-serif);
+    font-size: clamp(1.3rem, 3vw, 1.85rem);
+    font-weight: 600;
+    color: var(--text-primary, #f0e8d8);
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+    text-transform: none;
+  }
+
+  .post-modal-body {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-muted, rgba(240,232,216,0.75));
+    margin-bottom: 1.75rem;
+  }
+
+  .post-modal-cta {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-primary, #f0e8d8);
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .post-modal-cta:hover { opacity: 0.7; }
+  .post-modal-cta[hidden] { display: none; }
+
+  @media (max-width: 600px) {
+    .post-modal-content { padding: 1.5rem 1.25rem 2rem; }
+  }
+</style>
+
+<script>
+  (function() {
+    const POSTS = {
+      concurso: {
+        image: '/media/fototeca/thumb/eac-01.jpg',
+        tag:   { pt: 'Concurso', en: 'Open Call', es: 'Concurso' },
+        date:  '2026',
+        title: { pt: 'Submete a tua ideia — Produz connosco', en: 'Submit your idea — Make a film with us', es: 'Envía tu idea — Produce con nosotros' },
+        body:  {
+          pt: 'Queres produzir a tua curta-metragem? No Club Benares acreditamos que cada história merece ser contada. Estamos à procura de ideias originais para co-produzir juntos em 2026 — desde o argumento à pós-produção, percorremos o caminho contigo. Não precisas de experiência prévia, só de uma boa história. Submete a tua ideia pelo formulário de contacto e faz o teu filme connosco.',
+          en:  'Do you want to produce your own short film? At Club Benares we believe every story deserves to be told. We\'re looking for original ideas to co-produce together in 2026 — from script to post-production, we walk the journey with you. No prior experience needed, just a good story. Submit your idea through the contact form and make your film with us.',
+          es:  '¿Quieres producir tu cortometraje? En Club Benares creemos que cada historia merece ser contada. Estamos buscando ideas originales para co-producir juntos en 2026 — desde el guion hasta la postproducción, recorremos el camino contigo. No necesitas experiencia previa, solo una buena historia. Envía tu idea a través del formulario de contacto y haz tu película con nosotros.'
+        },
+        link:      '/contactos/',
+        linkLabel: { pt: 'Submeter ideia →', en: 'Submit idea →', es: 'Enviar idea →' }
+      },
+      mashup4: {
+        image: '/media/fototeca/thumb/mu4-01.jpg',
+        tag:   { pt: 'Evento', en: 'Event', es: 'Evento' },
+        date:  '16 Mar 2026',
+        title: { pt: 'MashUp #4 — Uma noite de cinema e música', en: 'MashUp #4 — A night of cinema and music', es: 'MashUp #4 — Una noche de cine y música' },
+        body:  {
+          pt: 'A quarta edição do MashUp reuniu realizadores, músicos e o público numa noite inesquecível de projeções e improvisação ao vivo no coração de Lisboa. Curtas-metragens foram projetadas ao som de música composta e tocada ao vivo, criando uma experiência única onde imagem e som se fundem. Uma noite que ficou na memória de quem esteve presente.',
+          en:  'The fourth edition of MashUp brought together directors, musicians and the public for an unforgettable night of screenings and live improvisation in the heart of Lisbon. Short films were screened to the sound of live composed and performed music, creating a unique experience where image and sound merge. A night that will stay in the memory of those who were there.',
+          es:  'La cuarta edición del MashUp reunió a realizadores, músicos y el público en una noche inolvidable de proyecciones e improvisación en vivo en el corazón de Lisboa. Los cortometrajes se proyectaron con música compuesta e interpretada en directo, creando una experiencia única donde imagen y sonido se fusionan. Una noche que quedó en la memoria de quienes estuvieron presentes.'
+        },
+        link:      null,
+        linkLabel: null
+      },
+      inexistente: {
+        image: '/media/cinemateca/stills/inx-still3.png',
+        tag:   { pt: 'Filme', en: 'Film', es: 'Película' },
+        date:  '2023',
+        title: { pt: 'Inexistente — O nosso primeiro filme', en: 'Inexistente — Our first film', es: 'Inexistente — Nuestra primera película' },
+        body:  {
+          pt: 'Helder visita a antiga casa do seu melhor amigo, Pedro, quem desapareceu sem deixar rasto. O que começa como uma visita torna-se uma viagem pela memória, pela saudade e pelo peso das coisas não ditas. Inexistente é a primeira curta-metragem do Club Benares, realizada em 2023, e está disponível para ver na nossa Cinemateca.',
+          en:  'Helder visits the former home of his best friend Pedro, who vanished without a trace. What begins as a visit becomes a journey through memory, longing and the weight of things left unsaid. Inexistente is Club Benares\' first short film, made in 2023, and is available to watch in our Cinemateca.',
+          es:  'Helder visita la antigua casa de su mejor amigo Pedro, quien desapareció sin dejar rastro. Lo que comienza como una visita se convierte en un viaje por la memoria, la nostalgia y el peso de las cosas no dichas. Inexistente es el primer cortometraje de Club Benares, realizado en 2023, y está disponible para ver en nuestra Cinemateca.'
+        },
+        link:      '/cinemateca/',
+        linkLabel: { pt: 'Ver na Cinemateca →', en: 'Watch in Cinemateca →', es: 'Ver en Cinemateca →' }
+      }
+    };
+
+    function openModal(postId) {
+      const post = POSTS[postId];
+      if (!post) return;
+      const lang = (typeof getCurrentLang === 'function' ? getCurrentLang() : localStorage.getItem('site-lang')) || 'pt';
+
+      const modal   = document.getElementById('post-modal');
+      const imgEl   = document.getElementById('post-modal-img');
+      const imgWrap = imgEl.parentElement;
+      const tagEl   = document.getElementById('post-modal-tag');
+      const dateEl  = document.getElementById('post-modal-date');
+      const titleEl = document.getElementById('post-modal-title');
+      const bodyEl  = document.getElementById('post-modal-body');
+      const linkEl  = document.getElementById('post-modal-link');
+
+      if (post.image) {
+        imgEl.src = post.image;
+        imgWrap.style.display = '';
+      } else {
+        imgWrap.style.display = 'none';
+      }
+
+      tagEl.textContent   = post.tag[lang]   || post.tag.pt;
+      dateEl.textContent  = post.date;
+      titleEl.textContent = post.title[lang]  || post.title.pt;
+      bodyEl.textContent  = post.body[lang]   || post.body.pt;
+
+      if (post.link && post.linkLabel) {
+        linkEl.href        = post.link;
+        linkEl.textContent = post.linkLabel[lang] || post.linkLabel.pt;
+        linkEl.removeAttribute('hidden');
+      } else {
+        linkEl.setAttribute('hidden', '');
+      }
+
+      modal._postId = postId;
+      modal.removeAttribute('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('post-modal');
+      modal.setAttribute('hidden', '');
+      modal._postId = null;
+      document.body.style.overflow = '';
+    }
+
+    function refreshModalLang(lang) {
+      const modal = document.getElementById('post-modal');
+      if (modal.hasAttribute('hidden') || !modal._postId) return;
+      const post = POSTS[modal._postId];
+      if (!post) return;
+      document.getElementById('post-modal-tag').textContent   = post.tag[lang]   || post.tag.pt;
+      document.getElementById('post-modal-title').textContent = post.title[lang]  || post.title.pt;
+      document.getElementById('post-modal-body').textContent  = post.body[lang]   || post.body.pt;
+      const linkEl = document.getElementById('post-modal-link');
+      if (post.link && post.linkLabel) {
+        linkEl.textContent = post.linkLabel[lang] || post.linkLabel.pt;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Wire card clicks
+      document.querySelectorAll('.blog-card[data-post]').forEach(function(card) {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', function(e) {
+          // Don't open modal if clicking the CTA link
+          if (e.target.closest('.blog-link')) return;
+          e.preventDefault();
+          openModal(card.dataset.post);
+        });
+      });
+
+      // Close on backdrop or close button
+      document.getElementById('post-modal').addEventListener('click', function(e) {
+        if (e.target.classList.contains('post-modal-backdrop') || e.target.classList.contains('post-modal-close')) {
+          closeModal();
+        }
+      });
+
+      // Close on ESC
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeModal();
+      });
+
+      // Update modal text when language changes
+      document.addEventListener('langchange', function(e) {
+        refreshModalLang(e.detail.lang);
+      });
+    });
   })();
 </script>
 </body>
