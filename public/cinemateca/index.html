@@ -1012,7 +1012,7 @@
         duration: "Curta-metragem",
         genre: "Drama",
         description: "Helder visita a antiga casa do seu melhor amigo, Pedro, quem desapareceu há um tempo atrás sem deixar rasto. O objetivo do Helder é redescobrir memórias esquecidas, mas acabará por descobrir ainda mais.",
-        poster: "/media/cinemateca/posters/inexistente.png",
+        poster: "/media/cinemateca/posters/inexistente.jpg",
         icon: "🏚️",
         trailerVideo: null,
         trailerUrl: null,
@@ -1024,7 +1024,7 @@
           "País": "Portugal",
           "Ano": "2023"
         },
-        heroImage: "/media/cinemateca/stills/inx-still3.png",
+        heroImage: "/media/cinemateca/stills/inx-still3.jpg",
         free: true,
         embedUrl: "https://vimeo.com/930451906",
         featured: true
@@ -1037,7 +1037,7 @@
         duration: "Curta-metragem",
         genre: "Drama",
         description: "Um jovem artista finaliza a sua obra-prima, mas a cada dia que passa, fica mais insatisfeito com o resultado final, por isso decide descartar o seu trabalho. Posteriormente, um crítico de arte encontra a sua obra...",
-        poster: "/media/cinemateca/posters/el-artista-comprendido.png",
+        poster: "/media/cinemateca/posters/el-artista-comprendido.jpg",
         icon: "🎨",
         trailerVideo: null,
         trailerUrl: null,
@@ -1049,7 +1049,7 @@
           "Elenco": "Charlie Chaves · Bruno de Franclieu",
           "País": "Portugal"
         },
-        heroImage: "/media/cinemateca/stills/eac-still1.png",
+        heroImage: "/media/cinemateca/stills/eac-still1.jpg",
         free: true,
         embedUrl: "https://vimeo.com/930022904",
         featured: false
@@ -1071,7 +1071,7 @@
           "País": "Portugal",
           "Ano": "2024"
         },
-        heroImage: "/media/cinemateca/stills/elprofesor-still1.png",
+        heroImage: "/media/cinemateca/stills/elprofesor-still1.jpg",
         free: false,
         comingSoon: true,
         rentPrice: "€3,50",
@@ -1086,7 +1086,7 @@
         duration: "Curta-metragem",
         genre: "Drama",
         description: "Em breve mais informações.",
-        poster: "/media/cinemateca/posters/jay-gupta.png",
+        poster: "/media/cinemateca/posters/jay-gupta.jpg",
         icon: "🌟",
         trailerVideo: null,
         trailerUrl: null,
@@ -1098,7 +1098,7 @@
           "Elenco": "Akshay Tharabole · Nilesh Suryawanshi · Varsha Mehra · Yacine Meziti · Francisco Lopes",
           "País": "Portugal"
         },
-        heroImage: "/media/cinemateca/stills/jaygupta-still1.png",
+        heroImage: "/media/cinemateca/stills/jaygupta-still1.jpg",
         free: false,
         comingSoon: true,
         rentPrice: "€3,50",
@@ -1166,15 +1166,17 @@
         if (film.heroImage) {
           const img = document.createElement('img');
           img.className = 'hero-video';
-          img.src = film.heroImage;
           img.alt = '';
+          if (i === 0) { img.src = film.heroImage; }
+          else { img.dataset.src = film.heroImage; img.loading = 'lazy'; }
           ph.appendChild(img);
         } else if (film.poster) {
           const img = document.createElement('img');
           img.className = 'hero-video';
-          img.src = film.poster;
           img.alt = '';
           img.style.opacity = '0.55';
+          if (i === 0) { img.src = film.poster; }
+          else { img.dataset.src = film.poster; img.loading = 'lazy'; }
           ph.appendChild(img);
         } else {
           ph.textContent = film.icon;
@@ -1252,6 +1254,12 @@
       dotsWrap.children[currentSlide].classList.remove('active');
 
       currentSlide = idx;
+
+      // Hydrate lazy images on first activation
+      slides[currentSlide].querySelectorAll('img[data-src]').forEach(function(img) {
+        img.src = img.dataset.src;
+        delete img.dataset.src;
+      });
 
       slides[currentSlide].classList.add('active');
       dotsWrap.children[currentSlide].classList.add('active');
