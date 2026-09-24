@@ -81,6 +81,94 @@
       word-break: break-all;
     }
 
+    /* Newsletter */
+    .newsletter-block {
+      margin-top: 4rem;
+      padding: 2.5rem 2rem;
+      background: rgba(255,248,238,0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+
+    .newsletter-block .section-label {
+      margin-bottom: 0.5rem;
+    }
+
+    .newsletter-heading {
+      font-family: var(--font-family);
+      font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin: 0 0 0.6rem;
+    }
+
+    .newsletter-desc {
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 0 1.75rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      min-width: 220px;
+      background: rgba(255,248,238,0.05);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.75rem 1rem;
+      font-family: var(--font-family);
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .newsletter-input::placeholder { color: var(--text-muted); opacity: 0.6; }
+    .newsletter-input:focus { border-color: var(--border-strong); }
+
+    .newsletter-btn {
+      background: var(--text-primary);
+      color: #000;
+      border: none;
+      border-radius: 4px;
+      padding: 0.75rem 1.75rem;
+      font-family: var(--font-family);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    .newsletter-btn:hover { opacity: 0.82; }
+
+    .newsletter-ok {
+      display: none;
+      font-family: var(--font-family);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 1rem;
+    }
+
+    .newsletter-note {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      opacity: 0.5;
+      margin-top: 0.85rem;
+    }
+
     @media (max-width: 480px) {
       .contactos-section {
         padding: 4rem 1.25rem 6rem;
@@ -89,6 +177,9 @@
       .contacts-grid {
         grid-template-columns: 1fr;
       }
+
+      .newsletter-form { flex-direction: column; }
+      .newsletter-btn  { width: 100%; }
     }
   </style>
 </head>
@@ -133,11 +224,79 @@
         </a>
 
       </div>
+
+      <!-- Newsletter -->
+      <div class="newsletter-block">
+        <p class="section-label">Newsletter</p>
+        <h2 class="newsletter-heading">
+          <span data-lang="pt">Fica a par de tudo</span>
+          <span data-lang="en">Stay in the loop</span>
+          <span data-lang="es">Mantente al día</span>
+        </h2>
+        <p class="newsletter-desc" data-lang="pt">Novos filmes, eventos próximos, chamadas abertas e tudo o que se passa no clube — diretamente no teu email. Sem spam, sem algoritmos.</p>
+        <p class="newsletter-desc" data-lang="en">New films, upcoming events, open calls and everything happening at the club — straight to your inbox. No spam, no algorithms.</p>
+        <p class="newsletter-desc" data-lang="es">Nuevas películas, próximos eventos, convocatorias abiertas y todo lo que pasa en el club — directo a tu email. Sin spam, sin algoritmos.</p>
+        <form class="newsletter-form" id="newsletter-form" novalidate>
+          <input
+            class="newsletter-input"
+            type="email"
+            id="newsletter-email"
+            autocomplete="email"
+            required
+            data-placeholder-pt="O teu endereço de email"
+            data-placeholder-en="Your email address"
+            data-placeholder-es="Tu dirección de email"
+          />
+          <button type="submit" class="newsletter-btn">
+            <span data-lang="pt">Subscrever</span>
+            <span data-lang="en">Subscribe</span>
+            <span data-lang="es">Suscribirse</span>
+          </button>
+        </form>
+        <p class="newsletter-ok" id="newsletter-ok">
+          <span data-lang="pt">✓ Subscrito! Obrigado.</span>
+          <span data-lang="en">✓ Subscribed! Thank you.</span>
+          <span data-lang="es">✓ ¡Suscrito! Gracias.</span>
+        </p>
+        <p class="newsletter-note" data-lang="pt">Podes cancelar a qualquer momento.</p>
+        <p class="newsletter-note" data-lang="en">You can unsubscribe at any time.</p>
+        <p class="newsletter-note" data-lang="es">Puedes darte de baja en cualquier momento.</p>
+      </div>
+
     </section>
   </main>
 
   <div id="footer-container"></div>
 
   <script src="/shared.js"></script>
+  <script>
+    (function() {
+      var input = document.getElementById('newsletter-email');
+      var form  = document.getElementById('newsletter-form');
+      var ok    = document.getElementById('newsletter-ok');
+
+      function setPlaceholder() {
+        var lang = localStorage.getItem('site-lang') || 'pt';
+        input.placeholder = input.dataset['placeholder' + lang.charAt(0).toUpperCase() + lang.slice(1)] || input.dataset.placeholderPt;
+      }
+      setPlaceholder();
+      document.addEventListener('langchange', setPlaceholder);
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (!input.value || !input.validity.valid) {
+          input.focus();
+          return;
+        }
+        /* Store locally — swap this for a real API call when ready */
+        var list = JSON.parse(localStorage.getItem('nl-subs') || '[]');
+        if (!list.includes(input.value)) list.push(input.value);
+        localStorage.setItem('nl-subs', JSON.stringify(list));
+
+        form.style.display = 'none';
+        ok.style.display = 'block';
+      });
+    })();
+  </script>
 </body>
 </html>
