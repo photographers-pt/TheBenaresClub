@@ -340,6 +340,75 @@
     .event-modal-cta:hover { background: #fff; }
     .event-modal-cta[hidden] { display: none; }
 
+    /* ── Preview (eventos não confirmados) ── */
+    .event-list-wrap {
+      position: relative;
+    }
+
+    .event-list-wrap.preview .event-list {
+      filter: blur(5px);
+      opacity: 0.35;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .event-list-cover {
+      display: none;
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      align-items: center;
+      justify-content: center;
+    }
+    .event-list-wrap.preview .event-list-cover { display: flex; }
+
+    .event-list-cover-inner {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .event-list-cover-icon { font-size: 2rem; line-height: 1; }
+
+    .event-list-cover-title {
+      font-family: var(--font-family);
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .event-list-cover-sub {
+      font-family: var(--font-family);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .event-list-cover-ig {
+      margin-top: 0.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-family);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border: 1px solid var(--border-strong);
+      border-radius: 4px;
+      padding: 0.55rem 1.1rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .event-list-cover-ig:hover { color: var(--text-primary); border-color: var(--text-primary); }
+
     /* ── Responsive ── */
     @media (max-width: 600px) {
       .event-row {
@@ -380,7 +449,19 @@
         <h2 class="section-title">Próximos eventos</h2>
       </div>
 
-      <div class="event-list" id="event-list"></div>
+      <div class="event-list-wrap preview" id="event-list-wrap">
+        <div class="event-list" id="event-list"></div>
+        <div class="event-list-cover">
+          <div class="event-list-cover-inner">
+            <span class="event-list-cover-icon">📅</span>
+            <p class="event-list-cover-title">Agenda em preparação</p>
+            <p class="event-list-cover-sub">Estamos a confirmar as datas dos próximos eventos.<br>Segue-nos no Instagram para não perderes nenhum anúncio.</p>
+            <a class="event-list-cover-ig" href="https://www.instagram.com/thebenaresclub" target="_blank" rel="noopener">
+              <i class="fab fa-instagram"></i> @thebenaresclub
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -516,10 +597,17 @@
       },
     ];
 
+    /*
+     * Para ativar os eventos (retirar difusão):
+     *   document.getElementById('event-list-wrap').classList.remove('preview');
+     * ou simplesmente remove a classe "preview" do HTML acima.
+     */
+
     /* ── Render list ── */
     const list = document.getElementById('event-list');
 
     if (events.length === 0) {
+      document.getElementById('event-list-wrap').classList.remove('preview');
       list.innerHTML = `
         <div class="cooking-state">
           <span class="cooking-state-icon">🍳</span>
