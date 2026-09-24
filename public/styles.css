@@ -239,6 +239,56 @@ nav a.active {
 [data-lang] { display: none; }
 [data-lang].active { display: revert; }
 
+/* ── Cooking-state placeholder (shared across Eventos, .KO, Mercado) ── */
+.cooking-state {
+  padding: 4rem 1rem 5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-family);
+}
+.cooking-state-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+.cooking-state-title {
+  font-size: 1.3rem;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin: 0;
+}
+.cooking-state-sub {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin: 0;
+}
+.cooking-state-ig {
+  margin-top: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 0.6rem 1.25rem;
+  transition: color 0.2s, border-color 0.2s;
+}
+.cooking-state-ig:hover {
+  color: var(--text-primary);
+  border-color: var(--text-primary);
+}
+
 footer {
   background-color: rgba(0, 0, 0, 0.95);
   color: var(--accent-color);
