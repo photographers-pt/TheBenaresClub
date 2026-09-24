@@ -351,17 +351,6 @@ function applyRandomBoxShadows() {
 
 document.addEventListener('DOMContentLoaded', function() {
 
-  // Inject atmosphere orbs + vignette (fixed, behind everything)
-  if (!document.querySelector('.atmosphere')) {
-    const atm = document.createElement('div');
-    atm.className = 'atmosphere';
-    atm.innerHTML = '<div class="orb a"></div><div class="orb b"></div><div class="orb c"></div><div class="orb d"></div>';
-    document.body.appendChild(atm);
-    const vig = document.createElement('div');
-    vig.className = 'vignette';
-    document.body.appendChild(vig);
-  }
-
   // Insert header
   const headerContainer = document.getElementById('header-container');
   if (headerContainer) {

@@ -1,5 +1,5 @@
 :root {
-  --bg-base: #080706;
+  --bg-base: #000000;
   --bg-surface: rgba(255, 248, 238, 0.05);
   --bg-elevated: rgba(255, 248, 238, 0.09);
   --bg-hover: rgba(255, 248, 238, 0.13);
@@ -8,7 +8,7 @@
   --text-muted: rgba(240, 232, 216, 0.32);
   --border: rgba(255, 248, 238, 0.10);
   --border-strong: rgba(255, 248, 238, 0.22);
-  --glass-blur: blur(20px) saturate(160%);
+  --glass-blur: none;
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -118,13 +118,11 @@ main {
 
 /* HEADER */
 header {
-  background-color: rgba(8, 7, 6, 0.7);
+  background-color: rgba(0, 0, 0, 0.85);
   color: var(--accent-color);
   text-align: center;
   padding: 0.75rem 0.5rem;
   border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   position: relative;
   display: flex;
   justify-content: center;
@@ -174,10 +172,8 @@ header h1 {
 
 /* NAV */
 nav {
-  background-color: rgba(8, 7, 6, 0.85);
+  background-color: rgba(0, 0, 0, 0.95);
   border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
   transition: max-height 0.3s ease, opacity 0.3s ease;
   max-height: 0;
   overflow: hidden;
@@ -244,13 +240,11 @@ nav a.active {
 [data-lang].active { display: revert; }
 
 footer {
-  background-color: rgba(8, 7, 6, 0.85);
+  background-color: rgba(0, 0, 0, 0.95);
   color: var(--accent-color);
   text-align: center;
   padding: 0.5rem 1rem;
   border-top: 1px solid var(--border);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
   border-radius: 10px 10px 0 0;
   font-size: 0.75rem;
   font-family: var(--font-family);
@@ -551,9 +545,7 @@ footer .copyright {
   left: 50%;
   transform: translate(-50%, -50%);
   
-  background: rgba(20, 20, 20, 0.3); /* fondo oscuro translúcido */
-  backdrop-filter: blur(12px) brightness(0.7); /* desenfoque y oscurecimiento */
-  -webkit-backdrop-filter: blur(12px) brightness(0.7); /* compatibilidad Safari */
+  background: rgba(20, 20, 20, 0.85);
 
   border: 1px solid rgba(255, 255, 255, 0.1); /* borde sutil */
   border-radius: 15px;
@@ -706,8 +698,7 @@ footer .copyright {
   left: 0;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(8px);
-  background: rgba(0, 0, 0, 0.4); /* opcional: añade un poco de oscuridad */
+  background: rgba(0, 0, 0, 0.65);
   z-index: 9998;
   display: none;
 }
@@ -819,8 +810,7 @@ footer .copyright {
 
 /* popup2 responsivo y centrado */
 .popup2-window {
-  background: rgba(10, 10, 10, 0.7);
-  backdrop-filter: blur(10px);
+  background: rgba(10, 10, 10, 0.95);
   color: white;
   padding: 2rem;
   border-radius: 16px;
@@ -959,15 +949,11 @@ body.bg-contactos { background-image: url("media/B04\ Noticias.png"); }
 /* ── Glass utility components ───────────────────── */
 .glass {
   background: var(--bg-surface);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--border);
 }
 
 .glass-card {
   background: var(--bg-surface);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
@@ -1010,7 +996,6 @@ body.bg-contactos { background-image: url("media/B04\ Noticias.png"); }
   font-size: 0.85rem;
   cursor: pointer;
   text-decoration: none;
-  backdrop-filter: var(--glass-blur);
   transition: background 0.2s ease, border-color 0.2s ease;
 }
 .btn-ghost:hover {
@@ -1047,43 +1032,12 @@ body.bg-contactos { background-image: url("media/B04\ Noticias.png"); }
    NEW DESIGN SYSTEM — atmosphere, components, layout
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
-/* ── Atmosphere orbs ───────────────────────────────────────── */
-.atmosphere {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(110px);
-  will-change: transform;
-  mix-blend-mode: screen;
-}
-.orb.a { width: 60vw; height: 60vw; left: -10vw; top: -16vw; background: radial-gradient(circle, rgba(255,248,238,0.08), rgba(255,255,255,0) 70%); animation: orbA 30s ease-in-out infinite; }
-.orb.b { width: 46vw; height: 46vw; right: -8vw; top: 16vh; background: radial-gradient(circle, rgba(255,248,238,0.06), rgba(255,255,255,0) 70%); animation: orbB 38s ease-in-out infinite; }
-.orb.c { width: 38vw; height: 38vw; left: 30vw; bottom: -8vw; background: radial-gradient(circle, rgba(255,248,238,0.05), rgba(255,255,255,0) 70%); animation: orbC 46s ease-in-out infinite; }
-.orb.d { width: 28vw; height: 28vw; left: -4vw; bottom: 28vh; background: radial-gradient(circle, rgba(255,248,238,0.04), rgba(255,255,255,0) 70%); animation: orbA 54s ease-in-out infinite reverse; }
-@keyframes orbA { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(7vw,5vh) scale(1.08); } }
-@keyframes orbB { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-5vw,-3vh) scale(0.94); } }
-@keyframes orbC { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-3vw,-7vh) scale(1.04); } }
-
-/* ── Vignette ──────────────────────────────────────────────── */
-.vignette {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  background: radial-gradient(ellipse at center, transparent 32%, rgba(8,7,6,0.55) 100%);
-}
+/* Atmosphere orbs and vignette removed — plain black background */
+.atmosphere, .vignette { display: none; }
 
 /* ── Enhanced glass card ───────────────────────────────────── */
 .glass-bright {
   background: linear-gradient(140deg, rgba(255,248,238,0.10), rgba(255,248,238,0.02) 60%, rgba(255,248,238,0.06));
-  backdrop-filter: blur(28px) saturate(170%);
-  -webkit-backdrop-filter: blur(28px) saturate(170%);
   border: 1px solid rgba(255,248,238,0.18);
   box-shadow: inset 0 1px 0 rgba(255,248,238,0.20), inset 0 -1px 0 rgba(255,248,238,0.04), 0 32px 64px -32px rgba(0,0,0,0.75);
   border-radius: var(--radius-lg, 16px);
@@ -1158,7 +1112,7 @@ body.bg-contactos { background-image: url("media/B04\ Noticias.png"); }
 }
 .pill.on {
   background: var(--text-primary, #f0e8d8);
-  color: #080706;
+  color: #000000;
   border-color: var(--text-primary, #f0e8d8);
 }
 
@@ -1311,7 +1265,7 @@ body.bg-contactos { background-image: url("media/B04\ Noticias.png"); }
 }
 .event-row-link:hover .erl-arrow {
   background: var(--text-primary, #f0e8d8);
-  color: #080706;
+  color: #000000;
   transform: rotate(-45deg);
 }
 
@@ -1346,7 +1300,7 @@ body.bg-contactos { background-image: url("media/B04\ Noticias.png"); }
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 38%, rgba(8,7,6,0.80));
+  background: linear-gradient(180deg, transparent 38%, rgba(0,0,0,0.80));
 }
 .arc-img img {
   width: 100%; height: 100%;
@@ -1359,8 +1313,7 @@ body.bg-contactos { background-image: url("media/B04\ Noticias.png"); }
   top: 1rem; left: 1rem;
   padding: 0.3rem 0.6rem;
   border-radius: 8px;
-  background: rgba(8,7,6,0.55);
-  backdrop-filter: blur(10px);
+  background: rgba(0,0,0,0.8);
   border: 1px solid var(--border, rgba(255,248,238,0.08));
   font-size: 0.58rem;
   letter-spacing: 0.1em;
@@ -1667,7 +1620,7 @@ body.bg-contactos { background-image: url("media/B04\ Noticias.png"); }
   position: absolute;
   inset: auto 0 0 0;
   height: 35%;
-  background: linear-gradient(to bottom, transparent, var(--bg-base, #080706));
+  background: linear-gradient(to bottom, transparent, var(--bg-base, #000000));
   pointer-events: none;
   z-index: 1;
 }
