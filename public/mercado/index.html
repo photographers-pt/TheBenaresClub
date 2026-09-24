@@ -70,18 +70,41 @@
         transparent 100%);
     }
 
+    .empty-icon {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
     .coming-label {
       font-family: var(--font-family);
-      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
       font-weight: 300;
       letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--text-primary);
       border: 1px solid var(--border-strong);
       border-radius: 4px;
-      padding: 1rem 2.5rem;
+      padding: 0.85rem 2.5rem;
       display: inline-block;
+      margin-bottom: 1.5rem;
     }
+
+    .mercado-ig {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      font-family: var(--font-family);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .mercado-ig:hover { color: var(--text-primary); }
 
     .mercado-hint {
       margin-top: 1.5rem;
@@ -141,11 +164,15 @@
 
     <!-- Overlay -->
     <div class="mercado-overlay">
-      <span class="coming-label">Coming Soon</span>
+      <span class="empty-icon">🍳</span>
+      <span class="coming-label">Cooking in progress</span>
       <p class="mercado-hint">
-        Em breve teremos produtos disponíveis.<br>
-        Segue-nos no <a href="https://www.instagram.com/thebenaresclub" target="_blank" rel="noopener">Instagram</a> para saber quando abrimos.
+        Estamos a colocar os produtos.<br>
+        Segue-nos no <a href="https://www.instagram.com/thebenaresclub" target="_blank" rel="noopener">Instagram</a> para não perderes o lançamento.
       </p>
+      <a class="mercado-ig" href="https://www.instagram.com/thebenaresclub" target="_blank" rel="noopener">
+        <i class="fab fa-instagram"></i> @thebenaresclub
+      </a>
     </div>
     </div><!-- /.mercado-wrap -->
   </main>

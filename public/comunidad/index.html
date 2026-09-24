@@ -90,25 +90,45 @@
       position: relative;
     }
 
+    .cooking-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .cooking-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
     .coming-soon {
       font-family: var(--font-family);
-      font-size: 0.78rem;
-      font-weight: 600;
+      font-size: 0.85rem;
+      font-weight: 300;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: var(--text-primary);
       border: 1px solid var(--border-strong);
       border-radius: 4px;
       padding: 0.7rem 1.75rem;
-      position: relative;
     }
 
-    .social-hint {
-      margin-top: 2.5rem;
-      position: relative;
+    .cooking-sub {
+      font-family: var(--font-family);
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin: 0.75rem 0 0;
+      text-align: center;
     }
 
-    .social-hint a {
+    .cooking-ig {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
       font-family: var(--font-family);
       font-size: 0.78rem;
       font-weight: 500;
@@ -116,15 +136,9 @@
       text-transform: uppercase;
       color: var(--text-muted);
       text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
       transition: color 0.2s;
     }
-
-    .social-hint a:hover {
-      color: var(--red-bright);
-    }
+    .cooking-ig:hover { color: var(--text-primary); }
   </style>
 </head>
 <body>
@@ -136,11 +150,12 @@
       <span class="ko-eyebrow">The Benares Club presents</span>
       <h1 class="ko-title">.KO</h1>
       <p class="ko-subtitle">Lisboa International Short-film Championship</p>
-      <span class="coming-soon">Coming Soon</span>
-      <div class="social-hint">
-        <a href="https://www.instagram.com/thebenaresclub" target="_blank" rel="noopener">
-          <i class="fab fa-instagram"></i>
-          Segue-nos para as últimas novidades
+      <div class="cooking-block">
+        <span class="cooking-icon">🍳</span>
+        <span class="coming-soon">Cooking in progress</span>
+        <p class="cooking-sub">Estamos a preparar o ring.<br>Segue-nos no Instagram para não perderes nenhum anúncio.</p>
+        <a class="cooking-ig" href="https://www.instagram.com/thebenaresclub" target="_blank" rel="noopener">
+          <i class="fab fa-instagram"></i> @thebenaresclub
         </a>
       </div>
     </div>
