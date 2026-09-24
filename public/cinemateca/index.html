@@ -362,14 +362,14 @@
 
     /* Price badge */
     .price-badge {
-      position: absolute;
-      top: 0.6rem; left: 0.6rem;
-      background: rgba(8,7,6,0.85);
+      display: inline-block;
+      margin-top: 0.35rem;
+      background: transparent;
       border: 1px solid rgba(240,232,216,0.12);
       border-radius: 99px;
       padding: 0.18rem 0.55rem;
       font-family: var(--font-family);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 600;
       letter-spacing: 0.08em;
       color: rgba(240,232,216,0.8);
@@ -1328,7 +1328,6 @@
         <div class="film-card-inner">
           <div class="film-poster-wrap">
             ${posterHTML}
-            ${badgeHTML}
             <div class="film-hover-panel">
               <button class="hover-rent-btn">${hoverLabel}</button>
             </div>
@@ -1336,6 +1335,7 @@
           <div class="film-card-info">
             <h3 class="film-card-title">${film.title}</h3>
             <p class="film-card-meta">${film.year} · ${film.director}</p>
+            ${badgeHTML}
           </div>
         </div>
       `;
