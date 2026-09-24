@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>.KO Lisboa — International Short-film Championship</title>
   <link rel="stylesheet" href="/styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-base:        #a60000;
@@ -68,10 +66,17 @@
       position: relative;
     }
 
+    @font-face {
+      font-family: 'Extenda30Deca';
+      src: url('/fuentes/Extenda30Deca.woff2') format('woff2'),
+           url('/fuentes/Extenda30Deca.ttf')   format('truetype');
+      font-display: swap;
+    }
+
     .ko-title {
-      font-family: 'Unbounded', sans-serif;
+      font-family: 'Extenda30Deca', sans-serif;
       font-size: clamp(3.5rem, 16vw, 11rem);
-      font-weight: 900;
+      font-weight: 400;
       color: #ffffff;
       line-height: 0.9;
       letter-spacing: 0.12em;
