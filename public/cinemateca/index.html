@@ -833,6 +833,42 @@
     @media (max-width: 580px) {
       .hero-description { display: none; }
       .video-hero { height: 70vh; min-height: 400px; }
+
+      .hero-content {
+        bottom: clamp(2rem, 5vh, 3.5rem);
+        left: 1.25rem;
+        max-width: calc(100% - 2.5rem);
+      }
+
+      .hero-actions {
+        gap: 0.5rem;
+      }
+
+      .btn-rent {
+        font-size: 0.75rem;
+        padding: 0.6rem 1.1rem;
+        gap: 0.45rem;
+      }
+
+      .btn-info {
+        font-size: 0.75rem;
+        padding: 0.6rem 0.9rem;
+        gap: 0.45rem;
+      }
+
+      .hero-nav {
+        bottom: clamp(0.75rem, 2vh, 1.25rem);
+        right: 1rem;
+        gap: 0.75rem;
+      }
+
+      .hero-arrow {
+        width: 1.75rem;
+        height: 1.75rem;
+      }
+
+      .hero-dot { width: 18px; }
+      .hero-dot.active { width: 28px; }
     }
   </style>
 </head>
