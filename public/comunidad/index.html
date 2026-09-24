@@ -7,18 +7,16 @@
   <link rel="stylesheet" href="/styles.css" />
   <style>
     :root {
-      --bg-base:        #0B0101;
-      --bg-surface:     #150303;
-      --bg-elevated:    #1E0404;
-      --text-primary:   #FFE8E8;
-      --text-secondary: #D4A0A0;
-      --text-muted:     #8A5050;
-      --border:         rgba(200, 16, 31, 0.18);
-      --border-strong:  rgba(200, 16, 31, 0.45);
-      --glass-blur:     blur(12px);
+      --bg-base:        #C8101F;
+      --bg-surface:     #D4121F;
+      --bg-elevated:    #E01525;
+      --text-primary:   #ffffff;
+      --text-secondary: rgba(255,255,255,0.75);
+      --text-muted:     rgba(255,255,255,0.5);
+      --border:         rgba(255,255,255,0.15);
+      --border-strong:  rgba(255,255,255,0.35);
       --red:            #C8101F;
       --red-bright:     #FF1830;
-      --red-dim:        rgba(200, 16, 31, 0.12);
     }
 
     body {
@@ -26,12 +24,13 @@
     }
 
     header, nav {
-      background: rgba(11, 1, 1, 0.85) !important;
-      border-color: var(--border) !important;
+      background: rgba(160, 10, 18, 0.92) !important;
+      border-color: rgba(255,255,255,0.12) !important;
     }
 
     footer {
-      border-top-color: var(--border) !important;
+      background-color: rgba(140, 8, 15, 0.95) !important;
+      border-top-color: rgba(255,255,255,0.12) !important;
     }
 
     .ko-page {
@@ -51,8 +50,8 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 70% 60% at 50% 40%, rgba(200, 16, 31, 0.18) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(200, 16, 31, 0.07) 0%, transparent 60%);
+        radial-gradient(ellipse 60% 55% at 50% 35%, rgba(255,255,255,0.08) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(0,0,0,0.15) 0%, transparent 60%);
       pointer-events: none;
     }
 
@@ -62,7 +61,7 @@
       font-weight: 600;
       letter-spacing: 0.32em;
       text-transform: uppercase;
-      color: var(--red-bright);
+      color: rgba(255,255,255,0.7);
       margin-bottom: 1.5rem;
       position: relative;
     }
@@ -71,12 +70,12 @@
       font-family: var(--font-serif);
       font-size: clamp(5rem, 22vw, 14rem);
       font-weight: 400;
-      color: var(--red-bright);
+      color: #ffffff;
       line-height: 0.9;
       letter-spacing: -0.02em;
       margin: 0 0 0.5rem;
       position: relative;
-      text-shadow: 0 0 80px rgba(255, 24, 48, 0.3);
+      text-shadow: 0 4px 40px rgba(0,0,0,0.25);
     }
 
     .ko-subtitle {
@@ -85,9 +84,21 @@
       font-weight: 400;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--text-secondary);
+      color: rgba(255,255,255,0.65);
       margin: 1.25rem 0 3.5rem;
       position: relative;
+    }
+
+    /* cooking-state overrides para fundo vermelho */
+    .cooking-state-title { color: #fff; }
+    .cooking-state-sub   { color: rgba(255,255,255,0.6); }
+    .cooking-state-ig {
+      color: rgba(255,255,255,0.75);
+      border-color: rgba(255,255,255,0.3);
+    }
+    .cooking-state-ig:hover {
+      color: #fff;
+      border-color: #fff;
     }
 
   </style>
