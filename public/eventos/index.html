@@ -152,6 +152,194 @@
     }
     .btn-ticket:hover { background: #fff; transform: translateY(-1px); }
 
+    /* ── Event row — clickable ── */
+    .event-row {
+      cursor: pointer;
+    }
+    .event-row:hover .event-name {
+      color: var(--text-primary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(240,232,216,0.25);
+    }
+
+    /* ── Tag ── */
+    .event-tag {
+      display: inline-block;
+      font-family: var(--font-family);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 0.15rem 0.55rem;
+      margin-bottom: 0.4rem;
+    }
+
+    /* ── Price chip ── */
+    .event-price {
+      font-family: var(--font-family);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .event-price.free { color: rgba(80,200,130,0.9); }
+
+    /* ── Modal ── */
+    .event-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .event-modal[hidden] { display: none; }
+
+    .event-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.78);
+    }
+
+    .event-modal-panel {
+      position: relative;
+      background: #111;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .event-modal-close {
+      position: absolute;
+      top: 0.75rem; right: 0.85rem;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.6rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0.2rem 0.4rem;
+      z-index: 1;
+      transition: color 0.2s;
+    }
+    .event-modal-close:hover { color: var(--text-primary); }
+
+    .event-modal-img-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: 10px 10px 0 0;
+      background: #0a0a0a;
+    }
+    .event-modal-img-wrap.no-image {
+      aspect-ratio: unset;
+      height: 6px;
+      background: var(--border);
+    }
+    .event-modal-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .event-modal-body {
+      padding: 2rem 2rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .event-modal-tag {
+      font-family: var(--font-family);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .event-modal-title {
+      font-family: var(--font-family);
+      font-size: clamp(1.3rem, 3vw, 1.75rem);
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin: 0;
+      line-height: 1.15;
+    }
+
+    .event-modal-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 1.5rem;
+      margin-top: 0.25rem;
+    }
+
+    .event-modal-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-family);
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+    .event-modal-meta-item a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(240,232,216,0.2);
+      transition: color 0.2s;
+    }
+    .event-modal-meta-item a:hover { color: var(--text-primary); }
+
+    .event-modal-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0.5rem 0;
+    }
+
+    .event-modal-desc {
+      font-family: var(--font-family);
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .event-modal-price {
+      font-family: var(--font-family);
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+    .event-modal-price strong { color: var(--text-primary); font-weight: 500; }
+
+    .event-modal-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-top: 0.75rem;
+      align-self: flex-start;
+      font-family: var(--font-family);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #0a0908;
+      background: rgba(240,232,216,0.92);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1.5rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .event-modal-cta:hover { background: #fff; }
+    .event-modal-cta[hidden] { display: none; }
+
     /* ── Responsive ── */
     @media (max-width: 600px) {
       .event-row {
@@ -165,6 +353,7 @@
         width: fit-content;
       }
       .event-date-day { font-size: 1.75rem; }
+      .event-modal-body { padding: 1.5rem 1.25rem 2rem; }
     }
 
     @media (max-width: 420px) {
@@ -195,24 +384,89 @@
     </div>
   </main>
 
+  <!-- Event detail modal -->
+  <div id="event-modal" class="event-modal" hidden aria-modal="true" role="dialog">
+    <div class="event-modal-backdrop"></div>
+    <div class="event-modal-panel">
+      <button class="event-modal-close" aria-label="Fechar">&times;</button>
+      <div id="event-modal-img-wrap" class="event-modal-img-wrap no-image">
+        <img id="event-modal-img" class="event-modal-img" src="" alt="">
+      </div>
+      <div class="event-modal-body">
+        <span id="event-modal-tag" class="event-modal-tag"></span>
+        <h2 id="event-modal-title" class="event-modal-title"></h2>
+        <div class="event-modal-meta">
+          <span class="event-modal-meta-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span id="event-modal-date"></span>
+          </span>
+          <span class="event-modal-meta-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span id="event-modal-time"></span>
+          </span>
+          <span class="event-modal-meta-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span id="event-modal-location"></span>
+          </span>
+        </div>
+        <hr class="event-modal-divider">
+        <p id="event-modal-desc" class="event-modal-desc"></p>
+        <p id="event-modal-price" class="event-modal-price"></p>
+        <a id="event-modal-cta" class="event-modal-cta" href="#" target="_blank" rel="noopener noreferrer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+          <span id="event-modal-cta-label"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+
   <div id="footer-container"></div>
 
   <script>
     /*
-     * EVENTOS
+     * ═══════════════════════════════════════════
+     *  EVENTOS — como adicionar um evento
+     * ═══════════════════════════════════════════
      *
-     * Para adicionar um evento:
-     *   date        → "15 Mar 2026"
-     *   day         → "15"
-     *   month       → "Mar 2026"
-     *   time        → "19:00"
-     *   name        → nome do evento
-     *   location    → nome do local
-     *   locationUrl → link Google Maps do local
-     *   eventbriteUrl → link Eventbrite para compra de bilhetes
+     *  Copia o bloco abaixo e preenche os campos:
+     *
+     *  {
+     *    day:         "15",               ← dia do mês
+     *    month:       "Nov 2026",          ← mês e ano
+     *    date:        "15 Nov 2026",       ← data completa (aparece no modal)
+     *    time:        "19:30",             ← hora de início
+     *    name:        "Night Lounge #5",   ← nome do evento
+     *    tag:         "Projeção",          ← etiqueta (Projeção / Networking / Workshop / Festival)
+     *    location:    "LX Factory, Lisboa",← nome do local
+     *    locationUrl: "https://maps.app.goo.gl/...", ← link Google Maps (ou null)
+     *    description: "Descrição...",      ← texto completo que aparece no modal
+     *    image:       "/media/...",        ← foto de capa (ou null)
+     *    price:       "Entrada livre",     ← "Entrada livre" / "5€" / "10€ · Eventbrite"
+     *    free:        true,                ← true = verde no preço
+     *    ticketUrl:   "https://www.eventbrite.com/e/...", ← link bilhetes (ou null)
+     *    ticketLabel: "Reservar no Eventbrite",           ← texto do botão
+     *  }
+     *
+     *  Plataformas suportadas: Eventbrite, Meetup, qualquer URL externo.
      */
-    const events = [];
+    const events = [
+      // Exemplo (apaga ou substitui quando tiveres um evento real):
+      // {
+      //   day: "15", month: "Nov 2026", date: "15 Nov 2026", time: "19:30",
+      //   name: "Night Lounge #5",
+      //   tag: "Projeção",
+      //   location: "LX Factory, Lisboa",
+      //   locationUrl: "https://maps.google.com",
+      //   description: "Uma noite de projeções e música ao vivo no coração de Lisboa. Curtas-metragens do clube e convidados, seguidas de conversa com os realizadores.",
+      //   image: null,
+      //   price: "Entrada livre",
+      //   free: true,
+      //   ticketUrl: null,
+      //   ticketLabel: null,
+      // }
+    ];
 
+    /* ── Render list ── */
     const list = document.getElementById('event-list');
 
     if (events.length === 0) {
@@ -230,23 +484,26 @@
       events.forEach(ev => {
         const row = document.createElement('div');
         row.className = 'event-row';
+        row.setAttribute('role', 'button');
+        row.setAttribute('tabindex', '0');
+        row.setAttribute('aria-label', `Ver detalhes: ${ev.name}`);
 
-        const locationLink = ev.locationUrl && ev.locationUrl !== '#'
-          ? `<a class="event-location" href="${ev.locationUrl}" target="_blank" rel="noopener noreferrer">
-               <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        const locationEl = ev.locationUrl
+          ? `<a class="event-location" href="${ev.locationUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+               <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                ${ev.location}
              </a>`
           : `<span class="event-time">
-               <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+               <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                ${ev.location}
              </span>`;
 
-        const ticketBtn = ev.eventbriteUrl && ev.eventbriteUrl !== '#'
-          ? `<a class="btn-ticket" href="${ev.eventbriteUrl}" target="_blank" rel="noopener noreferrer">
-               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
-               Reservar bilhetes
+        const ticketEl = ev.ticketUrl
+          ? `<a class="btn-ticket" href="${ev.ticketUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+               Reservar
              </a>`
-          : `<span class="btn-ticket" style="opacity:0.35;cursor:default;">Em breve</span>`;
+          : `<span class="event-price${ev.free ? ' free' : ''}">${ev.price || ''}</span>`;
 
         row.innerHTML = `
           <div class="event-date">
@@ -254,21 +511,93 @@
             <span class="event-date-month">${ev.month}</span>
           </div>
           <div class="event-info">
+            ${ev.tag ? `<span class="event-tag">${ev.tag}</span>` : ''}
             <h3 class="event-name">${ev.name}</h3>
             <div class="event-details">
               <span class="event-time">
-                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 ${ev.time}
               </span>
-              ${locationLink}
+              ${locationEl}
             </div>
           </div>
-          ${ticketBtn}
+          ${ticketEl}
         `;
 
+        row.addEventListener('click', () => openEventModal(ev));
+        row.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openEventModal(ev); });
         list.appendChild(row);
       });
     }
+
+    /* ── Modal ── */
+    function openEventModal(ev) {
+      const modal    = document.getElementById('event-modal');
+      const imgWrap  = document.getElementById('event-modal-img-wrap');
+      const img      = document.getElementById('event-modal-img');
+      const tag      = document.getElementById('event-modal-tag');
+      const title    = document.getElementById('event-modal-title');
+      const date     = document.getElementById('event-modal-date');
+      const time     = document.getElementById('event-modal-time');
+      const location = document.getElementById('event-modal-location');
+      const desc     = document.getElementById('event-modal-desc');
+      const price    = document.getElementById('event-modal-price');
+      const cta      = document.getElementById('event-modal-cta');
+      const ctaLabel = document.getElementById('event-modal-cta-label');
+
+      if (ev.image) {
+        img.src = ev.image;
+        imgWrap.classList.remove('no-image');
+      } else {
+        imgWrap.classList.add('no-image');
+      }
+
+      tag.textContent   = ev.tag || '';
+      title.textContent = ev.name;
+      date.textContent  = ev.date || `${ev.day} ${ev.month}`;
+      time.textContent  = ev.time;
+
+      if (ev.locationUrl) {
+        location.innerHTML = `<a href="${ev.locationUrl}" target="_blank" rel="noopener noreferrer">${ev.location}</a>`;
+      } else {
+        location.textContent = ev.location;
+      }
+
+      desc.textContent = ev.description || '';
+
+      if (ev.price) {
+        price.innerHTML = `Entrada: <strong>${ev.price}</strong>`;
+        price.style.display = '';
+      } else {
+        price.style.display = 'none';
+      }
+
+      if (ev.ticketUrl) {
+        cta.href = ev.ticketUrl;
+        ctaLabel.textContent = ev.ticketLabel || 'Reservar bilhetes';
+        cta.removeAttribute('hidden');
+      } else {
+        cta.setAttribute('hidden', '');
+      }
+
+      modal.removeAttribute('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeEventModal() {
+      document.getElementById('event-modal').setAttribute('hidden', '');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('event-modal').addEventListener('click', function(e) {
+      if (e.target.classList.contains('event-modal-backdrop') ||
+          e.target.classList.contains('event-modal-close')) {
+        closeEventModal();
+      }
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeEventModal();
+    });
   </script>
 
   <script src="/shared.js"></script>
