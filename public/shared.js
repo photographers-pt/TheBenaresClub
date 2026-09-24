@@ -98,12 +98,6 @@ function createFooter() {
       }
     </style>
     <footer>
-      <div class="footer-controls">
-        <button id="shadow-toggle" class="shadow-toggle-btn shadows-off" style="cursor: not-allowed;">
-          Loading...
-        </button>
-      </div>
-      
       <div class="copyright">
         &copy; 2026 Club Benares.
       </div>
