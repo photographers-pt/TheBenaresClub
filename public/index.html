@@ -251,8 +251,27 @@
     /* Vlog: no image */
     .bc-vlog .bc-grad { background: linear-gradient(160deg, transparent 0%, rgba(0,0,0,0.6) 100%); }
 
-    /* Charlie: grayscale tint */
-    .bc-charlie .bc-img { filter: grayscale(25%); }
+    /* ── Grayscale on all tiles except .KO ── */
+    .bc:not(.bc-ko) .bc-img,
+    .bc:not(.bc-ko) .bc-slide {
+      filter: grayscale(100%);
+      transition: transform 0.7s ease, filter 0.5s ease;
+    }
+    .bc:not(.bc-ko):hover .bc-img,
+    .bc:not(.bc-ko):hover .bc-slide {
+      filter: grayscale(30%);
+    }
+
+    /* Modal hero: animate from grey to full color on open */
+    .tm-hero-img,
+    .tm-hero-slide {
+      filter: grayscale(100%);
+      animation: tileColorReveal 0.8s ease forwards;
+    }
+    @keyframes tileColorReveal {
+      from { filter: grayscale(100%); }
+      to   { filter: grayscale(0%); }
+    }
 
     /* ════════════════════════════════════════════
        NOVEDADES
@@ -1332,6 +1351,12 @@
       if (!m) return;
       m.removeAttribute('hidden');
       document.body.style.overflow = 'hidden';
+      /* Restart colorReveal animation on every open */
+      m.querySelectorAll('.tm-hero-img, .tm-hero-slide').forEach(function(el) {
+        el.style.animation = 'none';
+        el.offsetHeight; /* reflow */
+        el.style.animation = '';
+      });
       if (!slideshowTimers[id]) {
         slideshowTimers[id] = startSlideshow(m);
       }
