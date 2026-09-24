@@ -6,11 +6,183 @@
   <title>The Benares Club</title>
   <meta name="description" content="Comunidade de cinema independente com sede em Lisboa. Produzimos curtas-metragens, organizamos eventos e reunimos criadores." />
   <link rel="stylesheet" href="/styles.css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    main { padding-bottom: 0; }
 
-    main { /* no max-width — banner full width */ }
+    /* ════════════════════════════════
+       HOME GRID
+    ════════════════════════════════ */
+    .home-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 280px;
+      gap: 2px;
+    }
+
+    /* ── Tile base ── */
+    .hg-tile {
+      position: relative;
+      overflow: hidden;
+      background: rgba(255,248,238,0.03);
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
+
+    .hg-wide { grid-column: span 2; }
+    .hg-tall { grid-row: span 2; }
+
+    /* Image bg */
+    .hg-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.6s ease, opacity 0.4s ease;
+    }
+    .hg-tile:hover .hg-bg { transform: scale(1.05); }
+
+    /* Slideshow images */
+    .hg-slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .hg-slide.active { opacity: 1; }
+
+    /* Overlay gradient */
+    .hg-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.88) 0%,
+        rgba(0,0,0,0.3)  50%,
+        rgba(0,0,0,0.1)  100%
+      );
+      transition: opacity 0.3s;
+    }
+    .hg-tile:hover .hg-overlay { opacity: 0.85; }
+
+    /* Body text */
+    .hg-body {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.5rem 1.75rem 1.75rem;
+      z-index: 1;
+    }
+
+    .hg-eyebrow {
+      display: block;
+      font-family: var(--font-family);
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(240,232,216,0.4);
+      margin-bottom: 0.4rem;
+    }
+
+    .hg-title {
+      font-family: var(--font-family);
+      font-size: clamp(1.15rem, 2vw, 1.5rem);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      line-height: 1.15;
+      margin-bottom: 0.45rem;
+    }
+
+    .hg-desc {
+      font-family: var(--font-family);
+      font-size: 0.78rem;
+      line-height: 1.55;
+      color: rgba(240,232,216,0.5);
+    }
+
+    .hg-arrow {
+      display: inline-block;
+      margin-top: 0.85rem;
+      font-family: var(--font-family);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(240,232,216,0.35);
+      transition: color 0.2s;
+    }
+    .hg-tile:hover .hg-arrow { color: var(--text-primary); }
+
+    /* Stats chips (on Historia tile) */
+    .hg-stats {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+    }
+
+    .hg-stat {
+      font-family: var(--font-family);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(240,232,216,0.55);
+      background: rgba(255,248,238,0.07);
+      border: 1px solid rgba(240,232,216,0.1);
+      border-radius: 99px;
+      padding: 0.2rem 0.6rem;
+    }
+
+    /* Coming-soon badge */
+    .hg-badge {
+      display: inline-block;
+      margin-top: 0.75rem;
+      font-family: var(--font-family);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(240,232,216,0.4);
+      border: 1px solid rgba(240,232,216,0.15);
+      border-radius: 99px;
+      padding: 0.2rem 0.65rem;
+    }
+
+    /* .KO tile special bg */
+    .hg-ko .hg-bg { background: #a60000; }
+    .hg-ko .hg-overlay { background: linear-gradient(to top, rgba(80,0,0,0.7) 0%, transparent 60%); }
+    .hg-ko .hg-eyebrow { color: rgba(255,255,255,0.4); }
+    .hg-ko .hg-title { color: #fff; }
+    .hg-ko .hg-desc { color: rgba(255,255,255,0.5); }
+    .hg-ko .hg-arrow { color: rgba(255,255,255,0.35); }
+    .hg-ko:hover .hg-arrow { color: #fff; }
+
+    /* Join the Club tile */
+    .hg-join .hg-bg { background: rgba(255,248,238,0.04); }
+    .hg-join .hg-overlay { background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.5) 100%); }
+
+    /* Vlog tile */
+    .hg-vlog .hg-bg { background: rgba(255,248,238,0.02); }
+
+    /* Charlie Chaves tile */
+    .hg-charlie .hg-bg {
+      background-image: url('/media/fototeca/thumb/nl1-06.jpg');
+      filter: grayscale(30%);
+    }
+
+    /* ════════════════════════════════
+       NOVEDADES STRIP
+    ════════════════════════════════ */
+    .novedades-section {
+      padding: 4rem 0 6rem;
+      border-top: 1px solid var(--border);
+    }
 
     .wrap {
       max-width: 1100px;
@@ -18,424 +190,50 @@
       padding: 0 2rem;
     }
 
-    /* ── Section base ── */
-    .section {
-      padding: 7rem 0;
-    }
-
-    .section + .section {
-      border-top: 1px solid var(--border);
+    .novedades-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 2rem;
     }
 
     .s-eyebrow {
-      display: block;
+      font-family: var(--font-family);
       font-size: 0.65rem;
       font-weight: 600;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin-bottom: 0.75rem;
     }
 
-    .s-title {
+    .novedades-title {
       font-family: var(--font-family);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      font-size: clamp(1.2rem, 2.5vw, 1.7rem);
       font-weight: 300;
-      font-size: clamp(2.2rem, 4vw, 3.4rem);
-      color: var(--text-primary);
-      line-height: 1.1;
-      margin-bottom: 3rem;
-    }
-
-    /* ══════════════════════════════════════
-       01 · PILLARS — O que somos
-    ══════════════════════════════════════ */
-    .pillars-intro {
-      max-width: 560px;
-      margin-bottom: 3.5rem;
-    }
-
-    .pillars-intro p {
-      font-size: 1rem;
-      line-height: 1.8;
-      color: var(--text-secondary);
-    }
-
-    .pillars-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-    }
-
-    .pillar-card {
-      background: rgba(255, 248, 238, 0.02);
-      padding: 2.25rem 1.75rem;
-      transition: background 0.25s;
-    }
-
-    .pillar-card:hover {
-      background: rgba(255, 248, 238, 0.055);
-    }
-
-    .pillar-num {
-      display: block;
-      font-size: 0.6rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-    }
-
-    .pillar-title {
-      font-family: var(--font-family);
-      text-transform: uppercase;
       letter-spacing: 0.06em;
-      font-weight: 300;
-      font-size: 1.25rem;
-      color: var(--text-primary);
-      line-height: 1.2;
-      margin-bottom: 0.85rem;
-    }
-
-    .pillar-desc {
-      font-size: 0.83rem;
-      line-height: 1.72;
-      color: var(--text-secondary);
-    }
-
-    /* ══════════════════════════════════════
-       02 · HISTÓRIA
-    ══════════════════════════════════════ */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: start;
-    }
-
-    .about-text { display: none; }
-    .about-text.active { display: block; }
-
-    .about-text p {
-      font-size: 0.95rem;
-      line-height: 1.85;
-      color: var(--text-secondary);
-      margin-bottom: 1.2rem;
-    }
-
-    .about-text p:last-child { margin-bottom: 0; }
-
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-      margin-top: 3rem;
-    }
-
-    .stat-item {
-      padding: 1.5rem 1rem;
-      background: rgba(255, 248, 238, 0.03);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      text-align: center;
-    }
-
-    .stat-num {
-      font-family: var(--font-family);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-size: 2rem;
-      font-weight: 300;
-      color: var(--text-primary);
-      line-height: 1;
-      margin-bottom: 0.4rem;
-    }
-
-    .stat-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .about-img-col { position: relative; }
-
-    .about-img-wrap {
-      aspect-ratio: 3 / 4;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      background: rgba(255, 248, 238, 0.03);
-      border: 1px solid var(--border);
-    }
-
-    .about-img-wrap img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      opacity: 0;
-      transition: opacity 1.2s ease;
-    }
-
-    .about-img-wrap img.active {
-      opacity: 1;
-    }
-
-    .about-img-wrap {
-      position: relative;
-    }
-
-    .about-img-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.6rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(240, 232, 216, 0.08);
-    }
-
-    /* ══════════════════════════════════════
-       03 · PROJETOS & DIÁRIO
-    ══════════════════════════════════════ */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-    }
-
-    .project-card {
-      background: rgba(255, 248, 238, 0.03);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 1.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      transition: border-color 0.25s, background 0.25s;
-      text-decoration: none;
-    }
-
-    .project-card:hover {
-      border-color: var(--border-strong);
-      background: rgba(255, 248, 238, 0.055);
-    }
-
-    .project-card-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-    }
-
-    .project-type {
-      font-size: 0.6rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .project-status {
-      font-size: 0.6rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 0.3rem 0.7rem;
-      border-radius: 100px;
-      white-space: nowrap;
-    }
-
-    .status-em-curso    { background: rgba(240, 200, 80, 0.12);  color: #c8a830; border: 1px solid rgba(240,200,80,0.25); }
-    .status-crowdfunding{ background: rgba(80, 180, 240, 0.12);  color: #50a8c8; border: 1px solid rgba(80,180,240,0.25); }
-    .status-concluido   { background: rgba(80, 200, 130, 0.12);  color: #50b878; border: 1px solid rgba(80,200,130,0.25); }
-    .status-em-breve    { background: rgba(255, 248, 238, 0.06); color: var(--text-muted); border: 1px solid var(--border-strong); }
-
-    .project-title {
-      font-family: var(--font-family);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-weight: 300;
-      font-size: 1.2rem;
-      color: var(--text-primary);
-      line-height: 1.2;
-    }
-
-    .project-desc {
-      font-size: 0.85rem;
-      line-height: 1.7;
-      color: var(--text-secondary);
-      flex: 1;
-    }
-
-    .project-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 0.25rem;
-    }
-
-    .project-date {
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .project-link-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      transition: color 0.2s;
-    }
-
-    .project-card:hover .project-link-label {
       color: var(--text-primary);
     }
 
-    /* ══════════════════════════════════════
-       04 · DESCOBRE
-    ══════════════════════════════════════ */
-    .discover-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-    }
-
-    .discover-card {
-      display: block;
-      text-decoration: none;
-      position: relative;
-      aspect-ratio: 3 / 4;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      background: rgba(255, 248, 238, 0.03);
-      border: 1px solid var(--border);
-      transition: border-color 0.25s;
-    }
-
-    .discover-card:hover {
-      border-color: var(--border-strong);
-    }
-
-    .discover-card-img {
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: center;
-      opacity: 0.45;
-      transition: opacity 0.4s ease, transform 0.5s ease;
-    }
-
-    .discover-card:hover .discover-card-img {
-      opacity: 0.6;
-      transform: scale(1.04);
-    }
-
-    .discover-card.grayscale .discover-card-img {
-      filter: grayscale(100%);
-    }
-
-    .discover-card-placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.58rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(240, 232, 216, 0.07);
-    }
-
-    .discover-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(8,7,6,0.88) 0%, rgba(8,7,6,0.2) 60%, transparent 100%);
-      pointer-events: none;
-    }
-
-    .discover-card-body {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 1.5rem 1.5rem 1.75rem;
-      z-index: 1;
-    }
-
-    .discover-card-num {
-      display: block;
-      font-size: 0.6rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(240, 232, 216, 0.4);
-      margin-bottom: 0.5rem;
-    }
-
-    .discover-card-title {
-      font-family: var(--font-family);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-weight: 300;
-      font-size: 1.35rem;
-      color: var(--text-primary);
-      line-height: 1.2;
-      margin-bottom: 0.5rem;
-    }
-
-    .discover-card-desc {
-      font-size: 0.78rem;
-      line-height: 1.55;
-      color: rgba(240, 232, 216, 0.5);
-    }
-
-    .discover-card-arrow {
-      display: inline-block;
-      margin-top: 1rem;
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(240, 232, 216, 0.4);
-      transition: color 0.2s;
-    }
-
-    .discover-card:hover .discover-card-arrow {
-      color: var(--text-primary);
-    }
-
-    /* ══════════════════════════════════════
-       02 · NOVEDADES — Blog
-    ══════════════════════════════════════ */
+    /* ── Blog cards ── */
     .blog-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: 1.25rem;
     }
 
     .blog-card {
       display: flex;
       flex-direction: column;
-      background: rgba(255, 248, 238, 0.03);
+      background: rgba(255,248,238,0.03);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       overflow: hidden;
       transition: border-color 0.25s;
+      cursor: pointer;
     }
 
-    .blog-card:hover {
-      border-color: var(--border-strong);
-    }
+    .blog-card:hover { border-color: var(--border-strong); }
 
     .blog-card-img-wrap {
       position: relative;
@@ -445,30 +243,26 @@
     }
 
     .blog-card-img {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       object-fit: cover;
       object-position: center;
       transition: transform 0.5s ease;
       filter: brightness(0.85);
     }
 
-    .blog-card:hover .blog-card-img {
-      transform: scale(1.04);
-    }
+    .blog-card:hover .blog-card-img { transform: scale(1.04); }
 
     .blog-tag {
       position: absolute;
-      top: 0.85rem;
-      left: 0.85rem;
+      top: 0.85rem; left: 0.85rem;
       font-family: var(--font-family);
       font-size: 0.6rem;
       font-weight: 600;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: rgba(240, 232, 216, 0.9);
-      background: rgba(0, 0, 0, 0.85);
-      border: 1px solid rgba(240, 232, 216, 0.15);
+      color: rgba(240,232,216,0.9);
+      background: rgba(0,0,0,0.85);
+      border: 1px solid rgba(240,232,216,0.15);
       border-radius: 3px;
       padding: 0.3rem 0.65rem;
     }
@@ -477,8 +271,8 @@
       display: flex;
       flex-direction: column;
       flex: 1;
-      padding: 1.5rem;
-      gap: 0.5rem;
+      padding: 1.25rem;
+      gap: 0.4rem;
     }
 
     .blog-date {
@@ -491,27 +285,25 @@
     }
 
     .blog-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1rem;
+      font-family: var(--font-family);
+      font-size: 0.95rem;
       font-weight: 600;
       color: var(--text-primary);
       line-height: 1.35;
-      margin-top: 0.15rem;
     }
 
     .blog-excerpt {
-      font-size: 0.85rem;
-      line-height: 1.7;
-      color: rgba(240, 232, 216, 0.55);
+      font-size: 0.82rem;
+      line-height: 1.65;
+      color: rgba(240,232,216,0.5);
       flex: 1;
-      margin-top: 0.25rem;
     }
 
     .blog-link {
       display: inline-block;
-      margin-top: 1rem;
+      margin-top: 0.75rem;
       font-family: var(--font-family);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -519,44 +311,29 @@
       text-decoration: none;
       transition: color 0.2s;
     }
-
-    .blog-link:hover {
-      color: var(--text-primary);
-    }
+    .blog-link:hover { color: var(--text-primary); }
 
     /* ── Responsive ── */
-    @media (max-width: 1000px) {
-      .pillars-grid { grid-template-columns: repeat(2, 1fr); }
-      .projects-grid { grid-template-columns: repeat(2, 1fr); }
-      .blog-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
     @media (max-width: 900px) {
-      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .about-img-col { order: -1; }
-      .about-img-wrap { aspect-ratio: 16 / 9; }
-      .discover-grid { grid-template-columns: 1fr 1fr; }
+      .home-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 240px;
+      }
+      .hg-wide { grid-column: span 2; }
     }
 
     @media (max-width: 620px) {
-      .section { padding: 4rem 0; }
-      .pillars-grid { grid-template-columns: 1fr 1fr; }
-      .projects-grid { grid-template-columns: 1fr; }
+      .home-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 200px;
+      }
       .blog-grid { grid-template-columns: 1fr; }
-      .discover-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-      .stats-row { grid-template-columns: repeat(3, 1fr); }
+      .hg-body { padding: 1rem 1.25rem 1.25rem; }
     }
 
-    @media (max-width: 480px) {
-      .section { padding: 2.5rem 0; }
-      .discover-grid { grid-template-columns: 1fr; }
-      .about-text p { margin-bottom: 0.85rem; }
-    }
-
-    @media (max-width: 400px) {
-      .section { padding: 2rem 0; }
-      .pillars-grid { grid-template-columns: 1fr; }
-      .stats-row { grid-template-columns: 1fr; gap: 0.5rem; }
+    @media (max-width: 420px) {
+      .home-grid { grid-auto-rows: 160px; }
+      .wrap { padding: 0 1.25rem; }
     }
   </style>
 </head>
@@ -576,157 +353,226 @@
     </div>
   </div>
 
-  <!-- 01 · O Clube & História -->
-  <section class="section" id="about">
-    <div class="wrap">
-      <span class="s-eyebrow">
-        <span data-lang="pt">01 · O Clube</span>
-        <span data-lang="en">01 · The Club</span>
-        <span data-lang="es">01 · El Club</span>
-      </span>
-      <h2 class="s-title">
-        <span data-lang="pt">A nossa história</span>
-        <span data-lang="en">Our story</span>
-        <span data-lang="es">Nuestra historia</span>
-      </h2>
+  <!-- Home Grid -->
+  <div class="home-grid">
 
-      <div class="pillars-intro">
-        <p data-lang="pt">Club Benares é uma comunidade de cinema independente com sede em Lisboa. Reunimos realizadores, estudantes, profissionais, artistas e amantes do cinema para criar, aprender e partilhar.</p>
-        <p data-lang="en">Club Benares is an independent cinema community based in Lisbon. We bring together directors, students, professionals, artists and cinema lovers to create, learn and share.</p>
-        <p data-lang="es">Club Benares es una comunidad de cine independiente con sede en Lisboa. Reunimos realizadores, estudiantes, profesionales, artistas y amantes del cine para crear, aprender y compartir.</p>
-      </div>
-
-      <div class="about-grid">
-        <div>
-          <div class="about-text active" id="about-pt" data-lang="pt">
-            <p>Club Benares foi fundado por Charlie Chaves em 2023, com a ideia de formar uma equipa com o objetivo de criar filmes em conjunto todos os meses.</p>
-            <p>Com o tempo, o projeto cresceu e deixou de ser um núcleo privado de criação para se tornar uma comunidade aberta ao público, reunindo realizadores, estudantes, profissionais, artistas e amantes do cinema.</p>
-            <p>O objetivo é simples: criar um espaço onde as pessoas possam conhecer-se, partilhar ideias, fazer filmes e fortalecer a comunidade cinematográfica independente em Lisboa.</p>
-          </div>
-
-          <div class="about-text" id="about-en" data-lang="en">
-            <p>Club Benares was founded by Charlie Chaves in 2023, with the idea of forming a team with the goal of making films together every month.</p>
-            <p>Over time, the project grew from a private creative circle into a community open to the public, bringing together directors, students, professionals, artists, and cinema lovers.</p>
-            <p>The goal is simple: to create a space where people can meet, share ideas, make films and strengthen the independent cinema community in Lisbon.</p>
-          </div>
-
-          <div class="about-text" id="about-es" data-lang="es">
-            <p>Club Benares fue fundado por Charlie Chaves en 2023, con la idea de formar un equipo con el objetivo de crear películas juntos cada mes.</p>
-            <p>Con el tiempo, el proyecto creció y dejó de ser un núcleo privado de creación para convertirse en una comunidad abierta al público, reuniendo realizadores, estudiantes, profesionales, artistas y amantes del cine.</p>
-            <p>El objetivo es simple: crear un espacio donde la gente pueda conocerse, compartir ideas, hacer películas y fortalecer la comunidad cinematográfica independiente en Lisboa.</p>
-          </div>
-
-          <div class="stats-row">
-            <div class="stat-item">
-              <div class="stat-num">2</div>
-              <div class="stat-label">
-                <span data-lang="pt">Filmes</span>
-                <span data-lang="en">Films</span>
-                <span data-lang="es">Películas</span>
-              </div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-num">11+</div>
-              <div class="stat-label">
-                <span data-lang="pt">Eventos</span>
-                <span data-lang="en">Events</span>
-                <span data-lang="es">Eventos</span>
-              </div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-num">2023</div>
-              <div class="stat-label">
-                <span data-lang="pt">Fundação</span>
-                <span data-lang="en">Founded</span>
-                <span data-lang="es">Fundación</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="about-img-col">
-          <div class="about-img-wrap" id="about-slideshow">
-            <img src="/media/fototeca/thumb/nl1-06.jpg"  alt="Club Benares" class="active">
-            <img src="/media/fototeca/thumb/eac-08.jpg"  alt="Club Benares" loading="lazy">
-            <img src="/media/fototeca/thumb/mu2-07.jpg"  alt="Club Benares" loading="lazy">
-            <img src="/media/fototeca/thumb/jg-04.jpg"   alt="Club Benares" loading="lazy">
-            <img src="/media/fototeca/thumb/nl3-03.jpg"  alt="Club Benares" loading="lazy">
-            <img src="/media/fototeca/thumb/inx-05.jpg"  alt="Club Benares" loading="lazy">
-            <img src="/media/fototeca/thumb/mu4-09.jpg"  alt="Club Benares" loading="lazy">
-          </div>
-        </div>
-      </div>
-
-      <div class="pillars-grid" style="margin-top: 3rem;">
-        <div class="pillar-card">
-          <span class="pillar-num">01</span>
-          <h3 class="pillar-title">
-            <span data-lang="pt">Curtas-Metragens</span>
-            <span data-lang="en">Short Films</span>
-            <span data-lang="es">Cortometrajes</span>
-          </h3>
-          <p class="pillar-desc" data-lang="pt">Produzimos filmes em conjunto de forma coletiva, valorizando tanto o processo criativo como o resultado final.</p>
-          <p class="pillar-desc" data-lang="en">We produce films collectively, valuing both the creative process and the final result.</p>
-          <p class="pillar-desc" data-lang="es">Producimos películas de forma colectiva, valorando tanto el proceso creativo como el resultado final.</p>
-        </div>
-        <div class="pillar-card">
-          <span class="pillar-num">02</span>
-          <h3 class="pillar-title">
-            <span data-lang="pt">Eventos</span>
-            <span data-lang="en">Events</span>
-            <span data-lang="es">Eventos</span>
-          </h3>
-          <p class="pillar-desc" data-lang="pt">Projeções, encontros, sessões de networking e colaborações com outras comunidades e espaços culturais de Lisboa.</p>
-          <p class="pillar-desc" data-lang="en">Screenings, meetups, networking sessions and collaborations with other communities and cultural spaces in Lisbon.</p>
-          <p class="pillar-desc" data-lang="es">Proyecciones, encuentros, sesiones de networking y colaboraciones con otras comunidades y espacios culturales de Lisboa.</p>
-        </div>
-        <div class="pillar-card">
-          <span class="pillar-num">03</span>
-          <h3 class="pillar-title">
-            <span data-lang="pt">Comunidade</span>
-            <span data-lang="en">Community</span>
-            <span data-lang="es">Comunidad</span>
-          </h3>
-          <p class="pillar-desc" data-lang="pt">Um espaço aberto onde qualquer pessoa pode entrar, conhecer criadores e fazer parte de algo maior.</p>
-          <p class="pillar-desc" data-lang="en">An open space where anyone can join, meet creators and be part of something bigger.</p>
-          <p class="pillar-desc" data-lang="es">Un espacio abierto donde cualquier persona puede entrar, conocer creadores y formar parte de algo mayor.</p>
-        </div>
-        <div class="pillar-card">
-          <span class="pillar-num">04</span>
-          <h3 class="pillar-title">.KO Festival</h3>
-          <p class="pillar-desc" data-lang="pt">O nosso festival internacional de curtas-metragens, em preparação para 2027 em Lisboa.</p>
-          <p class="pillar-desc" data-lang="en">Our international short film festival, in preparation for 2027 in Lisbon.</p>
-          <p class="pillar-desc" data-lang="es">Nuestro festival internacional de cortometrajes, en preparación para 2027 en Lisboa.</p>
+    <!-- 01 — HISTÓRIA (wide + tall) -->
+    <div class="hg-tile hg-wide hg-tall hg-historia">
+      <div class="hg-slide active" style="background-image:url('/media/fototeca/thumb/nl1-06.jpg')"></div>
+      <div class="hg-slide" style="background-image:url('/media/fototeca/thumb/eac-08.jpg')"></div>
+      <div class="hg-slide" style="background-image:url('/media/fototeca/thumb/mu2-07.jpg')"></div>
+      <div class="hg-slide" style="background-image:url('/media/fototeca/thumb/jg-04.jpg')"></div>
+      <div class="hg-slide" style="background-image:url('/media/fototeca/thumb/nl3-03.jpg')"></div>
+      <div class="hg-overlay"></div>
+      <div class="hg-body">
+        <span class="hg-eyebrow">01</span>
+        <h2 class="hg-title">
+          <span data-lang="pt">História</span>
+          <span data-lang="en">History</span>
+          <span data-lang="es">Historia</span>
+        </h2>
+        <p class="hg-desc">
+          <span data-lang="pt">Fundado por Charlie Chaves em 2023. Cinema independente em Lisboa.</span>
+          <span data-lang="en">Founded by Charlie Chaves in 2023. Independent cinema in Lisbon.</span>
+          <span data-lang="es">Fundado por Charlie Chaves en 2023. Cine independiente en Lisboa.</span>
+        </p>
+        <div class="hg-stats">
+          <span class="hg-stat">
+            <span data-lang="pt">5 Filmes</span>
+            <span data-lang="en">5 Films</span>
+            <span data-lang="es">5 Películas</span>
+          </span>
+          <span class="hg-stat">
+            <span data-lang="pt">11+ Eventos</span>
+            <span data-lang="en">11+ Events</span>
+            <span data-lang="es">11+ Eventos</span>
+          </span>
+          <span class="hg-stat">Since 2023</span>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- 02 · Novedades -->
-  <section class="section" id="novedades">
+    <!-- 02 — CHARLIE CHAVES -->
+    <a href="/contactos/" class="hg-tile hg-charlie">
+      <div class="hg-bg"></div>
+      <div class="hg-overlay"></div>
+      <div class="hg-body">
+        <span class="hg-eyebrow">02</span>
+        <h2 class="hg-title">Charlie Chaves</h2>
+        <p class="hg-desc">
+          <span data-lang="pt">Fundador · Realizador</span>
+          <span data-lang="en">Founder · Director</span>
+          <span data-lang="es">Fundador · Director</span>
+        </p>
+        <span class="hg-arrow">→</span>
+      </div>
+    </a>
+
+    <!-- 03 — VLOG -->
+    <div class="hg-tile hg-vlog">
+      <div class="hg-bg"></div>
+      <div class="hg-overlay"></div>
+      <div class="hg-body">
+        <span class="hg-eyebrow">03</span>
+        <h2 class="hg-title">Vlog</h2>
+        <p class="hg-desc">
+          <span data-lang="pt">Diário de rodagem e bastidores.</span>
+          <span data-lang="en">Behind the scenes and production diary.</span>
+          <span data-lang="es">Diario de rodaje y bastidores.</span>
+        </p>
+        <span class="hg-badge">Coming Soon</span>
+      </div>
+    </div>
+
+    <!-- 04 — EVENTOS -->
+    <a href="/eventos/" class="hg-tile">
+      <div class="hg-bg" style="background-image:url('/media/discover/eventos.jpg')"></div>
+      <div class="hg-overlay"></div>
+      <div class="hg-body">
+        <span class="hg-eyebrow">04</span>
+        <h2 class="hg-title">Eventos</h2>
+        <p class="hg-desc">
+          <span data-lang="pt">Projeções e encontros abertos a todos.</span>
+          <span data-lang="en">Screenings and meetups open to all.</span>
+          <span data-lang="es">Proyecciones y encuentros abiertos a todos.</span>
+        </p>
+        <span class="hg-arrow">
+          <span data-lang="pt">Ver agenda →</span>
+          <span data-lang="en">See agenda →</span>
+          <span data-lang="es">Ver agenda →</span>
+        </span>
+      </div>
+    </a>
+
+    <!-- 05 — CINEMATECA -->
+    <a href="/cinemateca/" class="hg-tile">
+      <div class="hg-bg" style="background-image:url('/media/discover/cinemateca.jpg'); filter: grayscale(20%)"></div>
+      <div class="hg-overlay"></div>
+      <div class="hg-body">
+        <span class="hg-eyebrow">05</span>
+        <h2 class="hg-title">Cinemateca</h2>
+        <p class="hg-desc">
+          <span data-lang="pt">Os nossos filmes, disponíveis para ver.</span>
+          <span data-lang="en">Our films, available to watch.</span>
+          <span data-lang="es">Nuestras películas, disponibles para ver.</span>
+        </p>
+        <span class="hg-arrow">
+          <span data-lang="pt">Entrar →</span>
+          <span data-lang="en">Enter →</span>
+          <span data-lang="es">Entrar →</span>
+        </span>
+      </div>
+    </a>
+
+    <!-- 06 — FOTOTECA -->
+    <a href="/fototeca/" class="hg-tile">
+      <div class="hg-bg" style="background-image:url('/media/discover/fototeca.jpg')"></div>
+      <div class="hg-overlay"></div>
+      <div class="hg-body">
+        <span class="hg-eyebrow">06</span>
+        <h2 class="hg-title">Fototeca</h2>
+        <p class="hg-desc">
+          <span data-lang="pt">Arquivo fotográfico do clube.</span>
+          <span data-lang="en">The club's photo archive.</span>
+          <span data-lang="es">Archivo fotográfico del club.</span>
+        </p>
+        <span class="hg-arrow">
+          <span data-lang="pt">Ver galeria →</span>
+          <span data-lang="en">See gallery →</span>
+          <span data-lang="es">Ver galería →</span>
+        </span>
+      </div>
+    </a>
+
+    <!-- 07 — .KO FESTIVAL -->
+    <a href="/comunidad/" class="hg-tile hg-ko">
+      <div class="hg-bg"></div>
+      <div class="hg-overlay"></div>
+      <div class="hg-body">
+        <span class="hg-eyebrow">07</span>
+        <h2 class="hg-title">.KO Festival</h2>
+        <p class="hg-desc">
+          <span data-lang="pt">Festival internacional de curtas. Lisboa 2027.</span>
+          <span data-lang="en">International short film festival. Lisbon 2027.</span>
+          <span data-lang="es">Festival internacional de cortometrajes. Lisboa 2027.</span>
+        </p>
+        <span class="hg-arrow">
+          <span data-lang="pt">Saber mais →</span>
+          <span data-lang="en">Learn more →</span>
+          <span data-lang="es">Saber más →</span>
+        </span>
+      </div>
+    </a>
+
+    <!-- 08 — MERCADO -->
+    <a href="/mercado/" class="hg-tile">
+      <div class="hg-bg" style="background-image:url('/media/discover/mercado.jpg'); filter: grayscale(20%)"></div>
+      <div class="hg-overlay"></div>
+      <div class="hg-body">
+        <span class="hg-eyebrow">08</span>
+        <h2 class="hg-title">Mercado</h2>
+        <p class="hg-desc">
+          <span data-lang="pt">Impressões e objectos do clube.</span>
+          <span data-lang="en">Prints and objects from the club.</span>
+          <span data-lang="es">Impresiones y objetos del club.</span>
+        </p>
+        <span class="hg-arrow">
+          <span data-lang="pt">Ver loja →</span>
+          <span data-lang="en">See shop →</span>
+          <span data-lang="es">Ver tienda →</span>
+        </span>
+      </div>
+    </a>
+
+    <!-- 09 — JOIN THE CLUB -->
+    <a href="/contactos/" class="hg-tile hg-join">
+      <div class="hg-bg" style="background-image:url('/media/discover/contactos.jpg')"></div>
+      <div class="hg-overlay"></div>
+      <div class="hg-body">
+        <span class="hg-eyebrow">09</span>
+        <h2 class="hg-title">Join the Club</h2>
+        <p class="hg-desc">
+          <span data-lang="pt">Faz parte da comunidade.</span>
+          <span data-lang="en">Be part of the community.</span>
+          <span data-lang="es">Forma parte de la comunidad.</span>
+        </p>
+        <span class="hg-arrow">
+          <span data-lang="pt">Contactar →</span>
+          <span data-lang="en">Contact →</span>
+          <span data-lang="es">Contactar →</span>
+        </span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Novedades -->
+  <section class="novedades-section">
     <div class="wrap">
-      <span class="s-eyebrow">
-        <span data-lang="pt">02 · Novidades</span>
-        <span data-lang="en">02 · News</span>
-        <span data-lang="es">02 · Novedades</span>
-      </span>
-      <h2 class="s-title">
-        <span data-lang="pt">O que há de novo</span>
-        <span data-lang="en">What's new</span>
-        <span data-lang="es">Qué hay de nuevo</span>
-      </h2>
+      <div class="novedades-header">
+        <span class="s-eyebrow">
+          <span data-lang="pt">Novidades</span>
+          <span data-lang="en">News</span>
+          <span data-lang="es">Novedades</span>
+        </span>
+        <h2 class="novedades-title">
+          <span data-lang="pt">O que há de novo</span>
+          <span data-lang="en">What's new</span>
+          <span data-lang="es">Qué hay de nuevo</span>
+        </h2>
+      </div>
 
       <div class="blog-grid">
 
         <article class="blog-card" data-post="concurso">
-          <a href="#" class="blog-card-img-wrap">
+          <div class="blog-card-img-wrap">
             <img src="/media/fototeca/thumb/eac-01.jpg" alt="" class="blog-card-img">
             <span class="blog-tag">
               <span data-lang="pt">Concurso</span>
               <span data-lang="en">Open Call</span>
               <span data-lang="es">Concurso</span>
             </span>
-          </a>
+          </div>
           <div class="blog-card-body">
             <time class="blog-date">2026</time>
             <h3 class="blog-title">
@@ -734,9 +580,9 @@
               <span data-lang="en">Submit your idea — Make a film with us</span>
               <span data-lang="es">Envía tu idea — Produce con nosotros</span>
             </h3>
-            <p class="blog-excerpt" data-lang="pt">Queres produzir a tua curta-metragem? Estamos à procura de histórias para produzir juntos em 2026. Submete a tua ideia e faz o teu filme connosco.</p>
-            <p class="blog-excerpt" data-lang="en">Do you want to produce your own short film? We're looking for stories to produce together in 2026. Submit your idea and make your film with us.</p>
-            <p class="blog-excerpt" data-lang="es">¿Quieres producir tu cortometraje? Estamos buscando historias para producir juntos en 2026. Envía tu idea y haz tu película con nosotros.</p>
+            <p class="blog-excerpt" data-lang="pt">Estamos à procura de histórias para produzir juntos em 2026.</p>
+            <p class="blog-excerpt" data-lang="en">We're looking for stories to produce together in 2026.</p>
+            <p class="blog-excerpt" data-lang="es">Estamos buscando historias para producir juntos en 2026.</p>
             <a href="/contactos/" class="blog-link">
               <span data-lang="pt">Submeter ideia →</span>
               <span data-lang="en">Submit idea →</span>
@@ -746,24 +592,24 @@
         </article>
 
         <article class="blog-card" data-post="mashup4">
-          <a href="#" class="blog-card-img-wrap">
+          <div class="blog-card-img-wrap">
             <img src="/media/fototeca/thumb/mu4-01.jpg" alt="" class="blog-card-img">
             <span class="blog-tag">
               <span data-lang="pt">Evento</span>
               <span data-lang="en">Event</span>
               <span data-lang="es">Evento</span>
             </span>
-          </a>
+          </div>
           <div class="blog-card-body">
             <time class="blog-date">16 Mar 2026</time>
             <h3 class="blog-title">
-              <span data-lang="pt">MashUp #4 — Uma noite de cinema e música</span>
-              <span data-lang="en">MashUp #4 — A night of cinema and music</span>
-              <span data-lang="es">MashUp #4 — Una noche de cine y música</span>
+              <span data-lang="pt">MashUp #4 — Cinema e música ao vivo</span>
+              <span data-lang="en">MashUp #4 — Cinema and live music</span>
+              <span data-lang="es">MashUp #4 — Cine y música en vivo</span>
             </h3>
-            <p class="blog-excerpt" data-lang="pt">A quarta edição do MashUp reuniu realizadores, músicos e o público numa noite de projeções e improvisação ao vivo no coração de Lisboa.</p>
-            <p class="blog-excerpt" data-lang="en">The fourth edition of MashUp brought together directors, musicians and the public for a night of screenings and live improvisation in the heart of Lisbon.</p>
-            <p class="blog-excerpt" data-lang="es">La cuarta edición del MashUp reunió a realizadores, músicos y el público en una noche de proyecciones e improvisación en vivo en el corazón de Lisboa.</p>
+            <p class="blog-excerpt" data-lang="pt">Uma noite de projeções e improvisação ao vivo no coração de Lisboa.</p>
+            <p class="blog-excerpt" data-lang="en">A night of screenings and live improvisation in the heart of Lisbon.</p>
+            <p class="blog-excerpt" data-lang="es">Una noche de proyecciones e improvisación en vivo en el corazón de Lisboa.</p>
             <a href="#" class="blog-link">
               <span data-lang="pt">Ler mais →</span>
               <span data-lang="en">Read more →</span>
@@ -773,14 +619,14 @@
         </article>
 
         <article class="blog-card" data-post="inexistente">
-          <a href="#" class="blog-card-img-wrap">
+          <div class="blog-card-img-wrap">
             <img src="/media/cinemateca/stills/inx-still3.jpg" alt="" class="blog-card-img">
             <span class="blog-tag">
               <span data-lang="pt">Filme</span>
               <span data-lang="en">Film</span>
               <span data-lang="es">Película</span>
             </span>
-          </a>
+          </div>
           <div class="blog-card-body">
             <time class="blog-date">2023</time>
             <h3 class="blog-title">
@@ -788,9 +634,9 @@
               <span data-lang="en">Inexistente — Our first film</span>
               <span data-lang="es">Inexistente — Nuestra primera película</span>
             </h3>
-            <p class="blog-excerpt" data-lang="pt">Helder visita a antiga casa do seu melhor amigo, Pedro, quem desapareceu sem deixar rasto. Uma curta sobre memória e ausência, já disponível na Cinemateca.</p>
-            <p class="blog-excerpt" data-lang="en">Helder visits the former home of his best friend Pedro, who vanished without a trace. A short film about memory and absence, now available in the Cinemateca.</p>
-            <p class="blog-excerpt" data-lang="es">Helder visita la antigua casa de su mejor amigo Pedro, quien desapareció sin dejar rastro. Un cortometraje sobre la memoria y la ausencia, ya disponible en la Cinemateca.</p>
+            <p class="blog-excerpt" data-lang="pt">Uma curta sobre memória e ausência, já disponível na Cinemateca.</p>
+            <p class="blog-excerpt" data-lang="en">A short film about memory and absence, now available in the Cinemateca.</p>
+            <p class="blog-excerpt" data-lang="es">Un cortometraje sobre la memoria y la ausencia, disponible en la Cinemateca.</p>
             <a href="/cinemateca/" class="blog-link">
               <span data-lang="pt">Ver na Cinemateca →</span>
               <span data-lang="en">Watch in Cinemateca →</span>
@@ -803,256 +649,14 @@
     </div>
   </section>
 
-  <!-- 03 · Descobre -->
-  <section class="section" id="descobre">
-    <div class="wrap">
-      <span class="s-eyebrow">
-        <span data-lang="pt">03 · Explora</span>
-        <span data-lang="en">03 · Explore</span>
-        <span data-lang="es">03 · Explora</span>
-      </span>
-      <h2 class="s-title">
-        <span data-lang="pt">Descobre o clube</span>
-        <span data-lang="en">Discover the club</span>
-        <span data-lang="es">Descubre el club</span>
-      </h2>
-
-      <div class="discover-grid">
-
-        <a class="discover-card" href="/eventos/">
-          <div class="discover-card-img" style="background-image: url('/media/discover/eventos.jpg')"></div>
-          <div class="discover-card-body">
-            <span class="discover-card-num">01</span>
-            <h3 class="discover-card-title">Eventos</h3>
-            <p class="discover-card-desc">
-              <span data-lang="pt">Projeções, encontros e sessões de networking abertas a todos.</span>
-              <span data-lang="en">Screenings, meetups and networking sessions open to everyone.</span>
-              <span data-lang="es">Proyecciones, encuentros y sesiones de networking abiertas a todos.</span>
-            </p>
-            <span class="discover-card-arrow">
-              <span data-lang="pt">Ver eventos →</span>
-              <span data-lang="en">See events →</span>
-              <span data-lang="es">Ver eventos →</span>
-            </span>
-          </div>
-        </a>
-
-        <a class="discover-card grayscale" href="/cinemateca/">
-          <div class="discover-card-img" style="background-image: url('/media/discover/cinemateca.jpg')"></div>
-          <div class="discover-card-body">
-            <span class="discover-card-num">02</span>
-            <h3 class="discover-card-title">Cinemateca</h3>
-            <p class="discover-card-desc">
-              <span data-lang="pt">O nosso catálogo de curtas-metragens disponível para ver.</span>
-              <span data-lang="en">Our short film catalogue available to watch.</span>
-              <span data-lang="es">Nuestro catálogo de cortometrajes disponible para ver.</span>
-            </p>
-            <span class="discover-card-arrow">
-              <span data-lang="pt">Entrar →</span>
-              <span data-lang="en">Enter →</span>
-              <span data-lang="es">Entrar →</span>
-            </span>
-          </div>
-        </a>
-
-        <a class="discover-card" href="/fototeca/">
-          <div class="discover-card-img" style="background-image: url('/media/discover/fototeca.jpg')"></div>
-          <div class="discover-card-body">
-            <span class="discover-card-num">03</span>
-            <h3 class="discover-card-title">Fototeca</h3>
-            <p class="discover-card-desc">
-              <span data-lang="pt">Arquivo fotográfico de todos os eventos e produções do clube.</span>
-              <span data-lang="en">Photo archive of all club events and productions.</span>
-              <span data-lang="es">Archivo fotográfico de todos los eventos y producciones del club.</span>
-            </p>
-            <span class="discover-card-arrow">
-              <span data-lang="pt">Ver galeria →</span>
-              <span data-lang="en">See gallery →</span>
-              <span data-lang="es">Ver galería →</span>
-            </span>
-          </div>
-        </a>
-
-        <a class="discover-card grayscale" href="/mercado/">
-          <div class="discover-card-img" style="background-image: url('/media/discover/mercado.jpg')"></div>
-          <div class="discover-card-body">
-            <span class="discover-card-num">04</span>
-            <h3 class="discover-card-title">Mercado</h3>
-            <p class="discover-card-desc">
-              <span data-lang="pt">Impressões numeradas e objectos do trabalho do clube.</span>
-              <span data-lang="en">Numbered prints and objects from the club's work.</span>
-              <span data-lang="es">Impresiones numeradas y objetos del trabajo del club.</span>
-            </p>
-            <span class="discover-card-arrow">
-              <span data-lang="pt">Ver loja →</span>
-              <span data-lang="en">See shop →</span>
-              <span data-lang="es">Ver tienda →</span>
-            </span>
-          </div>
-        </a>
-
-        <a class="discover-card" href="/comunidad/">
-          <div class="discover-card-img" style="background: #8b0000;"></div>
-          <div class="discover-card-body">
-            <span class="discover-card-num">05</span>
-            <h3 class="discover-card-title">.KO Festival</h3>
-            <p class="discover-card-desc">
-              <span data-lang="pt">O nosso festival internacional de curtas-metragens.</span>
-              <span data-lang="en">Our international short film festival.</span>
-              <span data-lang="es">Nuestro festival internacional de cortometrajes.</span>
-            </p>
-            <span class="discover-card-arrow">
-              <span data-lang="pt">Saber mais →</span>
-              <span data-lang="en">Learn more →</span>
-              <span data-lang="es">Saber más →</span>
-            </span>
-          </div>
-        </a>
-
-        <a class="discover-card" href="/contactos/">
-          <div class="discover-card-img" style="background-image: url('/media/discover/contactos.jpg')"></div>
-          <div class="discover-card-body">
-            <span class="discover-card-num">06</span>
-            <h3 class="discover-card-title">
-              <span data-lang="pt">Contactos</span>
-              <span data-lang="en">Contact</span>
-              <span data-lang="es">Contacto</span>
-            </h3>
-            <p class="discover-card-desc">
-              <span data-lang="pt">Fala connosco — para questões, parcerias ou só para dizer olá.</span>
-              <span data-lang="en">Talk to us — for questions, partnerships or just to say hello.</span>
-              <span data-lang="es">Habla con nosotros — para preguntas, colaboraciones o simplemente saludar.</span>
-            </p>
-            <span class="discover-card-arrow">
-              <span data-lang="pt">Contactar →</span>
-              <span data-lang="en">Contact →</span>
-              <span data-lang="es">Contactar →</span>
-            </span>
-          </div>
-        </a>
-
-      </div>
-    </div>
-  </section>
-
 </main>
 
 <div id="footer-container"></div>
 
-<script>
-  /*
-   * PROJETOS & DIÁRIO
-   *
-   * Para adicionar ou editar um projecto:
-   *   type   → 'filme' | 'crowdfunding' | 'recap' | 'artigo'
-   *   status → 'em-curso' | 'crowdfunding' | 'concluido' | 'em-breve'
-   *   title  → título do projecto
-   *   desc   → descrição curta (1–2 frases)
-   *   date   → data ou período (ex: "2025", "Jun 2025")
-   *   link   → URL destino (ou null para sem link)
-   *   linkLabel → texto do link (ex: "Ver filme →")
-   */
-  const projects = [
-    {
-      type: 'filme',
-      status: 'concluido',
-      title: 'Inexistente',
-      desc: 'Helder visita a antiga casa do seu melhor amigo, Pedro, quem desapareceu sem deixar rasto. Uma curta sobre memória e ausência.',
-      date: '2023',
-      link: '/cinemateca/',
-      linkLabel: 'Ver na cinemateca →'
-    },
-    {
-      type: 'filme',
-      status: 'concluido',
-      title: 'El Artista Comprendido',
-      desc: 'Segunda curta do clube, exploração sobre criatividade e reconhecimento no mundo da arte contemporânea.',
-      date: '2024',
-      link: '/cinemateca/',
-      linkLabel: 'Ver na cinemateca →'
-    },
-    {
-      type: 'filme',
-      status: 'em-curso',
-      title: 'Firefly',
-      desc: 'A próxima curta-metragem do clube, actualmente em pré-produção. Acompanha o processo aqui e nas nossas redes.',
-      date: '2026',
-      link: null,
-      linkLabel: null
-    },
-    {
-      type: 'crowdfunding',
-      status: 'em-breve',
-      title: 'Campanha Firefly',
-      desc: 'Em breve lançamos uma campanha de financiamento colectivo para apoiar a produção de Firefly. Fica atento.',
-      date: '2026',
-      link: null,
-      linkLabel: null
-    },
-    {
-      type: 'artigo',
-      status: 'em-breve',
-      title: 'Diário de Produção',
-      desc: 'Vamos partilhar o processo de criação dos nossos filmes — da ideia ao ecrã. Em breve neste espaço.',
-      date: '2026',
-      link: null,
-      linkLabel: null
-    },
-    {
-      type: 'evento',
-      status: 'em-breve',
-      title: '.KO Lisboa 2027',
-      desc: 'O nosso festival internacional de curtas-metragens chega em 2027. Submissões abertas em Janeiro.',
-      date: '2027',
-      link: '/comunidad/',
-      linkLabel: 'Saber mais →'
-    }
-  ];
-
-  const TYPE_LABELS = {
-    filme: 'Filme',
-    crowdfunding: 'Crowdfunding',
-    recap: 'Recap',
-    artigo: 'Diário',
-    evento: 'Festival'
-  };
-
-  const STATUS_LABELS = {
-    'em-curso':     'Em curso',
-    'crowdfunding': 'Em financiamento',
-    'concluido':    'Concluído',
-    'em-breve':     'Em breve'
-  };
-
-  const grid = document.getElementById('projects-grid');
-
-  projects.forEach(function(p) {
-    const el = document.createElement(p.link ? 'a' : 'div');
-    el.className = 'project-card';
-    if (p.link) {
-      el.href = p.link;
-    }
-
-    el.innerHTML =
-      '<div class="project-card-top">' +
-        '<span class="project-type">' + (TYPE_LABELS[p.type] || p.type) + '</span>' +
-        '<span class="project-status status-' + p.status + '">' + STATUS_LABELS[p.status] + '</span>' +
-      '</div>' +
-      '<h3 class="project-title">' + p.title + '</h3>' +
-      '<p class="project-desc">' + p.desc + '</p>' +
-      '<div class="project-footer">' +
-        '<span class="project-date">' + p.date + '</span>' +
-        (p.linkLabel ? '<span class="project-link-label">' + p.linkLabel + '</span>' : '') +
-      '</div>';
-
-    grid.appendChild(el);
-  });
-</script>
-
-<script src="/shared.js"></script>
+<!-- Historia slideshow -->
 <script>
   (function() {
-    var slides = document.querySelectorAll('#about-slideshow img');
+    var slides = document.querySelectorAll('.hg-historia .hg-slide');
     if (slides.length < 2) return;
     var cur = 0;
     setInterval(function() {
@@ -1063,7 +667,9 @@
   })();
 </script>
 
-<!-- ── Blog Post Modal ── -->
+<script src="/shared.js"></script>
+
+<!-- Blog Post Modal -->
 <div id="post-modal" class="post-modal" aria-modal="true" role="dialog" aria-label="Post" hidden>
   <div class="post-modal-backdrop"></div>
   <div class="post-modal-panel">
@@ -1084,113 +690,22 @@
 </div>
 
 <style>
-  .post-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 9000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-  }
+  .post-modal { position: fixed; inset: 0; z-index: 9000; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
   .post-modal[hidden] { display: none; }
-
-  .post-modal-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.82);
-  }
-
-  .post-modal-panel {
-    position: relative;
-    background: var(--surface, #1a1714);
-    border: 1px solid var(--border, rgba(240,232,216,0.12));
-    border-radius: 10px;
-    width: 100%;
-    max-width: 760px;
-    max-height: 90vh;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .post-modal-close {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.85rem;
-    background: transparent;
-    border: none;
-    color: var(--text-muted, rgba(240,232,216,0.55));
-    font-size: 1.6rem;
-    line-height: 1;
-    cursor: pointer;
-    z-index: 1;
-    padding: 0.2rem 0.4rem;
-    transition: color 0.2s;
-  }
-  .post-modal-close:hover { color: var(--text-primary, #f0e8d8); }
-
-  .post-modal-img-wrap {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    border-radius: 10px 10px 0 0;
-  }
-  .post-modal-img-wrap:empty { display: none; }
-
-  .post-modal-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .post-modal-content {
-    padding: 2rem 2rem 2.5rem;
-  }
-
-  .post-modal-meta {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .post-modal-title {
-    font-family: 'Montserrat', var(--font-family, sans-serif);
-    font-size: clamp(1.3rem, 3vw, 1.85rem);
-    font-weight: 600;
-    color: var(--text-primary, #f0e8d8);
-    line-height: 1.2;
-    margin-bottom: 1.25rem;
-    text-transform: none;
-  }
-
-  .post-modal-body {
-    font-size: 0.95rem;
-    line-height: 1.7;
-    color: var(--text-muted, rgba(240,232,216,0.75));
-    margin-bottom: 1.75rem;
-  }
-
-  .post-modal-cta {
-    display: inline-block;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--text-primary, #f0e8d8);
-    border-bottom: 1px solid currentColor;
-    padding-bottom: 2px;
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
+  .post-modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.82); }
+  .post-modal-panel { position: relative; background: #1a1714; border: 1px solid var(--border); border-radius: 10px; width: 100%; max-width: 760px; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; }
+  .post-modal-close { position: absolute; top: 0.75rem; right: 0.85rem; background: transparent; border: none; color: var(--text-muted); font-size: 1.6rem; line-height: 1; cursor: pointer; z-index: 1; padding: 0.2rem 0.4rem; transition: color 0.2s; }
+  .post-modal-close:hover { color: var(--text-primary); }
+  .post-modal-img-wrap { width: 100%; aspect-ratio: 16/9; overflow: hidden; border-radius: 10px 10px 0 0; }
+  .post-modal-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .post-modal-content { padding: 2rem 2rem 2.5rem; }
+  .post-modal-meta { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+  .post-modal-title { font-family: var(--font-family); font-size: clamp(1.3rem,3vw,1.85rem); font-weight: 600; color: var(--text-primary); line-height: 1.2; margin-bottom: 1.25rem; }
+  .post-modal-body { font-size: 0.95rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 1.75rem; }
+  .post-modal-cta { display: inline-block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-primary); border-bottom: 1px solid currentColor; padding-bottom: 2px; text-decoration: none; transition: opacity 0.2s; }
   .post-modal-cta:hover { opacity: 0.7; }
   .post-modal-cta[hidden] { display: none; }
-
-  @media (max-width: 600px) {
-    .post-modal-content { padding: 1.5rem 1.25rem 2rem; }
-  }
+  @media (max-width: 600px) { .post-modal-content { padding: 1.5rem 1.25rem 2rem; } }
 </style>
 
 <script>
@@ -1202,11 +717,11 @@
         date:  '2026',
         title: { pt: 'Submete a tua ideia — Produz connosco', en: 'Submit your idea — Make a film with us', es: 'Envía tu idea — Produce con nosotros' },
         body:  {
-          pt: 'Queres produzir a tua curta-metragem? No Club Benares acreditamos que cada história merece ser contada. Estamos à procura de ideias originais para co-produzir juntos em 2026 — desde o argumento à pós-produção, percorremos o caminho contigo. Não precisas de experiência prévia, só de uma boa história. Submete a tua ideia pelo formulário de contacto e faz o teu filme connosco.',
-          en:  'Do you want to produce your own short film? At Club Benares we believe every story deserves to be told. We\'re looking for original ideas to co-produce together in 2026 — from script to post-production, we walk the journey with you. No prior experience needed, just a good story. Submit your idea through the contact form and make your film with us.',
-          es:  '¿Quieres producir tu cortometraje? En Club Benares creemos que cada historia merece ser contada. Estamos buscando ideas originales para co-producir juntos en 2026 — desde el guion hasta la postproducción, recorremos el camino contigo. No necesitas experiencia previa, solo una buena historia. Envía tu idea a través del formulario de contacto y haz tu película con nosotros.'
+          pt: 'Queres produzir a tua curta-metragem? No Club Benares acreditamos que cada história merece ser contada. Estamos à procura de ideias originais para co-produzir juntos em 2026 — desde o argumento à pós-produção, percorremos o caminho contigo. Não precisas de experiência prévia, só de uma boa história. Submete a tua ideia pelo formulário de contacto.',
+          en:  'Do you want to produce your own short film? At Club Benares we believe every story deserves to be told. We\'re looking for original ideas to co-produce together in 2026 — from script to post-production, we walk the journey with you. No prior experience needed, just a good story.',
+          es:  '¿Quieres producir tu cortometraje? En Club Benares creemos que cada historia merece ser contada. Estamos buscando ideas originales para co-producir juntos en 2026 — desde el guion hasta la postproducción, recorremos el camino contigo.'
         },
-        link:      '/contactos/',
+        link: '/contactos/',
         linkLabel: { pt: 'Submeter ideia →', en: 'Submit idea →', es: 'Enviar idea →' }
       },
       mashup4: {
@@ -1215,12 +730,11 @@
         date:  '16 Mar 2026',
         title: { pt: 'MashUp #4 — Uma noite de cinema e música', en: 'MashUp #4 — A night of cinema and music', es: 'MashUp #4 — Una noche de cine y música' },
         body:  {
-          pt: 'A quarta edição do MashUp reuniu realizadores, músicos e o público numa noite inesquecível de projeções e improvisação ao vivo no coração de Lisboa. Curtas-metragens foram projetadas ao som de música composta e tocada ao vivo, criando uma experiência única onde imagem e som se fundem. Uma noite que ficou na memória de quem esteve presente.',
-          en:  'The fourth edition of MashUp brought together directors, musicians and the public for an unforgettable night of screenings and live improvisation in the heart of Lisbon. Short films were screened to the sound of live composed and performed music, creating a unique experience where image and sound merge. A night that will stay in the memory of those who were there.',
-          es:  'La cuarta edición del MashUp reunió a realizadores, músicos y el público en una noche inolvidable de proyecciones e improvisación en vivo en el corazón de Lisboa. Los cortometrajes se proyectaron con música compuesta e interpretada en directo, creando una experiencia única donde imagen y sonido se fusionan. Una noche que quedó en la memoria de quienes estuvieron presentes.'
+          pt: 'A quarta edição do MashUp reuniu realizadores, músicos e o público numa noite inesquecível de projeções e improvisação ao vivo no coração de Lisboa. Curtas-metragens foram projetadas ao som de música composta e tocada ao vivo, criando uma experiência única onde imagem e som se fundem.',
+          en:  'The fourth edition of MashUp brought together directors, musicians and the public for an unforgettable night of screenings and live improvisation in the heart of Lisbon.',
+          es:  'La cuarta edición del MashUp reunió a realizadores, músicos y el público en una noche inolvidable de proyecciones e improvisación en vivo en el corazón de Lisboa.'
         },
-        link:      null,
-        linkLabel: null
+        link: null, linkLabel: null
       },
       inexistente: {
         image: '/media/cinemateca/stills/inx-still3.jpg',
@@ -1228,11 +742,11 @@
         date:  '2023',
         title: { pt: 'Inexistente — O nosso primeiro filme', en: 'Inexistente — Our first film', es: 'Inexistente — Nuestra primera película' },
         body:  {
-          pt: 'Helder visita a antiga casa do seu melhor amigo, Pedro, quem desapareceu sem deixar rasto. O que começa como uma visita torna-se uma viagem pela memória, pela saudade e pelo peso das coisas não ditas. Inexistente é a primeira curta-metragem do Club Benares, realizada em 2023, e está disponível para ver na nossa Cinemateca.',
-          en:  'Helder visits the former home of his best friend Pedro, who vanished without a trace. What begins as a visit becomes a journey through memory, longing and the weight of things left unsaid. Inexistente is Club Benares\' first short film, made in 2023, and is available to watch in our Cinemateca.',
-          es:  'Helder visita la antigua casa de su mejor amigo Pedro, quien desapareció sin dejar rastro. Lo que comienza como una visita se convierte en un viaje por la memoria, la nostalgia y el peso de las cosas no dichas. Inexistente es el primer cortometraje de Club Benares, realizado en 2023, y está disponible para ver en nuestra Cinemateca.'
+          pt: 'Helder visita a antiga casa do seu melhor amigo, Pedro, quem desapareceu sem deixar rasto. O que começa como uma visita torna-se uma viagem pela memória, pela saudade e pelo peso das coisas não ditas. Inexistente é a primeira curta-metragem do Club Benares, realizada em 2023.',
+          en:  'Helder visits the former home of his best friend Pedro, who vanished without a trace. What begins as a visit becomes a journey through memory, longing and the weight of things left unsaid.',
+          es:  'Helder visita la antigua casa de su mejor amigo Pedro, quien desapareció sin dejar rastro. Lo que comienza como una visita se convierte en un viaje por la memoria, la nostalgia y el peso de las cosas no dichas.'
         },
-        link:      '/cinemateca/',
+        link: '/cinemateca/',
         linkLabel: { pt: 'Ver na Cinemateca →', en: 'Watch in Cinemateca →', es: 'Ver en Cinemateca →' }
       }
     };
@@ -1241,36 +755,21 @@
       const post = POSTS[postId];
       if (!post) return;
       const lang = (typeof getCurrentLang === 'function' ? getCurrentLang() : localStorage.getItem('site-lang')) || 'pt';
-
       const modal   = document.getElementById('post-modal');
       const imgEl   = document.getElementById('post-modal-img');
       const imgWrap = imgEl.parentElement;
-      const tagEl   = document.getElementById('post-modal-tag');
-      const dateEl  = document.getElementById('post-modal-date');
-      const titleEl = document.getElementById('post-modal-title');
-      const bodyEl  = document.getElementById('post-modal-body');
-      const linkEl  = document.getElementById('post-modal-link');
-
-      if (post.image) {
-        imgEl.src = post.image;
-        imgWrap.style.display = '';
-      } else {
-        imgWrap.style.display = 'none';
-      }
-
-      tagEl.textContent   = post.tag[lang]   || post.tag.pt;
-      dateEl.textContent  = post.date;
-      titleEl.textContent = post.title[lang]  || post.title.pt;
-      bodyEl.textContent  = post.body[lang]   || post.body.pt;
-
+      if (post.image) { imgEl.src = post.image; imgWrap.style.display = ''; }
+      else { imgWrap.style.display = 'none'; }
+      document.getElementById('post-modal-tag').textContent   = post.tag[lang]   || post.tag.pt;
+      document.getElementById('post-modal-date').textContent  = post.date;
+      document.getElementById('post-modal-title').textContent = post.title[lang]  || post.title.pt;
+      document.getElementById('post-modal-body').textContent  = post.body[lang]   || post.body.pt;
+      const linkEl = document.getElementById('post-modal-link');
       if (post.link && post.linkLabel) {
-        linkEl.href        = post.link;
+        linkEl.href = post.link;
         linkEl.textContent = post.linkLabel[lang] || post.linkLabel.pt;
         linkEl.removeAttribute('hidden');
-      } else {
-        linkEl.setAttribute('hidden', '');
-      }
-
+      } else { linkEl.setAttribute('hidden', ''); }
       modal._postId = postId;
       modal.removeAttribute('hidden');
       document.body.style.overflow = 'hidden';
@@ -1292,41 +791,25 @@
       document.getElementById('post-modal-title').textContent = post.title[lang]  || post.title.pt;
       document.getElementById('post-modal-body').textContent  = post.body[lang]   || post.body.pt;
       const linkEl = document.getElementById('post-modal-link');
-      if (post.link && post.linkLabel) {
-        linkEl.textContent = post.linkLabel[lang] || post.linkLabel.pt;
-      }
+      if (post.link && post.linkLabel) linkEl.textContent = post.linkLabel[lang] || post.linkLabel.pt;
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      // Wire card clicks
       document.querySelectorAll('.blog-card[data-post]').forEach(function(card) {
-        card.style.cursor = 'pointer';
         card.addEventListener('click', function(e) {
-          // Don't open modal if clicking the CTA link
           if (e.target.closest('.blog-link')) return;
           e.preventDefault();
           openModal(card.dataset.post);
         });
       });
-
-      // Close on backdrop or close button
       document.getElementById('post-modal').addEventListener('click', function(e) {
-        if (e.target.classList.contains('post-modal-backdrop') || e.target.classList.contains('post-modal-close')) {
-          closeModal();
-        }
+        if (e.target.classList.contains('post-modal-backdrop') || e.target.classList.contains('post-modal-close')) closeModal();
       });
-
-      // Close on ESC
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') closeModal();
-      });
-
-      // Update modal text when language changes
-      document.addEventListener('langchange', function(e) {
-        refreshModalLang(e.detail.lang);
-      });
+      document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+      document.addEventListener('langchange', function(e) { refreshModalLang(e.detail.lang); });
     });
   })();
 </script>
+
 </body>
 </html>
