@@ -480,7 +480,7 @@
   <div class="bento">
 
     <!-- HISTÓRIA -->
-    <div class="bc bc-historia">
+    <div class="bc bc-historia" id="bc-historia-tile" style="cursor:pointer;">
       <div class="bc-slide active" style="background-image:url('/media/fototeca/thumb/nl1-06.jpg')"></div>
       <div class="bc-slide" style="background-image:url('/media/fototeca/thumb/eac-08.jpg')"></div>
       <div class="bc-slide" style="background-image:url('/media/fototeca/thumb/mu2-07.jpg')"></div>
@@ -522,7 +522,7 @@
     </div>
 
     <!-- CHARLIE CHAVES -->
-    <a href="/contactos/" class="bc bc-charlie">
+    <div class="bc bc-charlie" id="bc-charlie-tile" style="cursor:pointer;">
       <div class="bc-img" style="background-image:url('/media/fototeca/thumb/nl1-06.jpg')"></div>
       <div class="bc-grad"></div>
       <div class="bc-body">
@@ -535,7 +535,7 @@
         </p>
         <span class="bc-link">→</span>
       </div>
-    </a>
+    </div>
 
     <!-- EVENTOS -->
     <a href="/eventos/" class="bc bc-eventos">
@@ -658,19 +658,19 @@
     </div>
 
     <!-- JOIN THE CLUB -->
-    <a href="/contactos/" class="bc bc-join">
+    <div class="bc bc-join" id="bc-join-tile" style="cursor:pointer;">
       <div class="bc-img" style="background-image:url('/media/discover/contactos.jpg')"></div>
       <div class="bc-grad"></div>
       <div class="bc-body">
         <span class="bc-label">09</span>
         <h2 class="bc-title">Join the Club</h2>
         <span class="bc-link">
-          <span data-lang="pt">Contactar →</span>
-          <span data-lang="en">Contact →</span>
-          <span data-lang="es">Contactar →</span>
+          <span data-lang="pt">Saber mais →</span>
+          <span data-lang="en">Learn more →</span>
+          <span data-lang="es">Saber más →</span>
         </span>
       </div>
-    </a>
+    </div>
 
   </div>
 
@@ -889,6 +889,487 @@
       });
       document.addEventListener('keydown', function(e) { if (e.key==='Escape') closeModal(); });
       document.addEventListener('langchange', function(e) { refreshLang(e.detail.lang); });
+    });
+  })();
+</script>
+
+<!-- ═══════════════════════════════════════════════════════
+     TILE MODALS: Historia · Charlie · Join the Club
+═══════════════════════════════════════════════════════ -->
+
+<!-- MODAL: Historia -->
+<div id="modal-historia" class="tile-modal" aria-modal="true" role="dialog" hidden>
+  <div class="tm-backdrop"></div>
+  <div class="tm-panel tm-panel--wide">
+    <button class="tm-close" aria-label="Fechar">&times;</button>
+    <div class="tm-hero">
+      <div class="tm-hero-slide active" style="background-image:url('/media/fototeca/thumb/nl1-06.jpg')"></div>
+      <div class="tm-hero-slide" style="background-image:url('/media/fototeca/thumb/eac-08.jpg')"></div>
+      <div class="tm-hero-slide" style="background-image:url('/media/fototeca/thumb/mu2-07.jpg')"></div>
+      <div class="tm-hero-grad"></div>
+      <div class="tm-hero-title">
+        <span class="tm-eyebrow">The Benares Club · Lisboa · 2023</span>
+        <h2 class="tm-hero-heading">A Nossa História</h2>
+      </div>
+    </div>
+    <div class="tm-body">
+      <div class="tm-cols">
+        <div class="tm-col">
+          <h3 class="tm-section-title" data-lang="pt">O Início</h3>
+          <h3 class="tm-section-title" data-lang="en">The Beginning</h3>
+          <h3 class="tm-section-title" data-lang="es">El Inicio</h3>
+          <p data-lang="pt">O Club Benares nasceu em 2023 de uma ideia simples: reunir pessoas que amam o cinema e querem fazê-lo — sem esperar por permissão, sem grandes orçamentos, sem intermediários. O nome vem de Varanasi, cidade-rio do norte da Índia, lugar de passagem, de encontro e de transformação.</p>
+          <p data-lang="en">Club Benares was born in 2023 from a simple idea: bring together people who love cinema and want to make it — without waiting for permission, without big budgets, without intermediaries. The name comes from Varanasi, the river city of northern India, a place of passage, encounter and transformation.</p>
+          <p data-lang="es">Club Benares nació en 2023 de una idea simple: reunir a personas que aman el cine y quieren hacerlo — sin esperar permiso, sin grandes presupuestos, sin intermediarios. El nombre viene de Varanasi, ciudad-río del norte de India, lugar de paso, de encuentro y de transformación.</p>
+
+          <h3 class="tm-section-title" data-lang="pt">Como Funciona</h3>
+          <h3 class="tm-section-title" data-lang="en">How It Works</h3>
+          <h3 class="tm-section-title" data-lang="es">Cómo Funciona</h3>
+          <p data-lang="pt">Cada projeto começa com uma conversa. Alguém tem uma história, outros trazem câmeras, atores, músicos, ou simplesmente vontade. Produzimos curtas-metragens, organizamos eventos e construímos uma comunidade em torno do cinema independente em Lisboa.</p>
+          <p data-lang="en">Each project starts with a conversation. Someone has a story, others bring cameras, actors, musicians, or simply the will. We produce short films, organise events and build a community around independent cinema in Lisbon.</p>
+          <p data-lang="es">Cada proyecto empieza con una conversación. Alguien tiene una historia, otros traen cámaras, actores, músicos, o simplemente ganas. Producimos cortometrajes, organizamos eventos y construimos una comunidad en torno al cine independiente en Lisboa.</p>
+        </div>
+        <div class="tm-col">
+          <h3 class="tm-section-title" data-lang="pt">Os Números</h3>
+          <h3 class="tm-section-title" data-lang="en">The Numbers</h3>
+          <h3 class="tm-section-title" data-lang="es">Los Números</h3>
+          <div class="tm-stats-grid">
+            <div class="tm-stat-big">
+              <strong>5</strong>
+              <span data-lang="pt">Filmes produzidos</span>
+              <span data-lang="en">Films produced</span>
+              <span data-lang="es">Películas producidas</span>
+            </div>
+            <div class="tm-stat-big">
+              <strong>11+</strong>
+              <span data-lang="pt">Eventos realizados</span>
+              <span data-lang="en">Events held</span>
+              <span data-lang="es">Eventos realizados</span>
+            </div>
+            <div class="tm-stat-big">
+              <strong>2023</strong>
+              <span data-lang="pt">Ano de fundação</span>
+              <span data-lang="en">Year founded</span>
+              <span data-lang="es">Año de fundación</span>
+            </div>
+            <div class="tm-stat-big">
+              <strong>2027</strong>
+              <span data-lang="pt">Festival .KO Lisboa</span>
+              <span data-lang="en">.KO Lisbon Festival</span>
+              <span data-lang="es">Festival .KO Lisboa</span>
+            </div>
+          </div>
+
+          <h3 class="tm-section-title" data-lang="pt">O Futuro</h3>
+          <h3 class="tm-section-title" data-lang="en">The Future</h3>
+          <h3 class="tm-section-title" data-lang="es">El Futuro</h3>
+          <p data-lang="pt">Em 2027 lançamos o .KO — Lisbon International Short-film Championship, um festival dedicado à curta-metragem independente com sede em Lisboa. Estamos a construir algo maior do que nós próprios.</p>
+          <p data-lang="en">In 2027 we launch .KO — Lisbon International Short-film Championship, a festival dedicated to independent short films based in Lisbon. We are building something bigger than ourselves.</p>
+          <p data-lang="es">En 2027 lanzamos .KO — Lisbon International Short-film Championship, un festival dedicado al cortometraje independiente con sede en Lisboa. Estamos construyendo algo más grande que nosotros mismos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Charlie Chaves -->
+<div id="modal-charlie" class="tile-modal" aria-modal="true" role="dialog" hidden>
+  <div class="tm-backdrop"></div>
+  <div class="tm-panel">
+    <button class="tm-close" aria-label="Fechar">&times;</button>
+    <div class="tm-hero tm-hero--portrait">
+      <div class="tm-hero-img" style="background-image:url('/media/fototeca/thumb/nl1-06.jpg')"></div>
+      <div class="tm-hero-grad"></div>
+      <div class="tm-hero-title">
+        <span class="tm-eyebrow">Realizador · Fundador</span>
+        <h2 class="tm-hero-heading">Charlie Chaves</h2>
+      </div>
+    </div>
+    <div class="tm-body">
+      <h3 class="tm-section-title" data-lang="pt">Sobre Charlie</h3>
+      <h3 class="tm-section-title" data-lang="en">About Charlie</h3>
+      <h3 class="tm-section-title" data-lang="es">Sobre Charlie</h3>
+      <p data-lang="pt">Charlie Chaves é realizador e fotógrafo, nascido e sediado em Lisboa. A sua linguagem cinematográfica é construída sobre texturas visuais densas, narrativas de intimidade e uma obsessão discreta pelo tempo — o tempo que passa, o que fica e o que desaparece sem aviso.</p>
+      <p data-lang="en">Charlie Chaves is a director and photographer, born and based in Lisbon. His cinematic language is built on dense visual textures, narratives of intimacy and a quiet obsession with time — time that passes, what remains and what disappears without warning.</p>
+      <p data-lang="es">Charlie Chaves es realizador y fotógrafo, nacido y con base en Lisboa. Su lenguaje cinematográfico se construye sobre texturas visuales densas, narrativas de intimidad y una obsesión discreta por el tiempo — el que pasa, el que queda y el que desaparece sin aviso.</p>
+
+      <h3 class="tm-section-title" data-lang="pt">Filmografia</h3>
+      <h3 class="tm-section-title" data-lang="en">Filmography</h3>
+      <h3 class="tm-section-title" data-lang="es">Filmografía</h3>
+      <ul class="tm-list">
+        <li><span class="tm-list-year">2023</span> Inexistente <span class="tm-list-sub" data-lang="pt">— Curta-metragem</span><span class="tm-list-sub" data-lang="en">— Short film</span><span class="tm-list-sub" data-lang="es">— Cortometraje</span></li>
+        <li><span class="tm-list-year">2024</span> El Artista Comprendido <span class="tm-list-sub" data-lang="pt">— Curta-metragem</span><span class="tm-list-sub" data-lang="en">— Short film</span><span class="tm-list-sub" data-lang="es">— Cortometraje</span></li>
+        <li><span class="tm-list-year">2025</span> Jay Gupta <span class="tm-list-sub" data-lang="pt">— Curta-metragem</span><span class="tm-list-sub" data-lang="en">— Short film</span><span class="tm-list-sub" data-lang="es">— Cortometraje</span></li>
+        <li><span class="tm-list-year">2026</span> <span data-lang="pt">Projeto em desenvolvimento</span><span data-lang="en">Project in development</span><span data-lang="es">Proyecto en desarrollo</span></li>
+      </ul>
+
+      <h3 class="tm-section-title" data-lang="pt">Fotografia</h3>
+      <h3 class="tm-section-title" data-lang="en">Photography</h3>
+      <h3 class="tm-section-title" data-lang="es">Fotografía</h3>
+      <p data-lang="pt">O trabalho fotográfico de Charlie documenta os bastidores dos projetos do clube, os eventos e os espaços da cidade. Um arquivo crescente de momentos entre cenas — disponível na Fototeca.</p>
+      <p data-lang="en">Charlie's photographic work documents the behind-the-scenes of the club's projects, events and city spaces. A growing archive of moments between scenes — available in the Fototeca.</p>
+      <p data-lang="es">El trabajo fotográfico de Charlie documenta los bastidores de los proyectos del club, los eventos y los espacios de la ciudad. Un archivo creciente de momentos entre escenas — disponible en la Fototeca.</p>
+
+      <div class="tm-cta-row">
+        <a href="/cinemateca/" class="tm-cta-btn">
+          <span data-lang="pt">Ver filmes →</span>
+          <span data-lang="en">See films →</span>
+          <span data-lang="es">Ver películas →</span>
+        </a>
+        <a href="/fototeca/" class="tm-cta-btn tm-cta-btn--ghost">
+          <span data-lang="pt">Ver fototeca →</span>
+          <span data-lang="en">See fototeca →</span>
+          <span data-lang="es">Ver fototeca →</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Join the Club -->
+<div id="modal-join" class="tile-modal" aria-modal="true" role="dialog" hidden>
+  <div class="tm-backdrop"></div>
+  <div class="tm-panel">
+    <button class="tm-close" aria-label="Fechar">&times;</button>
+    <div class="tm-hero">
+      <div class="tm-hero-img" style="background-image:url('/media/discover/contactos.jpg')"></div>
+      <div class="tm-hero-grad"></div>
+      <div class="tm-hero-title">
+        <span class="tm-eyebrow">The Benares Club</span>
+        <h2 class="tm-hero-heading">Join the Club</h2>
+      </div>
+    </div>
+    <div class="tm-body">
+
+      <h3 class="tm-section-title" data-lang="pt">O que é ser membro?</h3>
+      <h3 class="tm-section-title" data-lang="en">What does membership mean?</h3>
+      <h3 class="tm-section-title" data-lang="es">¿Qué significa ser miembro?</h3>
+      <p data-lang="pt">Ser membro do Club Benares é fazer parte de uma comunidade ativa de cineastas, fotógrafos e criadores independentes em Lisboa. É acesso antecipado a eventos, presença nos projetos e uma cartão de membro físico.</p>
+      <p data-lang="en">Being a Club Benares member means being part of an active community of filmmakers, photographers and independent creators in Lisbon. It means early access to events, presence in projects, and a physical member card.</p>
+      <p data-lang="es">Ser miembro del Club Benares es formar parte de una comunidad activa de cineastas, fotógrafos y creadores independientes en Lisboa. Es acceso anticipado a eventos, presencia en los proyectos y una tarjeta de miembro física.</p>
+
+      <h3 class="tm-section-title" data-lang="pt">Benefícios</h3>
+      <h3 class="tm-section-title" data-lang="en">Benefits</h3>
+      <h3 class="tm-section-title" data-lang="es">Beneficios</h3>
+      <ul class="tm-perks">
+        <li>
+          <span class="tm-perk-icon">✦</span>
+          <span>
+            <strong data-lang="pt">Cartão de membro físico</strong>
+            <strong data-lang="en">Physical member card</strong>
+            <strong data-lang="es">Tarjeta de miembro física</strong>
+            <span data-lang="pt"> — identificação oficial do clube, numerada e assinada.</span>
+            <span data-lang="en"> — official club ID, numbered and signed.</span>
+            <span data-lang="es"> — identificación oficial del club, numerada y firmada.</span>
+          </span>
+        </li>
+        <li>
+          <span class="tm-perk-icon">✦</span>
+          <span>
+            <strong data-lang="pt">Acesso prioritário a eventos</strong>
+            <strong data-lang="en">Priority event access</strong>
+            <strong data-lang="es">Acceso prioritario a eventos</strong>
+            <span data-lang="pt"> — entrada antecipada e preço reduzido.</span>
+            <span data-lang="en"> — early entry and reduced price.</span>
+            <span data-lang="es"> — entrada anticipada y precio reducido.</span>
+          </span>
+        </li>
+        <li>
+          <span class="tm-perk-icon">✦</span>
+          <span>
+            <strong data-lang="pt">Participa nos filmes</strong>
+            <strong data-lang="en">Be part of the films</strong>
+            <strong data-lang="es">Participa en las películas</strong>
+            <span data-lang="pt"> — casting, equipa técnica, extras e workshops.</span>
+            <span data-lang="en"> — casting, crew, extras and workshops.</span>
+            <span data-lang="es"> — casting, equipo técnico, extras y talleres.</span>
+          </span>
+        </li>
+        <li>
+          <span class="tm-perk-icon">✦</span>
+          <span>
+            <strong data-lang="pt">Comunidade privada</strong>
+            <strong data-lang="en">Private community</strong>
+            <strong data-lang="es">Comunidad privada</strong>
+            <span data-lang="pt"> — grupo exclusivo para membros com novidades e projetos.</span>
+            <span data-lang="en"> — exclusive member group with news and projects.</span>
+            <span data-lang="es"> — grupo exclusivo para miembros con noticias y proyectos.</span>
+          </span>
+        </li>
+        <li>
+          <span class="tm-perk-icon">✦</span>
+          <span>
+            <strong data-lang="pt">Desconto no Mercado</strong>
+            <strong data-lang="en">Mercado discount</strong>
+            <strong data-lang="es">Descuento en el Mercado</strong>
+            <span data-lang="pt"> — 10% em todos os produtos da loja.</span>
+            <span data-lang="en"> — 10% off all shop products.</span>
+            <span data-lang="es"> — 10% en todos los productos de la tienda.</span>
+          </span>
+        </li>
+      </ul>
+
+      <h3 class="tm-section-title" data-lang="pt">Preços</h3>
+      <h3 class="tm-section-title" data-lang="en">Pricing</h3>
+      <h3 class="tm-section-title" data-lang="es">Precios</h3>
+      <div class="tm-plans">
+        <div class="tm-plan">
+          <div class="tm-plan-name" data-lang="pt">Membro</div>
+          <div class="tm-plan-name" data-lang="en">Member</div>
+          <div class="tm-plan-name" data-lang="es">Miembro</div>
+          <div class="tm-plan-price">5€<span>/</span><span data-lang="pt">mês</span><span data-lang="en">mo</span><span data-lang="es">mes</span></div>
+          <ul class="tm-plan-features">
+            <li data-lang="pt">Cartão de membro</li><li data-lang="en">Member card</li><li data-lang="es">Tarjeta de miembro</li>
+            <li data-lang="pt">Acesso prioritário a eventos</li><li data-lang="en">Priority event access</li><li data-lang="es">Acceso prioritario</li>
+            <li data-lang="pt">Comunidade privada</li><li data-lang="en">Private community</li><li data-lang="es">Comunidad privada</li>
+          </ul>
+        </div>
+        <div class="tm-plan tm-plan--featured">
+          <div class="tm-plan-badge">✦ Pro</div>
+          <div class="tm-plan-name" data-lang="pt">Membro Pro</div>
+          <div class="tm-plan-name" data-lang="en">Pro Member</div>
+          <div class="tm-plan-name" data-lang="es">Miembro Pro</div>
+          <div class="tm-plan-price">12€<span>/</span><span data-lang="pt">mês</span><span data-lang="en">mo</span><span data-lang="es">mes</span></div>
+          <ul class="tm-plan-features">
+            <li data-lang="pt">Tudo do plano Membro</li><li data-lang="en">Everything in Member</li><li data-lang="es">Todo del plan Miembro</li>
+            <li data-lang="pt">Participa nos filmes</li><li data-lang="en">Be part of films</li><li data-lang="es">Participa en las películas</li>
+            <li data-lang="pt">Desconto 10% Mercado</li><li data-lang="en">10% Mercado discount</li><li data-lang="es">10% Descuento Mercado</li>
+            <li data-lang="pt">Workshops exclusivos</li><li data-lang="en">Exclusive workshops</li><li data-lang="es">Talleres exclusivos</li>
+          </ul>
+        </div>
+        <div class="tm-plan">
+          <div class="tm-plan-name" data-lang="pt">Anual</div>
+          <div class="tm-plan-name" data-lang="en">Annual</div>
+          <div class="tm-plan-name" data-lang="es">Anual</div>
+          <div class="tm-plan-price">100€<span>/</span><span data-lang="pt">ano</span><span data-lang="en">yr</span><span data-lang="es">año</span></div>
+          <ul class="tm-plan-features">
+            <li data-lang="pt">Tudo do plano Pro</li><li data-lang="en">Everything in Pro</li><li data-lang="es">Todo del plan Pro</li>
+            <li data-lang="pt">2 meses grátis</li><li data-lang="en">2 months free</li><li data-lang="es">2 meses gratis</li>
+            <li data-lang="pt">Nome nos créditos</li><li data-lang="en">Name in credits</li><li data-lang="es">Nombre en créditos</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tm-cta-row tm-cta-row--center">
+        <a href="/contactos/" class="tm-cta-btn tm-cta-btn--large">
+          <span data-lang="pt">Preencher formulário e receber cartão →</span>
+          <span data-lang="en">Fill in the form and receive your card →</span>
+          <span data-lang="es">Rellenar formulario y recibir tu tarjeta →</span>
+        </a>
+      </div>
+      <p class="tm-note" data-lang="pt">O cartão é enviado por correio para a tua morada após confirmação.</p>
+      <p class="tm-note" data-lang="en">The card is mailed to your address after confirmation.</p>
+      <p class="tm-note" data-lang="es">La tarjeta se envía por correo a tu dirección tras confirmación.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ═══════════════════ TILE MODAL BASE ═══════════════════ */
+  .tile-modal { position:fixed; inset:0; z-index:9100; display:flex; align-items:center; justify-content:center; padding:1.25rem; }
+  .tile-modal[hidden] { display:none; }
+  .tm-backdrop { position:absolute; inset:0; background:rgba(0,0,0,0.86); }
+
+  .tm-panel {
+    position:relative; z-index:1;
+    background:#141210;
+    border:1px solid var(--border);
+    border-radius:10px;
+    width:100%; max-width:600px; max-height:92vh;
+    overflow-y:auto;
+    display:flex; flex-direction:column;
+  }
+  .tm-panel--wide { max-width:900px; }
+
+  .tm-close {
+    position:absolute; top:.75rem; right:.85rem;
+    background:transparent; border:none;
+    color:var(--text-muted); font-size:1.6rem; line-height:1;
+    cursor:pointer; z-index:2; padding:.2rem .5rem;
+    transition:color .2s;
+  }
+  .tm-close:hover { color:var(--text-primary); }
+
+  /* Hero */
+  .tm-hero {
+    position:relative; width:100%; height:240px; overflow:hidden;
+    border-radius:10px 10px 0 0; flex-shrink:0;
+  }
+  .tm-hero--portrait { height:200px; }
+
+  .tm-hero-img,
+  .tm-hero-slide {
+    position:absolute; inset:0;
+    background-size:cover; background-position:center;
+  }
+  .tm-hero-slide { opacity:0; transition:opacity 1.4s ease; }
+  .tm-hero-slide.active { opacity:1; }
+
+  .tm-hero-grad {
+    position:absolute; inset:0;
+    background:linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.82) 100%);
+  }
+  .tm-hero-title {
+    position:absolute; bottom:0; left:0; padding:1.5rem 2rem;
+  }
+  .tm-eyebrow {
+    display:block;
+    font-family:var(--font-family); font-size:.58rem; font-weight:600;
+    letter-spacing:.24em; text-transform:uppercase;
+    color:rgba(240,232,216,.45); margin-bottom:.4rem;
+  }
+  .tm-hero-heading {
+    font-family:var(--font-family); font-size:clamp(1.4rem,4vw,2.2rem);
+    font-weight:300; letter-spacing:.05em; text-transform:uppercase;
+    color:#fff; line-height:1.1; margin:0;
+  }
+
+  /* Body */
+  .tm-body { padding:2rem 2rem 2.5rem; }
+
+  .tm-cols { display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; }
+  @media (max-width:700px) { .tm-cols { grid-template-columns:1fr; gap:0; } }
+
+  .tm-section-title {
+    font-family:var(--font-family); font-size:.6rem; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase;
+    color:var(--text-muted);
+    margin:1.5rem 0 .55rem;
+  }
+  .tm-section-title:first-child { margin-top:0; }
+
+  .tm-body p {
+    font-size:.9rem; line-height:1.7; color:var(--text-muted);
+    margin-bottom:.75rem;
+  }
+
+  /* Stats grid */
+  .tm-stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:.25rem 0 1rem; }
+  .tm-stat-big { padding:.85rem 1rem; background:rgba(255,248,238,.04); border:1px solid var(--border); border-radius:6px; }
+  .tm-stat-big strong { display:block; font-size:1.6rem; font-weight:300; color:var(--text-primary); line-height:1; margin-bottom:.2rem; }
+  .tm-stat-big span { font-size:.65rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--text-muted); }
+
+  /* Filmography list */
+  .tm-list { list-style:none; padding:0; margin:.25rem 0 1rem; display:flex; flex-direction:column; gap:.55rem; }
+  .tm-list li { font-size:.88rem; color:var(--text-muted); display:flex; align-items:baseline; gap:.5rem; }
+  .tm-list-year { font-size:.62rem; font-weight:600; letter-spacing:.1em; color:var(--text-muted); opacity:.55; flex-shrink:0; width:2.6rem; }
+  .tm-list-sub { font-size:.78rem; opacity:.55; }
+
+  /* Perks */
+  .tm-perks { list-style:none; padding:0; margin:.25rem 0 1.25rem; display:flex; flex-direction:column; gap:.85rem; }
+  .tm-perks li { display:flex; gap:.75rem; align-items:flex-start; font-size:.88rem; line-height:1.5; color:var(--text-muted); }
+  .tm-perk-icon { color:var(--text-muted); opacity:.5; font-size:.7rem; padding-top:.18rem; flex-shrink:0; }
+  .tm-perks strong { color:var(--text-primary); font-weight:600; }
+
+  /* Plans */
+  .tm-plans { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin:.25rem 0 2rem; }
+  @media (max-width:600px) { .tm-plans { grid-template-columns:1fr; } }
+
+  .tm-plan {
+    padding:1.25rem 1.25rem 1.5rem;
+    background:rgba(255,248,238,.03);
+    border:1px solid var(--border);
+    border-radius:8px;
+    display:flex; flex-direction:column; gap:.4rem;
+    position:relative;
+  }
+  .tm-plan--featured {
+    border-color:var(--border-strong);
+    background:rgba(255,248,238,.06);
+  }
+  .tm-plan-badge {
+    font-family:var(--font-family); font-size:.56rem; font-weight:600;
+    letter-spacing:.18em; text-transform:uppercase;
+    color:var(--text-muted); margin-bottom:.2rem;
+  }
+  .tm-plan-name { font-size:.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--text-muted); }
+  .tm-plan-price { font-family:var(--font-family); font-size:1.85rem; font-weight:300; color:var(--text-primary); line-height:1; margin:.4rem 0 .75rem; }
+  .tm-plan-price span { font-size:.85rem; opacity:.4; }
+  .tm-plan-features { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:.35rem; }
+  .tm-plan-features li { font-size:.78rem; color:var(--text-muted); line-height:1.4; padding-left:.8rem; position:relative; }
+  .tm-plan-features li::before { content:'—'; position:absolute; left:0; opacity:.3; }
+
+  /* CTA row */
+  .tm-cta-row { display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.5rem; }
+  .tm-cta-row--center { justify-content:center; }
+
+  .tm-cta-btn {
+    display:inline-block;
+    font-family:var(--font-family); font-size:.72rem; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase;
+    color:#000; background:var(--text-primary);
+    border:1px solid var(--text-primary);
+    border-radius:4px; padding:.65rem 1.4rem;
+    text-decoration:none;
+    transition:opacity .2s;
+  }
+  .tm-cta-btn:hover { opacity:.82; }
+  .tm-cta-btn--ghost { background:transparent; color:var(--text-primary); }
+  .tm-cta-btn--ghost:hover { background:rgba(255,248,238,.07); }
+  .tm-cta-btn--large { padding:.8rem 2rem; font-size:.78rem; }
+
+  .tm-note { font-size:.72rem; color:var(--text-muted); opacity:.55; text-align:center; margin-top:.75rem; }
+</style>
+
+<script>
+  (function() {
+    /* ── Hero slideshow for modals ── */
+    function startSlideshow(panel) {
+      var slides = panel.querySelectorAll('.tm-hero-slide');
+      if (slides.length < 2) return;
+      var cur = 0;
+      return setInterval(function() {
+        slides[cur].classList.remove('active');
+        cur = (cur + 1) % slides.length;
+        slides[cur].classList.add('active');
+      }, 4000);
+    }
+
+    var slideshowTimers = {};
+
+    function openTileModal(id) {
+      var m = document.getElementById(id);
+      if (!m) return;
+      m.removeAttribute('hidden');
+      document.body.style.overflow = 'hidden';
+      if (!slideshowTimers[id]) {
+        slideshowTimers[id] = startSlideshow(m);
+      }
+    }
+
+    function closeTileModal(m) {
+      m.setAttribute('hidden', '');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      /* Tile triggers */
+      var triggerMap = {
+        'bc-historia-tile': 'modal-historia',
+        'bc-charlie-tile':  'modal-charlie',
+        'bc-join-tile':     'modal-join'
+      };
+      Object.keys(triggerMap).forEach(function(tid) {
+        var tile = document.getElementById(tid);
+        if (tile) {
+          tile.addEventListener('click', function() {
+            openTileModal(triggerMap[tid]);
+          });
+        }
+      });
+
+      /* Close buttons & backdrop */
+      document.querySelectorAll('.tile-modal').forEach(function(m) {
+        m.querySelector('.tm-backdrop').addEventListener('click', function() { closeTileModal(m); });
+        m.querySelector('.tm-close').addEventListener('click', function() { closeTileModal(m); });
+      });
+
+      /* ESC closes top modal */
+      document.addEventListener('keydown', function(e) {
+        if (e.key !== 'Escape') return;
+        var open = document.querySelector('.tile-modal:not([hidden])');
+        if (open) closeTileModal(open);
+      });
     });
   })();
 </script>
