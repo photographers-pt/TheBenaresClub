@@ -96,6 +96,78 @@
       padding-bottom: 2rem;
     }
 
+    /* ── Preview (produtos não confirmados) ── */
+    .product-grid-wrap {
+      position: relative;
+    }
+
+    .product-grid-wrap.preview .product-grid {
+      filter: blur(6px);
+      opacity: 0.3;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .product-grid-wrap.preview .cart-trigger { display: none; }
+
+    .product-grid-cover {
+      display: none;
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .product-grid-wrap.preview .product-grid-cover { display: flex; }
+
+    .product-grid-cover-inner {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .product-grid-cover-icon { font-size: 2rem; line-height: 1; }
+
+    .product-grid-cover-title {
+      font-family: var(--font-family);
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .product-grid-cover-sub {
+      font-family: var(--font-family);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .product-grid-cover-ig {
+      margin-top: 0.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-family);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border: 1px solid var(--border-strong);
+      border-radius: 4px;
+      padding: 0.55rem 1.1rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .product-grid-cover-ig:hover { color: var(--text-primary); border-color: var(--text-primary); }
+
     .product-card {
       background: rgba(255,248,238,0.03);
       border: 1px solid var(--border);
@@ -946,7 +1018,19 @@
         </button>
       </div>
 
-      <div class="product-grid" id="product-grid"></div>
+      <div class="product-grid-wrap preview" id="product-grid-wrap">
+        <div class="product-grid" id="product-grid"></div>
+        <div class="product-grid-cover">
+          <div class="product-grid-cover-inner">
+            <span class="product-grid-cover-icon">🛍️</span>
+            <p class="product-grid-cover-title">Loja em preparação</p>
+            <p class="product-grid-cover-sub">Estamos a colocar os produtos.<br>Segue-nos no Instagram para não perderes o lançamento.</p>
+            <a class="product-grid-cover-ig" href="https://www.instagram.com/thebenaresclub" target="_blank" rel="noopener">
+              <i class="fab fa-instagram"></i> @thebenaresclub
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 
