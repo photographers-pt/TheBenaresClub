@@ -72,8 +72,8 @@
       font-weight: 400;
       color: #ffffff;
       line-height: 0.9;
-      letter-spacing: -0.02em;
-      margin: 0 0 0.5rem;
+      letter-spacing: 0.12em;
+      margin: 0 0 1.25rem;
       position: relative;
       text-shadow: 0 4px 40px rgba(0,0,0,0.25);
     }
@@ -82,23 +82,21 @@
       font-family: var(--font-family);
       font-size: clamp(0.65rem, 1.4vw, 0.88rem);
       font-weight: 400;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.65);
-      margin: 1.25rem 0 3.5rem;
+      margin: 0 0 4rem;
       position: relative;
     }
 
-    /* cooking-state overrides para fundo vermelho */
-    .cooking-state-title { color: #fff; }
-    .cooking-state-sub   { color: rgba(255,255,255,0.6); }
-    .cooking-state-ig {
-      color: rgba(255,255,255,0.75);
-      border-color: rgba(255,255,255,0.3);
-    }
-    .cooking-state-ig:hover {
-      color: #fff;
-      border-color: #fff;
+    .ko-coming-soon {
+      font-family: var(--font-family);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      position: relative;
     }
 
   </style>
@@ -111,15 +109,8 @@
     <div class="ko-page">
       <span class="ko-eyebrow">The Benares Club presents</span>
       <h1 class="ko-title">.KO</h1>
-      <p class="ko-subtitle">Lisboa International Short-film Championship</p>
-      <div class="cooking-state">
-        <span class="cooking-state-icon">🍳</span>
-        <p class="cooking-state-title">Cooking in progress</p>
-        <p class="cooking-state-sub">Estamos a preparar o ring.<br>Segue-nos no Instagram para não perderes nenhum anúncio.</p>
-        <a class="cooking-state-ig" href="https://www.instagram.com/thebenaresclub" target="_blank" rel="noopener">
-          <i class="fab fa-instagram"></i> @thebenaresclub
-        </a>
-      </div>
+      <p class="ko-subtitle">Lisbon International Short-film Championship</p>
+      <span class="ko-coming-soon">Coming Soon</span>
     </div>
   </main>
 
