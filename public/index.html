@@ -405,11 +405,7 @@
 
     <!-- HISTÓRIA -->
     <div class="bc bc-historia" id="bc-historia-tile" style="cursor:pointer;">
-      <div class="bc-slide active" style="background-image:url('/media/fototeca/full/mu3-03.jpg')"></div>
-      <div class="bc-slide"></div>
-      <div class="bc-slide"></div>
-      <div class="bc-slide"></div>
-      <div class="bc-slide"></div>
+      <div class="bc-img" style="background-image:url('/media/fototeca/full/mu3-03.jpg')"></div>
       <div class="bc-grad"></div>
       <div class="bc-body">
         <span class="bc-label">
@@ -652,20 +648,6 @@
 </main>
 
 <div id="footer-container"></div>
-
-<!-- Slideshow -->
-<script>
-  (function() {
-    var slides = document.querySelectorAll('.bc-historia .bc-slide');
-    if (slides.length < 2) return;
-    var cur = 0;
-    setInterval(function() {
-      slides[cur].classList.remove('active');
-      cur = (cur + 1) % slides.length;
-      slides[cur].classList.add('active');
-    }, 4000);
-  })();
-</script>
 
 <script src="/shared.js"></script>
 
