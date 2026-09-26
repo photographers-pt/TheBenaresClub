@@ -74,27 +74,7 @@
       background-repeat: repeat;
     }
 
-    /* ── Header override: paper ── */
-    header {
-      background: var(--paper) !important;
-      border-bottom: 2px solid var(--ink) !important;
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-    }
-
-    header a img { filter: brightness(0) saturate(0) !important; }
-
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) header a img { filter: brightness(10) !important; }
-    }
-    :root[data-theme="dark"] header a img { filter: brightness(10) !important; }
-
-    .lang-btn {
-      color: rgba(26,21,16,0.5) !important;
-      border-color: rgba(26,21,16,0.2) !important;
-      font-family: 'Space Grotesk', sans-serif !important;
-    }
-    .lang-btn:hover { color: var(--ink) !important; border-color: var(--ink) !important; }
+    header { display: none !important; }
 
     footer {
       background: var(--ink) !important;
