@@ -4,7 +4,45 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Charlie Chaves</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    :root {
+      --bg-base:        #ffffff;
+      --bg-surface:     #f5f5f5;
+      --bg-elevated:    #eeeeee;
+      --text-primary:   #0a0908;
+      --text-secondary: rgba(10,9,8,0.7);
+      --text-muted:     rgba(10,9,8,0.45);
+      --border:         rgba(10,9,8,0.1);
+      --border-strong:  rgba(10,9,8,0.3);
+    }
+
+    body {
+      background: #ffffff;
+    }
+
+    header, nav {
+      background: rgba(255,255,255,0.95) !important;
+      border-color: rgba(10,9,8,0.1) !important;
+    }
+
+    footer {
+      background: #ffffff !important;
+      border-top-color: rgba(10,9,8,0.1) !important;
+      color: rgba(10,9,8,0.5) !important;
+    }
+
+    /* Invert grain to be barely visible on white */
+    #grain { opacity: 0.03; }
+  </style>
 </head>
-<body style="margin:0;background:#fff;">
+<body>
+  <div id="grain"></div>
+  <div id="header-container"></div>
+
+  <main style="min-height:70vh;"></main>
+
+  <div id="footer-container"></div>
+  <script src="/shared.js"></script>
 </body>
 </html>
