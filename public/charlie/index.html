@@ -7,71 +7,83 @@
   <link rel="stylesheet" href="/styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap">
   <style>
     /* ══════════════════════════════════════════════════
-       FILM FESTIVAL CATALOG — Charlie Chaves
-       Cannes / A24 editorial aesthetic
+       TELETEXT / CEEFAX — Charlie Chaves
+       White ground · Monospace · Block colour headers
     ══════════════════════════════════════════════════ */
 
-    /* ── Palette tokens ── */
     :root {
-      --ink:    #1A1410;
-      --paper:  #F5F1E8;
-      --paper2: #EDE8DD;
-      --gold:   #B8924A;
-      --silver: #8C8278;
-      --rule:   #D0C8BC;
-      /* override shared.js dark tokens */
-      --bg-base:        #F5F1E8;
-      --text-primary:   #1A1410;
-      --text-secondary: rgba(26,20,16,0.6);
-      --text-muted:     rgba(26,20,16,0.38);
-      --border:         #D0C8BC;
-      --border-strong:  #1A1410;
+      --bg:      #FFFFFF;
+      --ink:     #0A0A0A;
+      --ink2:    #444444;
+      --rule:    #0A0A0A;
+      --cyan:    #007A7A;
+      --yellow:  #6E6E00;
+      --magenta: #AA0055;
+      --green:   #007700;
+      --red:     #CC2200;
+      --bar-bg:  #0A0A0A;
+      --bar-fg:  #FFFFFF;
+      /* override shared tokens */
+      --bg-base:        #FFFFFF;
+      --text-primary:   #0A0A0A;
+      --text-secondary: rgba(10,10,10,0.6);
+      --text-muted:     rgba(10,10,10,0.38);
+      --border:         #0A0A0A;
+      --border-strong:  #0A0A0A;
     }
 
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
-        --ink:    #F0EBE0;
-        --paper:  #100E0B;
-        --paper2: #1C1915;
-        --gold:   #C8A456;
-        --silver: #9C9288;
-        --rule:   #2E2A24;
+        --bg:      #0A0A0A;
+        --ink:     #EEEEEE;
+        --ink2:    #AAAAAA;
+        --rule:    #EEEEEE;
+        --cyan:    #00CCCC;
+        --yellow:  #CCCC00;
+        --magenta: #FF44AA;
+        --green:   #00BB00;
+        --red:     #FF4422;
+        --bar-bg:  #EEEEEE;
+        --bar-fg:  #0A0A0A;
         color-scheme: dark;
       }
     }
     :root[data-theme="dark"] {
-      --ink:    #F0EBE0;
-      --paper:  #100E0B;
-      --paper2: #1C1915;
-      --gold:   #C8A456;
-      --silver: #9C9288;
-      --rule:   #2E2A24;
+      --bg:      #0A0A0A;
+      --ink:     #EEEEEE;
+      --ink2:    #AAAAAA;
+      --rule:    #EEEEEE;
+      --cyan:    #00CCCC;
+      --yellow:  #CCCC00;
+      --magenta: #FF44AA;
+      --green:   #00BB00;
+      --red:     #FF4422;
+      --bar-bg:  #EEEEEE;
+      --bar-fg:  #0A0A0A;
       color-scheme: dark;
     }
 
-    html { background: var(--paper); }
+    html { background: var(--bg); }
 
     body {
-      background: var(--paper);
+      background: var(--bg);
       color: var(--ink);
-      font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Space Mono', 'Courier New', monospace;
       min-height: 100vh;
     }
 
-    /* ── Header: editorial paper ── */
+    /* ── Header override: white + black border ── */
     header {
-      background: var(--paper) !important;
-      border-bottom: 1px solid var(--rule) !important;
+      background: var(--bg) !important;
+      border-bottom: 2px solid var(--ink) !important;
       backdrop-filter: none !important;
       -webkit-backdrop-filter: none !important;
     }
 
-    header a img {
-      filter: brightness(0) !important;
-    }
+    header a img { filter: brightness(0) !important; }
 
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) header a img { filter: brightness(10) !important; }
@@ -79,328 +91,269 @@
     :root[data-theme="dark"] header a img { filter: brightness(10) !important; }
 
     .lang-btn {
-      color: var(--silver) !important;
-      border-color: var(--rule) !important;
+      color: var(--ink2) !important;
+      border-color: var(--ink) !important;
+      font-family: 'Space Mono', monospace !important;
+      font-size: 0.6rem !important;
     }
-    .lang-btn:hover {
-      color: var(--ink) !important;
-      border-color: var(--silver) !important;
-    }
+    .lang-btn:hover { color: var(--ink) !important; }
 
     footer {
-      background: var(--ink) !important;
-      border-top: 1px solid var(--rule) !important;
-      color: rgba(245,241,232,0.35) !important;
+      background: var(--bar-bg) !important;
+      border-top: 2px solid var(--rule) !important;
+      color: rgba(238,238,238,0.4) !important;
     }
-    footer a { color: rgba(245,241,232,0.5) !important; }
+    footer a { color: rgba(238,238,238,0.6) !important; }
 
     #grain    { display: none; }
     #main-nav  { display: none !important; }
     #nav-toggle { display: none !important; }
 
     /* ── MASTHEAD ── */
-    .ch-masthead {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 4.5rem 2.5rem 3rem;
-      border-bottom: 1px solid var(--rule);
-      position: relative;
+    .tt-header-bar {
+      background: var(--bar-bg);
+      color: var(--bar-fg);
+      padding: 0.4rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: none;
     }
 
-    .ch-edition-label {
-      display: block;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 500;
-      letter-spacing: 0.28em;
+    .tt-header-bar-left {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1.75rem;
+      color: var(--bar-fg);
+    }
+
+    .tt-header-bar-right {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 400;
+      color: rgba(238,238,238,0.55);
+      letter-spacing: 0.08em;
+    }
+
+    .tt-header-bar-page {
+      font-weight: 700;
+      color: var(--bar-fg);
+    }
+
+    .ch-masthead {
+      padding: 3rem 2.5rem 2.5rem;
+      border-bottom: 2px solid var(--ink);
+      position: relative;
+      max-width: 100%;
     }
 
     .ch-name {
-      font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-      font-size: clamp(4rem, 10vw, 8.5rem);
-      font-weight: 300;
-      font-style: italic;
+      font-family: 'Space Mono', 'Courier New', monospace;
+      font-size: clamp(2.2rem, 6vw, 5rem);
+      font-weight: 700;
       color: var(--ink);
       letter-spacing: -0.02em;
-      line-height: 0.9;
-      margin: 0 0 1.5rem;
-      text-wrap: balance;
+      line-height: 1;
+      margin: 0 0 1rem;
+      text-transform: uppercase;
     }
 
     .ch-tagline {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.65rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
       font-weight: 400;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--silver);
+      color: var(--cyan);
       margin: 0;
     }
 
-    .ch-masthead-rule {
-      height: 1px;
-      background: var(--rule);
-      margin-top: 2.75rem;
-      position: relative;
-    }
-
-    .ch-masthead-rule::before {
-      content: '';
-      position: absolute;
-      left: 0; top: -0.5px;
-      width: 3rem; height: 2px;
-      background: var(--gold);
-    }
-
-    /* ── CATALOG SECTIONS ── */
-    .catalog-section {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 3.5rem 2.5rem 5rem;
-    }
-
-    .catalog-section-head {
+    /* ── TELETEXT SECTION BARS ── */
+    .tt-section-bar {
+      background: var(--bar-bg);
+      color: var(--bar-fg);
+      padding: 0.4rem 2.5rem;
       display: flex;
-      align-items: baseline;
-      gap: 1rem;
-      margin-bottom: 2.25rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--rule);
-      position: relative;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    .catalog-section-head::before {
-      content: '';
-      position: absolute;
-      bottom: -1px; left: 0;
-      width: 2.5rem; height: 2px;
-      background: var(--gold);
-    }
-
-    .catalog-section-title {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.58rem;
-      font-weight: 600;
-      letter-spacing: 0.3em;
+    .tt-section-bar-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--ink);
-      margin: 0;
     }
 
-    .catalog-section-count {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.56rem;
+    .tt-section-bar-count {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
       font-weight: 400;
-      color: var(--silver);
-      letter-spacing: 0.1em;
+      opacity: 0.55;
     }
+
+    /* Colored accent bars per section */
+    .tt-accent-bar {
+      height: 4px;
+    }
+    .tt-accent-cyan    { background: var(--cyan); }
+    .tt-accent-yellow  { background: var(--yellow); }
+    .tt-accent-magenta { background: var(--magenta); }
+    .tt-accent-green   { background: var(--green); }
 
     /* ── FILMOGRAPHY GRID ── */
     .filmography {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 2.25rem 1.5rem;
+      gap: 0;
+      border-left: 2px solid var(--ink);
+      border-top: 2px solid var(--ink);
     }
 
     /* ── FILM CARD ── */
-    .film-card { cursor: pointer; position: relative; }
+    .film-card {
+      cursor: pointer;
+      position: relative;
+      border-right: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+      background: var(--bg);
+      transition: background 0.15s;
+    }
+
+    .film-card:hover { background: #F5F5F5; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .film-card:hover { background: #1A1A1A; }
+    }
+    :root[data-theme="dark"] .film-card:hover { background: #1A1A1A; }
 
     .film-card-poster {
       position: relative;
       aspect-ratio: 2/3;
       overflow: hidden;
-      background: var(--paper2);
-      border: 1px solid var(--rule);
-      transition: border-color 0.35s;
+      background: #E8E8E8;
+      border-bottom: 2px solid var(--ink);
     }
 
-    .film-card:hover .film-card-poster { border-color: var(--gold); }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .film-card-poster { background: #222; }
+    }
+    :root[data-theme="dark"] .film-card-poster { background: #222; }
 
     .film-card-poster img {
       width: 100%; height: 100%; object-fit: cover; display: block;
-      transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+      transition: transform 0.4s;
     }
     .film-card:hover .film-card-poster img { transform: scale(1.05); }
 
     .film-card-overlay {
       position: absolute; inset: 0;
-      background: rgba(26,20,16,0.75);
-      opacity: 0; transition: opacity 0.3s;
-      display: flex; align-items: flex-end;
-      flex-direction: column; justify-content: flex-end;
-      padding: 1rem;
+      background: rgba(10,10,10,0.88);
+      opacity: 0; transition: opacity 0.2s;
+      display: flex; flex-direction: column;
+      justify-content: flex-end; padding: 0.6rem;
     }
     .film-card:hover .film-card-overlay { opacity: 1; }
 
     .film-card-overlay-desc {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.66rem; line-height: 1.6;
-      color: rgba(245,241,232,0.82);
-      margin: 0 0 0.65rem; width: 100%;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem; line-height: 1.6;
+      color: #CCCCCC;
+      margin: 0 0 0.5rem;
       display: -webkit-box; -webkit-line-clamp: 3;
       -webkit-box-orient: vertical; overflow: hidden;
     }
 
     .film-card-overlay-btn {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.52rem; font-weight: 600;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--gold);
-      background: none; border: 1px solid var(--gold);
-      padding: 0.35rem 0.8rem; cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-    }
-    .film-card-overlay-btn:hover {
-      background: var(--gold); color: var(--paper);
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.5rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: #000;
+      background: var(--cyan);
+      border: none; padding: 3px 8px;
+      cursor: pointer; align-self: flex-start;
     }
 
+    /* Role badge — colored top strip */
     .film-role-badge {
-      position: absolute; top: 8px; left: 8px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.44rem; font-weight: 600;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--paper);
-      background: var(--gold);
-      padding: 2px 7px;
+      position: absolute; top: 0; left: 0; right: 0;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.44rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: #000;
+      background: var(--yellow);
+      padding: 2px 5px;
+      border-bottom: 1px solid rgba(0,0,0,0.2);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
-    .film-card-info { padding: 0.85rem 0 0; }
+    .film-card-info {
+      padding: 0.6rem 0.65rem 0.65rem;
+    }
 
     .film-card-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.05rem; font-weight: 400; font-style: italic;
-      color: var(--ink);
-      margin: 0 0 0.25rem; line-height: 1.2;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; color: var(--ink);
+      margin: 0 0 0.2rem; line-height: 1.2;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
     .film-card-meta {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.56rem; font-weight: 400;
-      letter-spacing: 0.08em;
-      color: var(--silver); margin: 0;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.5rem; font-weight: 400;
+      color: var(--cyan); margin: 0;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
     /* ── PLACEHOLDER CARDS ── */
+    .film-card-placeholder { cursor: default; }
     .film-card-placeholder .film-card-poster {
-      border-style: dashed; cursor: default; background: transparent;
       display: flex; align-items: center; justify-content: center;
+      background: var(--bg);
+      border-bottom-style: dashed;
     }
-    .film-card-placeholder:hover .film-card-poster { border-color: var(--rule); }
-    .placeholder-icon { font-size: 1.2rem; color: var(--rule); user-select: none; }
-    .film-card-placeholder .film-card-title {
-      font-style: normal; font-weight: 300; color: var(--silver);
-    }
-    .film-card-placeholder .film-card-meta { color: var(--rule); }
-
-    /* ── CATALOG DIVIDER ── */
-    .catalog-divider {
-      height: 1px; background: var(--rule);
-      border: none; display: block; margin: 0;
-    }
-
-    /* ── DARK PHOTO SECTION ── */
-    .catalog-dark {
-      background: #080706;
-      padding: 0;
-    }
-
-    .catalog-dark .catalog-section-head {
-      max-width: 1300px; margin: 0 auto;
-      padding: 3rem 2.5rem 0.75rem;
-      border-bottom-color: rgba(240,235,228,0.08);
-    }
-
-    .catalog-dark .catalog-section-head::before {
-      background: rgba(184,146,74,0.45);
-    }
-
-    .catalog-dark .catalog-section-title { color: rgba(240,235,228,0.45); }
-
-    /* ── CONTACT SHEET ── */
-    .cs-roll {
-      max-width: 1300px; margin: 0 auto;
-      padding: 0 2.5rem 3rem;
-    }
-    .cs-roll:first-of-type { padding-top: 2rem; }
-
-    .cs-roll-header {
-      display: flex; align-items: baseline; gap: 1rem;
-      margin-bottom: 0.75rem; padding-bottom: 0.5rem;
-      border-bottom: 1px solid rgba(240,232,216,0.06);
-    }
-
-    .cs-roll-name {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.52rem; font-weight: 500;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(240,235,228,0.3);
-    }
-
-    .cs-roll-frames {
-      font-family: 'Courier New', monospace;
-      font-size: 0.5rem; color: rgba(240,235,228,0.14);
-    }
-
-    .cs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 3px;
-    }
-
-    .cs-frame {
-      position: relative; aspect-ratio: 3/2;
-      background: #111; overflow: hidden; cursor: pointer;
-      outline: 1.5px solid rgba(240,232,216,0.05);
-    }
-
-    .cs-frame::after {
-      content: attr(data-frame);
-      position: absolute; bottom: 5px; right: 7px;
-      font-family: 'Courier New', monospace; font-size: 0.44rem;
-      color: rgba(240,235,228,0.18); pointer-events: none;
-    }
-
-    .cs-frame img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-      filter: grayscale(12%) brightness(0.82);
-      transition: filter 0.35s, transform 0.45s;
-    }
-    .cs-frame:hover img { filter: none; transform: scale(1.04); }
+    .film-card-placeholder:hover { background: var(--bg); }
+    .placeholder-icon { font-size: 1.4rem; color: #CCCCCC; user-select: none; }
+    .film-card-placeholder .film-card-title { color: #CCCCCC; font-weight: 400; }
+    .film-card-placeholder .film-card-meta  { color: #DDDDDD; }
 
     /* ── FILM MODAL ── */
     .fm-backdrop {
       display: none; position: fixed; inset: 0;
-      background: rgba(10,8,6,0.82);
-      backdrop-filter: blur(4px);
+      background: rgba(10,10,10,0.75);
       z-index: 1000;
       align-items: center; justify-content: center; padding: 2rem;
     }
     .fm-backdrop.open { display: flex; }
 
     .fm-modal {
-      background: var(--paper);
-      border: 1px solid var(--rule);
+      background: var(--bg);
+      border: 2px solid var(--ink);
       max-width: 860px; width: 100%; max-height: 90vh;
       overflow: hidden; display: flex; flex-direction: column;
       position: relative;
-      box-shadow: 0 40px 100px rgba(0,0,0,0.45);
-      transform: translateY(14px) scale(0.99);
-      transition: transform 0.24s cubic-bezier(0.25,0.46,0.45,0.94);
+      transform: translateY(10px); transition: transform 0.18s;
     }
     .fm-backdrop.open .fm-modal { transform: none; }
 
-    /* thin gold top bar */
+    /* Teletext title bar */
     .fm-modal::before {
-      content: '';
-      display: block; height: 2px; flex-shrink: 0;
-      background: var(--gold);
+      content: 'FICHA DO FILME';
+      display: flex; align-items: center;
+      background: var(--bar-bg); color: var(--bar-fg);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.4rem 0.85rem; min-height: 28px;
+      border-bottom: none; flex-shrink: 0;
     }
 
     .fm-modal-inner {
-      display: grid; grid-template-columns: 220px 1fr;
+      display: grid; grid-template-columns: 200px 1fr;
       overflow-y: auto; flex: 1;
     }
 
@@ -408,96 +361,165 @@
 
     .fm-poster-placeholder {
       aspect-ratio: 2/3; display: flex; align-items: center; justify-content: center;
-      font-size: 4rem; background: var(--paper2);
+      font-size: 4rem; background: #F0F0F0;
     }
 
     .fm-body {
-      padding: 2rem 2rem 1.75rem;
+      padding: 1.25rem 1.5rem;
       display: flex; flex-direction: column;
-      background: var(--paper);
-      border-left: 1px solid var(--rule);
+      background: var(--bg); border-left: 2px solid var(--ink);
     }
 
     .fm-eyebrow {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.52rem; font-weight: 600;
-      letter-spacing: 0.28em; text-transform: uppercase;
-      color: var(--gold); margin: 0 0 0.6rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.52rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--cyan); margin: 0 0 0.4rem;
     }
 
     .fm-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
-      font-weight: 300; font-style: italic;
-      color: var(--ink); line-height: 1.0; margin: 0 0 0.5rem;
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(1.1rem, 3vw, 1.75rem);
+      font-weight: 700; text-transform: uppercase;
+      color: var(--ink); line-height: 1.1; margin: 0 0 0.4rem;
     }
 
     .fm-meta {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.64rem; color: var(--silver);
-      letter-spacing: 0.06em; margin: 0 0 1.25rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem; color: var(--ink2);
+      margin: 0 0 1rem;
     }
 
     .fm-desc {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.84rem; line-height: 1.78;
-      color: var(--ink); opacity: 0.68;
-      margin: 0 0 1.25rem; flex: 1;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem; line-height: 1.75;
+      color: var(--ink); opacity: 0.7;
+      margin: 0 0 1rem; flex: 1;
     }
 
     .fm-ficha {
-      background: var(--paper2); border: 1px solid var(--rule);
-      padding: 0.75rem 1rem; margin-bottom: 1rem;
+      background: #F5F5F5; border: 2px solid var(--ink);
+      padding: 0.6rem 0.75rem; margin-bottom: 1rem;
     }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .fm-ficha { background: #1A1A1A; }
+    }
+    :root[data-theme="dark"] .fm-ficha { background: #1A1A1A; }
 
     .fm-ficha-row {
       display: flex; justify-content: space-between; gap: 1rem;
-      padding: 0.3rem 0; border-bottom: 1px solid var(--rule);
+      padding: 0.28rem 0; border-bottom: 1px solid var(--ink);
+      opacity: 0.8;
     }
     .fm-ficha-row:last-child { border-bottom: none; }
 
     .fm-ficha-key {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.52rem; font-weight: 600;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--gold); flex-shrink: 0;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.5rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--yellow); flex-shrink: 0;
     }
 
     .fm-ficha-val {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.68rem; color: var(--silver); text-align: right;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem; color: var(--ink); text-align: right; opacity: 0.7;
     }
 
     .fm-watch-btn {
       display: flex; align-items: center; justify-content: center; gap: 0.5rem;
       width: 100%;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.58rem; font-weight: 600;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--paper);
-      background: var(--ink);
-      border: none; padding: 0.9rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: #000; background: var(--cyan);
+      border: none; padding: 0.75rem;
       cursor: pointer; text-decoration: none;
-      transition: background 0.2s; box-sizing: border-box;
+      transition: background 0.15s; box-sizing: border-box;
     }
-    .fm-watch-btn:hover { background: var(--gold); }
+    .fm-watch-btn:hover { background: var(--green); }
 
     .fm-soon-note {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.58rem; color: var(--silver);
-      text-align: center; letter-spacing: 0.14em;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem; color: var(--ink2);
+      text-align: center; letter-spacing: 0.1em;
       text-transform: uppercase; margin: 0;
     }
 
     .fm-close {
-      position: absolute; top: 0.75rem; right: 0.75rem;
-      background: none; border: 1px solid var(--rule);
-      width: 1.75rem; height: 1.75rem;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; color: var(--silver); font-size: 0.7rem;
-      transition: border-color 0.2s, color 0.2s; z-index: 1;
+      position: absolute; top: 4px; right: 8px;
+      background: none; border: none;
+      color: var(--bar-fg); font-size: 0.75rem;
+      cursor: pointer; z-index: 1; padding: 4px 6px;
+      font-family: 'Space Mono', monospace;
+      line-height: 1;
     }
-    .fm-close:hover { border-color: var(--ink); color: var(--ink); }
+    .fm-close:hover { color: var(--cyan); }
+
+    /* ── PHOTO SECTION ── */
+    .tt-photo-bar {
+      background: var(--green);
+      color: #000;
+    }
+
+    .catalog-dark {
+      background: #0A0A0A;
+    }
+
+    .catalog-dark .tt-section-bar {
+      background: #007700;
+      color: #000;
+    }
+
+    /* ── CONTACT SHEET ── */
+    .cs-roll {
+      max-width: 100%;
+      padding: 0 2.5rem 2.5rem;
+    }
+    .cs-roll:first-of-type { padding-top: 2rem; }
+
+    .cs-roll-header {
+      display: flex; align-items: baseline; gap: 1rem;
+      margin-bottom: 0.6rem; padding-bottom: 0.4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .cs-roll-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.5rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(0,187,0,0.7);
+    }
+
+    .cs-roll-frames {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.48rem; color: rgba(255,255,255,0.2);
+    }
+
+    .cs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 2px;
+    }
+
+    .cs-frame {
+      position: relative; aspect-ratio: 3/2;
+      background: #111; overflow: hidden; cursor: pointer;
+    }
+
+    .cs-frame::after {
+      content: attr(data-frame);
+      position: absolute; bottom: 4px; right: 6px;
+      font-family: 'Space Mono', monospace; font-size: 0.4rem;
+      color: rgba(255,255,255,0.18); pointer-events: none;
+    }
+
+    .cs-frame img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: grayscale(10%) brightness(0.82);
+      transition: filter 0.3s, transform 0.4s;
+    }
+    .cs-frame:hover img { filter: none; transform: scale(1.04); }
 
     /* ── LIGHTBOX ── */
     .lb {
@@ -515,18 +537,18 @@
 
     .lb-btn {
       position: fixed; background: none; border: none;
-      color: rgba(255,255,255,0.28); cursor: pointer; padding: 0.75rem; line-height: 1;
+      color: rgba(255,255,255,0.3); cursor: pointer; padding: 0.75rem; line-height: 1;
       transition: color 0.15s;
     }
-    .lb-btn:hover { color: rgba(255,255,255,0.8); }
+    .lb-btn:hover { color: #00CCCC; }
     .lb-close { top: 1.25rem; right: 1.25rem; font-size: 1.4rem; }
     .lb-prev, .lb-next { top: 50%; transform: translateY(-50%); font-size: 2.5rem; }
     .lb-prev { left: 0.5rem; } .lb-next { right: 0.5rem; }
 
     .lb-counter {
       position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-      font-family: 'Inter', sans-serif; font-size: 0.52rem;
-      letter-spacing: 0.22em; color: rgba(255,255,255,0.2); pointer-events: none;
+      font-family: 'Space Mono', monospace; font-size: 0.52rem;
+      letter-spacing: 0.2em; color: rgba(255,255,255,0.2); pointer-events: none;
     }
 
     /* ── RESPONSIVE ── */
@@ -534,21 +556,17 @@
       .filmography { grid-template-columns: repeat(4, 1fr); }
     }
     @media (max-width: 820px) {
-      .filmography { grid-template-columns: repeat(3, 1fr); gap: 1.75rem 1rem; }
+      .filmography { grid-template-columns: repeat(3, 1fr); }
     }
-    @media (max-width: 600px) {
-      .filmography { grid-template-columns: repeat(2, 1fr); gap: 1.25rem 0.75rem; }
-      .ch-masthead { padding: 3rem 1.5rem 2.25rem; }
-      .catalog-section { padding-left: 1.5rem; padding-right: 1.5rem; padding-bottom: 3.5rem; }
-      .catalog-dark .catalog-section-head { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .cs-roll { padding-left: 1.5rem; padding-right: 1.5rem; }
+    @media (max-width: 580px) {
+      .filmography { grid-template-columns: repeat(2, 1fr); }
+      .ch-masthead, .tt-header-bar, .tt-section-bar, .cs-roll { padding-left: 1.25rem; padding-right: 1.25rem; }
       .fm-modal-inner { grid-template-columns: 1fr; }
       .fm-poster, .fm-poster-placeholder { aspect-ratio: 16/9; }
       .lb-prev { left: 0; } .lb-next { right: 0; }
     }
     @media (max-width: 420px) {
-      .cs-grid { grid-template-columns: repeat(3, 1fr); gap: 2px; }
-      .lb-img { max-width: 100vw; max-height: 75vh; }
+      .cs-grid { grid-template-columns: repeat(3, 1fr); gap: 1px; }
     }
   </style>
 </head>
@@ -558,29 +576,37 @@
 
   <main>
 
-    <!-- ── MASTHEAD ── -->
+    <!-- ── TELETEXT MASTHEAD ── -->
+    <div class="tt-header-bar">
+      <span class="tt-header-bar-left">CHARLIE.TXT</span>
+      <span class="tt-header-bar-right">LISBOA &nbsp; <span class="tt-header-bar-page">P.100</span></span>
+    </div>
+
     <div class="ch-masthead">
-      <span class="ch-edition-label">Portfólio · MMXXVI</span>
       <h1 class="ch-name">Charlie Chaves</h1>
-      <p class="ch-tagline">Director · Realizador · Lisboa</p>
-      <div class="ch-masthead-rule"></div>
+      <p class="ch-tagline">Director · Realizador · Lisboa · MMXXVI</p>
     </div>
 
     <!-- ── FILMOGRAPHY ── -->
-    <section class="catalog-section">
-      <div class="catalog-section-head">
-        <h2 class="catalog-section-title">Filmografia</h2>
-        <span class="catalog-section-count" id="film-count"></span>
-      </div>
+    <div class="tt-accent-bar tt-accent-cyan"></div>
+    <div class="tt-section-bar">
+      <span class="tt-section-bar-title">Filmografia</span>
+      <span class="tt-section-bar-count" id="film-count"></span>
+    </div>
+    <div class="tt-accent-bar tt-accent-cyan"></div>
+
+    <div style="padding: 0; border-bottom: 2px solid var(--ink);">
       <div class="filmography" id="filmography"></div>
-    </section>
+    </div>
 
     <!-- ── PHOTOGRAPHY ── -->
-    <div class="catalog-divider"></div>
     <section class="catalog-dark">
-      <div class="catalog-section-head">
-        <h2 class="catalog-section-title">Fotografia</h2>
+      <div class="tt-accent-bar tt-accent-green"></div>
+      <div class="tt-section-bar" style="background:#007700;color:#000;">
+        <span class="tt-section-bar-title">Fotografia</span>
+        <span class="tt-section-bar-count">178 frames</span>
       </div>
+      <div class="tt-accent-bar tt-accent-green"></div>
 
       <section class="cs-roll">
         <div class="cs-roll-header">
