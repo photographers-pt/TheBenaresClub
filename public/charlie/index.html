@@ -18,7 +18,7 @@
     body { background: #0a0908; }
 
     header {
-      background: rgba(10,9,8,0.96) !important;
+      background: rgba(10,9,8,0.97) !important;
       border-color: rgba(240,232,216,0.07) !important;
     }
 
@@ -31,20 +31,20 @@
     footer a { color: rgba(240,232,216,0.35) !important; }
 
     #grain { opacity: 0.05; }
-
     #main-nav  { display: none !important; }
     #nav-toggle { display: none !important; }
 
     /* ── INTRO ── */
-    .cs-intro {
-      padding: 4rem 2rem 2.5rem;
+    .ch-intro {
+      padding: 4.5rem 2rem 3rem;
       max-width: 1300px;
       margin: 0 auto;
+      border-bottom: 1px solid rgba(240,232,216,0.06);
     }
 
-    .cs-name {
+    .ch-name {
       font-family: var(--font-family);
-      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      font-size: clamp(3rem, 9vw, 6rem);
       font-weight: 700;
       color: #f0e8d8;
       letter-spacing: -0.03em;
@@ -52,19 +52,394 @@
       margin: 0 0 0.6rem;
     }
 
-    .cs-tagline {
+    .ch-tagline {
       font-family: var(--font-family);
       font-size: 0.65rem;
       font-weight: 600;
       letter-spacing: 0.32em;
       text-transform: uppercase;
-      color: rgba(240,232,216,0.3);
+      color: rgba(240,232,216,0.28);
       margin: 0;
     }
 
-    /* ── ROLL SECTION ── */
+    /* ── SECTION HEADERS ── */
+    .section-label {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 3rem 2rem 1.25rem;
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    .section-label-title {
+      font-family: var(--font-family);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(240,232,216,0.28);
+      margin: 0;
+    }
+
+    .section-label-count {
+      font-family: 'Courier New', monospace;
+      font-size: 0.52rem;
+      color: rgba(240,232,216,0.14);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── FILMOGRAPHY GRID ── */
+    .filmography {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+    }
+
+    /* ── FILM CARD ── */
+    .film-card {
+      cursor: pointer;
+      position: relative;
+    }
+
+    .film-card-poster {
+      position: relative;
+      aspect-ratio: 2/3;
+      overflow: hidden;
+      background: #111009;
+      border: 1px solid rgba(240,232,216,0.07);
+      border-radius: 4px;
+      transition: border-color 0.25s;
+    }
+
+    .film-card:hover .film-card-poster {
+      border-color: rgba(240,232,216,0.22);
+    }
+
+    .film-card-poster img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s, filter 0.25s;
+      filter: brightness(0.88);
+    }
+
+    .film-card:hover .film-card-poster img {
+      transform: scale(1.04);
+      filter: brightness(1.0);
+    }
+
+    .film-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8,7,6,0.92) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.25s;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1rem;
+    }
+
+    .film-card:hover .film-card-overlay { opacity: 1; }
+
+    .film-card-overlay-desc {
+      font-family: var(--font-family);
+      font-size: 0.72rem;
+      line-height: 1.55;
+      color: rgba(240,232,216,0.75);
+      margin: 0 0 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .film-card-overlay-btn {
+      display: inline-block;
+      font-family: var(--font-family);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #0a0908;
+      background: rgba(240,232,216,0.92);
+      border: none;
+      border-radius: 3px;
+      padding: 0.45rem 0.9rem;
+      cursor: pointer;
+      align-self: flex-start;
+    }
+
+    /* Role badge */
+    .film-role-badge {
+      position: absolute;
+      top: 0.55rem;
+      left: 0.55rem;
+      font-family: var(--font-family);
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(240,232,216,0.7);
+      background: rgba(8,7,6,0.8);
+      border: 1px solid rgba(240,232,216,0.12);
+      border-radius: 2px;
+      padding: 0.22rem 0.5rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .film-card-info {
+      padding: 0.65rem 0.1rem 0;
+    }
+
+    .film-card-title {
+      font-family: var(--font-family);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: rgba(240,232,216,0.85);
+      margin: 0 0 0.2rem;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .film-card-meta {
+      font-family: var(--font-family);
+      font-size: 0.62rem;
+      color: rgba(240,232,216,0.28);
+      margin: 0;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── PLACEHOLDER CARDS ── */
+    .film-card-placeholder .film-card-poster {
+      border-style: dashed;
+      border-color: rgba(240,232,216,0.1);
+      cursor: default;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .film-card-placeholder:hover .film-card-poster {
+      border-color: rgba(240,232,216,0.14);
+    }
+
+    .placeholder-icon {
+      font-size: 1.5rem;
+      color: rgba(240,232,216,0.1);
+      user-select: none;
+    }
+
+    .film-card-placeholder .film-card-title {
+      color: rgba(240,232,216,0.2);
+    }
+
+    .film-card-placeholder .film-card-meta {
+      color: rgba(240,232,216,0.12);
+    }
+
+    /* ── MODAL ── */
+    .fm-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(5,4,3,0.92);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .fm-backdrop.open { display: flex; }
+
+    .fm-modal {
+      background: #111009;
+      border: 1px solid rgba(240,232,216,0.1);
+      border-radius: 8px;
+      max-width: 800px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      position: relative;
+      transform: translateY(12px) scale(0.985);
+      transition: transform 0.25s;
+    }
+
+    .fm-backdrop.open .fm-modal { transform: none; }
+
+    .fm-poster {
+      aspect-ratio: 2/3;
+      width: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 8px 0 0 8px;
+    }
+
+    .fm-poster-placeholder {
+      aspect-ratio: 2/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      background: linear-gradient(160deg, #181614, #0c0b0a);
+      border-radius: 8px 0 0 8px;
+    }
+
+    .fm-body {
+      padding: 2.25rem 2rem 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .fm-eyebrow {
+      font-family: var(--font-family);
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(240,232,216,0.28);
+      margin: 0 0 0.5rem;
+    }
+
+    .fm-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 400;
+      color: #f0e8d8;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      margin: 0 0 0.4rem;
+    }
+
+    .fm-meta {
+      font-family: var(--font-family);
+      font-size: 0.72rem;
+      color: rgba(240,232,216,0.32);
+      letter-spacing: 0.04em;
+      margin: 0 0 1.2rem;
+    }
+
+    .fm-desc {
+      font-family: var(--font-family);
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: rgba(240,232,216,0.62);
+      margin: 0 0 1.5rem;
+      flex: 1;
+    }
+
+    .fm-ficha {
+      background: rgba(255,248,238,0.025);
+      border: 1px solid rgba(240,232,216,0.07);
+      border-radius: 4px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .fm-ficha-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.38rem 0;
+      border-bottom: 1px solid rgba(240,232,216,0.04);
+    }
+
+    .fm-ficha-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .fm-ficha-row:first-child { padding-top: 0; }
+
+    .fm-ficha-key {
+      font-family: var(--font-family);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(240,232,216,0.28);
+      flex-shrink: 0;
+    }
+
+    .fm-ficha-val {
+      font-family: var(--font-family);
+      font-size: 0.75rem;
+      color: rgba(240,232,216,0.55);
+      text-align: right;
+    }
+
+    .fm-watch-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      font-family: var(--font-family);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #0a0908;
+      background: rgba(240,232,216,0.94);
+      border: none;
+      border-radius: 4px;
+      padding: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+      box-sizing: border-box;
+    }
+
+    .fm-watch-btn:hover { background: #fff; }
+
+    .fm-soon-note {
+      font-family: var(--font-family);
+      font-size: 0.68rem;
+      color: rgba(240,232,216,0.22);
+      text-align: center;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .fm-close {
+      position: absolute;
+      top: 0.9rem;
+      right: 0.9rem;
+      background: rgba(255,248,238,0.06);
+      border: 1px solid rgba(240,232,216,0.1);
+      border-radius: 50%;
+      width: 1.9rem;
+      height: 1.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: rgba(240,232,216,0.45);
+      font-size: 0.9rem;
+      transition: background 0.2s, color 0.2s;
+      z-index: 1;
+    }
+
+    .fm-close:hover { background: rgba(255,248,238,0.12); color: #f0e8d8; }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      max-width: 1300px;
+      margin: 0 auto 0;
+      border: none;
+      border-top: 1px solid rgba(240,232,216,0.06);
+    }
+
+    /* ── CONTACT SHEET ── */
     .cs-roll {
-      padding: 0 1.5rem 3.5rem;
+      padding: 0 2rem 3.5rem;
       max-width: 1300px;
       margin: 0 auto;
     }
@@ -74,8 +449,8 @@
       align-items: baseline;
       gap: 1rem;
       margin-bottom: 0.75rem;
-      padding-bottom: 0.6rem;
-      border-bottom: 1px solid rgba(240,232,216,0.07);
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(240,232,216,0.06);
     }
 
     .cs-roll-name {
@@ -84,7 +459,7 @@
       font-weight: 700;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: rgba(240,232,216,0.3);
+      color: rgba(240,232,216,0.28);
     }
 
     .cs-roll-frames {
@@ -94,21 +469,19 @@
       letter-spacing: 0.1em;
     }
 
-    /* ── GRID ── */
     .cs-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 3px;
     }
 
-    /* ── FRAME ── */
     .cs-frame {
       position: relative;
       aspect-ratio: 3/2;
       background: #111;
       overflow: hidden;
       cursor: pointer;
-      outline: 1.5px solid rgba(240,232,216,0.09);
+      outline: 1.5px solid rgba(240,232,216,0.08);
     }
 
     .cs-frame::after {
@@ -118,7 +491,7 @@
       right: 7px;
       font-family: 'Courier New', monospace;
       font-size: 0.46rem;
-      color: rgba(240,232,216,0.22);
+      color: rgba(240,232,216,0.2);
       pointer-events: none;
       letter-spacing: 0.05em;
       line-height: 1;
@@ -172,19 +545,8 @@
     }
 
     .lb-btn:hover { color: rgba(240,232,216,0.9); }
-
-    .lb-close {
-      top: 1.25rem;
-      right: 1.25rem;
-      font-size: 1.4rem;
-    }
-
-    .lb-prev, .lb-next {
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 2.5rem;
-    }
-
+    .lb-close { top: 1.25rem; right: 1.25rem; font-size: 1.4rem; }
+    .lb-prev, .lb-next { top: 50%; transform: translateY(-50%); font-size: 2.5rem; }
     .lb-prev { left: 0.5rem; }
     .lb-next { right: 0.5rem; }
 
@@ -200,19 +562,25 @@
       pointer-events: none;
     }
 
-    /* ── MOBILE ── */
-    @media (max-width: 600px) {
-      .cs-intro { padding: 2.5rem 1.25rem 2rem; }
-      .cs-roll  { padding: 0 0.75rem 2.5rem; }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .filmography { grid-template-columns: repeat(4, 1fr); }
+    }
 
-      .cs-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2px;
-      }
-
-      .lb-img { max-width: 100vw; max-height: 75vh; }
+    @media (max-width: 680px) {
+      .filmography { grid-template-columns: repeat(3, 1fr); gap: 0.65rem; }
+      .ch-intro, .section-label, .cs-roll { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .filmography { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .fm-modal { grid-template-columns: 1fr; }
+      .fm-poster, .fm-poster-placeholder { border-radius: 8px 8px 0 0; aspect-ratio: 16/9; }
       .lb-prev { left: 0; }
       .lb-next { right: 0; }
+    }
+
+    @media (max-width: 480px) {
+      .filmography { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+      .cs-grid { grid-template-columns: repeat(3, 1fr); gap: 2px; }
+      .lb-img { max-width: 100vw; max-height: 75vh; }
     }
 
     @media (max-width: 360px) {
@@ -225,9 +593,26 @@
   <div id="header-container"></div>
 
   <main>
-    <div class="cs-intro">
-      <h1 class="cs-name">Charlie Chaves</h1>
-      <p class="cs-tagline">Photography · Lisboa</p>
+
+    <!-- ── INTRO ── -->
+    <div class="ch-intro">
+      <h1 class="ch-name">Charlie Chaves</h1>
+      <p class="ch-tagline">Director · Realizador · Lisboa</p>
+    </div>
+
+    <!-- ── FILMOGRAPHY ── -->
+    <div class="section-label">
+      <span class="section-label-title">Filmografia</span>
+      <span class="section-label-count" id="film-count"></span>
+    </div>
+
+    <div class="filmography" id="filmography"></div>
+
+    <hr class="section-divider" />
+
+    <!-- ── PHOTOGRAPHY ── -->
+    <div class="section-label">
+      <span class="section-label-title">Fotografia</span>
     </div>
 
     <section class="cs-roll">
@@ -317,21 +702,38 @@
       </div>
       <div class="cs-grid" id="roll-nl3"></div>
     </section>
+
   </main>
 
-  <!-- LIGHTBOX -->
+  <!-- ── FILM MODAL ── -->
+  <div class="fm-backdrop" id="fm-backdrop">
+    <div class="fm-modal" id="fm-modal">
+      <button class="fm-close" id="fm-close">✕</button>
+      <div id="fm-poster-wrap"></div>
+      <div class="fm-body">
+        <p class="fm-eyebrow" id="fm-eyebrow">Filmografia</p>
+        <h2 class="fm-title" id="fm-title">—</h2>
+        <p class="fm-meta"  id="fm-meta">—</p>
+        <p class="fm-desc"  id="fm-desc">—</p>
+        <div class="fm-ficha" id="fm-ficha"></div>
+        <div id="fm-action"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PHOTO LIGHTBOX ── -->
   <div class="lb" id="lb">
-    <button class="lb-btn lb-close" id="lb-close" aria-label="Fechar">✕</button>
-    <button class="lb-btn lb-prev"  id="lb-prev"  aria-label="Anterior">‹</button>
+    <button class="lb-btn lb-close" id="lb-close">✕</button>
+    <button class="lb-btn lb-prev"  id="lb-prev">‹</button>
     <img class="lb-img" id="lb-img" src="" alt="" />
-    <button class="lb-btn lb-next"  id="lb-next"  aria-label="Seguinte">›</button>
+    <button class="lb-btn lb-next"  id="lb-next">›</button>
     <span class="lb-counter" id="lb-counter"></span>
   </div>
 
   <div id="footer-container"></div>
   <script src="/shared.js"></script>
   <script>
-    // ── LOGO SWAP ──
+    /* ── LOGO SWAP ── */
     document.addEventListener('DOMContentLoaded', function () {
       var logoImg = document.querySelector('header a img');
       if (logoImg) {
@@ -341,7 +743,210 @@
       }
     });
 
-    // ── CONTACT SHEET BUILD ──
+    /* ════════════════════════════════
+       FILM DATA
+       To add a film:
+         { title, year, role, genre, description, poster, icon, tecnica, watchUrl }
+         Set watchUrl to null if not yet available.
+         Set poster to null to use the icon fallback.
+    ════════════════════════════════ */
+    var FILMS = [
+      {
+        title: "Inexistente",
+        year: "2023",
+        role: "Realização · Produção",
+        genre: "Drama · Curta-metragem",
+        description: "Helder visita a antiga casa do seu melhor amigo, Pedro, quem desapareceu há um tempo atrás sem deixar rasto. O objetivo do Helder é redescobrir memórias esquecidas, mas acabará por descobrir ainda mais.",
+        poster: "/media/cinemateca/posters/inexistente.jpg",
+        icon: "🏚️",
+        tecnica: {
+          "Realização": "Charlie Chaves",
+          "Produção": "Charlie Chaves",
+          "Fotografia · Som · Montagem": "João Nobre",
+          "Elenco": "Alessandro Barboza · Pedro Antonie de Saint",
+          "País": "Portugal",
+          "Ano": "2023"
+        },
+        watchUrl: "https://vimeo.com/930451906"
+      },
+      {
+        title: "El Artista Comprendido",
+        year: "2024",
+        role: "Realização · Produção",
+        genre: "Drama · Curta-metragem",
+        description: "Um jovem artista finaliza a sua obra-prima, mas a cada dia que passa, fica mais insatisfeito com o resultado final, por isso decide descartar o seu trabalho. Posteriormente, um crítico de arte encontra a sua obra...",
+        poster: "/media/cinemateca/posters/el-artista-comprendido.jpg",
+        icon: "🎨",
+        tecnica: {
+          "Realização · Produção": "Charlie Chaves",
+          "Câmara": "Nityam · Gonçalo Pereira",
+          "Som": "Valdir Neves",
+          "Post-produção": "Carlos Calderon",
+          "Elenco": "Charlie Chaves · Bruno de Franclieu",
+          "País": "Portugal",
+          "Ano": "2024"
+        },
+        watchUrl: "https://vimeo.com/930022904"
+      },
+      {
+        title: "El Profesor",
+        year: "2024",
+        role: "Realização",
+        genre: "Drama · Curta-metragem",
+        description: "Em breve mais informações.",
+        poster: "/media/cinemateca/posters/el-profesor.png",
+        icon: "📚",
+        tecnica: {
+          "Realização": "Charlie Chaves",
+          "País": "Portugal",
+          "Ano": "2024"
+        },
+        watchUrl: null
+      },
+      {
+        title: "Jay Gupta",
+        year: "2025",
+        role: "Realização · Escrita · Montagem",
+        genre: "Drama · Curta-metragem",
+        description: "Em breve mais informações.",
+        poster: "/media/cinemateca/posters/jay-gupta.jpg",
+        icon: "🌟",
+        tecnica: {
+          "Realização · Escrita · Montagem": "Charlie Chaves · Nityam",
+          "Fotografia": "Rasmus",
+          "Som": "Valdir Neves · Fabio Duarte",
+          "Produção": "Inês Serra",
+          "Elenco": "Akshay Tharabole · Nilesh Suryawanshi · Varsha Mehra · Yacine Meziti · Francisco Lopes",
+          "País": "Portugal",
+          "Ano": "2025"
+        },
+        watchUrl: null
+      },
+      {
+        title: "Firefly",
+        year: "2026",
+        role: "Participação",
+        genre: "Drama · Curta-metragem",
+        description: "Em breve mais informações.",
+        poster: "/media/cinemateca/posters/firefly.png",
+        icon: "✨",
+        tecnica: {
+          "Realização": "Val Neves",
+          "País": "Portugal",
+          "Ano": "2026"
+        },
+        watchUrl: null
+      },
+      /* ── PLACEHOLDERS — substituir pelos próximos projetos ── */
+      { placeholder: true },
+      { placeholder: true },
+      { placeholder: true },
+      { placeholder: true },
+      { placeholder: true }
+    ];
+
+    /* ── BUILD FILMOGRAPHY ── */
+    (function () {
+      var grid  = document.getElementById('filmography');
+      var count = document.getElementById('film-count');
+      var real  = FILMS.filter(function (f) { return !f.placeholder; }).length;
+      count.textContent = real + ' filmes';
+
+      FILMS.forEach(function (film, i) {
+        var card = document.createElement('div');
+
+        if (film.placeholder) {
+          card.className = 'film-card film-card-placeholder';
+          card.innerHTML =
+            '<div class="film-card-poster"><span class="placeholder-icon">+</span></div>' +
+            '<div class="film-card-info">' +
+            '<p class="film-card-title">Em breve</p>' +
+            '<p class="film-card-meta">—</p>' +
+            '</div>';
+        } else {
+          card.className = 'film-card';
+          var posterHTML = film.poster
+            ? '<img src="' + film.poster + '" alt="' + film.title + '" loading="lazy" />'
+            : '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;">' + film.icon + '</div>';
+
+          card.innerHTML =
+            '<div class="film-card-poster">' +
+            posterHTML +
+            '<span class="film-role-badge">' + film.role.split(' · ')[0] + '</span>' +
+            '<div class="film-card-overlay">' +
+            '<p class="film-card-overlay-desc">' + film.description + '</p>' +
+            '<span class="film-card-overlay-btn">Ver mais</span>' +
+            '</div>' +
+            '</div>' +
+            '<div class="film-card-info">' +
+            '<p class="film-card-title">' + film.title + '</p>' +
+            '<p class="film-card-meta">' + film.year + ' · ' + film.genre + '</p>' +
+            '</div>';
+
+          card.addEventListener('click', function (f) {
+            return function () { openFilmModal(f); };
+          }(film));
+        }
+
+        grid.appendChild(card);
+      });
+    })();
+
+    /* ── FILM MODAL ── */
+    var fmBackdrop = document.getElementById('fm-backdrop');
+    var fmClose    = document.getElementById('fm-close');
+
+    function openFilmModal(film) {
+      document.getElementById('fm-title').textContent = film.title;
+      document.getElementById('fm-meta').textContent  = film.year + ' · ' + film.role + ' · ' + film.genre;
+      document.getElementById('fm-desc').textContent  = film.description;
+
+      var posterWrap = document.getElementById('fm-poster-wrap');
+      if (film.poster) {
+        posterWrap.innerHTML = '<img class="fm-poster" src="' + film.poster + '" alt="' + film.title + '">';
+      } else {
+        posterWrap.innerHTML = '<div class="fm-poster-placeholder">' + film.icon + '</div>';
+      }
+
+      var ficha = document.getElementById('fm-ficha');
+      ficha.innerHTML = Object.entries(film.tecnica || {}).map(function (kv) {
+        return '<div class="fm-ficha-row">' +
+          '<span class="fm-ficha-key">' + kv[0] + '</span>' +
+          '<span class="fm-ficha-val">' + kv[1] + '</span>' +
+          '</div>';
+      }).join('');
+
+      var action = document.getElementById('fm-action');
+      if (film.watchUrl) {
+        action.innerHTML = '<a class="fm-watch-btn" href="' + film.watchUrl + '" target="_blank" rel="noopener">' +
+          '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>' +
+          'Ver Filme' +
+          '</a>';
+      } else {
+        action.innerHTML = '<p class="fm-soon-note">Em breve</p>';
+      }
+
+      fmBackdrop.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeFilmModal() {
+      fmBackdrop.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    fmClose.addEventListener('click', closeFilmModal);
+    fmBackdrop.addEventListener('click', function (e) {
+      if (e.target === fmBackdrop) closeFilmModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        if (fmBackdrop.classList.contains('open')) closeFilmModal();
+        if (lb.classList.contains('open')) closeLightbox();
+      }
+    });
+
+    /* ── CONTACT SHEET ── */
     var allPhotos = [];
 
     function pad(n) { return n < 10 ? '0' + n : String(n); }
@@ -358,7 +963,6 @@
         var frame = document.createElement('div');
         frame.className = 'cs-frame';
         frame.setAttribute('data-frame', label);
-        frame.setAttribute('data-idx', idx);
 
         var img = document.createElement('img');
         img.src = src;
@@ -367,13 +971,11 @@
         img.decoding = 'async';
 
         frame.appendChild(img);
-        frame.addEventListener('click', openHandler);
+        frame.addEventListener('click', (function (i2) {
+          return function () { openLightbox(i2); };
+        }(idx)));
         container.appendChild(frame);
       }
-    }
-
-    function openHandler() {
-      openLightbox(parseInt(this.getAttribute('data-idx')));
     }
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -390,7 +992,7 @@
       buildRoll('nl3', 15, 'roll-nl3');
     });
 
-    // ── LIGHTBOX ──
+    /* ── LIGHTBOX ── */
     var lb        = document.getElementById('lb');
     var lbImg     = document.getElementById('lb-img');
     var lbCounter = document.getElementById('lb-counter');
@@ -423,13 +1025,6 @@
 
     lb.addEventListener('click', function (e) {
       if (e.target === lb) closeLightbox();
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (!lb.classList.contains('open')) return;
-      if (e.key === 'Escape')      closeLightbox();
-      if (e.key === 'ArrowLeft')   lbGo(-1);
-      if (e.key === 'ArrowRight')  lbGo(1);
     });
 
     lb.addEventListener('touchstart', function (e) {
