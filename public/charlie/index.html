@@ -34,6 +34,10 @@
 
     /* Invert grain to be barely visible on white */
     #grain { opacity: 0.03; }
+
+    /* Hide nav and hamburger on this page */
+    #main-nav { display: none !important; }
+    #nav-toggle { display: none !important; }
   </style>
 </head>
 <body>
@@ -44,5 +48,15 @@
 
   <div id="footer-container"></div>
   <script src="/shared.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var logoImg = document.querySelector('header a img');
+      if (logoImg) {
+        logoImg.src = '/Imagenes/01%20Banners/Logo%20%26%20Charlie%20-%20light.png';
+        logoImg.alt = 'Charlie Chaves';
+        logoImg.style.height = '36px';
+      }
+    });
+  </script>
 </body>
 </html>
