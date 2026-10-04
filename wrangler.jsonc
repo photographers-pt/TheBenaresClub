@@ -8,6 +8,7 @@
     "binding": "ASSETS"
   },
   "vars": {
-    "MAILCHIMP_LIST_ID": "b53e4ffa66"
+    "MAILCHIMP_LIST_ID": "b53e4ffa66",
+    "MAILCHIMP_SERVER": "us1"
   }
 }
