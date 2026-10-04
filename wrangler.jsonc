@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "thebenaresclub",
+  "name": "benares-worker",
   "compatibility_date": "2026-04-29",
   "main": "src/worker.js",
   "assets": {
