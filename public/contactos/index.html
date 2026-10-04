@@ -236,10 +236,12 @@
         <p class="newsletter-desc" data-lang="pt">Novos filmes, eventos e chamadas abertas diretamente no teu email. Sem spam.</p>
         <p class="newsletter-desc" data-lang="en">New films, events and open calls straight to your inbox. No spam.</p>
         <p class="newsletter-desc" data-lang="es">Nuevas películas, eventos y convocatorias directo a tu email. Sin spam.</p>
-        <form class="newsletter-form" id="newsletter-form" novalidate>
+        <!-- Mailchimp embed (audience b53e4ffa66): same action, fields and honeypot as the official embed code -->
+        <form class="newsletter-form" id="newsletter-form" action="https://thebenaresclub.us1.list-manage.com/subscribe/post?u=cb9b148861bf6286edc498ca8&amp;id=b53e4ffa66&amp;f_id=005683e5f0" method="post" target="_blank" novalidate>
           <input
             class="newsletter-input"
             type="email"
+            name="EMAIL"
             id="newsletter-email"
             autocomplete="email"
             required
@@ -252,6 +254,8 @@
             <span data-lang="en">Subscribe</span>
             <span data-lang="es">Suscribirse</span>
           </button>
+          <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups -->
+          <div aria-hidden="true" style="position: absolute; left: -5000px;"><input type="text" name="b_cb9b148861bf6286edc498ca8_b53e4ffa66" tabindex="-1" value=""></div>
         </form>
         <p class="newsletter-ok" id="newsletter-ok">
           <span data-lang="pt">✓ Subscrito! Obrigado.</span>
@@ -290,25 +294,55 @@
         }
         var btn = form.querySelector('button[type=submit]');
         btn.disabled = true;
-        fetch('/api/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: input.value })
-        })
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-          if (data.ok) {
+
+        // Mailchimp embed endpoint, called as JSONP (same thing Mailchimp's own mc-validate.js does)
+        // so the result shows here without leaving the page.
+        var cbName = '__mcCb' + Date.now();
+        var script = document.createElement('script');
+        var finished = false;
+        var timer;
+
+        function cleanup() {
+          clearTimeout(timer);
+          delete window[cbName];
+          if (script.parentNode) script.parentNode.removeChild(script);
+        }
+
+        // If the JSONP call fails (blocked, offline, timeout), fall back to the plain
+        // embed behaviour: post the form to Mailchimp in a new tab.
+        function fallback() {
+          if (finished) return;
+          finished = true;
+          cleanup();
+          btn.disabled = false;
+          form.submit();
+        }
+
+        window[cbName] = function(data) {
+          if (finished) return;
+          finished = true;
+          cleanup();
+          var msg = String((data && data.msg) || '').replace(/<[^>]*>/g, '').replace(/^\d+\s*-\s*/, '').trim();
+          // Already subscribed is not an error
+          if (data && (data.result === 'success' || /already subscribed/i.test(msg))) {
             form.style.display = 'none';
             ok.style.display = 'block';
           } else {
             btn.disabled = false;
-            alert(data.error || 'Erro ao subscrever. Tenta de novo.');
+            alert(msg || 'Erro ao subscrever. Tenta de novo.');
           }
-        })
-        .catch(function() {
-          btn.disabled = false;
-          alert('Erro de ligação. Tenta de novo.');
-        });
+        };
+
+        var honeypot = form.querySelector('input[name^="b_"]');
+        var params = [
+          'EMAIL=' + encodeURIComponent(input.value),
+          encodeURIComponent(honeypot.name) + '=' + encodeURIComponent(honeypot.value),
+          'c=' + cbName
+        ].join('&');
+        script.src = form.getAttribute('action').replace('/subscribe/post?', '/subscribe/post-json?') + '&' + params;
+        script.onerror = fallback;
+        timer = setTimeout(fallback, 10000);
+        document.head.appendChild(script);
       });
     })();
   </script>
