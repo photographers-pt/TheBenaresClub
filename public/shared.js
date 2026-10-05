@@ -18,38 +18,17 @@ function createHeader() {
       nav img {
         vertical-align: middle;
       }
-
-      .lang-btn {
-        position: absolute;
-        right: calc(1rem + 36px + 0.5rem);
-        top: 50%;
-        transform: translateY(-50%);
-        font-family: inherit;
-        font-size: 0.65rem;
-        font-weight: 600;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: rgba(240, 232, 216, 0.6);
-        background: transparent;
-        border: 1px solid rgba(240, 232, 216, 0.18);
-        border-radius: 4px;
-        padding: 0.35rem 0.65rem;
-        cursor: pointer;
-        transition: color 0.2s, border-color 0.2s;
-        line-height: 1;
-      }
-
-      .lang-btn:hover {
-        color: rgba(240, 232, 216, 0.95);
-        border-color: rgba(240, 232, 216, 0.4);
-      }
     </style>
 
    <header>
       <a href="/">
         <img src="/media/A00_Logo_&_title_-_light.png" alt="Club Benares" style="height: 30px;">
       </a>
-      <button id="lang-btn" class="lang-btn" aria-label="Mudar idioma">PT</button>
+      <div id="lang-switch" class="lang-switch lang-switch--header" role="group" aria-label="Idioma" translate="no">
+        <button type="button" class="lang-opt" data-set-lang="pt" lang="pt" aria-pressed="false">PT</button>
+        <button type="button" class="lang-opt" data-set-lang="en" lang="en" aria-pressed="false">EN</button>
+        <button type="button" class="lang-opt" data-set-lang="es" lang="es" aria-pressed="false">ES</button>
+      </div>
       <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
         <svg class="nav-icon-open" width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect width="20" height="2" rx="1" fill="currentColor"/>
@@ -118,46 +97,31 @@ function createFooter() {
 // LANGUAGE SWITCHER
 // =================================
 
+// The language logic (switcher clicks, translating text, data-lang elements,
+// persistence, 'langchange' event) lives in /i18n.js with the texts in /i18n-dict.js.
+// These helpers are kept for pages that still call them.
+
 const LANGS = ['pt', 'en', 'es'];
 
 function getCurrentLang() {
-  return localStorage.getItem('site-lang') || 'pt';
+  return window.i18n ? window.i18n.lang() : (localStorage.getItem('site-lang') || 'pt');
 }
 
 function applyLang(lang) {
-  localStorage.setItem('site-lang', lang);
-
-  // Update button label
-  const btn = document.getElementById('lang-btn');
-  if (btn) btn.textContent = lang.toUpperCase();
-
-  // Show elements for current lang, hide others
-  LANGS.forEach(function(l) {
-    document.querySelectorAll('[data-lang="' + l + '"]').forEach(function(el) {
-      if (l === lang) {
-        el.classList.add('active');
-      } else {
-        el.classList.remove('active');
-      }
-    });
-  });
-
-  // Dispatch event so individual pages can react if needed
-  document.dispatchEvent(new CustomEvent('langchange', { detail: { lang: lang } }));
+  if (window.i18n) window.i18n.setLang(lang);
 }
 
-function initializeLangSwitcher() {
-  const btn = document.getElementById('lang-btn');
-  if (!btn) return;
-
-  const current = getCurrentLang();
-  applyLang(current);
-
-  btn.addEventListener('click', function() {
-    const current = getCurrentLang();
-    const next = LANGS[(LANGS.indexOf(current) + 1) % LANGS.length];
-    applyLang(next);
-  });
+// Pages should include /i18n-dict.js and /i18n.js in <head>. If one forgets, load them here
+// so the language switcher in the header still works.
+function ensureI18n() {
+  if (window.i18n) return;
+  function load(src, done) {
+    var s = document.createElement('script');
+    s.src = src;
+    s.onload = done;
+    document.head.appendChild(s);
+  }
+  load('/i18n-dict.js', function () { load('/i18n.js'); });
 }
 
 // =================================
@@ -350,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (headerContainer) {
     headerContainer.innerHTML = createHeader();
     initializeNavToggle();
-    initializeLangSwitcher();
+    ensureI18n();
   }
 
   // Highlight current page — never highlight anything on home "/"

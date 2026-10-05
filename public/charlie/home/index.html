@@ -62,6 +62,12 @@
       transition: color 0.15s;
     }
     .menubar-back:hover { color: var(--g); }
+    /* language switcher (markup + behaviour come from /i18n.js), light menubar variant */
+    .lang-switch.lang-switch--menubar { position: static; border-color: rgba(0,0,0,0.18); background: transparent; }
+    .lang-switch.lang-switch--menubar .lang-opt { font-size: 0.55rem; padding: 0.28rem 0.42rem; color: #666; }
+    .lang-switch.lang-switch--menubar .lang-opt + .lang-opt { border-left-color: rgba(0,0,0,0.12); }
+    .lang-switch.lang-switch--menubar .lang-opt:hover { color: #111; }
+    .lang-switch.lang-switch--menubar .lang-opt[aria-pressed="true"] { color: #fff; background: #111; }
 
     /* ═══════════════════════════════════════
        DESKTOP GRID
@@ -510,6 +516,8 @@
       .lb-next { right:.4rem; }
     }
   </style>
+  <script src="/i18n-dict.js"></script>
+  <script src="/i18n.js"></script>
 </head>
 <body>
 
@@ -518,6 +526,11 @@
     <span class="menubar-name">Charlie Chaves</span>
     <div class="menubar-right">
       <a class="menubar-back" href="/">Club Benares ↗</a>
+      <div id="lang-switch" class="lang-switch lang-switch--menubar" role="group" aria-label="Idioma" translate="no">
+        <button type="button" class="lang-opt" data-set-lang="pt" lang="pt" aria-pressed="false">PT</button>
+        <button type="button" class="lang-opt" data-set-lang="en" lang="en" aria-pressed="false">EN</button>
+        <button type="button" class="lang-opt" data-set-lang="es" lang="es" aria-pressed="false">ES</button>
+      </div>
       <span class="menubar-time" id="menubar-time"></span>
     </div>
   </div>

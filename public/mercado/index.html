@@ -991,6 +991,8 @@
       .form-grid { grid-template-columns: 1fr; }
     }
   </style>
+  <script src="/i18n-dict.js"></script>
+  <script src="/i18n.js"></script>
 </head>
 <body>
   <div id="grain"></div>
@@ -1258,7 +1260,7 @@
           </div>
           <div class="product-info">
             <h3 class="product-name">${p.name}</h3>
-            <p class="product-desc-short">${p.description.substring(0, 72)}…</p>
+            <p class="product-desc-short">${(window.i18n ? window.i18n.t(p.description) : p.description).substring(0, 72)}…</p>
             <div class="product-footer">
               <span class="product-price">${p.price}€</span>
               <button class="btn-add" data-id="${p.id}">Ver produto</button>
@@ -1465,6 +1467,8 @@
     /* ── Init ── */
     renderGrid();
     renderCart();
+    // the short descriptions are cut to 72 characters, so rebuild the grid when the language changes
+    document.addEventListener('langchange', renderGrid);
   </script>
 
   <script src="/shared.js"></script>

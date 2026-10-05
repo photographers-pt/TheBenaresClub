@@ -1,0 +1,437 @@
+/*
+ * i18n-dict.js — diccionario de traducciones del sitio.  Lo usa /i18n.js.
+ *
+ * entries:  [ portugués, inglés, español ]   (el texto fuente de las páginas está en portugués)
+ *           Se busca por el texto completo de un elemento (espacios normalizados).
+ *           Los textos con " · ", " — ", " | " se traducen por trozos, así que basta con
+ *           añadir cada trozo suelto. Las flechas y emojis de los extremos se conservan.
+ * patterns: para textos con partes variables (fechas, "Ver detalhes de X", "5 filmes").
+ * keep:     textos que se dejan igual a propósito (nombres propios, marcas); sirve para
+ *           que i18n.missing() no los marque como pendientes.
+ *
+ * Para añadir texto nuevo: añade una fila a entries. Si una página genera texto con JS,
+ * se traduce igual (basta que el texto coincida con una fila).
+ */
+(function () {
+  'use strict';
+
+  var MONTHS = {
+    pt: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+    en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    es: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+  };
+  var MONTH_RE = MONTHS.pt.join('|');
+
+  function monthTo(tok, lang) {
+    var i = MONTHS.pt.indexOf(tok);
+    return i < 0 ? tok : MONTHS[lang][i];
+  }
+
+  window.I18N_DICT = {
+
+    entries: [
+
+      /* ═══════════ Estructura común: menú, cabecera, accesibilidad ═══════════ */
+      ['Eventos', 'Events', 'Eventos'],
+      ['Cinemateca', 'Film Library', 'Cinemateca'],
+      ['Mercado', 'Shop', 'Mercado'],
+      ['Fototeca', 'Photo Library', 'Fototeca'],
+      ['Contactos', 'Contact', 'Contactos'],
+      ['Menu principal', 'Main menu', 'Menú principal'],
+      ['Abrir menu', 'Open menu', 'Abrir menú'],
+      ['Fechar', 'Close', 'Cerrar'],
+      ['Idioma', 'Language', 'Idioma'],
+      ['Mudar idioma', 'Change language', 'Cambiar idioma'],
+      ['Lisboa', 'Lisbon', 'Lisboa'],
+      ['Email', 'Email', 'Email'],   /* debe ir antes que 'E-mail' (Mercado): ambas variantes se buscan por texto */
+
+      /* ═══════════ Portada ═══════════ */
+      ['A Nossa História', 'Our Story', 'Nuestra historia'],
+      ['Desde 2023 reunimos estudantes, profissionais e amantes de cinema em Lisboa para ver, discutir e fazer cinema juntos. Ao tornares-te membro, fazes parte disto.',
+        'Since 2023 we have brought together students, professionals and film lovers in Lisbon to watch, discuss and make cinema together. By becoming a member, you become part of it.',
+        'Desde 2023 reunimos a estudiantes, profesionales y amantes del cine en Lisboa para ver, debatir y hacer cine juntos. Al hacerte miembro, formas parte de esto.'],
+      ['O que inclui', 'What’s included', 'Qué incluye'],
+      ['Descontos em atividades e na loja online (Mercado)',
+        'Discounts on activities and in the online shop',
+        'Descuentos en actividades y en la tienda online (Mercado)'],
+      ['Acesso à equipa de produção — fazemos curtas juntos',
+        'Access to the production team — we make short films together',
+        'Acceso al equipo de producción: hacemos cortos juntos'],
+      ['Reuniões mensais para desenvolver projetos e novas ideias',
+        'Monthly meetings to develop projects and new ideas',
+        'Reuniones mensuales para desarrollar proyectos y nuevas ideas'],
+      ['Entra no formulário, segue os passos para te tornares sócio e junta-te a nós. Obrigado por fazeres parte disto. Estamos à tua espera! 🎬',
+        'Fill in the form, follow the steps to become a member and join us. Thank you for being part of this. We’re waiting for you! 🎬',
+        'Entra en el formulario, sigue los pasos para hacerte socio y únete a nosotros. Gracias por formar parte de esto. ¡Te esperamos! 🎬'],
+      ['Preencher formulário de candidatura →', 'Fill in the application form →', 'Rellenar el formulario de candidatura →'],
+      ['Comunidade de cinema independente com sede em Lisboa. Produzimos curtas-metragens, organizamos eventos e reunimos criadores.',
+        'Independent film community based in Lisbon. We produce short films, organise events and bring creators together.',
+        'Comunidad de cine independiente con sede en Lisboa. Producimos cortometrajes, organizamos eventos y reunimos a creadores.'],
+
+      /* ═══════════ Cinemateca ═══════════ */
+      ['Em destaque', 'Featured', 'Destacado'],
+      ['Ver Grátis', 'Watch Free', 'Ver gratis'],
+      ['Ver detalhes', 'View details', 'Ver detalles'],
+      ['Catálogo', 'Catalogue', 'Catálogo'],
+      ['Todos os filmes', 'All films', 'Todas las películas'],
+      ['Ver agora', 'Watch now', 'Ver ahora'],
+      ['Ver opções', 'View options', 'Ver opciones'],
+      ['Grátis', 'Free', 'Gratis'],
+      ['Em breve', 'Coming soon', 'Próximamente'],
+      ['Voltar ao poster', 'Back to poster', 'Volver al póster'],
+      ['Ficha Técnica', 'Credits', 'Ficha técnica'],
+      ['Alugar', 'Rent', 'Alquilar'],
+      ['Acesso 48 horas', '48-hour access', 'Acceso 48 horas'],
+      ['Alugar agora', 'Rent now', 'Alquilar ahora'],
+      ['Comprar', 'Buy', 'Comprar'],
+      ['Acesso permanente', 'Permanent access', 'Acceso permanente'],
+      ['Pagamento seguro via Stripe. Após a compra recebes o link do filme por email.',
+        'Secure payment via Stripe. After purchase you will receive the film link by email.',
+        'Pago seguro con Stripe. Tras la compra recibirás el enlace de la película por email.'],
+      ['Brevemente disponível para alugar e comprar.',
+        'Available soon to rent and buy.',
+        'Próximamente disponible para alquilar y comprar.'],
+      ['Ver Agora — Grátis', 'Watch Now — Free', 'Ver ahora — Gratis'],
+      ['Visualização gratuita · Sem necessidade de registo',
+        'Free to watch · No sign-up required',
+        'Visualización gratuita · Sin necesidad de registro'],
+      ['Filme anterior', 'Previous film', 'Película anterior'],
+      ['Próximo filme', 'Next film', 'Siguiente película'],
+      ['Scroll esquerda', 'Scroll left', 'Desplazar a la izquierda'],
+      ['Scroll direita', 'Scroll right', 'Desplazar a la derecha'],
+      ['Detalhes do filme', 'Film details', 'Detalles de la película'],
+      ['Curta-metragem', 'Short film', 'Cortometraje'],
+      ['Em breve mais informações.', 'More information coming soon.', 'Próximamente más información.'],
+      ['Helder visita a antiga casa do seu melhor amigo, Pedro, quem desapareceu há um tempo atrás sem deixar rasto. O objetivo do Helder é redescobrir memórias esquecidas, mas acabará por descobrir ainda mais.',
+        'Helder visits the old home of his best friend, Pedro, who disappeared some time ago without a trace. Helder’s goal is to rediscover forgotten memories, but he will end up discovering even more.',
+        'Helder visita la antigua casa de su mejor amigo, Pedro, que desapareció hace un tiempo sin dejar rastro. El objetivo de Helder es redescubrir recuerdos olvidados, pero acabará descubriendo aún más.'],
+      ['Um jovem artista finaliza a sua obra-prima, mas a cada dia que passa, fica mais insatisfeito com o resultado final, por isso decide descartar o seu trabalho. Posteriormente, um crítico de arte encontra a sua obra...',
+        'A young artist finishes his masterpiece, but as each day goes by he grows more dissatisfied with the final result, so he decides to discard his work. Later, an art critic finds his piece...',
+        'Un joven artista termina su obra maestra, pero con cada día que pasa se siente más insatisfecho con el resultado final, por lo que decide descartar su trabajo. Posteriormente, un crítico de arte encuentra su obra...'],
+      ['Realização e câmara num filme de uma só divisão, feito em 48 horas para o 48 Hour Film Project.',
+        'Direction and camera on a single-room film, made in 48 hours for the 48 Hour Film Project.',
+        'Dirección y cámara en una película de una sola sala, hecha en 48 horas para el 48 Hour Film Project.'],
+
+      /* Fichas técnicas (créditos) */
+      ['Realização', 'Direction', 'Dirección'],
+      ['Produção', 'Production', 'Producción'],
+      ['Fotografia', 'Photography', 'Fotografía'],
+      ['Som', 'Sound', 'Sonido'],
+      ['Montagem', 'Editing', 'Montaje'],
+      ['Escrita', 'Writing', 'Escritura'],
+      ['Argumento', 'Screenplay', 'Guion'],
+      ['Elenco', 'Cast', 'Reparto'],
+      ['País', 'Country', 'País'],
+      ['Ano', 'Year', 'Año'],
+      ['Câmara', 'Camera', 'Cámara'],
+      ['Post-produção', 'Post-production', 'Posproducción'],
+      ['Direção de Fotografia', 'Cinematography', 'Dirección de fotografía'],
+      ['Direção de Arte', 'Art Direction', 'Dirección de arte'],
+      ['Assistente de Realização', 'Assistant Director', 'Ayudante de dirección'],
+      ['Luz', 'Lighting', 'Iluminación'],
+      ['Operação de Câmara', 'Camera Operator', 'Operación de cámara'],
+      ['Fotografia Adicional', 'Additional Photography', 'Fotografía adicional'],
+      ['Música Original', 'Original Music', 'Música original'],
+      ['Exibição', 'Screening', 'Exhibición'],
+
+      /* ═══════════ Charlie Chaves (portfolio) ═══════════ */
+      /* roles (se combinan con " · ") */
+      ['Realizador', 'Director', 'Director'],
+      ['Produtor', 'Producer', 'Productor'],
+      ['Co-realização', 'Co-direction', 'Codirección'],
+      ['Operador de Câmara', 'Camera Operator', 'Operador de cámara'],
+      ['Colaborador', 'Collaborator', 'Colaborador'],
+      ['Júri', 'Jury', 'Jurado'],
+      ['Fundador', 'Founder', 'Fundador'],
+      ['Escritor e Realizador', 'Writer & Director', 'Escritor y director'],
+      ['Produtor Audiovisual', 'Audiovisual Producer', 'Productor audiovisual'],
+      ['Programador Cultural', 'Cultural Programmer', 'Programador cultural'],
+      ['Género', 'Genre', 'Género'],
+      ['Cliente', 'Client', 'Cliente'],
+      ['Curta', 'Short', 'Corto'],
+      ['Documentário', 'Documentary', 'Documental'],
+      ['Comédia Musical', 'Musical Comedy', 'Comedia musical'],
+      ['Foto', 'Photo', 'Foto'],
+      ['Vídeo', 'Video', 'Vídeo'],
+      ['Cinema', 'Cinema', 'Cine'],
+      ['Filmes', 'Films', 'Películas'],
+      ['Comunidade', 'Community', 'Comunidad'],
+      ['Televisão', 'Television', 'Televisión'],
+      ['Contacto', 'Contact', 'Contacto'],
+      ['Filmografia', 'Filmography', 'Filmografía'],
+      ['Videografia', 'Videography', 'Videografía'],
+      ['Abrir →', 'Open →', 'Abrir →'],
+      ['Coleções', 'Collections', 'Colecciones'],
+      ['Retratos', 'Portraits', 'Retratos'],
+      ['Ver coleção', 'View collection', 'Ver colección'],
+      ['Séries de eventos', 'Event series', 'Series de eventos'],
+      ['Trabalhos de TV', 'TV Work', 'Trabajos de TV'],
+      ['A ser adicionados', 'To be added', 'Por añadir'],
+      ['Título do Vídeo', 'Video Title', 'Título del vídeo'],
+      ['Vamos trabalhar juntos.', 'Let’s work together.', 'Trabajemos juntos.'],
+      ['Olá, espero que estejas bem!', 'Hi, I hope you are well!', '¡Hola, espero que estés bien!'],
+      ['Os meus ídolos do cinema e os seus filmes', 'My cinema idols and their films', 'Mis ídolos del cine y sus películas'],
+      ['O que estou a ouvir agora', 'What I’m listening to right now', 'Lo que estoy escuchando ahora'],
+      ['Uma Frase', 'A Quote', 'Una frase'],
+      ['Ver cena no YouTube ↗', 'Watch the scene on YouTube ↗', 'Ver la escena en YouTube ↗'],
+      ['Visitar o Club Benares ↗', 'Visit Club Benares ↗', 'Visitar el Club Benares ↗'],
+      ['Eventos Culturales', 'Cultural Events', 'Eventos Culturales'],   /* el título de la ventana ya estaba en español en PT: se respeta */
+      ['Eventos Culturais', 'Cultural Events', 'Eventos Culturales'],
+      ['Organização de Eventos', 'Event Organisation', 'Organización de eventos'],
+      ['Curadoria & Programação', 'Curation & Programming', 'Curaduría y programación'],
+      ['Gestão de Espaços', 'Venue Management', 'Gestión de espacios'],
+      ['Festival de Cinema de Lisboa', 'Lisbon Film Festival', 'Festival de Cine de Lisboa'],
+      ['Competição de Cinema Português', 'Portuguese Cinema Competition', 'Competición de Cine Portugués'],
+      ['— Charlie Chaves, fundador · Lisboa, 2023', '— Charlie Chaves, founder · Lisbon, 2023', '— Charlie Chaves, fundador · Lisboa, 2023'],
+      ['Cresci na Guatemala e mudei-me para Lisboa aos 18 anos. Em 2023 fundei o Club Benares, um coletivo de cinema independente.',
+        'I grew up in Guatemala and moved to Lisbon at 18. In 2023 I founded Club Benares, an independent film collective.',
+        'Crecí en Guatemala y me mudé a Lisboa a los 18 años. En 2023 fundé el Club Benares, un colectivo de cine independiente.'],
+      ['Estes são os filmes em que participei. Desempenhei várias funções ao longo do meu percurso e diria até que já passei por todos os departamentos. Apaixona-me a criação audiovisual em qualquer função, mas escrever e realizar é, sem dúvida, a minha maior paixão. -Charlie',
+        'These are the films I have taken part in. I have held several roles along the way and I would even say I have been through every department. I love audiovisual creation in any role, but writing and directing is, without a doubt, my greatest passion. -Charlie',
+        'Estas son las películas en las que he participado. He desempeñado varias funciones a lo largo de mi trayectoria y diría incluso que he pasado por todos los departamentos. Me apasiona la creación audiovisual en cualquier función, pero escribir y dirigir es, sin duda, mi mayor pasión. -Charlie'],
+      ['Um dia acordei com a ideia de criar um espaço. Tinha vários objetivos e sonhos em mente, mas o fundamental foi sempre fazer filmes. Hoje esse espaço em que acordei a pensar numa manhã de 2023 chama-se Club Benares. Convido-te a descobrir de que se trata. -Charlie',
+        'One day I woke up with the idea of creating a space. I had several goals and dreams in mind, but the essential thing was always making films. Today, that space I woke up thinking about one morning in 2023 is called Club Benares. I invite you to discover what it is about. -Charlie',
+        'Un día me desperté con la idea de crear un espacio. Tenía varios objetivos y sueños en mente, pero lo fundamental siempre fue hacer películas. Hoy ese espacio en el que desperté pensando una mañana de 2023 se llama Club Benares. Te invito a descubrir de qué se trata. -Charlie'],
+      ['O Blow-Up do Antonioni é um filme genial. E temos de admitir que o estilo de vida do fotógrafo era o paraíso. Então, bem, também gosto de tirar fotografias... capaz que um dia chego lá haha. -Charlie',
+        'Antonioni’s Blow-Up is a brilliant film. And we have to admit that the photographer’s lifestyle was paradise. So, well, I also like taking photos... maybe one day I’ll get there haha. -Charlie',
+        'El Blow-Up de Antonioni es una película genial. Y hay que admitir que el estilo de vida del fotógrafo era el paraíso. Así que, bueno, a mí también me gusta sacar fotos... a lo mejor algún día llego a eso jaja. -Charlie'],
+      ['Conheci o vício quando comprei a minha primeira câmara. Desde então tornei-me viciado no equipamento de vídeo, na luz, na imagem e na busca interminável da emulação de película em digital. Ao longo dessa jornada dispendiosa, fiz alguns trabalhos para clientes. Espreita. -Charlie',
+        'I met the addiction when I bought my first camera. Since then I have become hooked on video equipment, on light, on the image and on the endless quest to emulate film in digital. Along this costly journey, I have done some work for clients. Take a look. -Charlie',
+        'Conocí el vicio cuando compré mi primera cámara. Desde entonces me volví adicto al equipo de vídeo, a la luz, a la imagen y a la búsqueda interminable de emular la película en digital. A lo largo de este costoso viaje, hice algunos trabajos para clientes. Echa un vistazo. -Charlie'],
+      ['Televisão é um meio que me fascina pela escala e pela disciplina que exige. Aqui encontras alguns dos trabalhos que fiz para televisão. -Charlie',
+        'Television is a medium that fascinates me for its scale and the discipline it demands. Here you will find some of the work I have done for television. -Charlie',
+        'La televisión es un medio que me fascina por su escala y por la disciplina que exige. Aquí encontrarás algunos de los trabajos que hice para televisión. -Charlie'],
+      ['Nasci a 6 de junho de 2004 e cresci na Guatemala, uma realidade muito diferente de Lisboa onde vivo hoje. As pessoas, os lugares e as experiências desses anos continuam presentes na forma como escrevo e conto histórias.',
+        'I was born on 6 June 2004 and grew up in Guatemala, a reality very different from Lisbon, where I live today. The people, the places and the experiences of those years remain present in the way I write and tell stories.',
+        'Nací el 6 de junio de 2004 y crecí en Guatemala, una realidad muy diferente de Lisboa, donde vivo hoy. Las personas, los lugares y las experiencias de esos años siguen presentes en la forma en que escribo y cuento historias.'],
+      ['Inspirado por muitos filmes e por pessoas como o meu pai, Gustavo, e a minha amiga de infância Sara Sánchez, decidi que um dia faria filmes. Aos 18 anos mudei-me para Lisboa, onde comecei a estudar Produção Audiovisual na ETIC.',
+        'Inspired by many films and by people such as my father, Gustavo, and my childhood friend Sara Sánchez, I decided that one day I would make films. At 18 I moved to Lisbon, where I began studying Audiovisual Production at ETIC.',
+        'Inspirado por muchas películas y por personas como mi padre, Gustavo, y mi amiga de la infancia Sara Sánchez, decidí que algún día haría películas. A los 18 años me mudé a Lisboa, donde empecé a estudiar Producción Audiovisual en la ETIC.'],
+      ['Em 2023, juntei um grupo de amigos com a mesma vontade de filmar e fundei o Club Benares, um coletivo de cinema independente que se tornou, com o tempo, uma comunidade aberta a todos os que amam o cinema.',
+        'In 2023, I brought together a group of friends with the same desire to film and founded Club Benares, an independent film collective that has, over time, become a community open to everyone who loves cinema.',
+        'En 2023 reuní a un grupo de amigos con las mismas ganas de filmar y fundé el Club Benares, un colectivo de cine independiente que con el tiempo se convirtió en una comunidad abierta a todos los que aman el cine.'],
+      ['O Club Benares é um coletivo de cinema independente fundado em Lisboa em 2023. Fazemos filmes, organizamos eventos culturais e construímos uma comunidade à volta do cinema de autor.',
+        'Club Benares is an independent film collective founded in Lisbon in 2023. We make films, organise cultural events and build a community around auteur cinema.',
+        'El Club Benares es un colectivo de cine independiente fundado en Lisboa en 2023. Hacemos películas, organizamos eventos culturales y construimos una comunidad en torno al cine de autor.'],
+      ['"Um dia acordei com a ideia de criar um espaço. Tinha vários objetivos e sonhos em mente, mas o fundamental foi sempre fazer filmes."',
+        '"One day I woke up with the idea of creating a space. I had several goals and dreams in mind, but the essential thing was always making films."',
+        '"Un día me desperté con la idea de crear un espacio. Tenía varios objetivos y sueños en mente, pero lo fundamental siempre fue hacer películas."'],
+      ['Da conceção ao dia do evento — logística, comunicação e gestão de público para mais de 11 eventos próprios de cinema e cultura.',
+        'From conception to the day of the event — logistics, communication and audience management for more than 11 of our own cinema and culture events.',
+        'De la concepción al día del evento — logística, comunicación y gestión de público para más de 11 eventos propios de cine y cultura.'],
+      ['Seleção e programação cinematográfica com critério editorial e atenção ao contexto cultural de cada sessão.',
+        'Film selection and programming with editorial criteria and attention to the cultural context of each screening.',
+        'Selección y programación cinematográfica con criterio editorial y atención al contexto cultural de cada sesión.'],
+      ['Coordenação de espaços culturais, negociação com parceiros e adaptação de ambientes para projeção e exibição.',
+        'Coordination of cultural venues, negotiation with partners and adaptation of spaces for projection and exhibition.',
+        'Coordinación de espacios culturales, negociación con socios y adaptación de ambientes para proyección y exhibición.'],
+      ['Para além do trabalho como realizador e produtor, fui convidado a participar em festivais de cinema internacionais como colaborador e membro de júri.',
+        'Beyond my work as a director and producer, I have been invited to take part in international film festivals as a collaborator and jury member.',
+        'Además de mi trabajo como director y productor, he sido invitado a participar en festivales de cine internacionales como colaborador y miembro de jurado.'],
+      ['Aqui vou escrever sobre cinema, sobre o processo criativo, sobre o que ando a ver, a ler e a ouvir. Ainda não está pronto, mas já está a acontecer.',
+        'Here I will write about cinema, the creative process, and what I am watching, reading and listening to. It is not ready yet, but it is already happening.',
+        'Aquí voy a escribir sobre cine, sobre el proceso creativo, sobre lo que ando viendo, leyendo y escuchando. Todavía no está listo, pero ya está sucediendo.'],
+
+      /* ═══════════ Subsitio de Charlie (/charlie/*) y otras páginas ═══════════ */
+      ['Ver mais', 'See more', 'Ver más'],
+      ['Lisboa, desde 2023', 'Lisbon, since 2023', 'Lisboa, desde 2023'],
+      ['Fazemos cinema.', 'We make cinema.', 'Hacemos cine.'],
+      ['Em Lisboa.', 'In Lisbon.', 'En Lisboa.'],
+      ['Visitar o Club', 'Visit the Club', 'Visitar el Club'],
+      ['"Título do Filme"', '"Film Title"', '"Título de la película"'],
+      ['Prémio Principal', 'Grand Prize', 'Premio principal'],
+      ['Selecção Oficial', 'Official Selection', 'Selección oficial'],
+      ['Menção Honrosa', 'Honourable Mention', 'Mención honorífica'],
+      ['Competição Internacional', 'International Competition', 'Competición internacional'],
+      ['Competição Nacional', 'National Competition', 'Competición nacional'],
+      ['Melhor Curta', 'Best Short', 'Mejor cortometraje'],
+      ['Casamento', 'Wedding', 'Boda'],
+      ['Nome do Cliente', 'Client Name', 'Nombre del cliente'],
+      ['Retrato', 'Portrait', 'Retrato'],
+      ['Corporativo', 'Corporate', 'Corporativo'],
+      ['Moda', 'Fashion', 'Moda'],
+      ['Laboratorio', 'Laboratory', 'Laboratorio'],
+
+      /* ═══════════ Comunidad (.KO) — textos en inglés a propósito en PT ═══════════ */
+      ['The Benares Club presents', 'The Benares Club presents', 'The Benares Club presenta'],
+      ['Coming Soon', 'Coming Soon', 'Próximamente'],
+
+      /* ═══════════ Contactos ═══════════ */
+      ['O teu endereço de email', 'Your email address', 'Tu dirección de email'],
+      ['Erro ao subscrever. Tenta de novo.', 'Could not subscribe. Please try again.', 'Error al suscribirse. Inténtalo de nuevo.'],
+      ['Erro de ligação. Tenta de novo.', 'Connection error. Please try again.', 'Error de conexión. Inténtalo de nuevo.'],
+      ['Email inválido', 'Invalid email', 'Email no válido'],
+      ['Pedido inválido', 'Invalid request', 'Solicitud no válida'],
+
+      /* ═══════════ Eventos ═══════════ */
+      ['Agenda', 'Schedule', 'Agenda'],
+      ['Próximos eventos', 'Upcoming events', 'Próximos eventos'],
+      ['Projeção', 'Screening', 'Proyección'],
+      ['Reservar', 'Book', 'Reservar'],
+      ['Estreias do Clube', 'Club Premieres', 'Estrenos del Club'],
+      ['Conhece o Clube', 'Meet the Club', 'Conoce el Club'],
+      ['Workshop: Guião em 48h', 'Workshop: Screenwriting in 48h', 'Workshop: Guion en 48h'],
+      ['Agenda em preparação', 'Schedule in the works', 'Agenda en preparación'],
+      ['Estamos a confirmar as datas dos próximos eventos.',
+        'We are confirming the dates of the upcoming events.',
+        'Estamos confirmando las fechas de los próximos eventos.'],
+      ['Segue-nos no Instagram para não perderes nenhum anúncio.',
+        'Follow us on Instagram so you don’t miss any announcement.',
+        'Síguenos en Instagram para no perderte ningún anuncio.'],
+      ['Estamos a preparar os próximos eventos.',
+        'We are preparing the upcoming events.',
+        'Estamos preparando los próximos eventos.'],
+      ['A primeira sessão do Night Lounge reúne as mais recentes curtas-metragens produzidas pelos membros do The Benares Club. Uma noite de estreias, conversa com os realizadores e muito cinema independente. Portas abertas às 19:30.',
+        'The first Night Lounge session brings together the latest short films produced by members of The Benares Club. A night of premieres, conversations with the filmmakers and plenty of independent cinema. Doors open at 19:30.',
+        'La primera sesión del Night Lounge reúne los cortometrajes más recientes producidos por los miembros de The Benares Club. Una noche de estrenos, charla con los realizadores y mucho cine independiente. Puertas abiertas a las 19:30.'],
+      ['Um workshop intensivo de dois dias sobre escrita criativa para cinema. Do argumento à página, da ideia ao pitch. Conduzido por membros fundadores do clube. Lugares muito limitados — reserva obrigatória.',
+        'An intensive two-day workshop on creative writing for film. From script to page, from idea to pitch. Led by founding members of the club. Very limited places — booking required.',
+        'Un taller intensivo de dos días sobre escritura creativa para cine. Del guion a la página, de la idea al pitch. Dirigido por miembros fundadores del club. Plazas muy limitadas — reserva obligatoria.'],
+      ['A grande final do .KO Lisboa International Short-film Championship. As 8 curtas selecionadas ao longo da temporada competem ao vivo perante o público e o júri. O vencedor recebe o troféu .KO e o prémio de produção para o próximo projeto.',
+        'The grand final of the .KO Lisboa International Short-film Championship. The 8 short films selected throughout the season compete live in front of the audience and the jury. The winner receives the .KO trophy and a production prize for their next project.',
+        'La gran final del .KO Lisboa International Short-film Championship. Los 8 cortos seleccionados a lo largo de la temporada compiten en directo ante el público y el jurado. El ganador recibe el trofeo .KO y el premio de producción para su próximo proyecto.'],
+      ['Uma tarde descontraída para realizadores, atores, produtores e entusiastas do cinema independente se conhecerem. Sem agenda fixa — apenas boas conversas e bons projetos. A participação é gratuita; as bebidas por conta de cada um.',
+        'A relaxed afternoon for filmmakers, actors, producers and independent cinema enthusiasts to get to know each other. No fixed agenda — just good conversations and good projects. Participation is free; drinks are on you.',
+        'Una tarde distendida para que realizadores, actores, productores y entusiastas del cine independiente se conozcan. Sin agenda fija — solo buenas conversaciones y buenos proyectos. La participación es gratuita; las bebidas corren por cuenta de cada uno.'],
+      ['Inclui materiais', 'Materials included', 'Incluye materiales'],
+      ['Entrada livre', 'Free entry', 'Entrada libre'],
+      ['Mesa', 'Table', 'Mesa'],
+      ['Reservar no Eventbrite', 'Book on Eventbrite', 'Reservar en Eventbrite'],
+      ['Inscrever no Eventbrite', 'Sign up on Eventbrite', 'Inscribirse en Eventbrite'],
+      ['Confirmar presença no Meetup', 'RSVP on Meetup', 'Confirmar asistencia en Meetup'],
+      ['Garantir mesa no Eventbrite', 'Reserve a table on Eventbrite', 'Reservar mesa en Eventbrite'],
+      ['Reservar bilhetes', 'Book tickets', 'Reservar entradas'],
+      ['Entrada:', 'Admission:', 'Entrada:'],
+
+      /* ═══════════ Fototeca ═══════════ */
+      ['Ver na Cinemateca', 'Watch in the Film Library', 'Ver en la Cinemateca'],
+      ['Anterior', 'Previous', 'Anterior'],
+      ['Seguinte', 'Next', 'Siguiente'],
+
+      /* ═══════════ Mercado ═══════════ */
+      ['Loja', 'Shop', 'Tienda'],
+      ['Os nossos produtos', 'Our products', 'Nuestros productos'],
+      ['Carrinho', 'Cart', 'Carrito'],
+      ['Acessórios', 'Accessories', 'Accesorios'],
+      ['Impressão', 'Print', 'Impresión'],
+      ['Vestuário', 'Clothing', 'Ropa'],
+      ['Publicação', 'Publication', 'Publicación'],
+      ['Poster Inexistente', 'Inexistente Poster', 'Póster Inexistente'],
+      ['Camiseta .KO Festival', '.KO Festival T-shirt', 'Camiseta .KO Festival'],
+      ['Diário de Produção', 'Production Diary', 'Diario de producción'],
+      ['Tote bag em algodão orgânico com o logo do Club Benares bordado. Resistente, lavável a máquina, ideal para o dia a dia.',
+        'Organic cotton tote bag with the Club Benares logo embroidered on it. Sturdy, machine washable, ideal for everyday use.',
+        'Tote bag de algodón orgánico con el logo del Club Benares bordado. Resistente, lavable a máquina, ideal para el día a día.'],
+      ['Impressão de alta qualidade do poster oficial de Inexistente (2023). Papel 200g, acabamento mate. Entregue em tubo de cartão.',
+        'High-quality print of the official Inexistente (2023) poster. 200g paper, matte finish. Delivered in a cardboard tube.',
+        'Impresión de alta calidad del póster oficial de Inexistente (2023). Papel de 200 g, acabado mate. Se entrega en tubo de cartón.'],
+      ['Camiseta 100% algodão com o branding do .KO Lisboa Short-film Championship. Corte unissexo, disponível em vários tamanhos.',
+        '100% cotton T-shirt with the .KO Lisboa Short-film Championship branding. Unisex cut, available in several sizes.',
+        'Camiseta 100% algodón con el branding del .KO Lisboa Short-film Championship. Corte unisex, disponible en varias tallas.'],
+      ['Primeira edição do nosso zine sobre o processo de criação de Inexistente. Fotografias de rodagem, storyboards e textos dos realizadores. Edição limitada.',
+        'First edition of our zine about the making of Inexistente. Behind-the-scenes photos, storyboards and texts by the filmmakers. Limited edition.',
+        'Primera edición de nuestro zine sobre el proceso de creación de Inexistente. Fotografías de rodaje, storyboards y textos de los realizadores. Edición limitada.'],
+      ['Ver produto', 'View product', 'Ver producto'],
+      ['Loja em preparação', 'Shop in the works', 'Tienda en preparación'],
+      ['Estamos a colocar os produtos.', 'We are adding the products.', 'Estamos añadiendo los productos.'],
+      ['Segue-nos no Instagram para não perderes o lançamento.',
+        'Follow us on Instagram so you don’t miss the launch.',
+        'Síguenos en Instagram para no perderte el lanzamiento.'],
+      ['Tamanho', 'Size', 'Talla'],
+      ['Quantidade', 'Quantity', 'Cantidad'],
+      ['Adicionar ao carrinho', 'Add to cart', 'Añadir al carrito'],
+      ['O teu carrinho está vazio.', 'Your cart is empty.', 'Tu carrito está vacío.'],
+      ['Portes calculados no checkout', 'Shipping calculated at checkout', 'Gastos de envío calculados en el checkout'],
+      ['Finalizar compra →', 'Checkout →', 'Finalizar compra →'],
+      ['Voltar ao carrinho', 'Back to cart', 'Volver al carrito'],
+      ['Informação de contacto', 'Contact information', 'Información de contacto'],
+      ['Nome', 'First name', 'Nombre'],
+      ['Apelido', 'Last name', 'Apellidos'],
+      ['E-mail', 'Email', 'Correo electrónico'],
+      ['Telefone (opcional)', 'Phone (optional)', 'Teléfono (opcional)'],
+      ['Endereço de entrega', 'Shipping address', 'Dirección de entrega'],
+      ['Morada', 'Address', 'Dirección'],
+      ['Complemento (opcional)', 'Apartment, suite (optional)', 'Complemento (opcional)'],
+      ['Cidade', 'City', 'Ciudad'],
+      ['Código postal', 'Postal code', 'Código postal'],
+      ['Espanha', 'Spain', 'España'],
+      ['França', 'France', 'Francia'],
+      ['Alemanha', 'Germany', 'Alemania'],
+      ['Reino Unido', 'United Kingdom', 'Reino Unido'],
+      ['Outro', 'Other', 'Otro'],
+      ['Pagamento', 'Payment', 'Pago'],
+      ['Pagamento seguro', 'Secure payment', 'Pago seguro'],
+      ['A plataforma de pagamento está a ser configurada.', 'The payment platform is being set up.', 'La plataforma de pago se está configurando.'],
+      ['Em breve poderás pagar com cartão ou MB Way.', 'Soon you will be able to pay by card or MB Way.', 'Pronto podrás pagar con tarjeta o MB Way.'],
+      ['Cartão de crédito', 'Credit card', 'Tarjeta de crédito'],
+      ['Pagamento em configuração', 'Payment being set up', 'Pago en configuración'],
+      ['Resumo do pedido', 'Order summary', 'Resumen del pedido'],
+      ['Rua de Exemplo, 42', 'Example Street, 42', 'Calle de Ejemplo, 42'],
+      ['Remover', 'Remove', 'Eliminar'],
+      ['Portes', 'Shipping', 'Envío'],
+      ['A calcular', 'To be calculated', 'Por calcular']
+    ],
+
+    patterns: [
+      /* "Cinema Ideal, Lisboa" */
+      { re: /^(.+), Lisboa$/, t: ['$1, Lisboa', '$1, Lisbon', '$1, Lisboa'] },
+      /* "5 filmes" */
+      { re: /^(\d+) filmes?$/, fn: function (m, lang) {
+          var one = m[1] === '1';
+          return m[1] + ' ' + ({ pt: one ? 'filme' : 'filmes', en: one ? 'film' : 'films', es: one ? 'película' : 'películas' })[lang];
+      } },
+      { re: /^TÍTULO DO VÍDEO (\d+)$/, t: ['TÍTULO DO VÍDEO $1', 'VIDEO TITLE $1', 'TÍTULO DEL VÍDEO $1'] },
+      /* "1 coleção", "15 fotos" */
+      { re: /^(\d+) coleç(?:ão|ões)$/, fn: function (m, lang) {
+          var one = m[1] === '1';
+          return m[1] + ' ' + ({ pt: one ? 'coleção' : 'coleções', en: one ? 'collection' : 'collections', es: one ? 'colección' : 'colecciones' })[lang];
+      } },
+      { re: /^(\d+) fotos?$/, fn: function (m, lang) {
+          var one = m[1] === '1';
+          return m[1] + ' ' + ({ pt: one ? 'foto' : 'fotos', en: one ? 'photo' : 'photos', es: 'foto' + (one ? '' : 's') })[lang];
+      } },
+      /* Atributos accesibles con parte variable */
+      { re: /^Ir para filme (\d+)$/, t: ['Ir para filme $1', 'Go to film $1', 'Ir a la película $1'] },
+      { re: /^Ver detalhes de (.+)$/, fn: function (m, lang, tr) {
+          return ({ pt: 'Ver detalhes de ', en: 'View details of ', es: 'Ver detalles de ' })[lang] + tr(m[1]);
+      } },
+      { re: /^Ver detalhes: (.+)$/, fn: function (m, lang, tr) {
+          return ({ pt: 'Ver detalhes: ', en: 'View details: ', es: 'Ver detalles: ' })[lang] + tr(m[1]);
+      } },
+      { re: /^Alugar — (.+)$/, t: ['Alugar — $1', 'Rent — $1', 'Alquilar — $1'] },
+      /* Fechas: "11 Dez 2024", "Out 2026", "Dez" */
+      { re: new RegExp('^(?:(\\d{1,2}) )?(' + MONTH_RE + ')(?: (\\d{4}))?$'), fn: function (m, lang) {
+          return (m[1] ? m[1] + ' ' : '') + monthTo(m[2], lang) + (m[3] ? ' ' + m[3] : '');
+      } }
+    ],
+
+    /* Patrones que se dejan igual (p. ej. pies de foto numerados: "Madalena M. #3") */
+    keepRe: [/^[^#]+ #\d+$/],
+
+    /* Se dejan igual en los tres idiomas (marcas, nombres propios, títulos originales) */
+    keep: [
+      // marca y secciones
+      'Charlie Chaves', 'Charlie', 'Chaves', 'The Benares Club', 'Club Benares', '© 2026 Club Benares.', '.KO', 'PT', 'EN', 'ES',
+      'Instagram', 'Email', 'Newsletter', 'MB Way', 'PayPal', 'Subtotal', 'Total', 'Stripe', 'Drama', 'Portugal', 'Suspense',
+      'Bio', 'Blog', 'Cine Club', 'Daily Life', 'Editorial', 'Workshop', 'Networking', 'Festival', 'Film Festivals',
+      'Join the Club', 'Open Call', 'Crowdfunding', 'Feedback',
+      '.KO Lisboa', 'International Short-film Championship', 'Final Championship',
+      'Lisbon International Short-film Championship', 'Cooking in progress',
+      // títulos de películas, eventos y productos
+      'Inexistente', 'El Artista Comprendido', 'El Profesor', 'Jay Gupta', 'Firefly', 'Sinestesia', 'Dimensão S2',
+      'A Especialidade da Casa', 'Nos Bastidores', 'A Cor da Memória', 'Onde Cabem Todos',
+      'Night Lounge #1', 'Night Lounge #2', 'Night Lounge #3', 'MashUp #1', 'MashUp #2', 'MashUp #3', 'MashUp #4', 'MashUp #5',
+      'Tote Bag Club Benares', 'Zine #1', 'FestIn', 'DocLisboa', 'Madalena M.', 'Terreiro do Paço',
+      'Gastón Duprat & Mariano Cohn', 'Competencia oficial', 'El ciudadano ilustre', 'Mi obra maestra', 'El hombre de al lado', 'El artista',
+      'Duprat · Cohn', '"La cabeza te da, la cabeza sí te da... lo que no te da es el corazón."', '— Guillermo Francella · Corazón de León (2013)',
+      // personas y lugares
+      'Charlie Chaves', 'Valdir Neves', 'Val Neves', 'Nityam', 'João Nobre', 'Alessandro Barboza', 'Pedro Antonie de Saint', 'Gonçalo Pereira',
+      'Carlos Calderon', 'Bruno de Franclieu', 'Fabio Duarte', 'Inês Serra', 'Cinema São Jorge', 'Cinema Ideal', 'ETIC', 'Bar Tejo', 'Teatro São Luiz',
+      'Ana', 'Silva', 'Apt 3B', 'S', 'M', 'L', 'XL',
+      'Rasmus', 'Akshay Tharabole', 'Nilesh Suryawanshi', 'Varsha Mehra', 'Yacine Meziti', 'Francisco Lopes',
+      'Giovanna Domiciano Neto', 'Rita Primavera Lopes Família', 'Sinou Gomez', 'Nikolas Serra', 'Rafaela Sousa',
+      'Inês Garcias Lopes', 'Sofia Aragão', 'Sara Silva Veiga', 'Jiani Shi', 'Xihe Yu', 'André de Brito', 'Dylan Cabanis',
+      'Marta Taborda (Ophelia)', 'Leonor Canas (Sophie)', 'João Guilherme Gouveia'
+    ]
+  };
+})();

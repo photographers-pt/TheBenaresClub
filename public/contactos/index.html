@@ -182,6 +182,8 @@
       .newsletter-btn  { width: 100%; }
     }
   </style>
+  <script src="/i18n-dict.js"></script>
+  <script src="/i18n.js"></script>
 </head>
 <body>
 
@@ -302,12 +304,12 @@
             ok.style.display = 'block';
           } else {
             btn.disabled = false;
-            alert(data.error || 'Erro ao subscrever. Tenta de novo.');
+            alert(data.error ? (window.i18n ? window.i18n.t(data.error) : data.error) : (window.i18n ? window.i18n.t('Erro ao subscrever. Tenta de novo.') : 'Erro ao subscrever. Tenta de novo.'));
           }
         })
         .catch(function() {
           btn.disabled = false;
-          alert('Erro de ligação. Tenta de novo.');
+          alert(window.i18n ? window.i18n.t('Erro de ligação. Tenta de novo.') : 'Erro de ligação. Tenta de novo.');
         });
       });
     })();

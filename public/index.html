@@ -357,6 +357,8 @@
       .bc-opencall, .bc-crowd, .bc-feedback { grid-column: 1; grid-row: auto; }
     }
   </style>
+  <script src="/i18n-dict.js"></script>
+  <script src="/i18n.js"></script>
 </head>
 <body>
 
@@ -563,7 +565,7 @@
 <script src="/shared.js"></script>
 
 <!-- Blog Post Modal -->
-<div id="post-modal" class="post-modal" aria-modal="true" role="dialog" hidden>
+<div id="post-modal" data-i18n-skip class="post-modal" aria-modal="true" role="dialog" hidden>
   <div class="post-modal-backdrop"></div>
   <div class="post-modal-panel">
     <button class="post-modal-close">&times;</button>
