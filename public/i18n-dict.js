@@ -39,6 +39,7 @@
       ['Contactos', 'Contact', 'Contactos'],
       ['Menu principal', 'Main menu', 'Menú principal'],
       ['Abrir menu', 'Open menu', 'Abrir menú'],
+      ['Fechar menu', 'Close menu', 'Cerrar menú'],
       ['Fechar', 'Close', 'Cerrar'],
       ['Idioma', 'Language', 'Idioma'],
       ['Mudar idioma', 'Change language', 'Cambiar idioma'],

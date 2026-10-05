@@ -160,9 +160,27 @@ header h1 {
   padding: 0;
 }
 
-.nav-toggle:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-50%) scale(1.05);
+/* hover only on devices that really hover: on touch screens it would stay "stuck" after a tap */
+@media (hover: hover) and (pointer: fine) {
+  .nav-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%) scale(1.05);
+  }
+}
+
+/* "pop" on every tap, open or close (class added by shared.js) */
+.nav-toggle.is-tapped {
+  animation: navTogglePop 0.32s ease-out;
+}
+
+@keyframes navTogglePop {
+  0%   { transform: translateY(-50%) scale(1);    background: rgba(255, 255, 255, 0.1); }
+  40%  { transform: translateY(-50%) scale(1.18); background: rgba(255, 255, 255, 0.22); }
+  100% { transform: translateY(-50%) scale(1);    background: rgba(255, 255, 255, 0.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-toggle.is-tapped { animation: none; }
 }
 
 .nav-icon {

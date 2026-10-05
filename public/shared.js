@@ -30,14 +30,10 @@ function createHeader() {
         <button type="button" class="lang-opt" data-set-lang="es" lang="es" aria-pressed="false">ES</button>
       </div>
       <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
-        <svg class="nav-icon-open" width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <svg class="nav-icon-burger" width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect width="20" height="2" rx="1" fill="currentColor"/>
           <rect y="6" width="20" height="2" rx="1" fill="currentColor"/>
           <rect y="12" width="20" height="2" rx="1" fill="currentColor"/>
-        </svg>
-        <svg class="nav-icon-close" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:none;">
-          <line x1="1" y1="1" x2="13" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <line x1="13" y1="1" x2="1" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>
       </button>
     </header>
@@ -136,19 +132,28 @@ function initializeNavToggle() {
 
   function isMobile() { return window.innerWidth <= 768; }
 
+  // The icon always stays a burger; state is shown by the menu itself (and aria-expanded/label).
   function openNav() {
     nav.classList.add('active');
     toggleBtn.setAttribute('aria-expanded', 'true');
-    toggleBtn.querySelector('.nav-icon-open').style.display = 'none';
-    toggleBtn.querySelector('.nav-icon-close').style.display = 'block';
+    toggleBtn.setAttribute('aria-label', 'Fechar menu');
   }
 
   function closeNav() {
     nav.classList.remove('active');
     toggleBtn.setAttribute('aria-expanded', 'false');
-    toggleBtn.querySelector('.nav-icon-open').style.display = 'block';
-    toggleBtn.querySelector('.nav-icon-close').style.display = 'none';
+    toggleBtn.setAttribute('aria-label', 'Abrir menu');
   }
+
+  // Small "pop" on every tap (open and close), see .nav-toggle.is-tapped in styles.css
+  function pulse() {
+    toggleBtn.classList.remove('is-tapped');
+    void toggleBtn.offsetWidth; // restart the animation if tapped again quickly
+    toggleBtn.classList.add('is-tapped');
+  }
+  toggleBtn.addEventListener('animationend', function() {
+    toggleBtn.classList.remove('is-tapped');
+  });
 
   // Initial state
   if (isMobile()) {
@@ -158,6 +163,7 @@ function initializeNavToggle() {
   }
 
   toggleBtn.addEventListener('click', function() {
+    pulse();
     nav.classList.contains('active') ? closeNav() : openNav();
   });
 
